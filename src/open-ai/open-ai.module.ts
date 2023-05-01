@@ -4,5 +4,6 @@ import { OpenAiResolver } from './open-ai.resolver';
 
 @Module({
   providers: [OpenAiService, OpenAiResolver],
+  exports: [OpenAiService],
 })
 export class OpenAiModule {}

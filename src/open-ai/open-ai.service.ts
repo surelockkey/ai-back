@@ -4,6 +4,7 @@ import { Configuration, OpenAIApi } from 'openai';
 import * as fs from 'fs';
 import axios from 'axios';
 import * as FormData from 'form-data';
+import { OpenAiMessageResponse } from './dto/message-response.dto';
 
 // import * as ax from 'axios';
 
@@ -14,18 +15,24 @@ export class OpenAiService {
   });
   private readonly openai = new OpenAIApi(this.configuration);
 
-  public async sendMessage(message: string) {
+  public async sendMessage(prompt: string): Promise<OpenAiMessageResponse> {
     const res = await this.openai.createCompletion({
-      // model: 'text-davinci-003',
-      model: 'davinci:ft-personal-2023-04-28-15-10-46',
-      prompt: message,
+      model: 'text-davinci-003',
+      // model: 'davinci:ft-personal-2023-04-28-15-10-46',
+      prompt,
       temperature: 0,
       max_tokens: 200,
     });
 
-    console.log(res.data);
+    return {
+      id: res.data.id,
+      created: res.data.created,
+      text: res.data.choices[0].text,
+      total_tokens: res.data.usage.total_tokens,
+      finish_reason: res.data.choices[0].finish_reason,
+    };
 
-    return res.data.choices[0].text;
+    // return res.data.choices[0].text;
   }
 
   public async uploadFileToOpenAi() {

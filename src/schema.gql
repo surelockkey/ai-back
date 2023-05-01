@@ -2,8 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Message {
+  created: Int!
+  finish_reason: String!
+  id: ID!
+  openai_id: String!
+  prompt: String!
+  text: String!
+  total_tokens: Int!
+}
+
 type Mutation {
   createFineTune(file_id: String!): String!
+  sendMessage(prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
   uploadFileToOpenAi: OpenAiFile!
 }
@@ -20,6 +31,7 @@ type OpenAiFile {
 
 type Query {
   getAllFiles: [OpenAiFile!]!
+  getAllMessages: [Message!]!
   getHello: String!
   listFineTunes: String!
 }
