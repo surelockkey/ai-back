@@ -19,7 +19,7 @@ export class OpenAiService {
       // model: 'text-davinci-003',
       model: 'davinci:ft-personal-2023-04-28-15-10-46',
       prompt: message,
-      temperature: 0.2,
+      temperature: 0,
       max_tokens: 200,
     });
 

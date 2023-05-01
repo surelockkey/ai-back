@@ -3,9 +3,12 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { OpenAiModule } from './open-ai/open-ai.module';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       context: ({ req, connection }) =>
@@ -15,8 +18,19 @@ import { ConfigModule } from '@nestjs/config';
       playground: true,
       introspection: true,
     }),
-    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT),
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+      entities: ['dist/**/*.entity.js'],
+      synchronize: true,
+      logging: true,
+    }),
     OpenAiModule,
+    ChatModule,
   ],
 })
 export class AppModule {}
