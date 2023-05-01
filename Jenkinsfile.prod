@@ -19,7 +19,7 @@ def prod_secrets = [
     ]],
 ]
 
-def configuration = [vaultUrl: 'https://vault.tech-slk.com',  vaultCredentialId: 'jenkins-vault-role', engineVersion: 1]
+def configuration = [vaultUrl: 'https://vault.tech-slk.com',  vaultCredentialId: 'jenkins-vault-role', engineVersion: 2]
 
 pipeline {
     agent {
