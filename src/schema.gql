@@ -1,0 +1,25 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Mutation {
+  createFineTune(file_id: String!): String!
+  sendMessageToOpenAi(message: String!): String!
+  uploadFileToOpenAi: OpenAiFile!
+}
+
+type OpenAiFile {
+  bytes: Int!
+  created_at: Int!
+  filename: String!
+  id: String!
+  object: String!
+  purpose: String!
+  status: String!
+}
+
+type Query {
+  getAllFiles: [OpenAiFile!]!
+  getHello: String!
+  listFineTunes: String!
+}
