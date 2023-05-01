@@ -1,0 +1,46 @@
+version: '3.3'
+
+services:
+    prod:
+        container_name: ai_api
+        build:
+            dockerfile: Dockerfile
+            target: production
+            context: .
+        environment:
+            DATABASE_HOST: ${DATABASE_HOST}
+            DATABASE_USERNAME: ${DATABASE_USERNAME}
+            DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+            DATABASE_NAME: ${DATABASE_NAME}
+            NPM_TOKEN: ${NPM_TOKEN}
+            NODE_ENV: production
+            PORT: 4000
+        depends_on:
+            - postgres
+            - pgadmin
+        ports:
+            - 4000:4000
+        restart: unless-stopped
+    
+    postgres:
+        image: postgres:14.1
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_USER: ${DATABASE_USERNAME}
+            POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+            POSTGRES_DB: ${DATABASE_NAME}
+        volumes:
+            - data:/var/lib/postgresql/data
+    pgadmin:
+        image: dpage/pgadmin4
+        depends_on:
+            - postgres
+        ports:
+            - "5555:80"
+        environment:
+            PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+            PGADMIN_DEFAULT_PASSWORD: admin
+        restart: unless-stopped
+volumes:
+    data:
