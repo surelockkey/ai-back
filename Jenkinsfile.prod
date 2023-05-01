@@ -6,7 +6,7 @@ def COLOR_MAP = [
 ]
 
 def prod_secrets = [
-    [path: 'ai/back/prod', engineVersion: 1, secretValues: [
+    [path: 'ai/back/prod', engineVersion: 2, secretValues: [
         [envVar: 'OPEN_AI_API_KEY', vaultKey: 'OPEN_AI_API_KEY'],
         [envVar: 'DATABASE_TYPE', vaultKey: 'DATABASE_TYPE'],
         [envVar: 'DATABASE_HOST', vaultKey: 'DATABASE_HOST'],
