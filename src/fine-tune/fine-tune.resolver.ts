@@ -18,4 +18,9 @@ export class FineTuneResolver {
   getFineTuneList() {
     return this.fineTuneService.findAll({ deleted: false });
   }
+
+  @Mutation(() => String)
+  prepareFileForFileTune() {
+    return this.fineTuneService.prepareFileForFileTune();
+  }
 }
