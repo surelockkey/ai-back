@@ -1,0 +1,86 @@
+#!/usr/bin/env groovy
+
+def COLOR_MAP = [
+    'SUCCESS': 'good',
+    'FAILURE': 'danger'
+]
+
+def prod_secrets = [
+    [path: 'ai/back/prod', engineVersion: 1, secretValues: [
+        [envVar: 'OPEN_AI_API_KEY', vaultKey: 'OPEN_AI_API_KEY'],
+        [envVar: 'DATABASE_TYPE', vaultKey: 'DATABASE_TYPE'],
+        [envVar: 'DATABASE_HOST', vaultKey: 'DATABASE_HOST'],
+        [envVar: 'DATABASE_PORT', vaultKey: 'DATABASE_PORT'],
+        [envVar: 'DATABASE_PASSWORD', vaultKey: 'DATABASE_PASSWORD'],
+        [envVar: 'DATABASE_NAME', vaultKey: 'DATABASE_NAME'],
+        [envVar: 'DATABASE_USERNAME', vaultKey: 'DATABASE_USERNAME'],
+        [envVar: 'DATABASE_SYNCHRONIZE', vaultKey: 'DATABASE_SYNCHRONIZE'],
+        [envVar: 'NPM_TOKEN', vaultKey: 'NPM_TOKEN'],
+    ]],
+]
+
+def configuration = [vaultUrl: 'https://vault.tech-slk.com',  vaultCredentialId: 'jenkins-vault-role', engineVersion: 1]
+
+pipeline {
+    agent {
+        node {
+            label 'master'
+        }
+    }
+    environment {
+        SLACK_CHANNEL = 'ai'
+    }
+    options {
+        ansiColor('xterm')
+        buildDiscarder(logRotator(numToKeepStr: '3', artifactNumToKeepStr: '3'))
+        disableConcurrentBuilds()
+    }
+    stages {
+        stage('Prepare Build Version') {
+            agent {
+                node {
+                    label 'master'
+                }
+            }
+            steps {
+                slackSend channel: SLACK_CHANNEL,
+                          color: 'good',
+                          message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} build started \n More information at: ${env.BUILD_URL}"
+            }
+        }
+        stage('Build and Run PROD') {
+            agent {
+                node {
+                    label 'ai'
+                }
+            }
+            steps {
+                withVault([configuration: configuration, vaultSecrets: prod_secrets]) {
+                    sh '''
+                        sudo rm -rf .env
+
+                        echo "OPEN_AI_API_KEY=${OPEN_AI_API_KEY}" >> .env
+                        echo "DATABASE_TYPE=${DATABASE_TYPE}" >> .env
+                        echo "DATABASE_HOST=${DATABASE_HOST}" >> .env
+                        echo "DATABASE_PORT=${DATABASE_PORT}" >> .env
+                        echo "DATABASE_PASSWORD=${DATABASE_PASSWORD}" >> .env
+                        echo "DATABASE_NAME=${DATABASE_NAME}" >> .env
+                        echo "DATABASE_USERNAME=${DATABASE_USERNAME}" >> .env
+                        echo "DATABASE_SYNCHRONIZE=${DATABASE_SYNCHRONIZE}" >> .env
+
+                        sudo docker-compose build --no-cache --build-arg NPM_TOKEN=${NPM_TOKEN} prod
+                        sudo docker-compose up -d
+                        sudo docker system prune -f
+                    '''
+                }
+            }
+        }
+    }
+    post {
+        always {
+            slackSend channel: SLACK_CHANNEL,
+                      color: COLOR_MAP[currentBuild.currentResult],
+                      message: "*${currentBuild.currentResult}:* ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More information at: ${env.BUILD_URL}"
+        }
+    }
+}
