@@ -1,19 +1,23 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from '@tech-slk/nest-crud';
 import { Column, Entity } from 'typeorm';
 
-@Entity('fine-tune')
+@Entity()
 @ObjectType()
 export class FineTune extends BaseEntity {
   @Field(() => String)
   @Column()
-  prompt: string;
+  openai_id: string;
+
+  @Field(() => Int)
+  @Column('int')
+  created_at: number;
 
   @Field(() => String)
   @Column()
-  text: string;
+  openai_file_id: string;
 
-  @Field(() => Boolean)
-  @Column('bool', { default: false })
-  deleted: boolean;
+  @Field(() => String)
+  @Column()
+  model: string;
 }

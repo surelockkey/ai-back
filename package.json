@@ -33,6 +33,7 @@
     "axios": "~1.4.0",
     "graphql": "~16.6.0",
     "graphql-upload": "~14.0.0",
+    "moment": "~2.29.4",
     "nodejs-fs-utils": "~1.2.6",
     "openai": "~3.2.1",
     "pg": "~8.10.0",

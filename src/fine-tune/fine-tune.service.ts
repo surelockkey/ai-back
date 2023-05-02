@@ -1,24 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { CrudService } from '@tech-slk/nest-crud';
-import { FineTune } from './entity/fine-tune.entity';
+import { FineTuneItem } from './entity/fine-tune-item.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as fs from 'fs';
 import { GraphQLError } from 'graphql';
+import { FineTune } from './entity/fine-tune.entity';
+import * as moment from 'moment';
+import { OpenAiService } from 'src/open-ai/open-ai.service';
+import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
 
 @Injectable()
-export class FineTuneService extends CrudService<FineTune> {
+export class FineTuneService extends CrudService<FineTuneItem> {
   constructor(
+    @InjectRepository(FineTuneItem)
+    private readonly fineTuneItemRepository: Repository<FineTuneItem>,
     @InjectRepository(FineTune)
     private readonly fineTuneRepository: Repository<FineTune>,
+    private readonly openAiService: OpenAiService,
   ) {
-    super(fineTuneRepository);
+    super(fineTuneItemRepository);
   }
 
-  public async prepareFileForFileTune(filename: string) {
+  public async prepareFileForFineTune(filename: string) {
     const fine_tunes = await this.findAll({ deleted: false });
 
-    fs.appendFile(
+    await fs.appendFileSync(
       __dirname + `/../../pubic/${filename}.jsonl`,
       fine_tunes
         .map(
@@ -26,13 +33,74 @@ export class FineTuneService extends CrudService<FineTune> {
             `{ "prompt": "${fine_tune.prompt}", "completion": "${fine_tune.text}" }`,
         )
         .join('\n'),
-      (err) => {
-        if (err) {
-          throw new GraphQLError('Failed to create file', {
-            originalError: err,
-          });
-        }
-      },
+      //   (err) => {
+      //     if (err) {
+      //       throw new GraphQLError('Failed to create file', {
+      //         originalError: err,
+      //       });
+      //     }
+      //   },
     );
+  }
+
+  public async startFineTune() {
+    try {
+      const filename = randomStringGenerator();
+
+      await this.prepareFileForFineTune(filename);
+
+      console.log(filename);
+
+      const file = await this.openAiService.uploadFileToOpenAi(filename);
+
+      console.log({ file });
+
+      const [last_fine_tune] = await this.fineTuneRepository.find({
+        order: { created_at: 'DESC' },
+        take: 1,
+      });
+
+      console.log({ last_fine_tune });
+
+      let model = 'davinci';
+
+      if (last_fine_tune) {
+        const full_last_fine_tune = await this.openAiService.getFullFineTune(
+          last_fine_tune.openai_id,
+        );
+
+        console.log({ full_last_fine_tune });
+
+        if (full_last_fine_tune) {
+          model = full_last_fine_tune.fine_tuned_model;
+        }
+      }
+
+      console.log({ model });
+
+      const openai_fine_tune = await this.openAiService.createTune(
+        file.id,
+        model,
+      );
+
+      console.log({ openai_fine_tune });
+
+      await this.fineTuneItemRepository.update(
+        { deleted: false },
+        { deleted: true },
+      );
+
+      const res = await this.fineTuneRepository.save({
+        created_at: moment().unix(),
+        model,
+        openai_id: openai_fine_tune.id,
+        openai_file_id: file.id,
+      });
+
+      console.log({ res });
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

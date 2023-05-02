@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { FileUpload } from 'graphql-upload';
-import { Configuration, OpenAIApi } from 'openai';
+import { Configuration, OpenAIApi, OpenAIFile } from 'openai';
 import * as fs from 'fs';
 import axios from 'axios';
 import * as FormData from 'form-data';
@@ -35,14 +35,13 @@ export class OpenAiService {
     // return res.data.choices[0].text;
   }
 
-  public async uploadFileToOpenAi() {
+  public async uploadFileToOpenAi(filename: string): Promise<OpenAIFile> {
     const data = new FormData();
-    console.log(__dirname);
 
     data.append('purpose', 'fine-tune');
     data.append(
       'file',
-      fs.createReadStream(__dirname + '/../../pubic/file-tune.jsonl'),
+      fs.createReadStream(__dirname + `/../../pubic/${filename}.jsonl`),
     );
 
     const res = await axios({
@@ -62,13 +61,17 @@ export class OpenAiService {
     return (await this.openai.listFiles()).data.data;
   }
 
-  public async createTune(file_id: string) {
+  public async createTune(file_id: string, model: string) {
     const res = await this.openai.createFineTune({
       training_file: file_id,
-      model: 'davinci',
+      model: model,
     });
 
-    console.log(res.data);
+    return res.data;
+  }
+
+  public async getFullFineTune(fine_tune_id: string) {
+    return (await this.openai.retrieveFineTune(fine_tune_id)).data;
   }
 
   public async listFineTunes() {

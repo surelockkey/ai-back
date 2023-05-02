@@ -3,6 +3,14 @@
 # ------------------------------------------------------
 
 type FineTune {
+  created_at: Int!
+  id: ID!
+  model: String!
+  openai_file_id: String!
+  openai_id: String!
+}
+
+type FineTuneItem {
   deleted: Boolean!
   id: ID!
   prompt: String!
@@ -20,12 +28,11 @@ type Message {
 }
 
 type Mutation {
-  addToFineTune(prompt: String!, text: String!): FineTune!
-  createFineTune(file_id: String!): String!
-  prepareFileForFileTune(filename: String!): String!
+  createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
+  prepareFileForFineTune(filename: String!): String!
   sendMessage(prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
-  uploadFileToOpenAi: OpenAiFile!
+  startFineTune: FineTune!
 }
 
 type OpenAiFile {
@@ -41,7 +48,7 @@ type OpenAiFile {
 type Query {
   getAllFiles: [OpenAiFile!]!
   getAllMessages: [Message!]!
-  getFineTuneList: [FineTune!]!
+  getFineTuneList: [FineTuneItem!]!
   getHello: String!
   listFineTunes: String!
 }
