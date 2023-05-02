@@ -15,11 +15,11 @@ export class FineTuneService extends CrudService<FineTune> {
     super(fineTuneRepository);
   }
 
-  public async prepareFileForFileTune() {
+  public async prepareFileForFileTune(filename: string) {
     const fine_tunes = await this.findAll({ deleted: false });
 
     fs.appendFile(
-      __dirname + '/../../pubic/new-tune.jsonl',
+      __dirname + `/../../pubic/${filename}.jsonl`,
       fine_tunes
         .map(
           (fine_tune) =>

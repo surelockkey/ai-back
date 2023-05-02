@@ -20,7 +20,7 @@ export class FineTuneResolver {
   }
 
   @Mutation(() => String)
-  prepareFileForFileTune() {
-    return this.fineTuneService.prepareFileForFileTune();
+  prepareFileForFileTune(@Args('filename') filename: string) {
+    return this.fineTuneService.prepareFileForFileTune(filename);
   }
 }

@@ -27,7 +27,7 @@ export class OpenAiService {
     return {
       id: res.data.id,
       created: res.data.created,
-      text: res.data.choices[0].text,
+      text: res.data.choices[0].text.replace('\n\n', ''),
       total_tokens: res.data.usage.total_tokens,
       finish_reason: res.data.choices[0].finish_reason,
     };
