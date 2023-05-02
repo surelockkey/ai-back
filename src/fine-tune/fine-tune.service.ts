@@ -4,6 +4,7 @@ import { FineTune } from './entity/fine-tune.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as fs from 'fs';
+import { GraphQLError } from 'graphql';
 
 @Injectable()
 export class FineTuneService extends CrudService<FineTune> {
@@ -22,12 +23,15 @@ export class FineTuneService extends CrudService<FineTune> {
       fine_tunes
         .map(
           (fine_tune) =>
-            `{ "prompt": "${fine_tune.prompt}", "completion": "${fine_tune.text}" }\n`,
+            `{ "prompt": "${fine_tune.prompt}", "completion": "${fine_tune.text}" }`,
         )
-        .join(''),
-      //   `{ "prompt": "${fine_tunes[0].prompt}", "completion": "${fine_tunes[0].text}" }\n`,
+        .join('\n'),
       (err) => {
-        console.log(err);
+        if (err) {
+          throw new GraphQLError('Failed to create file', {
+            originalError: err,
+          });
+        }
       },
     );
   }

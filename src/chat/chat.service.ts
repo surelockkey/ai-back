@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CrudService } from '@tech-slk/nest-crud';
 import { Message } from './entity/message.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 import { OpenAiService } from 'src/open-ai/open-ai.service';
 
 @Injectable()
@@ -24,5 +24,9 @@ export class ChatService extends CrudService<Message> {
       ...openai_response,
       openai_id,
     });
+  }
+
+  public async findMany(options?: FindManyOptions<Message>) {
+    return this.messageRepository.find(options);
   }
 }

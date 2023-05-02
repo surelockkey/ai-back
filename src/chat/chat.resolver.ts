@@ -13,6 +13,6 @@ export class ChatResolver {
 
   @Query(() => [Message])
   getAllMessages() {
-    return this.chatService.findAll();
+    return this.chatService.findMany({ order: { created: 'ASC' } });
   }
 }
