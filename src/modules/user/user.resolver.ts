@@ -19,10 +19,6 @@ export class UserResolver {
         @CurrentUser()
         { user_id }: CurrentUserDto,
     ): Promise<User> {
-        return this.loggerService.actionLog({
-            callback: () => this.userService.findOne({ id: user_id }),
-            user_id,
-            action: 'Tried to get current user',
-        })
+        return this.userService.findOne({ id: user_id });
     }
 }
