@@ -1,5 +1,5 @@
 import { Global, Injectable } from "@nestjs/common";
-import { Repository } from "typeorm";
+import { FindManyOptions, Repository } from "typeorm";
 import { Log } from "./entity/log.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CrudService } from "@tech-slk/nest-crud";
@@ -7,6 +7,7 @@ import { LogType } from "./enum/type.enum";
 import { LogGroup } from "./enum/group";
 import { GraphQLError } from "graphql";
 import * as moment from "moment";
+import { FindPaginationDto } from "src/core/dto/pagination.dto";
 
 class ActionLogDto <T> {
     callback: () => Promise<T>; 
@@ -51,4 +52,21 @@ export class LoggerService extends CrudService<Log> {
             throw new GraphQLError(e.message);
         }
     }
+
+    public async find({ take, skip }: FindPaginationDto) {
+        const [items, total] = await this.logRepository.findAndCount({
+            skip,
+            take,
+            order: {
+              created_at: "ASC",
+            },
+        });
+      
+        return {
+            items,
+            total,
+        };
+    }
+
+    
 }

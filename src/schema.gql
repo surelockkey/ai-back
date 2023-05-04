@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input FindPaginationDto {
+  skip: Int!
+  take: Int!
+}
+
 type FineTune {
   created_at: Int!
   id: ID!
@@ -17,9 +22,35 @@ type FineTuneItem {
   text: String!
 }
 
+type Log {
+  action: String!
+  created_at: Int!
+  group: LogGroup!
+  id: ID!
+  message: String
+  type: LogType!
+  user_id: ID
+}
+
+enum LogGroup {
+  DEVELOPER
+  USER
+}
+
+enum LogType {
+  ERROR
+  SUCCESS
+  WARNING
+}
+
 input LoginCredential {
   email: String!
   password: String!
+}
+
+type LogsPaginated {
+  items: [Log!]!
+  total: Int!
 }
 
 type Message {
@@ -79,6 +110,7 @@ type Query {
   getCurrentUser: User!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!
+  getLogs(pagination: FindPaginationDto!): LogsPaginated!
   getSystemSettings: SystemSettings!
   listFineTunes: String!
 }
