@@ -16,20 +16,13 @@ export class OpenAiResolver {
     return this.openAiService.sendMessage(message);
   }
 
-  // @Mutation(() => OpenAiFile)
-  // uploadFileToOpenAi() {
-  //   return this.openAiService.uploadFileToOpenAi();
-  // }
-
   @Query(() => [OpenAiFile])
   getAllFiles() {
     return this.openAiService.getAllFiles();
   }
 
-  // @Mutation(() => String)
-  // createFineTune(@Args('file_id') file_id: string) {
-  //   return this.openAiService.createTune(file_id);
-  // }
+  @Query(() => String)
+  getFullLastFineTune() {}
 
   @Query(() => String)
   listFineTunes() {

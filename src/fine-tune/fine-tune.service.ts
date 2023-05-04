@@ -25,6 +25,10 @@ export class FineTuneService extends CrudService<FineTuneItem> {
   public async prepareFileForFineTune(filename: string) {
     const fine_tunes = await this.findAll({ deleted: false });
 
+    if (!fine_tunes.length) {
+      throw new GraphQLError(`Must be at least 1 fine tune item`);
+    }
+
     await fs.appendFileSync(
       __dirname + `/../../pubic/${filename}.jsonl`,
       fine_tunes
@@ -33,13 +37,19 @@ export class FineTuneService extends CrudService<FineTuneItem> {
             `{ "prompt": "${fine_tune.prompt}", "completion": "${fine_tune.text}" }`,
         )
         .join('\n'),
-      //   (err) => {
-      //     if (err) {
-      //       throw new GraphQLError('Failed to create file', {
-      //         originalError: err,
-      //       });
-      //     }
-      //   },
+    );
+  }
+
+  public async getFullLastFineTune() {
+    const [last_fine_tune] = await this.fineTuneRepository.find({
+      order: { created_at: 'DESC' },
+      take: 1,
+    });
+
+    console.log(last_fine_tune);
+
+    return await this.openAiService.getFullLastFineTune(
+      last_fine_tune.openai_id,
     );
   }
 
@@ -100,6 +110,7 @@ export class FineTuneService extends CrudService<FineTuneItem> {
       console.log({ res });
       return res;
     } catch (error) {
+      throw new GraphQLError(error.message, { originalError: error });
       console.log(error);
     }
   }

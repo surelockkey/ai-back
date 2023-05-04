@@ -1,27 +1,29 @@
 import { Injectable } from '@nestjs/common';
-import { FileUpload } from 'graphql-upload';
 import { Configuration, OpenAIApi, OpenAIFile } from 'openai';
 import * as fs from 'fs';
 import axios from 'axios';
 import * as FormData from 'form-data';
 import { OpenAiMessageResponse } from './dto/message-response.dto';
-
-// import * as ax from 'axios';
-
+import { SystemSettingsService } from 'src/system-settings/system-settings.service';
 @Injectable()
 export class OpenAiService {
+  constructor(private readonly systemSettingsService: SystemSettingsService) {}
+
   private readonly configuration = new Configuration({
     apiKey: process.env.OPEN_AI_API_KEY,
   });
   private readonly openai = new OpenAIApi(this.configuration);
 
   public async sendMessage(prompt: string): Promise<OpenAiMessageResponse> {
+    const system_settings =
+      await this.systemSettingsService.getSystemSettings();
+
     const res = await this.openai.createCompletion({
-      model: 'text-davinci-003',
-      // model: 'davinci:ft-personal-2023-04-28-15-10-46',
+      // model: 'text-davinci-003',
+      model: system_settings.active_model,
       prompt,
       temperature: 0,
-      max_tokens: 200,
+      max_tokens: system_settings.max_tokens,
     });
 
     return {
@@ -31,8 +33,6 @@ export class OpenAiService {
       total_tokens: res.data.usage.total_tokens,
       finish_reason: res.data.choices[0].finish_reason,
     };
-
-    // return res.data.choices[0].text;
   }
 
   public async uploadFileToOpenAi(filename: string): Promise<OpenAIFile> {
@@ -72,6 +72,24 @@ export class OpenAiService {
 
   public async getFullFineTune(fine_tune_id: string) {
     return (await this.openai.retrieveFineTune(fine_tune_id)).data;
+  }
+
+  public async getFullLastFineTune(fine_tune_id: string) {
+    const fine_tune = await this.getFullFineTune(fine_tune_id);
+    const system_settings =
+      await this.systemSettingsService.getSystemSettings();
+
+    if (
+      fine_tune.status === 'succeeded' &&
+      fine_tune.fine_tuned_model !== system_settings.active_model
+    ) {
+      await this.systemSettingsService.updateByCriteriaAndReturnOne(
+        {},
+        { active_model: fine_tune.fine_tuned_model },
+      );
+    }
+
+    return fine_tune;
   }
 
   public async listFineTunes() {

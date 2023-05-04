@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ChatModule } from './chat/chat.module';
 import { FineTuneModule } from './fine-tune/fine-tune.module';
+import { SystemSettingsModule } from './system-settings/system-settings.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { FineTuneModule } from './fine-tune/fine-tune.module';
     OpenAiModule,
     ChatModule,
     FineTuneModule,
+    SystemSettingsModule,
   ],
 })
 export class AppModule {}

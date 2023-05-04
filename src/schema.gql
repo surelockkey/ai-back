@@ -29,10 +29,14 @@ type Message {
 
 type Mutation {
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
+  createSystemSettings(max_tokens: Int!): SystemSettings!
+  deleteFineTuneItem(id: ID!): ID!
   prepareFileForFineTune(filename: String!): String!
   sendMessage(prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
   startFineTune: FineTune!
+  updateFineTuneItem(fine_tune_item: UpdateFineTuneItemDto!): FineTuneItem!
+  updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
 }
 
 type OpenAiFile {
@@ -45,10 +49,44 @@ type OpenAiFile {
   status: String!
 }
 
+type OpenAiFineTune {
+  created_at: Int!
+  events: [OpenAiFineTuneEvent!]!
+  fine_tuned_model: String
+  id: String!
+  model: String!
+  status: String!
+  updated_at: Int!
+}
+
+type OpenAiFineTuneEvent {
+  created_at: Int!
+  level: String!
+  message: String!
+}
+
 type Query {
   getAllFiles: [OpenAiFile!]!
   getAllMessages: [Message!]!
   getFineTuneList: [FineTuneItem!]!
+  getFullLastFineTune: OpenAiFineTune!
   getHello: String!
+  getSystemSettings: SystemSettings!
   listFineTunes: String!
+}
+
+type SystemSettings {
+  active_model: String!
+  id: ID!
+  max_tokens: Int!
+}
+
+input UpdateFineTuneItemDto {
+  id: ID!
+  prompt: String
+  text: String
+}
+
+input UpdateSystemSettingsDto {
+  max_tokens: Int!
 }
