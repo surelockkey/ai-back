@@ -9,6 +9,7 @@ import { ChatModule } from './modules/chat/chat.module';
 import { FineTuneModule } from './modules/fine-tune/fine-tune.module';
 import config, { GqlConfigService, TypeOrmConfigService } from './core/config/config';
 import { AuthorizationModule } from './modules/authorization/authorization.module';
+import { LoggerModule } from './modules/logger/logger.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { AuthorizationModule } from './modules/authorization/authorization.modul
     FineTuneModule,
     SystemSettingsModule,
     AuthorizationModule,
+    LoggerModule
   ],
 })
 export class AppModule {}
