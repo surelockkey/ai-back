@@ -51,7 +51,7 @@ export class OpenAiService {
     data.append('purpose', 'fine-tune');
     data.append(
       'file',
-      fs.createReadStream(__dirname + `/../../pubic/${filename}.jsonl`),
+      fs.createReadStream(__dirname + `/../../../pubic/${filename}.jsonl`),
     );
 
     const res = await axios({
