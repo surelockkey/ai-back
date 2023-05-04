@@ -76,6 +76,7 @@ type OpenAiFineTuneEvent {
 type Query {
   getAllFiles: [OpenAiFile!]!
   getAllMessages: [Message!]!
+  getCurrentUser: User!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!
   getSystemSettings: SystemSettings!
