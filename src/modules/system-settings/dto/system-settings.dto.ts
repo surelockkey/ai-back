@@ -1,10 +1,4 @@
-import {
-  InputType,
-  IntersectionType,
-  OmitType,
-  PartialType,
-  PickType,
-} from '@nestjs/graphql';
+import { InputType, OmitType } from '@nestjs/graphql';
 import { SystemSettings } from '../entity/system-settings.entity';
 
 @InputType()
