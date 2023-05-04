@@ -34,7 +34,13 @@ export class FineTuneService extends CrudService<FineTuneItem> {
       fine_tunes
         .map(
           (fine_tune) =>
-            `{ "prompt": "${fine_tune.prompt}", "completion": "${fine_tune.text}" }`,
+            `{ "prompt": "${fine_tune.prompt.replace(
+              new RegExp('\n', 'g'),
+              '\\n',
+            )}", "completion": "${fine_tune.text.replace(
+              new RegExp('\n', 'g'),
+              '\\n',
+            )}" }`,
         )
         .join('\n'),
     );
@@ -81,7 +87,7 @@ export class FineTuneService extends CrudService<FineTuneItem> {
 
         console.log({ full_last_fine_tune });
 
-        if (full_last_fine_tune) {
+        if (full_last_fine_tune && full_last_fine_tune.fine_tuned_model) {
           model = full_last_fine_tune.fine_tuned_model;
         }
       }
@@ -110,8 +116,8 @@ export class FineTuneService extends CrudService<FineTuneItem> {
       console.log({ res });
       return res;
     } catch (error) {
+      console.log(error?.response?.data ?? error);
       throw new GraphQLError(error.message, { originalError: error });
-      console.log(error);
     }
   }
 }

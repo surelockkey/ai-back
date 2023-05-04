@@ -54,9 +54,7 @@ export class OpenAiService {
       fs.createReadStream(__dirname + `/../../../pubic/${filename}.jsonl`),
     );
 
-    let res;
-
-    await axios({
+    const res = await axios({
       method: 'post',
       url: 'https://api.openai.com/v1/files',
       headers: {
@@ -64,11 +62,7 @@ export class OpenAiService {
         ...data.getHeaders(),
       },
       data: data,
-    })
-      .catch((err) => {
-        console.log(err.response.data);
-      })
-      .then((res) => (res = res));
+    });
 
     return res.data;
   }
