@@ -66,7 +66,7 @@ export class OpenAiService {
       data: data,
     })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data);
       })
       .then((res) => (res = res));
 
