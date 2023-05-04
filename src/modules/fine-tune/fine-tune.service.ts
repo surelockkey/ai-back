@@ -30,7 +30,7 @@ export class FineTuneService extends CrudService<FineTuneItem> {
     }
 
     await fs.appendFileSync(
-      __dirname + `/../../pubic/${filename}.jsonl`,
+      __dirname + `/../../../pubic/${filename}.jsonl`,
       fine_tunes
         .map(
           (fine_tune) =>
