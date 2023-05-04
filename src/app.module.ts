@@ -7,7 +7,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SystemSettingsModule } from './modules/system-settings/system-settings.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { FineTuneModule } from './modules/fine-tune/fine-tune.module';
-import config, { GqlConfigService, TypeOrmConfigService } from './core/config/config';
+import config, {
+  GqlConfigService,
+  TypeOrmConfigService,
+} from './core/config/config';
 import { AuthorizationModule } from './modules/authorization/authorization.module';
 
 @Module({
@@ -19,7 +22,7 @@ import { AuthorizationModule } from './modules/authorization/authorization.modul
     }),
     GraphQLModule.forRootAsync({
       driver: ApolloDriver,
-      useClass: GqlConfigService
+      useClass: GqlConfigService,
     }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
