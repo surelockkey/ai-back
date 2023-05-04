@@ -78,6 +78,7 @@ type Query {
   getAllMessages: [Message!]!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!
+  getSheets: String!
   getSystemSettings: SystemSettings!
   listFineTunes: String!
 }

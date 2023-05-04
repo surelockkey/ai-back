@@ -12,6 +12,7 @@ import config, {
   TypeOrmConfigService,
 } from './core/config/config';
 import { AuthorizationModule } from './modules/authorization/authorization.module';
+import { GoogleApiModule } from './modules/google-api/google-api.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { AuthorizationModule } from './modules/authorization/authorization.modul
     FineTuneModule,
     SystemSettingsModule,
     AuthorizationModule,
+    GoogleApiModule,
   ],
 })
 export class AppModule {}
