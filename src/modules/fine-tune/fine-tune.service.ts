@@ -7,7 +7,7 @@ import * as fs from 'fs';
 import { GraphQLError } from 'graphql';
 import { FineTune } from './entity/fine-tune.entity';
 import * as moment from 'moment';
-import { OpenAiService } from 'src/open-ai/open-ai.service';
+import { OpenAiService } from 'src/modules/open-ai/open-ai.service';
 import { randomStringGenerator } from '@nestjs/common/utils/random-string-generator.util';
 
 @Injectable()

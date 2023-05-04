@@ -4,15 +4,25 @@ import * as fs from 'fs';
 import axios from 'axios';
 import * as FormData from 'form-data';
 import { OpenAiMessageResponse } from './dto/message-response.dto';
-import { SystemSettingsService } from 'src/system-settings/system-settings.service';
+import { ConfigService } from '@nestjs/config';
+import { SystemSettingsService } from 'src/modules/system-settings/system-settings.service';
+
+// import * as ax from 'axios';
+
 @Injectable()
 export class OpenAiService {
-  constructor(private readonly systemSettingsService: SystemSettingsService) {}
+  private readonly configuration: Configuration;
+  private readonly openai: OpenAIApi;
 
-  private readonly configuration = new Configuration({
-    apiKey: process.env.OPEN_AI_API_KEY,
-  });
-  private readonly openai = new OpenAIApi(this.configuration);
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly systemSettingsService: SystemSettingsService,
+  ) {
+    this.configuration = new Configuration({
+      apiKey: this.configService.get<string>('app.open_ai_key'),
+    });
+    this.openai = new OpenAIApi(this.configuration);
+  }
 
   public async sendMessage(prompt: string): Promise<OpenAiMessageResponse> {
     const system_settings =

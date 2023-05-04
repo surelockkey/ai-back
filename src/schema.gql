@@ -17,6 +17,11 @@ type FineTuneItem {
   text: String!
 }
 
+input LoginCredential {
+  email: String!
+  password: String!
+}
+
 type Message {
   created: Int!
   finish_reason: String!
@@ -31,7 +36,10 @@ type Mutation {
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
   createSystemSettings(max_tokens: Int!): SystemSettings!
   deleteFineTuneItem(id: ID!): ID!
+  login(login_dto: LoginCredential!): TokenResponse!
+  logout(refresh_token: String!): SendDto!
   prepareFileForFineTune(filename: String!): String!
+  registration(registration_dto: RegistrationDto!): User!
   sendMessage(prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
   startFineTune: FineTune!
@@ -70,15 +78,30 @@ type Query {
   getAllMessages: [Message!]!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!
-  getHello: String!
   getSystemSettings: SystemSettings!
   listFineTunes: String!
+}
+
+input RegistrationDto {
+  email: String!
+  password: String!
+  role: UserRole! = ADMIN
+}
+
+type SendDto {
+  message: String
+  status: Float
 }
 
 type SystemSettings {
   active_model: String!
   id: ID!
   max_tokens: Int!
+}
+
+type TokenResponse {
+  access_token: String!
+  refresh_token: String!
 }
 
 input UpdateFineTuneItemDto {
@@ -89,4 +112,15 @@ input UpdateFineTuneItemDto {
 
 input UpdateSystemSettingsDto {
   max_tokens: Int!
+}
+
+type User {
+  email: String!
+  id: String!
+  password: String!
+  role: UserRole!
+}
+
+enum UserRole {
+  ADMIN
 }

@@ -16,6 +16,14 @@ def prod_secrets = [
         [envVar: 'DATABASE_USERNAME', vaultKey: 'DATABASE_USERNAME'],
         [envVar: 'DATABASE_SYNCHRONIZE', vaultKey: 'DATABASE_SYNCHRONIZE'],
         [envVar: 'NPM_TOKEN', vaultKey: 'NPM_TOKEN'],
+        [envVar: 'BACKEND_URL', vaultKey: 'BACKEND_URL'],
+        [envVar: 'FRONTEND_URL', vaultKey: 'FRONTEND_URL'],
+        [envVar: 'PORT', vaultKey: 'PORT'],
+        [envVar: 'GQL_PLAYGROUND', vaultKey: 'GQL_PLAYGROUND'],
+        [envVar: 'GQL_DEBUG', vaultKey: 'GQL_DEBUG'],
+        [envVar: 'JWT_KEY', vaultKey: 'JWT_KEY'],
+        [envVar: 'JWT_ACCESS_EXPIRE', vaultKey: 'JWT_ACCESS_EXPIRE'],
+        [envVar: 'JWT_REFRESH_EXPIRE', vaultKey: 'JWT_REFRESH_EXPIRE'],
     ]],
 ]
 
@@ -67,6 +75,14 @@ pipeline {
                         echo "DATABASE_NAME=${DATABASE_NAME}" >> .env
                         echo "DATABASE_USERNAME=${DATABASE_USERNAME}" >> .env
                         echo "DATABASE_SYNCHRONIZE=${DATABASE_SYNCHRONIZE}" >> .env
+                        echo "BACKEND_URL=${BACKEND_URL}" >> .env
+                        echo "FRONTEND_URL=${FRONTEND_URL}" >> .env
+                        echo "PORT=${PORT}" >> .env
+                        echo "GQL_PLAYGROUND=${GQL_PLAYGROUND}" >> .env
+                        echo "GQL_DEBUG=${GQL_DEBUG}" >> .env
+                        echo "JWT_KEY=${JWT_KEY}" >> .env
+                        echo "JWT_ACCESS_EXPIRE=${JWT_ACCESS_EXPIRE}" >> .env
+                        echo "JWT_REFRESH_EXPIRE=${JWT_REFRESH_EXPIRE}" >> .env
 
                         sudo docker-compose build --no-cache --build-arg NPM_TOKEN=${NPM_TOKEN} prod
                         sudo docker-compose up -d

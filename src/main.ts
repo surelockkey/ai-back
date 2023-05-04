@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   console.log({
@@ -16,8 +17,11 @@ async function bootstrap() {
   });
 
   const app = await NestFactory.create(AppModule);
+  const configService = app.get(ConfigService);
+
   app.use(graphqlUploadExpress({ maxFileSize: 1000000, maxFiles: 10 }));
   app.enableCors();
-  await app.listen(4000);
+  
+  await app.listen(configService.get('app.port'));
 }
 bootstrap();

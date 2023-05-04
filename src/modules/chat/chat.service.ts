@@ -3,7 +3,7 @@ import { CrudService } from '@tech-slk/nest-crud';
 import { Message } from './entity/message.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, Repository } from 'typeorm';
-import { OpenAiService } from 'src/open-ai/open-ai.service';
+import { OpenAiService } from 'src/modules/open-ai/open-ai.service';
 
 @Injectable()
 export class ChatService extends CrudService<Message> {

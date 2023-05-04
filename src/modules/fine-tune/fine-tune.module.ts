@@ -4,7 +4,7 @@ import { FineTuneResolver } from './fine-tune.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FineTuneItem } from './entity/fine-tune-item.entity';
 import { FineTune } from './entity/fine-tune.entity';
-import { OpenAiModule } from 'src/open-ai/open-ai.module';
+import { OpenAiModule } from 'src/modules/open-ai/open-ai.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([FineTune, FineTuneItem]), OpenAiModule],

@@ -29,6 +29,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "~9.0.1",
     "@tech-slk/nest-crud": "~1.0.11",
+    "@tech-slk/nest-auth": "^1.0.30",
     "@types/graphql-upload": "~8.0.12",
     "axios": "~1.4.0",
     "graphql": "~16.6.0",
