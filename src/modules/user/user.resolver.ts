@@ -27,11 +27,12 @@ export class UserResolver {
     }
 
     @UseGuards(GqlAuthGuard)
-    @Mutation(() => String)
-    public async deleteUser(
-        @Args('user_id', { type: () => ID })
-        user_id: string
-    ): Promise<string> {
-        return this.userService.deleteByIdReturnId(user_id);
+    @Mutation(() => [String])
+    public async deleteManyUsers(
+        @Args('user_ids', { type: () => [ID] })
+        user_ids: string[]
+    ): Promise<string[]> {
+        await this.userService.deleteManyByIds(user_ids);
+        return user_ids;
     }
 }
