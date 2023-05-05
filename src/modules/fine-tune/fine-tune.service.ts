@@ -34,13 +34,27 @@ export class FineTuneService extends CrudService<FineTuneItem> {
       fine_tunes
         .map(
           (fine_tune) =>
-            `{ "prompt": "${fine_tune.prompt.replace(
-              new RegExp('\n', 'g'),
-              '\\n',
-            ).replace(new RegExp('"', 'g'), "\"")}", "completion": "${fine_tune.text.replace(
-              new RegExp('\n', 'g'),
-              '\\n',
-            ).replace(new RegExp('"', 'g'), "\"")}" }`,
+            `{ "prompt": "${
+              fine_tune.prompt
+                .replace(
+                  new RegExp('\n', 'g'),
+                  '\\n',
+                )
+                .replace(
+                  new RegExp('"', 'g'), 
+                  "\""
+                )
+            }", "completion": "${
+              fine_tune.text
+              .replace(
+                new RegExp('\n', 'g'),
+                '\\n',
+              )
+              .replace(
+                new RegExp('"', 'g'), 
+                "\""
+              )
+            }" }`,
         )
         .join('\n'),
     );
