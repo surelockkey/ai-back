@@ -5,12 +5,10 @@ import { CurrentUserDto } from "../authorization/dto/current-user.dto";
 import { UseGuards } from "@nestjs/common";
 import { User } from "./entity/user.entity";
 import { UserService } from "./user.service";
-import { LoggerService } from "../logger/logger.service";
 @Resolver()
 export class UserResolver {
     constructor(
         private readonly userService: UserService,
-        private readonly loggerService: LoggerService,
     ) { }
 
     @UseGuards(GqlAuthGuard)
@@ -24,10 +22,7 @@ export class UserResolver {
 
     @UseGuards(GqlAuthGuard)
     @Query(() => [User])
-    public async getAllUsers(
-        @CurrentUser()
-        { user_id }: CurrentUserDto,
-    ): Promise<User[]> {
+    public async getAllUsers(): Promise<User[]> {
         return this.userService.findAll();
     }
 }

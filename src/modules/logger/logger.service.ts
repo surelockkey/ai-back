@@ -1,5 +1,5 @@
 import { Global, Injectable } from "@nestjs/common";
-import { FindManyOptions, Repository } from "typeorm";
+import { Repository } from "typeorm";
 import { Log } from "./entity/log.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CrudService } from "@tech-slk/nest-crud";
@@ -59,7 +59,7 @@ export class LoggerService extends CrudService<Log> {
             take,
             relations: ['user'],
             order: {
-              created_at: "ASC",
+              created_at: "DESC",
             },
         });
       
