@@ -78,7 +78,7 @@ export class FineTuneService extends CrudService<FineTuneItem> {
 
       console.log({ last_fine_tune });
 
-      let model = 'davinci';
+      let model = 'ada';
 
       if (last_fine_tune) {
         const full_last_fine_tune = await this.openAiService.getFullFineTune(
