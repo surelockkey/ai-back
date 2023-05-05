@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AcceptInviteDto {
+  key: String!
+  name: String!
+  password: String!
+}
+
 input FindPaginationDto {
   skip: Int!
   take: Int!
@@ -20,6 +26,12 @@ type FineTuneItem {
   id: ID!
   prompt: String!
   text: String!
+}
+
+type InvitedUser {
+  email: String!
+  id: ID!
+  key: String!
 }
 
 type Log {
@@ -75,9 +87,11 @@ type Message {
 }
 
 type Mutation {
+  acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
   createSystemSettings(max_tokens: Int!): SystemSettings!
   deleteFineTuneItem(id: ID!): ID!
+  inviteUserToApp(email: String!): InvitedUser!
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!
   prepareFileForFineTune(filename: String!): String!

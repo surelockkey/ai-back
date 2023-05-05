@@ -12,7 +12,7 @@ export class User extends NestUser {
     id: string;
 
     @Field(() => String)
-    @Column({ default: '' })
+    @Column()
     name: string;
 
     @Column({ unique: true })

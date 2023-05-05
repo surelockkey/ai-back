@@ -62,8 +62,6 @@ export class LoggerService extends CrudService<Log> {
               created_at: "ASC",
             },
         });
-
-        console.log(items)
       
         return {
             items,
