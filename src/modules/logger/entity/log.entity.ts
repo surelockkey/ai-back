@@ -1,8 +1,9 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from '@tech-slk/nest-crud';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { LogType } from '../enum/type.enum';
 import { LogGroup } from '../enum/group';
+import { User } from 'src/modules/user/entity/user.entity';
 
 @Entity('log')
 @ObjectType()
@@ -37,4 +38,12 @@ export class Log extends BaseEntity {
   @Field(() => Int)
   @Column({ type: 'bigint' })
   created_at: number;
+
+  @ManyToOne(() => User, user => user.logs, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'user_id'})
+  user: User;
 }

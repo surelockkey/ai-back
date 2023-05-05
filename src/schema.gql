@@ -43,13 +43,24 @@ enum LogType {
   WARNING
 }
 
+type LogWithUser {
+  action: String!
+  created_at: Int!
+  group: LogGroup!
+  id: ID!
+  message: String
+  type: LogType!
+  user: User
+  user_id: ID
+}
+
 input LoginCredential {
   email: String!
   password: String!
 }
 
 type LogsPaginated {
-  items: [Log!]!
+  items: [LogWithUser!]!
   total: Int!
 }
 
@@ -117,6 +128,7 @@ type Query {
 
 input RegistrationDto {
   email: String!
+  name: String!
   password: String!
   role: UserRole! = ADMIN
 }
@@ -150,6 +162,8 @@ input UpdateSystemSettingsDto {
 type User {
   email: String!
   id: String!
+  logs: [Log!]!
+  name: String!
   password: String!
   role: UserRole!
 }

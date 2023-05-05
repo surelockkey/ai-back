@@ -57,10 +57,13 @@ export class LoggerService extends CrudService<Log> {
         const [items, total] = await this.logRepository.findAndCount({
             skip,
             take,
+            relations: ['user'],
             order: {
               created_at: "ASC",
             },
         });
+
+        console.log(items)
       
         return {
             items,
