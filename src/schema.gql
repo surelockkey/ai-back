@@ -132,6 +132,7 @@ type OpenAiFineTuneEvent {
 type Query {
   getAllFiles: [OpenAiFile!]!
   getAllMessages: [Message!]!
+  getAllUsers: [User!]!
   getCurrentUser: User!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!

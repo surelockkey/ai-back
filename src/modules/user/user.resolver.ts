@@ -21,4 +21,13 @@ export class UserResolver {
     ): Promise<User> {
         return this.userService.findOne({ id: user_id });
     }
+
+    @UseGuards(GqlAuthGuard)
+    @Query(() => [User])
+    public async getAllUsers(
+        @CurrentUser()
+        { user_id }: CurrentUserDto,
+    ): Promise<User[]> {
+        return this.userService.findAll();
+    }
 }
