@@ -91,6 +91,7 @@ type Mutation {
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
   createSystemSettings(max_tokens: Int!): SystemSettings!
   deleteFineTuneItem(id: ID!): ID!
+  deleteUser(user_id: ID!): String!
   inviteUserToApp(email: String!): InvitedUser!
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!

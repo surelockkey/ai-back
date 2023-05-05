@@ -1,4 +1,4 @@
-import { Query, Resolver } from "@nestjs/graphql";
+import { Args, ID, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { GqlAuthGuard } from "../authorization/guard/auth.guard";
 import { CurrentUser } from "@tech-slk/nest-auth";
 import { CurrentUserDto } from "../authorization/dto/current-user.dto";
@@ -24,5 +24,14 @@ export class UserResolver {
     @Query(() => [User])
     public async getAllUsers(): Promise<User[]> {
         return this.userService.findAll();
+    }
+
+    @UseGuards(GqlAuthGuard)
+    @Mutation(() => String)
+    public async deleteUser(
+        @Args('user_id', { type: () => ID })
+        user_id: string
+    ): Promise<string> {
+        return this.userService.deleteByIdReturnId(user_id);
     }
 }
