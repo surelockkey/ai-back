@@ -42,7 +42,7 @@ export class FineTuneService extends CrudService<FineTuneItem> {
                 )
                 .replace(
                   new RegExp('"', 'g'), 
-                  "\""
+                  "'"
                 )
             }", "completion": "${
               fine_tune.text
@@ -52,7 +52,7 @@ export class FineTuneService extends CrudService<FineTuneItem> {
               )
               .replace(
                 new RegExp('"', 'g'), 
-                "\""
+                "'"
               )
             }" }`,
         )
