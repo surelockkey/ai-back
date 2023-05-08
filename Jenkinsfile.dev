@@ -24,6 +24,7 @@ def prod_secrets = [
         [envVar: 'JWT_KEY', vaultKey: 'JWT_KEY'],
         [envVar: 'JWT_ACCESS_EXPIRE', vaultKey: 'JWT_ACCESS_EXPIRE'],
         [envVar: 'JWT_REFRESH_EXPIRE', vaultKey: 'JWT_REFRESH_EXPIRE'],
+        [envVar: 'TOKEN_WORKIZ', vaultKey: 'TOKEN_WORKIZ'],
     ]],
 ]
 
@@ -83,6 +84,7 @@ pipeline {
                         echo "JWT_KEY=${JWT_KEY}" >> .env
                         echo "JWT_ACCESS_EXPIRE=${JWT_ACCESS_EXPIRE}" >> .env
                         echo "JWT_REFRESH_EXPIRE=${JWT_REFRESH_EXPIRE}" >> .env
+                        echo "TOKEN_WORKIZ=${TOKEN_WORKIZ}" >> .env
 
 
                         sudo docker-compose build --no-cache --build-arg NPM_TOKEN=${NPM_TOKEN} prod
