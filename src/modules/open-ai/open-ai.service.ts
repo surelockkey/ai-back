@@ -6,6 +6,7 @@ import * as FormData from 'form-data';
 import { OpenAiMessageResponse } from './dto/message-response.dto';
 import { ConfigService } from '@nestjs/config';
 import { SystemSettingsService } from 'src/modules/system-settings/system-settings.service';
+import { GoogleAdsApi } from 'google-ads-api';
 
 // import * as ax from 'axios';
 
@@ -22,6 +23,14 @@ export class OpenAiService {
       apiKey: this.configService.get<string>('app.open_ai_key'),
     });
     this.openai = new OpenAIApi(this.configuration);
+  }
+
+  public async listModel() {
+    const res = await this.openai.listModels();
+
+    console.log(res.data);
+
+    return res.data;
   }
 
   public async sendMessage(prompt: string): Promise<OpenAiMessageResponse> {
@@ -88,6 +97,8 @@ export class OpenAiService {
     const fine_tune = await this.getFullFineTune(fine_tune_id);
     const system_settings =
       await this.systemSettingsService.getSystemSettings();
+
+    console.log(fine_tune);
 
     if (
       fine_tune.status === 'succeeded' &&

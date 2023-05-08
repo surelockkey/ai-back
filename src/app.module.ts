@@ -7,9 +7,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SystemSettingsModule } from './modules/system-settings/system-settings.module';
 import { ChatModule } from './modules/chat/chat.module';
 import { FineTuneModule } from './modules/fine-tune/fine-tune.module';
-import config, { GqlConfigService, TypeOrmConfigService } from './core/config/config';
+import config, {
+  GqlConfigService,
+  TypeOrmConfigService,
+} from './core/config/config';
 import { AuthorizationModule } from './modules/authorization/authorization.module';
 import { LoggerModule } from './modules/logger/logger.module';
+import { GoogleApiModule } from './modules/google-api/google-api.module';
+import { ApiModule } from './modules/api/api.module';
 
 @Module({
   imports: [
@@ -20,7 +25,7 @@ import { LoggerModule } from './modules/logger/logger.module';
     }),
     GraphQLModule.forRootAsync({
       driver: ApolloDriver,
-      useClass: GqlConfigService
+      useClass: GqlConfigService,
     }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
@@ -30,7 +35,9 @@ import { LoggerModule } from './modules/logger/logger.module';
     FineTuneModule,
     SystemSettingsModule,
     AuthorizationModule,
-    LoggerModule
+    LoggerModule,
+    GoogleApiModule,
+    ApiModule,
   ],
 })
 export class AppModule {}

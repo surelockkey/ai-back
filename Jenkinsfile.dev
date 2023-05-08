@@ -24,7 +24,6 @@ def prod_secrets = [
         [envVar: 'JWT_KEY', vaultKey: 'JWT_KEY'],
         [envVar: 'JWT_ACCESS_EXPIRE', vaultKey: 'JWT_ACCESS_EXPIRE'],
         [envVar: 'JWT_REFRESH_EXPIRE', vaultKey: 'JWT_REFRESH_EXPIRE'],
-
     ]],
 ]
 
