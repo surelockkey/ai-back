@@ -13,7 +13,7 @@ import config, {
 } from './core/config/config';
 import { AuthorizationModule } from './modules/authorization/authorization.module';
 import { LoggerModule } from './modules/logger/logger.module';
-import { GoogleApiModule } from './modules/google-api/google-api.module';
+// import { GoogleApiModule } from './modules/google-api/google-api.module';
 import { ApiModule } from './modules/api/api.module';
 
 @Module({
@@ -36,7 +36,7 @@ import { ApiModule } from './modules/api/api.module';
     SystemSettingsModule,
     AuthorizationModule,
     LoggerModule,
-    GoogleApiModule,
+    // GoogleApiModule,
     ApiModule,
   ],
 })
