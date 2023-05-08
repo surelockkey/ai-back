@@ -2,22 +2,27 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TechnicianWorkiz, CreateJobDto, JobDto } from './dto/workiz-api.dto';
 import { WorkizApiService } from './workiz-api.service';
 import { SendDto } from '@tech-slk/nest-crud';
+import { UseGuards } from '@nestjs/common';
+import { GqlAuthGuard } from 'src/modules/authorization/guard/auth.guard';
 // import { WorkizService } from './workiz.service';
 
 @Resolver()
 export class WorkizResolver {
   constructor(private readonly workizApiService: WorkizApiService) {}
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => [TechnicianWorkiz])
   async getAllTechsWorkiz(): Promise<TechnicianWorkiz[]> {
     return await this.workizApiService.getAllTechWorkiz();
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => [TechnicianWorkiz])
   async getAllUsersWorkiz(): Promise<TechnicianWorkiz[]> {
     return await this.workizApiService.getAllUsersWorkiz();
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => SendDto)
   async createNewJobWorkiz(
     @Args('createJobDto', { type: () => CreateJobDto })
@@ -26,6 +31,7 @@ export class WorkizResolver {
     return await this.workizApiService.createJob(createJobDto);
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => SendDto)
   async assignTechToJobWorkiz(
     @Args('id', { type: () => String }) id: string,
@@ -34,21 +40,25 @@ export class WorkizResolver {
     return await this.workizApiService.assignTechToJob(id, userName);
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => [JobDto])
   async getAllJobsWorkiz(): Promise<JobDto[]> {
     return await this.workizApiService.getAllJobsWorkiz();
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => [JobDto])
   async getAllWorkizLeads(): Promise<JobDto[]> {
     return await this.workizApiService.getAllLeadsWorkiz();
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => JobDto)
   async getWorkizLeadById(@Args('id') id: string): Promise<JobDto> {
     return await this.workizApiService.getLeadWorkizById(id);
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => JobDto)
   async getWorkizJobById(@Args('id') id: string): Promise<JobDto> {
     return await this.workizApiService.getJobWorkizById(id);
