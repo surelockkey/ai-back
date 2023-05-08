@@ -1,0 +1,192 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input AcceptInviteDto {
+  key: String!
+  name: String!
+  password: String!
+}
+
+input FindPaginationDto {
+  skip: Int!
+  take: Int!
+}
+
+type FineTune {
+  created_at: Int!
+  id: ID!
+  model: String!
+  openai_file_id: String!
+  openai_id: String!
+}
+
+type FineTuneItem {
+  deleted: Boolean!
+  id: ID!
+  prompt: String!
+  text: String!
+}
+
+type InvitedUser {
+  email: String!
+  id: ID!
+  key: String!
+}
+
+type Log {
+  action: String!
+  created_at: Int!
+  group: LogGroup!
+  id: ID!
+  message: String
+  type: LogType!
+  user_id: ID
+}
+
+enum LogGroup {
+  DEVELOPER
+  USER
+}
+
+enum LogType {
+  ERROR
+  SUCCESS
+  WARNING
+}
+
+type LogWithUser {
+  action: String!
+  created_at: Int!
+  group: LogGroup!
+  id: ID!
+  message: String
+  type: LogType!
+  user: User
+  user_id: ID
+}
+
+input LoginCredential {
+  email: String!
+  password: String!
+}
+
+type LogsPaginated {
+  items: [LogWithUser!]!
+  total: Int!
+}
+
+type Message {
+  created: Int!
+  finish_reason: String!
+  id: ID!
+  openai_id: String!
+  prompt: String!
+  text: String!
+  total_tokens: Int!
+}
+
+type Mutation {
+  acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
+  createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
+  createSystemSettings(max_tokens: Int!): SystemSettings!
+  deleteFineTuneItem(id: ID!): ID!
+  deleteManyUsers(user_ids: [ID!]!): [String!]!
+  inviteUserToApp(email: String!): InvitedUser!
+  login(login_dto: LoginCredential!): TokenResponse!
+  logout(refresh_token: String!): SendDto!
+  prepareFileForFineTune(filename: String!): String!
+  registration(registration_dto: RegistrationDto!): User!
+  sendMessage(prompt: String!): Message!
+  sendMessageToOpenAi(message: String!): String!
+  startFineTune: FineTune!
+  updateFineTuneItem(fine_tune_item: UpdateFineTuneItemDto!): FineTuneItem!
+  updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
+}
+
+type OpenAiFile {
+  bytes: Int!
+  created_at: Int!
+  filename: String!
+  id: String!
+  object: String!
+  purpose: String!
+  status: String!
+}
+
+type OpenAiFineTune {
+  created_at: Int!
+  events: [OpenAiFineTuneEvent!]!
+  fine_tuned_model: String
+  id: String!
+  model: String!
+  status: String!
+  updated_at: Int!
+}
+
+type OpenAiFineTuneEvent {
+  created_at: Int!
+  level: String!
+  message: String!
+}
+
+type Query {
+  getAllFiles: [OpenAiFile!]!
+  getAllMessages: [Message!]!
+  getAllUsers: [User!]!
+  getCurrentUser: User!
+  getFineTuneList: [FineTuneItem!]!
+  getFullLastFineTune: OpenAiFineTune!
+  getGoogleAdsCustomers(refresh_token: String!): String!
+  getLogs(pagination: FindPaginationDto!): LogsPaginated!
+  getSheets: String!
+  getSystemSettings: SystemSettings!
+  listFineTunes: String!
+  listModels: String!
+}
+
+input RegistrationDto {
+  email: String!
+  name: String!
+  password: String!
+  role: UserRole! = ADMIN
+}
+
+type SendDto {
+  message: String
+  status: Float
+}
+
+type SystemSettings {
+  active_model: String!
+  id: ID!
+  max_tokens: Int!
+}
+
+type TokenResponse {
+  access_token: String!
+  refresh_token: String!
+}
+
+input UpdateFineTuneItemDto {
+  id: ID!
+  prompt: String
+  text: String
+}
+
+input UpdateSystemSettingsDto {
+  max_tokens: Int!
+}
+
+type User {
+  email: String!
+  id: String!
+  logs: [Log!]!
+  name: String!
+  password: String!
+  role: UserRole!
+}
+
+enum UserRole {
+  ADMIN
+}

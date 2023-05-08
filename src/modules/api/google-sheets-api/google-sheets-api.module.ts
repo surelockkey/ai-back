@@ -2,6 +2,6 @@ import { Module } from '@nestjs/common';
 import { GoogleSheetsApiService } from './google-sheets-api.service';
 
 @Module({
-  providers: [GoogleSheetsApiService]
+  providers: [GoogleSheetsApiService],
 })
 export class GoogleSheetsApiModule {}
