@@ -78,9 +78,11 @@ type Query {
   getAllMessages: [Message!]!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!
+  getGoogleAdsCustomers(refresh_token: String!): String!
   getSheets: String!
   getSystemSettings: SystemSettings!
   listFineTunes: String!
+  listModels: String!
 }
 
 input RegistrationDto {

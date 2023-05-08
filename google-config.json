@@ -1,0 +1,10 @@
+{
+  "web": {
+    "client_id": "1070488779420-4gll6h342doo5amo4jqc4t9hge6r6jbg.apps.googleusercontent.com",
+    "project_id": "sodium-pathway-385808",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "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"
+  }
+}

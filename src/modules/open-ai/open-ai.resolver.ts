@@ -25,4 +25,9 @@ export class OpenAiResolver {
   listFineTunes() {
     return this.openAiService.listFineTunes();
   }
+
+  @Query(() => String)
+  listModels() {
+    return this.openAiService.listModel();
+  }
 }

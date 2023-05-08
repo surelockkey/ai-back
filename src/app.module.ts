@@ -13,6 +13,7 @@ import config, {
 } from './core/config/config';
 import { AuthorizationModule } from './modules/authorization/authorization.module';
 import { GoogleApiModule } from './modules/google-api/google-api.module';
+import { ApiModule } from './modules/api/api.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { GoogleApiModule } from './modules/google-api/google-api.module';
     SystemSettingsModule,
     AuthorizationModule,
     GoogleApiModule,
+    ApiModule,
   ],
 })
 export class AppModule {}
