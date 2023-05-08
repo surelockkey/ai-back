@@ -8,6 +8,21 @@ input AcceptInviteDto {
   password: String!
 }
 
+input CreateJobDto {
+  Address: String!
+  City: String!
+  Email: String!
+  FirstName: String!
+  JobDateTime: String!
+  JobNotes: String!
+  JobType: String!
+  LastName: String!
+  Metro: String!
+  Phone: String!
+  PostalCode: String!
+  State: String!
+}
+
 input FindPaginationDto {
   skip: Int!
   take: Int!
@@ -32,6 +47,43 @@ type InvitedUser {
   email: String!
   id: ID!
   key: String!
+}
+
+type JobDto {
+  Address: String!
+  City: String!
+  ClientId: Float!
+  Comments: String!
+  Company: String!
+  Country: String!
+  CreatedBy: String!
+  CreatedDate: String
+  Email: String!
+  FirstName: String!
+  JobAmountDue: String
+  JobDateTime: String
+  JobEndDateTime: String
+  JobNotes: String
+  JobSource: String!
+  JobTotalPrice: String
+  JobType: String
+  LastName: String!
+  LastStatusUpdate: String
+  Latitude: String!
+  Longitude: String!
+  PaymentDueDate: String
+  Phone: String!
+  PhoneExt: String!
+  PostalCode: String!
+  SecondPhone: String!
+  SecondPhoneExt: String!
+  SerialId: Float!
+  State: String!
+  Status: String!
+  SubStatus: String!
+  SubTotal: String
+  UUID: String!
+  Unit: String!
 }
 
 type Log {
@@ -88,7 +140,9 @@ type Message {
 
 type Mutation {
   acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
+  assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
+  createNewJobWorkiz(createJobDto: CreateJobDto!): SendDto!
   createSystemSettings(max_tokens: Int!): SystemSettings!
   deleteFineTuneItem(id: ID!): ID!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
@@ -132,8 +186,12 @@ type OpenAiFineTuneEvent {
 
 type Query {
   getAllFiles: [OpenAiFile!]!
+  getAllJobsWorkiz: [JobDto!]!
   getAllMessages: [Message!]!
+  getAllTechsWorkiz: [TechnicianWorkiz!]!
   getAllUsers: [User!]!
+  getAllUsersWorkiz: [TechnicianWorkiz!]!
+  getAllWorkizLeads: [JobDto!]!
   getCurrentUser: User!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!
@@ -141,6 +199,8 @@ type Query {
   getLogs(pagination: FindPaginationDto!): LogsPaginated!
   getSheets: String!
   getSystemSettings: SystemSettings!
+  getWorkizJobById(id: String!): JobDto!
+  getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
   listModels: String!
 }
@@ -161,6 +221,18 @@ type SystemSettings {
   active_model: String!
   id: ID!
   max_tokens: Int!
+}
+
+type TechnicianWorkiz {
+  active: Boolean!
+  created: String!
+  email: String!
+  fieldTech: Boolean!
+  id: String!
+  name: String!
+  role: String!
+  serviceAreas: [String!]!
+  skills: [String!]!
 }
 
 type TokenResponse {

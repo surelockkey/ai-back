@@ -7,7 +7,7 @@ import { GqlAuthGuard } from 'src/modules/authorization/guard/auth.guard';
 // import { WorkizService } from './workiz.service';
 
 @Resolver()
-export class WorkizResolver {
+export class WorkizApiResolver {
   constructor(private readonly workizApiService: WorkizApiService) {}
 
   @UseGuards(GqlAuthGuard)
