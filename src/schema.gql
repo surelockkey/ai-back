@@ -195,10 +195,8 @@ type Query {
   getCurrentUser: User!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!
-  getGoogleAdsCustomers(refresh_token: String!): String!
   getLogs(pagination: FindPaginationDto!): LogsPaginated!
   getSheet(col: String!, row: String!, sheet_id: String!, tab_name: String!): [[String!]!]!
-  getSheets: String!
   getSystemSettings: SystemSettings!
   getTechsSchedule: [TechSchedule!]!
   getWorkizJobById(id: String!): JobDto!
