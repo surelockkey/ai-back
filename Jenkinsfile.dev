@@ -25,6 +25,10 @@ def prod_secrets = [
         [envVar: 'JWT_ACCESS_EXPIRE', vaultKey: 'JWT_ACCESS_EXPIRE'],
         [envVar: 'JWT_REFRESH_EXPIRE', vaultKey: 'JWT_REFRESH_EXPIRE'],
         [envVar: 'TOKEN_WORKIZ', vaultKey: 'TOKEN_WORKIZ'],
+        [envVar: 'CTM_USER', vaultKey: 'CTM_USER'],
+        [envVar: 'CTM_PASSWORD', vaultKey: 'CTM_PASSWORD'],
+        [envVar: 'CTM_API_URL', vaultKey: 'CTM_API_URL'],
+        [envVar: 'CTM_ACCOUNT_ID', vaultKey: 'CTM_ACCOUNT_ID'],
     ]],
 ]
 
@@ -85,6 +89,11 @@ pipeline {
                         echo "JWT_ACCESS_EXPIRE=${JWT_ACCESS_EXPIRE}" >> .env
                         echo "JWT_REFRESH_EXPIRE=${JWT_REFRESH_EXPIRE}" >> .env
                         echo "TOKEN_WORKIZ=${TOKEN_WORKIZ}" >> .env
+                        echo "CTM_USER=${CTM_USER}" >> .env
+                        echo "CTM_PASSWORD=${CTM_PASSWORD}" >> .env
+                        echo "CTM_API_URL=${CTM_API_URL}" >> .env
+                        echo "CTM_ACCOUNT_ID=${CTM_ACCOUNT_ID}" >> .env
+
 
 
                         sudo docker-compose build --no-cache --build-arg NPM_TOKEN=${NPM_TOKEN} prod
