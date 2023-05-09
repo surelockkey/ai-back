@@ -186,7 +186,12 @@ type OpenAiFineTuneEvent {
 
 type Query {
   getAllFiles: [OpenAiFile!]!
-  getAllJobsWorkiz: [JobDto!]!
+  getAllJobsWorkiz(
+    offset: Int!
+
+    """Max 100"""
+    records: Int!
+  ): [JobDto!]!
   getAllMessages: [Message!]!
   getAllTechsWorkiz: [TechnicianWorkiz!]!
   getAllUsers: [User!]!

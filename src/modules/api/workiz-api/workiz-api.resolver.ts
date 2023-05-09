@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TechnicianWorkiz, CreateJobDto, JobDto } from './dto/workiz-api.dto';
 import { WorkizApiService } from './workiz-api.service';
 import { SendDto } from '@tech-slk/nest-crud';
@@ -42,8 +42,12 @@ export class WorkizApiResolver {
 
   @UseGuards(GqlAuthGuard)
   @Query(() => [JobDto])
-  async getAllJobsWorkiz(): Promise<JobDto[]> {
-    return await this.workizApiService.getAllJobsWorkiz();
+  async getAllJobsWorkiz(
+    @Args('records', { type: () => Int, description: 'Max 100' })
+    records: number,
+    @Args('offset', { type: () => Int }) offset: number,
+  ): Promise<JobDto[]> {
+    return await this.workizApiService.getAllJobsWorkiz(records, offset);
   }
 
   @UseGuards(GqlAuthGuard)

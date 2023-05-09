@@ -56,9 +56,14 @@ export class WorkizApiService {
       });
   }
 
-  public async getAllJobsWorkiz(): Promise<JobDto[]> {
+  public async getAllJobsWorkiz(
+    records: number,
+    offset: number,
+  ): Promise<JobDto[]> {
     const jobs: JobDto[] = await axios
-      .get(`${this.apiLink}/job/all/`)
+      .get(
+        `${this.apiLink}/job/all/?start_date=YYYY-mm-dd&offset=${offset}&records=${records}`,
+      )
       .then((result) => {
         return result.data.data;
       });
