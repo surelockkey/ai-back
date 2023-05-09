@@ -4,5 +4,6 @@ import { WorkizApiResolver } from './workiz-api.resolver';
 
 @Module({
   providers: [WorkizApiService, WorkizApiResolver],
+  exports: [WorkizApiService],
 })
 export class WorkizApiModule {}

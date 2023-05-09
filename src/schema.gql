@@ -23,6 +23,70 @@ input CreateJobDto {
   State: String!
 }
 
+type CtmCall {
+  account_id: Int!
+  billed_amount: Int!
+  billed_at: String!
+  call_status: String!
+  called_at: String!
+  caller_number_format: String!
+  city: String!
+  cnam: String!
+  country: String!
+  day: String!
+  dial_status: String!
+  direction: String!
+  duration: Int!
+  hold_time: Int!
+  hour: String!
+  id: Int!
+  month: String!
+  name: String!
+  notes: String!
+  postal_code: String!
+  ring_time: Int!
+  sid: String!
+  source: String!
+  source_id: Int!
+  source_sid: String!
+  state: String!
+  status: String!
+  talk_time: Int!
+  tgid: Int!
+  tracking_label: String!
+  tracking_number: String!
+  tracking_number_format: String!
+  unix_time: Int!
+  wait_time: Int!
+}
+
+type CtmGetCallsDto {
+  calls: [CtmCall!]!
+  page: Int!
+  per_page: Int!
+  total_entries: Int!
+  total_pages: Int!
+}
+
+input CtmGetCallsOptionDto {
+  """the end date for the search (YYYY-MM-DD)"""
+  end_date: String
+
+  """
+  search string to look for messages with specific callerid, caller_number, called_number, source name, etc.
+  """
+  filter: String
+
+  """the page number"""
+  page: Int!
+
+  """the number of items per page, defaults to 10"""
+  per_page: Int
+
+  """the start date for the search (YYYY-MM-DD)"""
+  start_date: String
+}
+
 input FindPaginationDto {
   skip: Int!
   take: Int!
@@ -197,6 +261,7 @@ type Query {
   getAllUsers: [User!]!
   getAllUsersWorkiz: [TechnicianWorkiz!]!
   getAllWorkizLeads: [JobDto!]!
+  getCalls(ctmGetCallsOptionDto: CtmGetCallsOptionDto!): CtmGetCallsDto!
   getCurrentUser: User!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!

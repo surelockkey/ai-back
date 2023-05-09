@@ -13,8 +13,8 @@ import config, {
 } from './core/config/config';
 import { AuthorizationModule } from './modules/authorization/authorization.module';
 import { LoggerModule } from './modules/logger/logger.module';
-// import { GoogleApiModule } from './modules/google-api/google-api.module';
 import { ApiModule } from './modules/api/api.module';
+import { JobModule } from './modules/job/job.module';
 
 @Module({
   imports: [
@@ -36,8 +36,8 @@ import { ApiModule } from './modules/api/api.module';
     SystemSettingsModule,
     AuthorizationModule,
     LoggerModule,
-    // GoogleApiModule,
     ApiModule,
+    // JobModule,
   ],
 })
 export class AppModule {}

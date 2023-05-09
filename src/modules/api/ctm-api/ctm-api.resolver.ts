@@ -1,15 +1,17 @@
-import { Resolver, Query } from "@nestjs/graphql";
-import { CtmApiService } from "./ctm-api.service";
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { CtmApiService } from './ctm-api.service';
+import { CtmGetCallsDto, CtmGetCallsOptionDto } from './dto/ctm-get-calls.dto';
 
 @Resolver()
 export class CtmApiResolver {
-    constructor(
-        private readonly ctmApiService: CtmApiService,
-    ) { }
+  constructor(private readonly ctmApiService: CtmApiService) {}
 
-    // @Query(() => String)
-    // testtwo() {
-    //     this.ctmApiService.getCalls(1);
-    //     return 'test'
-    // }
+
+  @Query(() => CtmGetCallsDto)
+  async getCalls(
+    @Args('ctmGetCallsOptionDto', { type: () => CtmGetCallsOptionDto })
+    ctmGetCallsOptionDto: CtmGetCallsOptionDto,
+  ): Promise<CtmGetCallsDto> {
+    return await this.ctmApiService.getCalls(ctmGetCallsOptionDto);
+  }
 }

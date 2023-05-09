@@ -1,0 +1,1340 @@
+[
+  {
+    "id": 2346478477,
+    "sid": "504691024",
+    "account_id": 186864,
+    "name": "ANA MARTINEZ",
+    "cnam": "ANA MARTINEZ",
+    "search": "",
+    "referrer": "",
+    "visitor_sid": "",
+    "location": "",
+    "source": "sure lock & KEY",
+    "source_id": 918347,
+    "source_sid": "TSOF6FC2D2594D22C52C7F22FA76C7AEAFAB305EF7EB198EFF3A9776F5B247612F4",
+    "tgid": 4984850,
+    "likelihood": null,
+    "duration": 0,
+    "direction": "msg_outbound",
+    "talk_time": 0,
+    "ring_time": 0,
+    "hold_time": 0,
+    "wait_time": 0,
+    "parent_id": null,
+    "email": null,
+    "street": null,
+    "city": "Hartford",
+    "state": "CT",
+    "country": "US",
+    "postal_code": "06002",
+    "called_at": "2023-05-09 07:15 AM -04:00",
+    "unix_time": 1683630955,
+    "tracking_number_id": 1372953,
+    "tracking_number_sid": "TPNC3C4B23C348AEC2EE54EFD301979CD2EF79D99BA51DC82ECA96C1BD91B649116C82E0965AAE09668",
+    "tracking_number": "+12039893585",
+    "tracking_label": "CT SLK OUT AND RECEIVING CALLS",
+    "dial_status": "delivered",
+    "is_new_caller": false,
+    "indexed_at": 1683630960.262327,
+    "agent_insights": false,
+    "duration_period": {
+      "gte": 1683630955000,
+      "lte": 1683630955000
+    },
+    "inbound_rate_center": {
+      "country": "US",
+      "prefix": "1",
+      "tollfree": false
+    },
+    "excluded": false,
+    "redacted": false,
+    "tracking_number_format": "(203) 989-3585",
+    "alternative_number": "8609943221",
+    "tracking_number_bare": "2039893585",
+    "caller_number_format": "(860) 994-3221",
+    "caller_number_complete": "+18609943221",
+    "caller_number_bare": "8609943221",
+    "caller_number": "+18609943221",
+    "caller_number_split": [
+      "1",
+      "860",
+      "994",
+      "3221"
+    ],
+    "contact_number": "+18609943221",
+    "visitor": false,
+    "call_path": [
+      {
+        "route_name": "sure lock after call",
+        "route_id": "AUT245483329FD692760FB1F9A8ED46925C5C88899B4D5B83CC",
+        "route_type": "Automator",
+        "started_at": "2023-05-09T07:15:55Z"
+      }
+    ],
+    "left_talk_time": 0,
+    "right_talk_time": 0,
+    "transfers": [],
+    "call_status": "delivered",
+    "status": "delivered",
+    "message_id": "MSGA9B07EC712F11C710194D5733524CCC750EBD0627E9337AE0A4AED05EB127D45",
+    "message_body": "Hi and thank you for calling our locksmith services! \r\nWe are here for you 24/7.  \r\nwebsite: surelockkey.com\r\nphone: 866-412-6220 \r\nemail: office@surelockkey.com",
+    "message_media": [],
+    "spotted": [],
+    "salesforce": {},
+    "callbacks": [],
+    "emails": [],
+    "day": "Tuesday",
+    "month": "May",
+    "hour": "07AM",
+    "paid": {
+      "source": null,
+      "medium": null
+    },
+    "ga": {
+      "cid": "186864.2346478477"
+    },
+    "tag_list": [],
+    "notes": "",
+    "latitude": 41.7676,
+    "longitude": -72.6795,
+    "extended_lookup_on": false,
+    "legs": [],
+    "touchpoints": [
+      {
+        "call_id": 2346477949,
+        "time": "2023-05-09T11:13:29Z",
+        "touch_type": "inbound",
+        "clickid": null,
+        "type": null,
+        "source": "sure lock & KEY ",
+        "medium": null,
+        "position": "last",
+        "weight": 100
+      }
+    ],
+    "last_touch": "sure lock & KEY /",
+    "geo": {
+      "lon": -72.6795,
+      "lat": 41.7676
+    }
+  },
+  {
+    "id": 2346478444,
+    "sid": "CA90ec7ad5573ae295846edce9759fbedd",
+    "account_id": 186864,
+    "name": "Dilon A1 Sub",
+    "cnam": "Conway Dorothy",
+    "search": "",
+    "referrer": "",
+    "visitor_sid": "",
+    "location": "",
+    "source": "TECH LINE",
+    "source_id": 1058790,
+    "source_sid": "TSOF6FC2D2594D22C52C7F22FA76C7AEAFA9065BC0D5B74AE1DC1FF9137D8D10778",
+    "tgid": 3835678,
+    "likelihood": null,
+    "duration": 43,
+    "direction": "inbound",
+    "talk_time": 0,
+    "ring_time": 43,
+    "hold_time": 0,
+    "wait_time": 40000,
+    "parent_id": null,
+    "email": "",
+    "street": "",
+    "city": "Waterbury",
+    "state": "CT",
+    "country": "",
+    "postal_code": "06702",
+    "called_at": "2023-05-09 07:15 AM -04:00",
+    "unix_time": 1683630943,
+    "tracking_number_id": 1487168,
+    "tracking_number_sid": "TPNC3C4B23C348AEC2EE54EFD301979CD2EF79D99BA51DC82EC8ABBCF30897F5EC402B9FF398F1820A0",
+    "tracking_number": "+12034964836",
+    "tracking_label": "TECH LINE 1",
+    "dial_status": "no answer",
+    "is_new_caller": false,
+    "indexed_at": 1683631166.345152,
+    "agent_insights": false,
+    "duration_period": {
+      "gte": 1683630943000,
+      "lte": 1683630986000
+    },
+    "inbound_rate_center": {
+      "country": "US",
+      "prefix": "1",
+      "tollfree": false
+    },
+    "excluded": false,
+    "redacted": false,
+    "tracking_number_format": "(203) 496-4836",
+    "alternative_number": "+12035604563",
+    "tracking_number_bare": "2034964836",
+    "caller_number_format": "(203) 560-4563",
+    "caller_number_complete": "+12035604563",
+    "caller_number_bare": "2035604563",
+    "caller_number": "+12035604563",
+    "caller_number_split": [
+      "1",
+      "203",
+      "560",
+      "4563"
+    ],
+    "contact_number": "+12035604563",
+    "visitor": false,
+    "call_path": [
+      {
+        "route_name": "ALL TECHS INCOMING CALLS",
+        "route_id": "CQU182BC82C1063561E41AA931C2E1F446ACC3704AD5066C2FA",
+        "route_type": "CallQueue",
+        "started_at": "2023-05-09T07:15:43Z"
+      }
+    ],
+    "left_talk_time": 0,
+    "right_talk_time": 0,
+    "transfers": [],
+    "call_status": "no answer",
+    "status": "no answer",
+    "spotted": [],
+    "salesforce": {},
+    "custom_fields": {
+      "call_type": "Job"
+    },
+    "callbacks": [],
+    "emails": [],
+    "day": "Tuesday",
+    "month": "May",
+    "hour": "07AM",
+    "paid": {
+      "source": null,
+      "medium": null
+    },
+    "ga": {
+      "cid": "186864.2346478444"
+    },
+    "tag_list": [
+      "repeat caller"
+    ],
+    "notes": "",
+    "latitude": 41.5695,
+    "longitude": -73.0448,
+    "extended_lookup_on": false,
+    "legs": [
+      {
+        "started_at": "2023-05-09T11:15:45Z",
+        "end_at": "2023-05-09T11:16:25+00:00",
+        "sid": "CA1f33a68b363e14a05a8e95abe609b702",
+        "to": "client:agent_704392?call_id=2346478444&name=Dilon+A1+Sub&tn_num=%2B12034964836&source=TECH+LINE+&fifo=1",
+        "from": "+12035604563",
+        "status": "canceled"
+      },
+      {
+        "started_at": "2023-05-09T11:15:45Z",
+        "end_at": "2023-05-09T11:16:26+00:00",
+        "sid": "CAc568eb0ba27cfcc3d9e5c5dec589a153",
+        "to": "client:agent_642092?call_id=2346478444&name=Dilon+A1+Sub&tn_num=%2B12034964836&source=TECH+LINE+&fifo=1",
+        "from": "+12035604563",
+        "status": "canceled"
+      },
+      {
+        "started_at": "2023-05-09T11:15:45Z",
+        "end_at": "2023-05-09T11:16:26+00:00",
+        "sid": "CA1d548f54727b7debe47397a6885ca064",
+        "to": "client:agent_704098?call_id=2346478444&name=Dilon+A1+Sub&tn_num=%2B12034964836&source=TECH+LINE+&fifo=1",
+        "from": "+12035604563",
+        "status": "canceled"
+      },
+      {
+        "started_at": "2023-05-09T11:15:45Z",
+        "end_at": "2023-05-09T11:16:20+00:00",
+        "sid": "CA8ffde534130481749ea79652ad836f7e",
+        "to": "client:agent_656376?call_id=2346478444&name=Dilon+A1+Sub&tn_num=%2B12034964836&source=TECH+LINE+&fifo=1",
+        "from": "+12035604563",
+        "status": "canceled"
+      },
+      {
+        "started_at": "2023-05-09T11:15:45Z",
+        "end_at": "2023-05-09T11:15:45+00:00",
+        "sid": "CAc73b2bdbf010319bcfe3352733541bf2",
+        "to": "client:agent_647345_ios?call_id=2346478444&name=Dilon+A1+Sub&tn_num=%2B12034964836&source=TECH+LINE+&fifo=1",
+        "from": "+12035604563",
+        "status": "no-answer"
+      }
+    ],
+    "geo": {
+      "lon": -73.0448,
+      "lat": 41.5695
+    }
+  },
+  {
+    "id": 2346477949,
+    "sid": "CA33138e4c9550342e71c0bdb45897bca9",
+    "account_id": 186864,
+    "name": "ANA MARTINEZ",
+    "cnam": "ANA MARTINEZ",
+    "search": "",
+    "referrer": "",
+    "visitor_sid": "",
+    "location": "",
+    "source": "sure lock & KEY",
+    "source_id": 918347,
+    "source_sid": "TSOF6FC2D2594D22C52C7F22FA76C7AEAFAB305EF7EB198EFF3A9776F5B247612F4",
+    "tgid": 4984850,
+    "likelihood": null,
+    "duration": 135,
+    "direction": "inbound",
+    "talk_time": 125,
+    "ring_time": 10,
+    "hold_time": 0,
+    "wait_time": 10000,
+    "parent_id": null,
+    "email": null,
+    "street": null,
+    "city": "Hartford",
+    "state": "CT",
+    "country": "US",
+    "postal_code": "06002",
+    "called_at": "2023-05-09 07:13 AM -04:00",
+    "unix_time": 1683630809,
+    "tracking_number_id": 1372953,
+    "tracking_number_sid": "TPNC3C4B23C348AEC2EE54EFD301979CD2EF79D99BA51DC82ECA96C1BD91B649116C82E0965AAE09668",
+    "tracking_number": "+12039893585",
+    "tracking_label": "CT SLK OUT AND RECEIVING CALLS",
+    "dial_status": "answered",
+    "is_new_caller": true,
+    "indexed_at": 1683631065.321605,
+    "agent_insights": false,
+    "duration_period": {
+      "gte": 1683630809000,
+      "lte": 1683630944000
+    },
+    "inbound_rate_center": {
+      "country": "US",
+      "prefix": "1",
+      "tollfree": false
+    },
+    "billed_amount": 1689,
+    "billed_at": "2023-05-09T11:15:45",
+    "excluded": false,
+    "redacted": false,
+    "tracking_number_format": "(203) 989-3585",
+    "alternative_number": "8609943221",
+    "tracking_number_bare": "2039893585",
+    "caller_number_format": "(860) 994-3221",
+    "caller_number_complete": "+18609943221",
+    "caller_number_bare": "8609943221",
+    "caller_number": "+18609943221",
+    "caller_number_split": [
+      "1",
+      "860",
+      "994",
+      "3221"
+    ],
+    "contact_number": "+18609943221",
+    "visitor": false,
+    "call_path": [
+      {
+        "route_name": "SLK  ALL CALLS",
+        "route_id": "CQU182BC82C1063561E41AA931C2E1F446AB17E32E0DFAD7C85",
+        "route_type": "CallQueue",
+        "started_at": "2023-05-09T07:13:29Z"
+      },
+      {
+        "route_name": "sure lock after call",
+        "route_id": "114411",
+        "route_type": "RoutingRule",
+        "started_at": "2023-05-09T07:15:55Z"
+      }
+    ],
+    "left_talk_time": 0,
+    "right_talk_time": 0,
+    "transfers": [],
+    "call_status": "answered",
+    "status": "answered",
+    "spotted": [],
+    "salesforce": {},
+    "audio": "https://app.calltrackingmetrics.com/api/v1/accounts/186864/calls/CA33138e4c9550342e71c0bdb45897bca9/recording",
+    "is_s3_link": true,
+    "callbacks": [],
+    "emails": [],
+    "day": "Tuesday",
+    "month": "May",
+    "hour": "07AM",
+    "paid": {
+      "source": null,
+      "medium": null
+    },
+    "ga": {
+      "cid": "186864.2346477949"
+    },
+    "tag_list": [
+      "new caller"
+    ],
+    "notes": "",
+    "latitude": 41.5752,
+    "longitude": -72.7383,
+    "extended_lookup_on": false,
+    "agent_id": "USR5F59458ADC83D2203F23D4E5BD83DEFF",
+    "agent": {
+      "name": "12 (APRIL) DISPATCHER",
+      "email": "12dispatcher@surelockkey.com",
+      "id": "USR5F59458ADC83D2203F23D4E5BD83DEFF"
+    },
+    "legs": [
+      {
+        "started_at": "2023-05-09T11:13:32Z",
+        "end_at": "2023-05-09T11:13:35+00:00",
+        "sid": "CA86f9b5b7c1aa7fbb19f86799c668d8c1",
+        "to": "client:agent_427757?call_id=2346477949&name=ANA+MARTINEZ&tn_num=%2B12039893585&source=sure+lock+%26+KEY+&fifo=1",
+        "from": "+18609943221",
+        "status": "canceled"
+      },
+      {
+        "started_at": "2023-05-09T11:13:32Z",
+        "end_at": "2023-05-09T11:13:38+00:00",
+        "sid": "CAab6bba74ac60f1ece4b72eb0679cab8e",
+        "to": "client:agent_642092?call_id=2346477949&name=ANA+MARTINEZ&tn_num=%2B12039893585&source=sure+lock+%26+KEY+&fifo=1",
+        "from": "+18609943221",
+        "status": "no-answer"
+      },
+      {
+        "started_at": "2023-05-09T11:13:32Z",
+        "end_at": "2023-05-09T11:13:38+00:00",
+        "sid": "CA52399937804617716d2460560402248a",
+        "to": "client:agent_521003?call_id=2346477949&name=ANA+MARTINEZ&tn_num=%2B12039893585&source=sure+lock+%26+KEY+&fifo=1",
+        "from": "+18609943221",
+        "status": "no-answer"
+      },
+      {
+        "started_at": "2023-05-09T11:13:32Z",
+        "end_at": "2023-05-09T11:13:38+00:00",
+        "sid": "CA5c503170c883eff161cdb58c1b2abae0",
+        "to": "client:agent_704098?call_id=2346477949&name=ANA+MARTINEZ&tn_num=%2B12039893585&source=sure+lock+%26+KEY+&fifo=1",
+        "from": "+18609943221",
+        "status": "no-answer"
+      },
+      {
+        "started_at": "2023-05-09T11:13:32Z",
+        "end_at": "2023-05-09T11:13:38+00:00",
+        "sid": "CA690f45fbb53a06bc0f55fc0c3a20700b",
+        "to": "client:agent_704392?call_id=2346477949&name=ANA+MARTINEZ&tn_num=%2B12039893585&source=sure+lock+%26+KEY+&fifo=1",
+        "from": "+18609943221",
+        "status": "no-answer"
+      },
+      {
+        "started_at": "2023-05-09T11:13:39Z",
+        "end_at": "2023-05-09T11:15:44+00:00",
+        "sid": "CAb1708527c6d2bc21927517b9826bca77",
+        "to": "12039893585",
+        "from": "+18609943221",
+        "status": "completed"
+      }
+    ],
+    "touchpoints": [
+      {
+        "call_id": 2346477949,
+        "time": "2023-05-09T11:13:29Z",
+        "touch_type": "inbound",
+        "clickid": null,
+        "type": null,
+        "source": "sure lock & KEY ",
+        "medium": null,
+        "position": "last",
+        "weight": 100
+      }
+    ],
+    "last_touch": "sure lock & KEY /",
+    "geo": {
+      "lon": -72.7383,
+      "lat": 41.5752
+    }
+  },
+  {
+    "id": 2346474697,
+    "sid": "504690526",
+    "account_id": 186864,
+    "name": "MICHAEL COMEAUX",
+    "cnam": "MICHAEL COMEAUX",
+    "search": "",
+    "referrer": "",
+    "visitor_sid": "",
+    "location": "",
+    "source": "TEXAS",
+    "source_id": 954219,
+    "source_sid": "TSOF6FC2D2594D22C52C7F22FA76C7AEAFAEA864B859DDF75AE44773791AF21E0C4",
+    "tgid": 2877024,
+    "likelihood": null,
+    "duration": 0,
+    "direction": "msg_inbound",
+    "talk_time": 0,
+    "ring_time": 0,
+    "hold_time": 0,
+    "wait_time": 0,
+    "parent_id": "MSGA9B07EC712F11C71B3DDD04A7946BD61D1D9C707B3174BB3A9B80762D64E7FDA",
+    "email": null,
+    "street": null,
+    "city": "Houston",
+    "state": "TX",
+    "country": "US",
+    "postal_code": "77002",
+    "called_at": "2023-05-09 06:58 AM -04:00",
+    "unix_time": 1683629912,
+    "tracking_number_id": 1524009,
+    "tracking_number_sid": "TPNC3C4B23C348AEC2EE54EFD301979CD2EF79D99BA51DC82EC6EE415412DD8E0A7C8B7B89EBEBA7B6B",
+    "tracking_number": "+14693149899",
+    "tracking_label": "TX SLK OUT AND RECEIVING CALLS ",
+    "dial_status": "received",
+    "is_new_caller": false,
+    "indexed_at": 1683630512.659714,
+    "agent_insights": false,
+    "duration_period": {
+      "gte": 1683629912000,
+      "lte": 1683629912000
+    },
+    "inbound_rate_center": {
+      "country": "US",
+      "prefix": "1",
+      "tollfree": false
+    },
+    "billed_amount": 100,
+    "billed_at": "2023-05-09T11:08:32",
+    "excluded": false,
+    "redacted": false,
+    "tracking_number_format": "(469) 314-9899",
+    "alternative_number": "7133983626",
+    "tracking_number_bare": "4693149899",
+    "caller_number_format": "(713) 398-3626",
+    "caller_number_complete": "+17133983626",
+    "caller_number_bare": "7133983626",
+    "caller_number": "+17133983626",
+    "caller_number_split": [
+      "1",
+      "713",
+      "398",
+      "3626"
+    ],
+    "contact_number": "+17133983626",
+    "visitor": false,
+    "call_path": [],
+    "left_talk_time": 0,
+    "right_talk_time": 0,
+    "transfers": [],
+    "call_status": "received",
+    "status": "received",
+    "message_id": "MSGA9B07EC712F11C710194D5733524CCC79F65E1E23010E0E4CFFF18D8604FABE9",
+    "message_body": "???hey???",
+    "message_media": [],
+    "spotted": [],
+    "salesforce": {},
+    "callbacks": [],
+    "emails": [],
+    "day": "Tuesday",
+    "month": "May",
+    "hour": "06AM",
+    "paid": {
+      "source": null,
+      "medium": null
+    },
+    "ga": {
+      "cid": "186864.2346474697"
+    },
+    "tag_list": [
+      "repeat caller"
+    ],
+    "notes": "",
+    "latitude": 29.7587,
+    "longitude": -95.3684,
+    "extended_lookup_on": false,
+    "agent_id": "USRB927819239392CA1B48F54B35FBE1A3A",
+    "agent": {
+      "name": "csr_5 call agent",
+      "email": "csr_5@surelockkey.com",
+      "id": "USRB927819239392CA1B48F54B35FBE1A3A"
+    },
+    "legs": [],
+    "touchpoints": [
+      {
+        "call_id": 2346474697,
+        "time": "2023-05-09T10:58:32Z",
+        "touch_type": "msg_inbound",
+        "clickid": null,
+        "type": null,
+        "source": "TEXAS ",
+        "medium": null,
+        "position": "last",
+        "weight": 62.5
+      },
+      {
+        "call_id": 2319434464,
+        "time": "2023-04-21T15:40:40Z",
+        "touch_type": "inbound",
+        "clickid": null,
+        "type": null,
+        "source": "sure lock & KEY ",
+        "medium": null,
+        "position": "touch",
+        "weight": 25
+      },
+      {
+        "call_id": 2305890187,
+        "time": "2023-04-12T21:41:45Z",
+        "touch_type": "inbound",
+        "clickid": null,
+        "type": null,
+        "source": "TEXAS ",
+        "medium": null,
+        "position": "first",
+        "weight": 12.5
+      }
+    ],
+    "first_touch": "TEXAS /",
+    "last_touch": "TEXAS /",
+    "geo": {
+      "lon": -95.3684,
+      "lat": 29.7587
+    }
+  },
+  {
+    "id": 2346472654,
+    "sid": "CAff62f4a2753d0e213e613d27c61adc84",
+    "account_id": 186864,
+    "name": "EULESS, TX",
+    "cnam": "EULESS, TX",
+    "search": "",
+    "referrer": "",
+    "visitor_sid": "",
+    "location": "",
+    "source": "TEXAS",
+    "source_id": 954219,
+    "source_sid": "TSOF6FC2D2594D22C52C7F22FA76C7AEAFAEA864B859DDF75AE44773791AF21E0C4",
+    "tgid": 2877024,
+    "likelihood": null,
+    "duration": 43,
+    "direction": "inbound",
+    "talk_time": 29,
+    "ring_time": 13,
+    "hold_time": 1,
+    "wait_time": 13000,
+    "parent_id": null,
+    "email": null,
+    "street": null,
+    "city": "Dallas",
+    "state": "TX",
+    "country": "US",
+    "postal_code": "75050",
+    "called_at": "2023-05-09 06:46 AM -04:00",
+    "unix_time": 1683629218,
+    "tracking_number_id": 1524009,
+    "tracking_number_sid": "TPNC3C4B23C348AEC2EE54EFD301979CD2EF79D99BA51DC82EC6EE415412DD8E0A7C8B7B89EBEBA7B6B",
+    "tracking_number": "+14693149899",
+    "tracking_label": "TX SLK OUT AND RECEIVING CALLS ",
+    "dial_status": "answered",
+    "is_new_caller": false,
+    "indexed_at": 1683631061.304451,
+    "agent_insights": false,
+    "duration_period": {
+      "gte": 1683629218000,
+      "lte": 1683629261000
+    },
+    "inbound_rate_center": {
+      "country": "US",
+      "prefix": "1",
+      "tollfree": false
+    },
+    "billed_amount": 606,
+    "billed_at": "2023-05-09T10:47:41",
+    "excluded": false,
+    "redacted": false,
+    "tracking_number_format": "(469) 314-9899",
+    "alternative_number": "9728904996",
+    "tracking_number_bare": "4693149899",
+    "caller_number_format": "(972) 890-4996",
+    "caller_number_complete": "+19728904996",
+    "caller_number_bare": "9728904996",
+    "caller_number": "+19728904996",
+    "caller_number_split": [
+      "1",
+      "972",
+      "890",
+      "4996"
+    ],
+    "contact_number": "+19728904996",
+    "visitor": false,
+    "call_path": [
+      {
+        "route_name": "SLK  ALL CALLS",
+        "route_id": "CQU182BC82C1063561E41AA931C2E1F446AB17E32E0DFAD7C85",
+        "route_type": "CallQueue",
+        "started_at": "2023-05-09T06:46:58Z"
+      }
+    ],
+    "left_talk_time": 0,
+    "right_talk_time": 0,
+    "transfers": [],
+    "call_status": "answered",
+    "status": "answered",
+    "spotted": [],
+    "salesforce": {},
+    "audio": "https://app.calltrackingmetrics.com/api/v1/accounts/186864/calls/CAff62f4a2753d0e213e613d27c61adc84/recording",
+    "is_s3_link": true,
+    "callbacks": [],
+    "emails": [],
+    "day": "Tuesday",
+    "month": "May",
+    "hour": "06AM",
+    "paid": {
+      "source": null,
+      "medium": null
+    },
+    "ga": {
+      "cid": "186864.2346472654"
+    },
+    "tag_list": [
+      "repeat caller"
+    ],
+    "notes": "",
+    "latitude": 32.7673,
+    "longitude": -96.7776,
+    "extended_lookup_on": false,
+    "agent_id": "USRDF088CC726BEB972891E8D88D49A47D7",
+    "agent": {
+      "name": "csr_20 call agent",
+      "email": "csr_20@surelockkey.com",
+      "id": "USRDF088CC726BEB972891E8D88D49A47D7"
+    },
+    "legs": [
+      {
+        "started_at": "2023-05-09T10:46:59Z",
+        "end_at": "2023-05-09T10:47:05+00:00",
+        "sid": "CA609c9cf01344b0b8cdc448fc770bdce5",
+        "to": "client:agent_642086?call_id=2346472654&name=EULESS%2C+TX&tn_num=%2B14693149899&source=TEXAS+&fifo=1",
+        "from": "+19728904996",
+        "status": "no-answer"
+      },
+      {
+        "started_at": "2023-05-09T10:47:00Z",
+        "end_at": "2023-05-09T10:47:06+00:00",
+        "sid": "CA787e3799367bc6bb4467bf6f88c6fe07",
+        "to": "client:agent_521003?call_id=2346472654&name=EULESS%2C+TX&tn_num=%2B14693149899&source=TEXAS+&fifo=1",
+        "from": "+19728904996",
+        "status": "no-answer"
+      },
+      {
+        "started_at": "2023-05-09T10:47:11Z",
+        "end_at": "2023-05-09T10:47:40+00:00",
+        "sid": "CAb35228208b1a22edcf7bf41c6a24ccc9",
+        "to": "14693149899",
+        "from": "+19728904996",
+        "status": "completed"
+      }
+    ],
+    "geo": {
+      "lon": -96.7776,
+      "lat": 32.7673
+    }
+  },
+  {
+    "id": 2346470674,
+    "sid": "CAc58615a8fd43be6632ae12b3dd9959f5",
+    "account_id": 186864,
+    "name": "EULESS, TX",
+    "cnam": "EULESS, TX",
+    "search": "",
+    "referrer": "",
+    "visitor_sid": "",
+    "location": "",
+    "source": "sure lock & KEY",
+    "source_id": 918347,
+    "source_sid": "TSOF6FC2D2594D22C52C7F22FA76C7AEAFAB305EF7EB198EFF3A9776F5B247612F4",
+    "tgid": 4984850,
+    "likelihood": null,
+    "duration": 78,
+    "direction": "outbound",
+    "talk_time": 59,
+    "ring_time": 18,
+    "hold_time": 0,
+    "wait_time": 0,
+    "parent_id": null,
+    "email": null,
+    "street": null,
+    "city": "Dallas",
+    "state": "TX",
+    "country": "US",
+    "postal_code": "75050",
+    "called_at": "2023-05-09 06:35 AM -04:00",
+    "unix_time": 1683628544,
+    "tracking_number_id": 1372953,
+    "tracking_number_sid": "TPNC3C4B23C348AEC2EE54EFD301979CD2EF79D99BA51DC82ECA96C1BD91B649116C82E0965AAE09668",
+    "tracking_number": "+12039893585",
+    "tracking_label": "CT SLK OUT AND RECEIVING CALLS",
+    "dial_status": "answered",
+    "is_new_caller": false,
+    "indexed_at": 1683629222.466366,
+    "agent_insights": false,
+    "duration_period": {
+      "gte": 1683628544000,
+      "lte": 1683628622000
+    },
+    "inbound_rate_center": {
+      "country": "US",
+      "prefix": "1",
+      "tollfree": false
+    },
+    "billed_amount": 522,
+    "billed_at": "2023-05-09T10:37:02",
+    "excluded": false,
+    "redacted": false,
+    "tracking_number_format": "(203) 989-3585",
+    "alternative_number": "9728904996",
+    "tracking_number_bare": "2039893585",
+    "caller_number_format": "(972) 890-4996",
+    "caller_number_complete": "+19728904996",
+    "caller_number_bare": "9728904996",
+    "caller_number": "+19728904996",
+    "caller_number_split": [
+      "1",
+      "972",
+      "890",
+      "4996"
+    ],
+    "contact_number": "+19728904996",
+    "visitor": false,
+    "call_path": [],
+    "left_talk_time": 0,
+    "right_talk_time": 0,
+    "transfers": [],
+    "call_status": "answered",
+    "status": "answered",
+    "spotted": [],
+    "salesforce": {},
+    "audio": "https://app.calltrackingmetrics.com/api/v1/accounts/186864/calls/CAc58615a8fd43be6632ae12b3dd9959f5/recording",
+    "is_s3_link": true,
+    "callbacks": [],
+    "emails": [],
+    "day": "Tuesday",
+    "month": "May",
+    "hour": "06AM",
+    "paid": {
+      "source": null,
+      "medium": null
+    },
+    "ga": {
+      "cid": "186864.2346470674"
+    },
+    "tag_list": [],
+    "notes": "",
+    "latitude": 32.7454,
+    "longitude": -96.9985,
+    "extended_lookup_on": false,
+    "agent_id": "USRDF088CC726BEB972891E8D88D49A47D7",
+    "agent": {
+      "name": "csr_20 call agent",
+      "email": "csr_20@surelockkey.com",
+      "id": "USRDF088CC726BEB972891E8D88D49A47D7"
+    },
+    "legs": [
+      {
+        "started_at": "2023-05-09T10:35:44Z",
+        "end_at": "2023-05-09T10:37:02+00:00",
+        "sid": "CA1495b86f96aa27ec4c54d32f1cd7e767",
+        "to": "19728904996",
+        "from": "+12039893585",
+        "status": "completed"
+      }
+    ],
+    "geo": {
+      "lon": -96.9985,
+      "lat": 32.7454
+    }
+  },
+  {
+    "id": 2346470596,
+    "sid": "CA2bb4efee723da92ddb7b540f105dd1d8",
+    "account_id": 186864,
+    "name": "EULESS, TX",
+    "cnam": "EULESS, TX",
+    "search": "",
+    "referrer": "",
+    "visitor_sid": "",
+    "location": "",
+    "source": "sure lock & KEY",
+    "source_id": 918347,
+    "source_sid": "TSOF6FC2D2594D22C52C7F22FA76C7AEAFAB305EF7EB198EFF3A9776F5B247612F4",
+    "tgid": 4984850,
+    "likelihood": null,
+    "duration": 13,
+    "direction": "inbound",
+    "talk_time": 0,
+    "ring_time": 13,
+    "hold_time": 0,
+    "wait_time": 12000,
+    "parent_id": null,
+    "email": null,
+    "street": null,
+    "city": "Dallas",
+    "state": "TX",
+    "country": "US",
+    "postal_code": "75050",
+    "called_at": "2023-05-09 06:35 AM -04:00",
+    "unix_time": 1683628521,
+    "tracking_number_id": 1372953,
+    "tracking_number_sid": "TPNC3C4B23C348AEC2EE54EFD301979CD2EF79D99BA51DC82ECA96C1BD91B649116C82E0965AAE09668",
+    "tracking_number": "+12039893585",
+    "tracking_label": "CT SLK OUT AND RECEIVING CALLS",
+    "dial_status": "hangup",
+    "is_new_caller": false,
+    "indexed_at": 1683629136.265347,
+    "agent_insights": false,
+    "duration_period": {
+      "gte": 1683628521000,
+      "lte": 1683628534000
+    },
+    "inbound_rate_center": {
+      "country": "US",
+      "prefix": "1",
+      "tollfree": false
+    },
+    "billed_amount": 541,
+    "billed_at": "2023-05-09T10:40:36",
+    "excluded": false,
+    "redacted": false,
+    "tracking_number_format": "(203) 989-3585",
+    "alternative_number": "9728904996",
+    "tracking_number_bare": "2039893585",
+    "caller_number_format": "(972) 890-4996",
+    "caller_number_complete": "+19728904996",
+    "caller_number_bare": "9728904996",
+    "caller_number": "+19728904996",
+    "caller_number_split": [
+      "1",
+      "972",
+      "890",
+      "4996"
+    ],
+    "contact_number": "+19728904996",
+    "visitor": false,
+    "call_path": [
+      {
+        "route_name": "SLK  ALL CALLS",
+        "route_id": "CQU182BC82C1063561E41AA931C2E1F446AB17E32E0DFAD7C85",
+        "route_type": "CallQueue",
+        "started_at": "2023-05-09T06:35:22Z"
+      }
+    ],
+    "left_talk_time": 0,
+    "right_talk_time": 0,
+    "transfers": [],
+    "call_status": "hangup",
+    "status": "hangup",
+    "spotted": [],
+    "salesforce": {},
+    "callbacks": [],
+    "emails": [],
+    "day": "Tuesday",
+    "month": "May",
+    "hour": "06AM",
+    "paid": {
+      "source": null,
+      "medium": null
+    },
+    "ga": {
+      "cid": "186864.2346470596"
+    },
+    "tag_list": [
+      "repeat caller"
+    ],
+    "notes": "",
+    "latitude": 32.7673,
+    "longitude": -96.7776,
+    "extended_lookup_on": false,
+    "legs": [
+      {
+        "started_at": "2023-05-09T10:35:23Z",
+        "end_at": "2023-05-09T10:35:29+00:00",
+        "sid": "CAaa013c05ab5fbef17cbfa140d56b754f",
+        "to": "client:agent_521003?call_id=2346470596&name=EULESS%2C+TX&tn_num=%2B12039893585&source=sure+lock+%26+KEY+&fifo=1",
+        "from": "+19728904996",
+        "status": "canceled"
+      },
+      {
+        "started_at": "2023-05-09T10:35:23Z",
+        "end_at": "2023-05-09T10:35:29+00:00",
+        "sid": "CAeb4617d7dad502357ec63bec9a5618d0",
+        "to": "client:agent_642086?call_id=2346470596&name=EULESS%2C+TX&tn_num=%2B12039893585&source=sure+lock+%26+KEY+&fifo=1",
+        "from": "+19728904996",
+        "status": "no-answer"
+      },
+      {
+        "started_at": "2023-05-09T10:35:35Z",
+        "end_at": "2023-05-09T10:35:39+00:00",
+        "sid": "CAa560bfc47d75960acea38a37c105bdb7",
+        "to": "12039893585",
+        "from": "+19728904996",
+        "status": "completed"
+      }
+    ],
+    "geo": {
+      "lon": -96.7776,
+      "lat": 32.7673
+    }
+  },
+  {
+    "id": 2346470464,
+    "sid": "CA48093cb1a49cd4fa01f263bbf1f16b33",
+    "account_id": 186864,
+    "name": "LONGVIEW     TX",
+    "cnam": "LONGVIEW     TX",
+    "search": "",
+    "referrer": "",
+    "visitor_sid": "",
+    "location": "",
+    "source": "TEXAS",
+    "source_id": 954219,
+    "source_sid": "TSOF6FC2D2594D22C52C7F22FA76C7AEAFAEA864B859DDF75AE44773791AF21E0C4",
+    "tgid": 2877024,
+    "likelihood": null,
+    "duration": 47,
+    "direction": "outbound",
+    "talk_time": 29,
+    "ring_time": 18,
+    "hold_time": 0,
+    "wait_time": 0,
+    "parent_id": null,
+    "email": null,
+    "street": null,
+    "city": "Sherman",
+    "state": "TX",
+    "country": "US",
+    "postal_code": "75090",
+    "called_at": "2023-05-09 06:34 AM -04:00",
+    "unix_time": 1683628467,
+    "tracking_number_id": 1524009,
+    "tracking_number_sid": "TPNC3C4B23C348AEC2EE54EFD301979CD2EF79D99BA51DC82EC6EE415412DD8E0A7C8B7B89EBEBA7B6B",
+    "tracking_number": "+14693149899",
+    "tracking_label": "TX SLK OUT AND RECEIVING CALLS ",
+    "dial_status": "answered",
+    "is_new_caller": false,
+    "indexed_at": 1683629114.309197,
+    "agent_insights": false,
+    "duration_period": {
+      "gte": 1683628467000,
+      "lte": 1683628514000
+    },
+    "inbound_rate_center": {
+      "country": "US",
+      "prefix": "1",
+      "tollfree": false
+    },
+    "billed_amount": 261,
+    "billed_at": "2023-05-09T10:35:14",
+    "excluded": false,
+    "redacted": false,
+    "tracking_number_format": "(469) 314-9899",
+    "alternative_number": "4302023539",
+    "tracking_number_bare": "4693149899",
+    "caller_number_format": "(430) 202-3539",
+    "caller_number_complete": "+14302023539",
+    "caller_number_bare": "4302023539",
+    "caller_number": "+14302023539",
+    "caller_number_split": [
+      "1",
+      "430",
+      "202",
+      "3539"
+    ],
+    "contact_number": "+14302023539",
+    "visitor": false,
+    "call_path": [],
+    "left_talk_time": 0,
+    "right_talk_time": 0,
+    "transfers": [],
+    "call_status": "answered",
+    "status": "answered",
+    "spotted": [],
+    "salesforce": {},
+    "audio": "https://app.calltrackingmetrics.com/api/v1/accounts/186864/calls/CA48093cb1a49cd4fa01f263bbf1f16b33/recording",
+    "is_s3_link": true,
+    "callbacks": [],
+    "emails": [],
+    "day": "Tuesday",
+    "month": "May",
+    "hour": "06AM",
+    "paid": {
+      "source": null,
+      "medium": null
+    },
+    "ga": {
+      "cid": "186864.2346470464"
+    },
+    "tag_list": [],
+    "notes": "",
+    "latitude": 33.6333,
+    "longitude": -96.6081,
+    "extended_lookup_on": false,
+    "agent_id": "USRDF088CC726BEB972891E8D88D49A47D7",
+    "agent": {
+      "name": "csr_20 call agent",
+      "email": "csr_20@surelockkey.com",
+      "id": "USRDF088CC726BEB972891E8D88D49A47D7"
+    },
+    "legs": [
+      {
+        "started_at": "2023-05-09T10:34:27Z",
+        "end_at": "2023-05-09T10:35:14+00:00",
+        "sid": "CAf4e96316c7b2942c72c04329fffbe1c9",
+        "to": "14302023539",
+        "from": "+14693149899",
+        "status": "completed"
+      }
+    ],
+    "geo": {
+      "lon": -96.6081,
+      "lat": 33.6333
+    }
+  },
+  {
+    "id": 2346469597,
+    "sid": "CA8c25605f1e8271d422a35b3e228da16e",
+    "account_id": 186864,
+    "name": "LONGVIEW     TX",
+    "cnam": "LONGVIEW     TX",
+    "search": "",
+    "referrer": "",
+    "visitor_sid": "",
+    "location": "",
+    "source": "TEXAS",
+    "source_id": 954219,
+    "source_sid": "TSOF6FC2D2594D22C52C7F22FA76C7AEAFAEA864B859DDF75AE44773791AF21E0C4",
+    "tgid": 2877024,
+    "likelihood": null,
+    "duration": 238,
+    "direction": "inbound",
+    "talk_time": 221,
+    "ring_time": 16,
+    "hold_time": 1,
+    "wait_time": 16000,
+    "parent_id": null,
+    "email": null,
+    "street": null,
+    "city": "Sherman",
+    "state": "TX",
+    "country": "US",
+    "postal_code": "75090",
+    "called_at": "2023-05-09 06:28 AM -04:00",
+    "unix_time": 1683628131,
+    "tracking_number_id": 1524009,
+    "tracking_number_sid": "TPNC3C4B23C348AEC2EE54EFD301979CD2EF79D99BA51DC82EC6EE415412DD8E0A7C8B7B89EBEBA7B6B",
+    "tracking_number": "+14693149899",
+    "tracking_label": "TX SLK OUT AND RECEIVING CALLS ",
+    "dial_status": "answered",
+    "is_new_caller": false,
+    "indexed_at": 1683630169.13607,
+    "agent_insights": false,
+    "duration_period": {
+      "gte": 1683628131000,
+      "lte": 1683628369000
+    },
+    "inbound_rate_center": {
+      "country": "US",
+      "prefix": "1",
+      "tollfree": false
+    },
+    "billed_amount": 991,
+    "billed_at": "2023-05-09T10:32:49",
+    "excluded": false,
+    "redacted": false,
+    "tracking_number_format": "(469) 314-9899",
+    "alternative_number": "4302023539",
+    "tracking_number_bare": "4693149899",
+    "caller_number_format": "(430) 202-3539",
+    "caller_number_complete": "+14302023539",
+    "caller_number_bare": "4302023539",
+    "caller_number": "+14302023539",
+    "caller_number_split": [
+      "1",
+      "430",
+      "202",
+      "3539"
+    ],
+    "contact_number": "+14302023539",
+    "visitor": false,
+    "call_path": [
+      {
+        "route_name": "SLK  ALL CALLS",
+        "route_id": "CQU182BC82C1063561E41AA931C2E1F446AB17E32E0DFAD7C85",
+        "route_type": "CallQueue",
+        "started_at": "2023-05-09T06:28:51Z"
+      }
+    ],
+    "left_talk_time": 0,
+    "right_talk_time": 0,
+    "transfers": [],
+    "call_status": "answered",
+    "status": "answered",
+    "spotted": [],
+    "salesforce": {},
+    "audio": "https://app.calltrackingmetrics.com/api/v1/accounts/186864/calls/CA8c25605f1e8271d422a35b3e228da16e/recording",
+    "is_s3_link": true,
+    "callbacks": [],
+    "emails": [],
+    "day": "Tuesday",
+    "month": "May",
+    "hour": "06AM",
+    "paid": {
+      "source": null,
+      "medium": null
+    },
+    "ga": {
+      "cid": "186864.2346469597"
+    },
+    "tag_list": [
+      "repeat caller"
+    ],
+    "notes": "",
+    "latitude": 31.4638,
+    "longitude": -99.3333,
+    "extended_lookup_on": false,
+    "agent_id": "USRB927819239392CA1B48F54B35FBE1A3A",
+    "agent": {
+      "name": "csr_5 call agent",
+      "email": "csr_5@surelockkey.com",
+      "id": "USRB927819239392CA1B48F54B35FBE1A3A"
+    },
+    "legs": [
+      {
+        "started_at": "2023-05-09T10:28:52Z",
+        "end_at": "2023-05-09T10:28:58+00:00",
+        "sid": "CA5b47afd4d79cad2bc52dc02171727170",
+        "to": "client:agent_521003?call_id=2346469597&name=LONGVIEW+++++TX&tn_num=%2B14693149899&source=TEXAS+&fifo=1",
+        "from": "+14302023539",
+        "status": "no-answer"
+      },
+      {
+        "started_at": "2023-05-09T10:29:03Z",
+        "end_at": "2023-05-09T10:32:49+00:00",
+        "sid": "CA86907ef43d6ba8224ec54f2c42ef02ba",
+        "to": "client:agent_642086?call_id=2346469597&name=LONGVIEW+++++TX&tn_num=%2B14693149899&source=TEXAS+&fifo=1",
+        "from": "+14302023539",
+        "status": "completed"
+      }
+    ],
+    "geo": {
+      "lon": -99.3333,
+      "lat": 31.4638
+    }
+  },
+  {
+    "id": 2346469552,
+    "sid": "CA234e4fc0e1f15ba47c1fc794916bb421",
+    "account_id": 186864,
+    "name": "LONGVIEW     TX",
+    "cnam": "LONGVIEW     TX",
+    "search": "",
+    "referrer": "",
+    "visitor_sid": "",
+    "location": "",
+    "source": "TEXAS",
+    "source_id": 954219,
+    "source_sid": "TSOF6FC2D2594D22C52C7F22FA76C7AEAFAEA864B859DDF75AE44773791AF21E0C4",
+    "tgid": 2877024,
+    "likelihood": null,
+    "duration": 30,
+    "direction": "outbound",
+    "talk_time": 29,
+    "ring_time": 1,
+    "hold_time": 0,
+    "wait_time": 0,
+    "parent_id": null,
+    "email": null,
+    "street": null,
+    "city": "Sherman",
+    "state": "TX",
+    "country": "US",
+    "postal_code": "75090",
+    "called_at": "2023-05-09 06:28 AM -04:00",
+    "unix_time": 1683628109,
+    "tracking_number_id": 1524009,
+    "tracking_number_sid": "TPNC3C4B23C348AEC2EE54EFD301979CD2EF79D99BA51DC82EC6EE415412DD8E0A7C8B7B89EBEBA7B6B",
+    "tracking_number": "+14693149899",
+    "tracking_label": "TX SLK OUT AND RECEIVING CALLS ",
+    "dial_status": "answered",
+    "is_new_caller": false,
+    "indexed_at": 1683628739.377481,
+    "agent_insights": false,
+    "duration_period": {
+      "gte": 1683628109000,
+      "lte": 1683628139000
+    },
+    "inbound_rate_center": {
+      "country": "US",
+      "prefix": "1",
+      "tollfree": false
+    },
+    "billed_amount": 261,
+    "billed_at": "2023-05-09T10:28:59",
+    "excluded": false,
+    "redacted": false,
+    "tracking_number_format": "(469) 314-9899",
+    "alternative_number": "4302023539",
+    "tracking_number_bare": "4693149899",
+    "caller_number_format": "(430) 202-3539",
+    "caller_number_complete": "+14302023539",
+    "caller_number_bare": "4302023539",
+    "caller_number": "+14302023539",
+    "caller_number_split": [
+      "1",
+      "430",
+      "202",
+      "3539"
+    ],
+    "contact_number": "+14302023539",
+    "visitor": false,
+    "call_path": [],
+    "left_talk_time": 0,
+    "right_talk_time": 0,
+    "transfers": [],
+    "call_status": "answered",
+    "status": "answered",
+    "spotted": [],
+    "salesforce": {},
+    "audio": "https://app.calltrackingmetrics.com/api/v1/accounts/186864/calls/CA234e4fc0e1f15ba47c1fc794916bb421/recording",
+    "is_s3_link": true,
+    "callbacks": [],
+    "emails": [],
+    "day": "Tuesday",
+    "month": "May",
+    "hour": "06AM",
+    "paid": {
+      "source": null,
+      "medium": null
+    },
+    "ga": {
+      "cid": "186864.2346469552"
+    },
+    "tag_list": [],
+    "notes": "",
+    "latitude": 33.6333,
+    "longitude": -96.6081,
+    "extended_lookup_on": false,
+    "agent_id": "USRB927819239392CA1B48F54B35FBE1A3A",
+    "agent": {
+      "name": "csr_5 call agent",
+      "email": "csr_5@surelockkey.com",
+      "id": "USRB927819239392CA1B48F54B35FBE1A3A"
+    },
+    "legs": [
+      {
+        "started_at": "2023-05-09T10:28:29Z",
+        "end_at": "2023-05-09T10:28:58+00:00",
+        "sid": "CA48cdd8e75a91bf62f5d0201cfb57d282",
+        "to": "14302023539",
+        "from": "+14693149899",
+        "status": "completed"
+      }
+    ],
+    "geo": {
+      "lon": -96.6081,
+      "lat": 33.6333
+    }
+  }
+]
