@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { google, sheets_v4 } from 'googleapis';
+import { TechSchedule } from './dto/tech-schedule.dto';
 
 @Injectable()
 export class GoogleSheetsApiService {
@@ -21,22 +22,83 @@ export class GoogleSheetsApiService {
     this.google_sheets = google.sheets({ version: 'v4', auth: auth_client });
   }
 
+  public async getTechsSchedule(): Promise<TechSchedule[]> {
+    const values = await this.getSheet(
+      '1Tk9psKa1FaIw9DhttlI9dTV0rV6I29zinKROVCi2P_s',
+      'Tech Weekly Schedule',
+      'A',
+      'K',
+    );
+
+    return this.transformTechTable(values);
+  }
+
+  private transformTechTable(values: string[][]) {
+    const last_data = values[values.length - 1][9];
+
+    let isFirstSkipped = false;
+    const states = [
+      'CT',
+      'TX (Dallas)',
+      'Subs Dallas',
+      'TX (Houston)',
+      'Subs Houston',
+      'AZ(Arizona)',
+      'AZ SUBS',
+    ];
+    let active_state = '';
+
+    return values
+      .filter((val) => {
+        if (
+          last_data === val[9] &&
+          isFirstSkipped &&
+          !states.includes(val[0])
+        ) {
+          return val;
+        }
+        if (last_data === val[9] && !isFirstSkipped) {
+          isFirstSkipped = true;
+        }
+      })
+      .map((value) => {
+        if (last_data === value[9] && !isFirstSkipped) {
+          isFirstSkipped = true;
+        }
+
+        if (states.includes(value[0])) {
+          active_state = value[0];
+        }
+
+        return {
+          name: value[0],
+          monday: value[1],
+          tuesday: value[2],
+          wednesday: value[3],
+          thursday: value[4],
+          friday: value[5],
+          saturday: value[6],
+          sunday: value[7],
+          note: value[8],
+          week_start: value[9],
+          week_end: value[10],
+          active_state,
+        };
+      });
+  }
+
   public async getSheet(
     sheet_id: string,
     tab_name: string,
     col: string,
     row: string,
   ) {
-    // const sheet_id = '1zP51f9-mJ-Pfkl0DhJZow54A_ux5YTCvx0Y2i9BjlyQ';
-
     const res = await this.google_sheets.spreadsheets.values.get({
       auth: this.auth,
       spreadsheetId: sheet_id,
       range: `${tab_name}!${col}:${row}`,
     });
 
-    console.log(res.data);
-
-    return res.data;
+    return res.data.values;
   }
 }

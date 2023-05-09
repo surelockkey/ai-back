@@ -197,8 +197,10 @@ type Query {
   getFullLastFineTune: OpenAiFineTune!
   getGoogleAdsCustomers(refresh_token: String!): String!
   getLogs(pagination: FindPaginationDto!): LogsPaginated!
+  getSheet(col: String!, row: String!, sheet_id: String!, tab_name: String!): [[String!]!]!
   getSheets: String!
   getSystemSettings: SystemSettings!
+  getTechsSchedule: [TechSchedule!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
@@ -221,6 +223,21 @@ type SystemSettings {
   active_model: String!
   id: ID!
   max_tokens: Int!
+}
+
+type TechSchedule {
+  active_state: String!
+  friday: String
+  monday: String
+  name: String!
+  note: String
+  saturday: String
+  sunday: String
+  thursday: String
+  tuesday: String
+  wednesday: String
+  week_end: String
+  week_start: String
 }
 
 type TechnicianWorkiz {
