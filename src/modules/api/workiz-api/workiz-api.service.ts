@@ -62,11 +62,15 @@ export class WorkizApiService {
   ): Promise<JobDto[]> {
     const jobs: JobDto[] = await axios
       .get(
-        `${this.apiLink}/job/all/?start_date=YYYY-mm-dd&offset=${offset}&records=${records}`,
+        `${this.apiLink}/job/all/?offset=${offset}&records=${records}`,
+        // `${this.apiLink}/job/all/?start_date=YYYY-mm-dd&offset=${offset}&records=${records}`,
       )
       .then((result) => {
+        console.log(result.data.data.length);
+
         return result.data.data;
-      });
+      })
+      .catch((err) => console.log(err));
 
     return jobs.map((job) => {
       console.log(job.CreatedDate);
