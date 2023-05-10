@@ -17,15 +17,10 @@ export class CtmApiService {
     }
 
     public async getCalls(ctmGetCallsOptionDto: CtmGetCallsOptionDto) {
-        const cc = await this.req(
+        return await this.req(
             ctmGetCallsOptionDto, 
             `accounts/${this.config.account_id}/calls/search.json`
         )
-
-        console.log(cc);
-        
-
-        return cc
     }
 
     private async req(data_obj: any, url: string) {
