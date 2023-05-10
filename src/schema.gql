@@ -23,6 +23,14 @@ input CreateJobDto {
   State: String!
 }
 
+input CreateTechDto {
+  email: String!
+  name: String!
+  service_areas: [String!]
+  skills: [String!]
+  workiz_id: String
+}
+
 input CreateTechScheduleDto {
   tech_id: String!
   work_from: Int!
@@ -215,6 +223,8 @@ type Mutation {
   createManyTechsSchedules(techs_schedules: [CreateTechScheduleDto!]!): [TechSchedule!]!
   createNewJobWorkiz(createJobDto: CreateJobDto!): SendDto!
   createSystemSettings(max_tokens: Int!): SystemSettings!
+  createTech(tech: CreateTechDto!): Tech!
+  createTechFromWorkiz(workiz_id: String!): Tech!
   createTechSchedule(tech_schedule: CreateTechScheduleDto!): TechSchedule!
   deleteFineTuneItem(id: ID!): ID!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
@@ -229,6 +239,7 @@ type Mutation {
   updateFineTuneItem(fine_tune_item: UpdateFineTuneItemDto!): FineTuneItem!
   updateManyTechsSchedules(techs_schedules: [UpdateTechScheduleDto!]!): [TechSchedule!]!
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
+  updateTech(tech: UpdateTechDto!): Tech!
   updateTechSchedule(tech_schedule: UpdateTechScheduleDto!): TechSchedule!
 }
 
@@ -272,6 +283,7 @@ type Query {
     records: Int!
   ): PaginatedJobDto!
   getAllMessages: [Message!]!
+  getAllTechs: [Tech!]!
   getAllTechsWorkiz: [TechnicianWorkiz!]!
   getAllUsers: [User!]!
   getAllUsersWorkiz: [TechnicianWorkiz!]!
@@ -306,6 +318,15 @@ type SystemSettings {
   active_model: String!
   id: ID!
   max_tokens: Int!
+}
+
+type Tech {
+  email: String!
+  id: ID!
+  name: String!
+  service_areas: [String!]
+  skills: [String!]
+  workiz_id: String
 }
 
 type TechSchedule {
@@ -348,6 +369,15 @@ input UpdateFineTuneItemDto {
 
 input UpdateSystemSettingsDto {
   max_tokens: Int!
+}
+
+input UpdateTechDto {
+  email: String
+  id: ID!
+  name: String
+  service_areas: [String!]
+  skills: [String!]
+  workiz_id: String
 }
 
 input UpdateTechScheduleDto {

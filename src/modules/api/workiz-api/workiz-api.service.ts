@@ -61,6 +61,14 @@ export class WorkizApiService {
       });
   }
 
+  public async getTechById(id: string): Promise<TechnicianWorkiz> {
+    const res = await axios.get(`${this.apiLink}/team/get/${id}`);
+
+    console.log(res, 'res');
+
+    return res.data;
+  }
+
   public async getAllJobsWorkiz(
     records: number,
     offset: number,
