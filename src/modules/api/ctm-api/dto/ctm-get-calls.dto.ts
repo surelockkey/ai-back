@@ -70,6 +70,9 @@ export class CtmCall {
     duration: number;
 
     @Field(() => String)
+    audio: string;
+
+    @Field(() => String)
     direction: string;
 
     @Field(() => Int)

@@ -31,6 +31,7 @@ input CreateTechScheduleDto {
 
 type CtmCall {
   account_id: Int!
+  audio: String!
   billed_amount: Int!
   billed_at: String!
   call_status: String!
