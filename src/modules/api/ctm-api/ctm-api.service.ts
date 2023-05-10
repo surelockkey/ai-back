@@ -17,7 +17,6 @@ export class CtmApiService {
     }
 
     public async getCalls(ctmGetCallsOptionDto: CtmGetCallsOptionDto) {
-        console.log(ctmGetCallsOptionDto.page, ctmGetCallsOptionDto.per_page)
         return await this.req(
             ctmGetCallsOptionDto, 
             `accounts/${this.config.account_id}/calls/search.json`

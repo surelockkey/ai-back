@@ -66,8 +66,11 @@ export class CtmCall {
     @Field(() => Int)
     tgid: number;
 
-    @Field(() => Int)
+    @Field(() => Int, { nullable: true })
     duration: number;
+
+    @Field(() => String, { nullable: true })
+    audio: string;
 
     @Field(() => String)
     direction: string;
