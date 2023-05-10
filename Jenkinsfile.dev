@@ -90,7 +90,7 @@ pipeline {
                         echo "JWT_REFRESH_EXPIRE=${JWT_REFRESH_EXPIRE}" >> .env
                         echo "TOKEN_WORKIZ=${TOKEN_WORKIZ}" >> .env
                         echo "CTM_USER=${CTM_USER}" >> .env
-                        echo "CTM_PASSWORD=${CTM_PASSWORD}" >> .env
+                        echo "CTM_PASSWORD="'"'"${CTM_PASSWORD}"'"' >> .env
                         echo "CTM_API_URL=${CTM_API_URL}" >> .env
                         echo "CTM_ACCOUNT_ID=${CTM_ACCOUNT_ID}" >> .env
 
