@@ -69,7 +69,7 @@ export class CtmCall {
     @Field(() => Int)
     duration: number;
 
-    @Field(() => String)
+    @Field(() => String, { nullable: true })
     audio: string;
 
     @Field(() => String)
