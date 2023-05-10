@@ -62,6 +62,15 @@ export class CreateJobDto {
 }
 
 @ObjectType()
+export class PaginatedJobDto {
+  @Field(() => Boolean)
+  has_more: boolean;
+
+  @Field(() => [JobDto])
+  items: JobDto[];
+}
+
+@ObjectType()
 export class JobDto {
   @Field(() => String)
   UUID: string;

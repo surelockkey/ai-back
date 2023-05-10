@@ -15,6 +15,7 @@ import { AuthorizationModule } from './modules/authorization/authorization.modul
 import { LoggerModule } from './modules/logger/logger.module';
 import { ApiModule } from './modules/api/api.module';
 import { JobModule } from './modules/job/job.module';
+import { TechScheduleModule } from './modules/tech-schedule/tech-schedule.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { JobModule } from './modules/job/job.module';
     AuthorizationModule,
     LoggerModule,
     ApiModule,
+    TechScheduleModule,
     // JobModule,
   ],
 })

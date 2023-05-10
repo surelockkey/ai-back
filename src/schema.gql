@@ -23,6 +23,12 @@ input CreateJobDto {
   State: String!
 }
 
+input CreateTechScheduleDto {
+  tech_id: String!
+  work_from: Int!
+  work_to: Int!
+}
+
 type CtmCall {
   account_id: Int!
   billed_amount: Int!
@@ -206,8 +212,10 @@ type Mutation {
   acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
   assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
+  createManyTechsSchedules(techs_schedules: [CreateTechScheduleDto!]!): [TechSchedule!]!
   createNewJobWorkiz(createJobDto: CreateJobDto!): SendDto!
   createSystemSettings(max_tokens: Int!): SystemSettings!
+  createTechSchedule(tech_schedule: CreateTechScheduleDto!): TechSchedule!
   deleteFineTuneItem(id: ID!): ID!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
   inviteUserToApp(email: String!): InvitedUser!
@@ -219,7 +227,9 @@ type Mutation {
   sendMessageToOpenAi(message: String!): String!
   startFineTune: FineTune!
   updateFineTuneItem(fine_tune_item: UpdateFineTuneItemDto!): FineTuneItem!
+  updateManyTechsSchedules(techs_schedules: [UpdateTechScheduleDto!]!): [TechSchedule!]!
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
+  updateTechSchedule(tech_schedule: UpdateTechScheduleDto!): TechSchedule!
 }
 
 type OpenAiFile {
@@ -248,6 +258,11 @@ type OpenAiFineTuneEvent {
   message: String!
 }
 
+type PaginatedJobDto {
+  has_more: Boolean!
+  items: [JobDto!]!
+}
+
 type Query {
   getAllFiles: [OpenAiFile!]!
   getAllJobsWorkiz(
@@ -255,7 +270,7 @@ type Query {
 
     """Max 100"""
     records: Int!
-  ): [JobDto!]!
+  ): PaginatedJobDto!
   getAllMessages: [Message!]!
   getAllTechsWorkiz: [TechnicianWorkiz!]!
   getAllUsers: [User!]!
@@ -333,6 +348,12 @@ input UpdateFineTuneItemDto {
 
 input UpdateSystemSettingsDto {
   max_tokens: Int!
+}
+
+input UpdateTechScheduleDto {
+  id: ID!
+  work_from: Int
+  work_to: Int
 }
 
 type User {

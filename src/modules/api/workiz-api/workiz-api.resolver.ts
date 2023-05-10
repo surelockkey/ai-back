@@ -1,5 +1,10 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { TechnicianWorkiz, CreateJobDto, JobDto } from './dto/workiz-api.dto';
+import {
+  TechnicianWorkiz,
+  CreateJobDto,
+  JobDto,
+  PaginatedJobDto,
+} from './dto/workiz-api.dto';
 import { WorkizApiService } from './workiz-api.service';
 import { SendDto } from '@tech-slk/nest-crud';
 import { UseGuards } from '@nestjs/common';
@@ -41,12 +46,12 @@ export class WorkizApiResolver {
   }
 
   @UseGuards(GqlAuthGuard)
-  @Query(() => [JobDto])
+  @Query(() => PaginatedJobDto)
   async getAllJobsWorkiz(
     @Args('records', { type: () => Int, description: 'Max 100' })
     records: number,
     @Args('offset', { type: () => Int }) offset: number,
-  ): Promise<JobDto[]> {
+  ): Promise<PaginatedJobDto> {
     return await this.workizApiService.getAllJobsWorkiz(records, offset);
   }
 

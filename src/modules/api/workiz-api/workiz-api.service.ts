@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { SendDto } from '@tech-slk/nest-crud';
-import { TechnicianWorkiz, CreateJobDto, JobDto } from './dto/workiz-api.dto';
+import {
+  TechnicianWorkiz,
+  CreateJobDto,
+  JobDto,
+  PaginatedJobDto,
+} from './dto/workiz-api.dto';
 
 @Injectable()
 export class WorkizApiService {
@@ -59,28 +64,25 @@ export class WorkizApiService {
   public async getAllJobsWorkiz(
     records: number,
     offset: number,
-  ): Promise<JobDto[]> {
-    const jobs: JobDto[] = await axios
-      .get(
-        `${this.apiLink}/job/all/?offset=${offset}&records=${records}`,
-        // `${this.apiLink}/job/all/?start_date=YYYY-mm-dd&offset=${offset}&records=${records}`,
-      )
+  ): Promise<PaginatedJobDto> {
+    const res: { items: JobDto[]; has_more: boolean } = await axios
+      .get(`${this.apiLink}/job/all/?offset=${offset}&records=${records}`)
       .then((result) => {
-        console.log(result.data.data.length);
+        return {
+          items: result.data.data,
+          has_more: result.data.has_more,
+        };
+      });
 
-        return result.data.data;
-      })
-      .catch((err) => console.log(err));
-
-    return jobs.map((job) => {
-      console.log(job.CreatedDate);
-
-      if (Array.isArray(job.Comments)) {
-        job.Comments = job.Comments.join(', ');
-      }
-
-      return job;
-    });
+    return {
+      ...res,
+      items: res.items.map((job) => {
+        if (Array.isArray(job.Comments)) {
+          job.Comments = job.Comments.join(', ');
+        }
+        return job;
+      }),
+    };
   }
 
   public async getAllLeadsWorkiz(): Promise<JobDto[]> {
