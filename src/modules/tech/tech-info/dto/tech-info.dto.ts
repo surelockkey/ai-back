@@ -16,5 +16,5 @@ export class CreateTechInfoDto extends OmitType(TechInfoInput, ['id']) {}
 @InputType()
 export class UpdateTechInfoDto extends IntersectionType(
   PickType(TechInfoInput, ['id']),
-  PartialType(OmitType(TechInfoInput, ['id'])),
+  PartialType(OmitType(TechInfoInput, ['id', 'tech_id'])),
 ) {}

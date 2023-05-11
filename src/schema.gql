@@ -249,9 +249,9 @@ type Mutation {
   createTechFromWorkiz(workiz_id: String!): Tech!
   createTechInfo(tech_info: CreateTechInfoDto!): TechInfo!
   createTechSchedule(tech_schedule: CreateTechScheduleDto!): TechSchedule!
-  deleteDeleteTechInfo(id: ID!): ID!
   deleteFineTuneItem(id: ID!): ID!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
+  deleteTechInfo(id: ID!): ID!
   inviteUserToApp(email: String!): InvitedUser!
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!
@@ -420,7 +420,6 @@ input UpdateTechDto {
 input UpdateTechInfoDto {
   id: ID!
   key: String
-  tech_id: ID
   value: String
 }
 

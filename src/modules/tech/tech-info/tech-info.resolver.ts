@@ -16,7 +16,7 @@ export class TechInfoResolver {
   }
 
   @Mutation(() => ID)
-  deleteDeleteTechInfo(@Args('id', { type: () => ID }) id: string) {
+  deleteTechInfo(@Args('id', { type: () => ID }) id: string) {
     return this.techInfoService.deleteByIdReturnId(id);
   }
 
