@@ -31,6 +31,12 @@ input CreateTechDto {
   workiz_id: String
 }
 
+input CreateTechInfoDto {
+  key: String!
+  tech_id: ID!
+  value: String!
+}
+
 input CreateTechScheduleDto {
   tech_id: ID!
   work_from: Int!
@@ -241,7 +247,9 @@ type Mutation {
   createSystemSettings(max_tokens: Int!): SystemSettings!
   createTech(tech: CreateTechDto!): Tech!
   createTechFromWorkiz(workiz_id: String!): Tech!
+  createTechInfo(tech_info: CreateTechInfoDto!): TechInfo!
   createTechSchedule(tech_schedule: CreateTechScheduleDto!): TechSchedule!
+  deleteDeleteTechInfo(id: ID!): ID!
   deleteFineTuneItem(id: ID!): ID!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
   inviteUserToApp(email: String!): InvitedUser!
@@ -256,6 +264,7 @@ type Mutation {
   updateManyTechsSchedules(techs_schedules: [UpdateTechScheduleDto!]!): [TechSchedule!]!
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
   updateTech(tech: UpdateTechDto!): Tech!
+  updateTechInfo(tech_info: UpdateTechInfoDto!): TechInfo!
   updateTechSchedule(tech_schedule: UpdateTechScheduleDto!): TechSchedule!
 }
 
@@ -340,10 +349,18 @@ type SystemSettings {
 type Tech {
   email: String!
   id: ID!
+  info: [TechInfo!]!
   name: String!
   service_areas: [String!]
   skills: [String!]
   workiz_id: String
+}
+
+type TechInfo {
+  id: ID!
+  key: String!
+  tech_id: ID!
+  value: String!
 }
 
 type TechSchedule {
@@ -356,6 +373,7 @@ type TechSchedule {
 type TechWithSchedule {
   email: String!
   id: ID!
+  info: [TechInfo!]!
   name: String!
   schedules: [TechSchedule!]!
   service_areas: [String!]
@@ -397,6 +415,13 @@ input UpdateTechDto {
   service_areas: [String!]
   skills: [String!]
   workiz_id: String
+}
+
+input UpdateTechInfoDto {
+  id: ID!
+  key: String
+  tech_id: ID
+  value: String
 }
 
 input UpdateTechScheduleDto {

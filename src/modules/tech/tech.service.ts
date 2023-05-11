@@ -33,6 +33,7 @@ export class TechService extends CrudService<Tech> {
   public async getTechsWithSchedule(from: number, to: number) {
     return await this.techRepository
       .createQueryBuilder('tech')
+      .leftJoinAndSelect('tech.info', 'tech-info')
       .leftJoinAndSelect(
         'tech.schedules',
         'tech-schedule',
