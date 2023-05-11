@@ -1,7 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-export class TechSchedule {
+export class GoogleSheetsTechSchedule {
   @Field(() => String)
   name: string;
 

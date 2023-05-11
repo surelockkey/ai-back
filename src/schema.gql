@@ -32,14 +32,14 @@ input CreateTechDto {
 }
 
 input CreateTechScheduleDto {
-  tech_id: String!
+  tech_id: ID!
   work_from: Int!
   work_to: Int!
 }
 
 type CtmCall {
   account_id: Int!
-  audio: String!
+  audio: String
   billed_amount: Int!
   billed_at: String!
   call_status: String!
@@ -51,7 +51,7 @@ type CtmCall {
   day: String!
   dial_status: String!
   direction: String!
-  duration: Int!
+  duration: Int
   hold_time: Int!
   hour: String!
   id: Int!
@@ -120,6 +120,21 @@ type FineTuneItem {
   id: ID!
   prompt: String!
   text: String!
+}
+
+type GoogleSheetsTechSchedule {
+  active_state: String!
+  friday: String
+  monday: String
+  name: String!
+  note: String
+  saturday: String
+  sunday: String
+  thursday: String
+  tuesday: String
+  wednesday: String
+  week_end: String
+  week_start: String
 }
 
 type InvitedUser {
@@ -296,7 +311,8 @@ type Query {
   getLogs(pagination: FindPaginationDto!): LogsPaginated!
   getSheet(col: String!, row: String!, sheet_id: String!, tab_name: String!): [[String!]!]!
   getSystemSettings: SystemSettings!
-  getTechsSchedule: [TechSchedule!]!
+  getTechsSchedule: [GoogleSheetsTechSchedule!]!
+  getTechsWithSchedule(from: Int!, to: Int!): [TechWithSchedule!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
@@ -331,18 +347,20 @@ type Tech {
 }
 
 type TechSchedule {
-  active_state: String!
-  friday: String
-  monday: String
+  id: ID!
+  tech_id: ID!
+  work_from: Int!
+  work_to: Int!
+}
+
+type TechWithSchedule {
+  email: String!
+  id: ID!
   name: String!
-  note: String
-  saturday: String
-  sunday: String
-  thursday: String
-  tuesday: String
-  wednesday: String
-  week_end: String
-  week_start: String
+  schedules: [TechSchedule!]!
+  service_areas: [String!]
+  skills: [String!]
+  workiz_id: String
 }
 
 type TechnicianWorkiz {

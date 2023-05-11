@@ -1,6 +1,6 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { GoogleSheetsApiService } from './google-sheets-api.service';
-import { TechSchedule } from './dto/tech-schedule.dto';
+import { GoogleSheetsTechSchedule } from './dto/tech-schedule.dto';
 
 @Resolver()
 export class GoogleSheetsApiResolver {
@@ -17,7 +17,7 @@ export class GoogleSheetsApiResolver {
     return this.googleSheetsApiService.getSheet(sheet_id, tab_name, col, row);
   }
 
-  @Query(() => [TechSchedule])
+  @Query(() => [GoogleSheetsTechSchedule])
   getTechsSchedule() {
     return this.googleSheetsApiService.getTechsSchedule();
   }

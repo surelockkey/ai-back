@@ -1,11 +1,12 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { TechScheduleService } from './tech-schedule.service';
-import { TechSchedule } from '../api/google-sheets-api/dto/tech-schedule.dto';
+// import { TechSchedule } from '../../api/google-sheets-api/dto/tech-schedule.dto';
 import {
   CreateTechScheduleDto,
   UpdateTechScheduleDto,
 } from './dto/tech-schedule.dto';
 import { In } from 'typeorm';
+import { TechSchedule } from './entity/tech-schedule.entity';
 
 @Resolver()
 export class TechScheduleResolver {

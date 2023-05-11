@@ -4,9 +4,14 @@ import { TechResolver } from './tech.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Tech } from './entity/tech.entity';
 import { WorkizApiModule } from '../api/workiz-api/workiz-api.module';
+import { TechScheduleModule } from './tech-schedule/tech-schedule.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Tech]), WorkizApiModule],
+  imports: [
+    TypeOrmModule.forFeature([Tech]),
+    TechScheduleModule,
+    WorkizApiModule,
+  ],
   providers: [TechService, TechResolver],
 })
 export class TechModule {}

@@ -1,7 +1,7 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TechService } from './tech.service';
 import { Tech } from './entity/tech.entity';
-import { CreateTechDto, UpdateTechDto } from './dto/tech.dto';
+import { CreateTechDto, TechWithSchedule, UpdateTechDto } from './dto/tech.dto';
 
 @Resolver()
 export class TechResolver {
@@ -25,5 +25,13 @@ export class TechResolver {
   @Mutation(() => Tech)
   createTechFromWorkiz(@Args('workiz_id') workiz_id: string) {
     return this.techService.createTechFromWorkiz(workiz_id);
+  }
+
+  @Query(() => [TechWithSchedule])
+  getTechsWithSchedule(
+    @Args('from', { type: () => Int }) from: number,
+    @Args('to', { type: () => Int }) to: number,
+  ) {
+    return this.techService.getTechsWithSchedule(from, to);
   }
 }

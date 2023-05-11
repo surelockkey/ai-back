@@ -1,6 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from '@tech-slk/nest-crud';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { TechSchedule } from '../tech-schedule/entity/tech-schedule.entity';
 
 @Entity('tech')
 @ObjectType()
@@ -24,4 +25,7 @@ export class Tech extends BaseEntity {
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   workiz_id?: string;
+
+  @OneToMany(() => TechSchedule, (tech_schedule) => tech_schedule.tech)
+  schedules: TechSchedule[];
 }

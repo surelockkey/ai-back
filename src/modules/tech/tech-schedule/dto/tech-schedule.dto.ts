@@ -20,3 +20,4 @@ export class UpdateTechScheduleDto extends IntersectionType(
   PickType(TechScheduleInput, ['id']),
   PartialType(OmitType(CreateTechScheduleDto, ['tech_id'])),
 ) {}
+

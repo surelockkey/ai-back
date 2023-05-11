@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleAuth } from 'google-auth-library';
 import { sheets } from 'googleapis/build/src/apis/sheets';
-import { TechSchedule } from './dto/tech-schedule.dto';
+import { GoogleSheetsTechSchedule } from './dto/tech-schedule.dto';
 
 @Injectable()
 export class GoogleSheetsApiService {
@@ -23,7 +23,7 @@ export class GoogleSheetsApiService {
     this.google_sheets = sheets({ version: 'v4', auth: auth_client });
   }
 
-  public async getTechsSchedule(): Promise<TechSchedule[]> {
+  public async getTechsSchedule(): Promise<GoogleSheetsTechSchedule[]> {
     const values = await this.getSheet(
       '1Tk9psKa1FaIw9DhttlI9dTV0rV6I29zinKROVCi2P_s',
       'Tech Weekly Schedule',

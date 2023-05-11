@@ -29,4 +29,19 @@ export class TechService extends CrudService<Tech> {
       workiz_id,
     });
   }
+
+  public async getTechsWithSchedule(from: number, to: number) {
+    return await this.techRepository
+      .createQueryBuilder('tech')
+      .leftJoinAndSelect(
+        'tech.schedules',
+        'tech-schedule',
+        'tech-schedule.work_from BETWEEN :from AND :to OR tech-schedule.work_to BETWEEN :from AND :to',
+        {
+          from,
+          to,
+        },
+      )
+      .getMany();
+  }
 }
