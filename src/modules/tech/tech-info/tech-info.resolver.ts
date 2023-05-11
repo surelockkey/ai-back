@@ -1,7 +1,11 @@
 import { Args, ID, Mutation, Resolver } from '@nestjs/graphql';
 import { TechInfoService } from './tech-info.service';
 import { TechInfo } from './entity/tech-info.entity';
-import { CreateTechInfoDto, UpdateTechInfoDto } from './dto/tech-info.dto';
+import {
+  CreateOrUpdateTechInfoDto,
+  CreateTechInfoDto,
+  UpdateTechInfoDto,
+} from './dto/tech-info.dto';
 
 @Resolver()
 export class TechInfoResolver {
@@ -26,5 +30,13 @@ export class TechInfoResolver {
     tech_info: UpdateTechInfoDto,
   ) {
     return this.techInfoService.updateAndReturn(tech_info.id, tech_info);
+  }
+
+  @Mutation(() => [TechInfo])
+  createOrUpdateTechInfo(
+    @Args('tech_infos', { type: () => [CreateOrUpdateTechInfoDto] })
+    tech_infos: CreateOrUpdateTechInfoDto,
+  ) {
+    return this.techInfoService.createOrUpdateTechInfo(tech_infos);
   }
 }

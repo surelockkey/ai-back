@@ -11,7 +11,7 @@ import { Tech } from '../entity/tech.entity';
 import { TechSchedule } from '../tech-schedule/entity/tech-schedule.entity';
 
 @InputType()
-export class TechInput extends OmitType(Tech, ['schedules', 'info']) {}
+export class TechInput extends OmitType(Tech, ['schedules', 'info', 'notes']) {}
 
 @InputType()
 export class CreateTechDto extends OmitType(TechInput, ['id']) {}

@@ -35,6 +35,11 @@ export class TechService extends CrudService<Tech> {
       .createQueryBuilder('tech')
       .leftJoinAndSelect('tech.info', 'tech-info')
       .leftJoinAndSelect(
+        'tech.notes',
+        'tech-note',
+        'tech-note.week_start = :from AND tech-note.week_end = :to',
+      )
+      .leftJoinAndSelect(
         'tech.schedules',
         'tech-schedule',
         'tech-schedule.work_from BETWEEN :from AND :to OR tech-schedule.work_to BETWEEN :from AND :to',

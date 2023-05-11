@@ -3,6 +3,7 @@ import { BaseEntity } from '@tech-slk/nest-crud';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { TechSchedule } from '../tech-schedule/entity/tech-schedule.entity';
 import { TechInfo } from '../tech-info/entity/tech-info.entity';
+import { TechNote } from '../tech-note/entity/tech-note.entity';
 
 @Entity('tech')
 @ObjectType()
@@ -33,4 +34,8 @@ export class Tech extends BaseEntity {
   @Field(() => [TechInfo])
   @OneToMany(() => TechInfo, (tech_info) => tech_info.tech, { eager: true })
   info: TechInfo[];
+
+  @Field(() => [TechNote])
+  @OneToMany(() => TechNote, (tech_note) => tech_note.tech, { eager: true })
+  notes: TechNote[];
 }
