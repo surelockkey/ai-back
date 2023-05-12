@@ -31,7 +31,17 @@ export class TechResolver {
   getTechsWithSchedule(
     @Args('from', { type: () => Int }) from: number,
     @Args('to', { type: () => Int }) to: number,
+    @Args('search_value', { nullable: true }) search_value?: string,
+    @Args('is_available', { nullable: true, type: () => Boolean })
+    is_available?: boolean,
+    @Args('state', { nullable: true }) state?: string,
   ) {
-    return this.techService.getTechsWithSchedule(from, to);
+    return this.techService.getTechsWithSchedule(
+      from,
+      to,
+      search_value,
+      is_available,
+      state,
+    );
   }
 }

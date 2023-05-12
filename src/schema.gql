@@ -35,6 +35,7 @@ input CreateTechDto {
   name: String!
   service_areas: [String!]
   skills: [String!]
+  state: String
   workiz_id: String
 }
 
@@ -339,7 +340,7 @@ type Query {
   getSheet(col: String!, row: String!, sheet_id: String!, tab_name: String!): [[String!]!]!
   getSystemSettings: SystemSettings!
   getTechsSchedule: [GoogleSheetsTechSchedule!]!
-  getTechsWithSchedule(from: Int!, to: Int!): [TechWithSchedule!]!
+  getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, state: String, to: Int!): [TechWithSchedule!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
@@ -372,6 +373,7 @@ type Tech {
   notes: [TechNote!]!
   service_areas: [String!]
   skills: [String!]
+  state: String
   workiz_id: String
 }
 
@@ -406,6 +408,7 @@ type TechWithSchedule {
   schedules: [TechSchedule!]!
   service_areas: [String!]
   skills: [String!]
+  state: String
   workiz_id: String
 }
 
@@ -442,6 +445,7 @@ input UpdateTechDto {
   name: String
   service_areas: [String!]
   skills: [String!]
+  state: String
   workiz_id: String
 }
 

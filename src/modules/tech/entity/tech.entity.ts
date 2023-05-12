@@ -28,6 +28,10 @@ export class Tech extends BaseEntity {
   @Column({ nullable: true })
   workiz_id?: string;
 
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  state: string;
+
   @OneToMany(() => TechSchedule, (tech_schedule) => tech_schedule.tech)
   schedules: TechSchedule[];
 

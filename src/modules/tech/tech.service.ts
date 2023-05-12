@@ -4,6 +4,7 @@ import { Tech } from './entity/tech.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WorkizApiService } from '../api/workiz-api/workiz-api.service';
+import * as moment from 'moment';
 
 @Injectable()
 export class TechService extends CrudService<Tech> {
@@ -30,8 +31,16 @@ export class TechService extends CrudService<Tech> {
     });
   }
 
-  public async getTechsWithSchedule(from: number, to: number) {
-    return await this.techRepository
+  public async getTechsWithSchedule(
+    from: number,
+    to: number,
+    search_value?: string,
+    is_available?: boolean,
+    state?: string,
+  ) {
+    const date = moment().unix();
+
+    const queryBuilder = await this.techRepository
       .createQueryBuilder('tech')
       .leftJoinAndSelect('tech.info', 'tech-info')
       .leftJoinAndSelect(
@@ -47,7 +56,36 @@ export class TechService extends CrudService<Tech> {
           from,
           to,
         },
-      )
-      .getMany();
+      );
+
+    if (search_value) {
+      queryBuilder.where('tech.name LIKE :search_value', {
+        search_value: `%${search_value}%`,
+      });
+    }
+
+    if (typeof is_available === 'boolean') {
+      if (is_available) {
+        queryBuilder.andWhere(
+          ':date BETWEEN tech-schedule.work_from AND tech-schedule.work_to',
+          {
+            date,
+          },
+        );
+      } else {
+        queryBuilder.andWhere(
+          ':date NOT BETWEEN tech-schedule.work_from AND tech-schedule.work_to',
+          {
+            date,
+          },
+        );
+      }
+    }
+
+    if (state) {
+      queryBuilder.andWhere('tech.state = :state', { state });
+    }
+
+    return await queryBuilder.getMany();
   }
 }
