@@ -1,7 +1,11 @@
 import { Args, ID, Mutation, Resolver } from '@nestjs/graphql';
 import { TechNoteService } from './tech-note.service';
 import { TechNote } from './entity/tech-note.entity';
-import { CreateTechNoteDto, UpdateTechNoteDto } from './dto/tech-note.dto';
+import {
+  CreateOrUpdateTechNoteDto,
+  CreateTechNoteDto,
+  UpdateTechNoteDto,
+} from './dto/tech-note.dto';
 import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
 import { UserRole } from 'src/modules/user/enum/user-role.enum';
 
@@ -29,5 +33,13 @@ export class TechNoteResolver {
   @Mutation(() => ID)
   deleteTechNote(@Args('id', { type: () => ID }) id: string) {
     return this.techNoteService.deleteById(id);
+  }
+
+  @Mutation(() => TechNote)
+  createOrUpdateTechNote(
+    @Args('tech_note', { type: () => CreateOrUpdateTechNoteDto })
+    tech_note: CreateOrUpdateTechNoteDto,
+  ) {
+    return this.techNoteService.createOrUpdateTechNote(tech_note);
   }
 }
