@@ -18,3 +18,6 @@ export class UpdateTechNoteDto extends IntersectionType(
   PickType(TechNoteInput, ['id']),
   PartialType(OmitType(TechNoteInput, ['id', 'tech_id'])),
 ) {}
+
+// @InputType()
+// export class CreateOr

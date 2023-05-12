@@ -270,6 +270,7 @@ type Mutation {
   deleteManyUsers(user_ids: [ID!]!): [String!]!
   deleteTechInfo(id: ID!): ID!
   deleteTechNote(id: ID!): ID!
+  deleteTechSchedule(id: ID!): ID!
   inviteUserToApp(email: String!): InvitedUser!
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!

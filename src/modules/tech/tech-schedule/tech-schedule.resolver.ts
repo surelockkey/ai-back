@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Resolver } from '@nestjs/graphql';
 import { TechScheduleService } from './tech-schedule.service';
 // import { TechSchedule } from '../../api/google-sheets-api/dto/tech-schedule.dto';
 import {
@@ -45,5 +45,10 @@ export class TechScheduleResolver {
     techs_schedules: UpdateTechScheduleDto[],
   ) {
     return this.techScheduleService.updateManyTechsSchedules(techs_schedules);
+  }
+
+  @Mutation(() => ID)
+  deleteTechSchedule(@Args('id', { type: () => ID }) id: string) {
+    return this.techScheduleService.deleteByIdReturnId(id);
   }
 }
