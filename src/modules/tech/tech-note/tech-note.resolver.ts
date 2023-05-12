@@ -2,11 +2,14 @@ import { Args, ID, Mutation, Resolver } from '@nestjs/graphql';
 import { TechNoteService } from './tech-note.service';
 import { TechNote } from './entity/tech-note.entity';
 import { CreateTechNoteDto, UpdateTechNoteDto } from './dto/tech-note.dto';
+import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
+import { UserRole } from 'src/modules/user/enum/user-role.enum';
 
 @Resolver()
 export class TechNoteResolver {
   constructor(private readonly techNoteService: TechNoteService) {}
 
+  @RoleGuard(UserRole.ADMIN, UserRole.DISPATCHER)
   @Mutation(() => TechNote)
   createTechNote(
     @Args('tech_note', { type: () => CreateTechNoteDto })
