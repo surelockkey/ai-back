@@ -28,6 +28,7 @@ def prod_secrets = [
         [envVar: 'CTM_PASSWORD', vaultKey: 'CTM_PASSWORD'],
         [envVar: 'CTM_API_URL', vaultKey: 'CTM_API_URL'],
         [envVar: 'CTM_ACCOUNT_ID', vaultKey: 'CTM_ACCOUNT_ID'],
+        [envVar: 'TOKEN_WORKIZ', vaultKey: 'TOKEN_WORKIZ'],
     ]],
 ]
 
