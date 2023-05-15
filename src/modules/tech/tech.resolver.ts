@@ -1,9 +1,10 @@
-import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TechService } from './tech.service';
 import { Tech } from './entity/tech.entity';
 import { CreateTechDto, TechWithSchedule, UpdateTechDto } from './dto/tech.dto';
 import { TechnicianWorkiz } from '../api/workiz-api/dto/workiz-api.dto';
 import { CreateTechFromWorkizDto } from './dto/workiz-tech.dto';
+import { StateWithTechs } from './dto/state-with-techs.dto';
 
 @Resolver()
 export class TechResolver {
@@ -40,7 +41,12 @@ export class TechResolver {
     return this.techService.createManyTechsFromWorkiz(techs);
   }
 
-  @Query(() => [TechWithSchedule])
+  @Mutation(() => ID)
+  deleteTechById(@Args('id', { type: () => ID }) id: string) {
+    return this.techService.deleteByIdReturnId(id);
+  }
+
+  @Query(() => [StateWithTechs])
   getTechsWithSchedule(
     @Args('from', { type: () => Int }) from: number,
     @Args('to', { type: () => Int }) to: number,

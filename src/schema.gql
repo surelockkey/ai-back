@@ -284,6 +284,7 @@ type Mutation {
   createTechSchedule(tech_schedule: CreateTechScheduleDto!): TechSchedule!
   deleteFineTuneItem(id: ID!): ID!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
+  deleteTechById(id: ID!): ID!
   deleteTechInfo(id: ID!): ID!
   deleteTechNote(id: ID!): ID!
   deleteTechSchedule(id: ID!): ID!
@@ -357,7 +358,7 @@ type Query {
   getSheet(col: String!, row: String!, sheet_id: String!, tab_name: String!): [[String!]!]!
   getSystemSettings: SystemSettings!
   getTechsSchedule: [GoogleSheetsTechSchedule!]!
-  getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, state: String, to: Int!): [TechWithSchedule!]!
+  getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, state: String, to: Int!): [StateWithTechs!]!
   getTechsWorkizWithoutAdded: [TechnicianWorkiz!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
@@ -375,6 +376,11 @@ input RegistrationDto {
 type SendDto {
   message: String
   status: Float
+}
+
+type StateWithTechs {
+  state: String!
+  techs: [TechWithSchedule!]!
 }
 
 type SystemSettings {
