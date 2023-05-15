@@ -34,13 +34,14 @@ export class SystemSettingsResolver {
     { user_id }: CurrentUserDto,
   ) {
     return this.loggerService.actionLog({
-      callback: () => this.systemSettingsService.updateByCriteriaAndReturnOne(
-        {},
-        system_settings,
-      ),
+      callback: () =>
+        this.systemSettingsService.updateByCriteriaAndReturnOne(
+          {},
+          system_settings,
+        ),
       user_id,
       action: `Tried update application settings`,
-    })
+    });
   }
 
   @Query(() => SystemSettings)

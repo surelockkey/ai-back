@@ -38,8 +38,6 @@ export class TechService extends CrudService<Tech> {
     is_available?: boolean,
     state?: string,
   ) {
-    const date = moment().unix();
-
     const queryBuilder = await this.techRepository
       .createQueryBuilder('tech')
       .leftJoinAndSelect('tech.info', 'tech-info')
@@ -65,6 +63,8 @@ export class TechService extends CrudService<Tech> {
     }
 
     if (typeof is_available === 'boolean') {
+      const date = moment().unix();
+
       if (is_available) {
         queryBuilder.andWhere(
           ':date BETWEEN tech-schedule.work_from AND tech-schedule.work_to',
@@ -74,7 +74,7 @@ export class TechService extends CrudService<Tech> {
         );
       } else {
         queryBuilder.andWhere(
-          ':date NOT BETWEEN tech-schedule.work_from AND tech-schedule.work_to',
+          '(:date NOT BETWEEN tech-schedule.work_from AND tech-schedule.work_to OR tech-schedule.id IS NULL)',
           {
             date,
           },
@@ -86,6 +86,6 @@ export class TechService extends CrudService<Tech> {
       queryBuilder.andWhere('tech.state = :state', { state });
     }
 
-    return await queryBuilder.getMany();
+    return await queryBuilder.orderBy('tech.name', 'ASC').getMany();
   }
 }
