@@ -3,6 +3,7 @@ import { TechService } from './tech.service';
 import { Tech } from './entity/tech.entity';
 import { CreateTechDto, TechWithSchedule, UpdateTechDto } from './dto/tech.dto';
 import { TechnicianWorkiz } from '../api/workiz-api/dto/workiz-api.dto';
+import { CreateTechFromWorkizDto } from './dto/workiz-tech.dto';
 
 @Resolver()
 export class TechResolver {
@@ -28,7 +29,15 @@ export class TechResolver {
     @Args('workiz_id') workiz_id: string,
     @Args('state', { nullable: true }) state?: string,
   ) {
-    return this.techService.createTechFromWorkiz(workiz_id);
+    return this.techService.createTechFromWorkiz(workiz_id, state);
+  }
+
+  @Mutation(() => [Tech])
+  createManyTechsFromWorkiz(
+    @Args('techs', { type: () => [CreateTechFromWorkizDto] })
+    techs: CreateTechFromWorkizDto[],
+  ) {
+    return this.techService.createManyTechsFromWorkiz(techs);
   }
 
   @Query(() => [TechWithSchedule])

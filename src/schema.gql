@@ -47,6 +47,11 @@ input CreateTechDto {
   workiz_id: String
 }
 
+input CreateTechFromWorkizDto {
+  state: String
+  workiz_id: String!
+}
+
 input CreateTechInfoDto {
   key: String!
   tech_id: ID!
@@ -266,6 +271,7 @@ type Mutation {
   acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
   assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
+  createManyTechsFromWorkiz(techs: [CreateTechFromWorkizDto!]!): [Tech!]!
   createManyTechsSchedules(techs_schedules: [CreateTechScheduleDto!]!): [TechSchedule!]!
   createNewJobWorkiz(createJobDto: CreateJobDto!): SendDto!
   createOrUpdateTechInfo(tech_infos: [CreateOrUpdateTechInfoDto!]!): [TechInfo!]!

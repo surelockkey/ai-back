@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WorkizApiService } from '../api/workiz-api/workiz-api.service';
 import * as moment from 'moment';
+import { CreateTechFromWorkizDto } from './dto/workiz-tech.dto';
 
 @Injectable()
 export class TechService extends CrudService<Tech> {
@@ -23,6 +24,27 @@ export class TechService extends CrudService<Tech> {
 
     return workiz_techs.filter(
       (tech) => !our_techs_workiz_ids.includes(tech.id),
+    );
+  }
+
+  public async createManyTechsFromWorkiz(techs: CreateTechFromWorkizDto[]) {
+    const all_workiz_techs = await this.workizApiService.getAllTechWorkiz();
+
+    return await this.techRepository.save(
+      techs.map(({ workiz_id, state }) => {
+        const { email, name, serviceAreas, skills } = all_workiz_techs.find(
+          (tech) => tech.id === workiz_id,
+        );
+
+        return {
+          email,
+          name,
+          service_areas: serviceAreas,
+          skills,
+          workiz_id,
+          state,
+        };
+      }),
     );
   }
 
