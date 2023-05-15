@@ -15,6 +15,17 @@ export class TechService extends CrudService<Tech> {
     super(techRepository);
   }
 
+  public async getTechsWorkizWithoutAdded() {
+    const workiz_techs = await this.workizApiService.getAllTechWorkiz();
+    const our_techs = await this.techRepository.find();
+
+    const our_techs_workiz_ids = our_techs.map((tech) => tech.workiz_id);
+
+    return workiz_techs.filter(
+      (tech) => !our_techs_workiz_ids.includes(tech.id),
+    );
+  }
+
   public async createTechFromWorkiz(workiz_id: string) {
     const all_workiz_techs = await this.workizApiService.getAllTechWorkiz();
 

@@ -351,6 +351,7 @@ type Query {
   getSystemSettings: SystemSettings!
   getTechsSchedule: [GoogleSheetsTechSchedule!]!
   getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, state: String, to: Int!): [TechWithSchedule!]!
+  getTechsWorkizWithoutAdded: [TechnicianWorkiz!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!

@@ -2,6 +2,7 @@ import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TechService } from './tech.service';
 import { Tech } from './entity/tech.entity';
 import { CreateTechDto, TechWithSchedule, UpdateTechDto } from './dto/tech.dto';
+import { TechnicianWorkiz } from '../api/workiz-api/dto/workiz-api.dto';
 
 @Resolver()
 export class TechResolver {
@@ -43,5 +44,10 @@ export class TechResolver {
       is_available,
       state,
     );
+  }
+
+  @Query(() => [TechnicianWorkiz])
+  getTechsWorkizWithoutAdded() {
+    return this.techService.getTechsWorkizWithoutAdded();
   }
 }
