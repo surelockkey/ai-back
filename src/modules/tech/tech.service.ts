@@ -26,7 +26,7 @@ export class TechService extends CrudService<Tech> {
     );
   }
 
-  public async createTechFromWorkiz(workiz_id: string) {
+  public async createTechFromWorkiz(workiz_id: string, state?: string) {
     const all_workiz_techs = await this.workizApiService.getAllTechWorkiz();
 
     const { email, name, serviceAreas, skills } = all_workiz_techs.find(
@@ -39,6 +39,7 @@ export class TechService extends CrudService<Tech> {
       service_areas: serviceAreas,
       skills,
       workiz_id,
+      state,
     });
   }
 

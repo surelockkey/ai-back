@@ -24,7 +24,10 @@ export class TechResolver {
   }
 
   @Mutation(() => Tech)
-  createTechFromWorkiz(@Args('workiz_id') workiz_id: string) {
+  createTechFromWorkiz(
+    @Args('workiz_id') workiz_id: string,
+    @Args('state', { nullable: true }) state?: string,
+  ) {
     return this.techService.createTechFromWorkiz(workiz_id);
   }
 

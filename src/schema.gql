@@ -272,7 +272,7 @@ type Mutation {
   createOrUpdateTechNote(tech_note: CreateOrUpdateTechNoteDto!): TechNote!
   createSystemSettings(max_tokens: Int!): SystemSettings!
   createTech(tech: CreateTechDto!): Tech!
-  createTechFromWorkiz(workiz_id: String!): Tech!
+  createTechFromWorkiz(state: String, workiz_id: String!): Tech!
   createTechInfo(tech_info: CreateTechInfoDto!): TechInfo!
   createTechNote(tech_note: CreateTechNoteDto!): TechNote!
   createTechSchedule(tech_schedule: CreateTechScheduleDto!): TechSchedule!
