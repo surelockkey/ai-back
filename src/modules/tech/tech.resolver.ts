@@ -45,6 +45,12 @@ export class TechResolver {
     return this.techService.deleteByIdReturnId(id);
   }
 
+  @Mutation(() => [ID])
+  async deleteManyTechsByIds(@Args('ids', { type: () => [ID] }) ids: string[]) {
+    await this.techService.deleteManyByIds(ids);
+    return ids;
+  }
+
   @Query(() => [TechWithSchedule])
   getTechsWithSchedule(
     @Args('from', { type: () => Int }) from: number,
