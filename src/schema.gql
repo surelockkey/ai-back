@@ -358,7 +358,7 @@ type Query {
   getSheet(col: String!, row: String!, sheet_id: String!, tab_name: String!): [[String!]!]!
   getSystemSettings: SystemSettings!
   getTechsSchedule: [GoogleSheetsTechSchedule!]!
-  getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, state: String, to: Int!): [StateWithTechs!]!
+  getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, state: String, to: Int!): [TechWithSchedule!]!
   getTechsWorkizWithoutAdded: [TechnicianWorkiz!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
@@ -376,11 +376,6 @@ input RegistrationDto {
 type SendDto {
   message: String
   status: Float
-}
-
-type StateWithTechs {
-  state: String!
-  techs: [TechWithSchedule!]!
 }
 
 type SystemSettings {

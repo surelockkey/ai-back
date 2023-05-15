@@ -121,15 +121,6 @@ export class TechService extends CrudService<Tech> {
       queryBuilder.andWhere('tech.state = :state', { state });
     }
 
-    const techs = await queryBuilder.orderBy('tech.name', 'ASC').getMany();
-
-    return (
-      _.chain(techs)
-        // Group the elements of Array based on `color` property
-        .groupBy('state')
-        // `key` is group's name (color), `value` is the array of objects
-        .map((value, key) => ({ state: key, techs: value }))
-        .value()
-    );
+    return await queryBuilder.orderBy('tech.name', 'ASC').getMany();
   }
 }

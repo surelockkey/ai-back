@@ -4,7 +4,6 @@ import { Tech } from './entity/tech.entity';
 import { CreateTechDto, TechWithSchedule, UpdateTechDto } from './dto/tech.dto';
 import { TechnicianWorkiz } from '../api/workiz-api/dto/workiz-api.dto';
 import { CreateTechFromWorkizDto } from './dto/workiz-tech.dto';
-import { StateWithTechs } from './dto/state-with-techs.dto';
 
 @Resolver()
 export class TechResolver {
@@ -46,7 +45,7 @@ export class TechResolver {
     return this.techService.deleteByIdReturnId(id);
   }
 
-  @Query(() => [StateWithTechs])
+  @Query(() => [TechWithSchedule])
   getTechsWithSchedule(
     @Args('from', { type: () => Int }) from: number,
     @Args('to', { type: () => Int }) to: number,
