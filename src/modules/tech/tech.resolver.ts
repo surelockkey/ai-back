@@ -52,14 +52,14 @@ export class TechResolver {
     @Args('search_value', { nullable: true }) search_value?: string,
     @Args('is_available', { nullable: true, type: () => Boolean })
     is_available?: boolean,
-    @Args('state', { nullable: true }) state?: string,
+    @Args('states', { nullable: true, type: () => [String] }) states?: string[],
   ) {
     return this.techService.getTechsWithSchedule(
       from,
       to,
       search_value,
       is_available,
-      state,
+      states,
     );
   }
 

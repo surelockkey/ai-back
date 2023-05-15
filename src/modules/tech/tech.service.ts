@@ -71,7 +71,7 @@ export class TechService extends CrudService<Tech> {
     to: number,
     search_value?: string,
     is_available?: boolean,
-    state?: string,
+    states?: string[],
   ) {
     const queryBuilder = await this.techRepository
       .createQueryBuilder('tech')
@@ -117,8 +117,8 @@ export class TechService extends CrudService<Tech> {
       }
     }
 
-    if (state) {
-      queryBuilder.andWhere('tech.state = :state', { state });
+    if (states && states.length) {
+      queryBuilder.andWhere('tech.state IN (:...states)', { states });
     }
 
     return await queryBuilder.orderBy('tech.name', 'ASC').getMany();

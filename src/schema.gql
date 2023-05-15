@@ -358,7 +358,7 @@ type Query {
   getSheet(col: String!, row: String!, sheet_id: String!, tab_name: String!): [[String!]!]!
   getSystemSettings: SystemSettings!
   getTechsSchedule: [GoogleSheetsTechSchedule!]!
-  getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, state: String, to: Int!): [TechWithSchedule!]!
+  getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, states: [String!], to: Int!): [TechWithSchedule!]!
   getTechsWorkizWithoutAdded: [TechnicianWorkiz!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
