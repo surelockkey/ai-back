@@ -31,7 +31,20 @@ export class AuthorizationService extends NestAuthService<
     super(tokenService, userService);
   }
 
-  public async inviteUserToApp(email: string): Promise<InvitedUser> {
+  public async inviteUserToApp(
+    email: string,
+    role: UserRole,
+    current_user_id: string,
+  ): Promise<InvitedUser> {
+    const current_user = await this.userService.findOneById(current_user_id);
+
+    if (
+      current_user.role === UserRole.MAIN_DISPATCHER &&
+      role !== UserRole.DISPATCHER
+    ) {
+      throw new GraphQLError(`You don't have permissions`);
+    }
+
     return await this.userService
       .findOne({ email })
       .then(() => {
@@ -41,6 +54,7 @@ export class AuthorizationService extends NestAuthService<
         return this.invitedUserService.create({
           email,
           key: randomStringGenerator(),
+          role,
         });
       });
   }
@@ -65,12 +79,13 @@ export class AuthorizationService extends NestAuthService<
     key,
     ...rest
   }: AcceptInviteDto): Promise<User> {
-    const { email, id } = await this.invitedUserService.findOne({ key });
+    const { email, id, role } = await this.invitedUserService.findOne({ key });
 
     if (!email) throw new GraphQLError("User isn't invited");
 
     const new_user = await this.registration({
       email,
+      role,
       ...rest,
     });
 

@@ -170,6 +170,7 @@ type InvitedUser {
   email: String!
   id: ID!
   key: String!
+  role: UserRole!
 }
 
 type JobDto {
@@ -280,7 +281,7 @@ type Mutation {
   deleteTechInfo(id: ID!): ID!
   deleteTechNote(id: ID!): ID!
   deleteTechSchedule(id: ID!): ID!
-  inviteUserToApp(email: String!): InvitedUser!
+  inviteUserToApp(email: String!, role: UserRole!): InvitedUser!
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!
   prepareFileForFineTune(filename: String!): String!
