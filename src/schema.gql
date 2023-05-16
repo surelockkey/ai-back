@@ -283,6 +283,7 @@ type Mutation {
   createTechNote(tech_note: CreateTechNoteDto!): TechNote!
   createTechSchedule(tech_schedule: CreateTechScheduleDto!): TechSchedule!
   deleteFineTuneItem(id: ID!): ID!
+  deleteManyTechsByIds(ids: [ID!]!): [ID!]!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
   deleteTechById(id: ID!): ID!
   deleteTechInfo(id: ID!): ID!

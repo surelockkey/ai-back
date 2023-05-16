@@ -16,6 +16,7 @@ import { LoggerModule } from './modules/logger/logger.module';
 import { ApiModule } from './modules/api/api.module';
 import { TechModule } from './modules/tech/tech.module';
 import { JobModule } from './modules/job/job.module';
+import { MailModule } from './modules/mail/mail.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { JobModule } from './modules/job/job.module';
     ApiModule,
     TechModule,
     JobModule,
+    MailModule,
   ],
 })
 export class AppModule {}

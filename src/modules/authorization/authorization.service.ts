@@ -13,6 +13,8 @@ import { randomStringGenerator } from '@nestjs/common/utils/random-string-genera
 import { LoggerService } from '../logger/logger.service';
 import { RegistrationDto } from './dto/registration.dto';
 import { UserRole } from '../user/enum/user-role.enum';
+import { MailService } from '../mail/mail.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthorizationService extends NestAuthService<
@@ -27,6 +29,8 @@ export class AuthorizationService extends NestAuthService<
     protected readonly invitedUserService: InvitedUserService,
     protected readonly tokenService: TokenService,
     protected readonly loggerService: LoggerService,
+    private readonly mailService: MailService,
+    private readonly configService: ConfigService,
   ) {
     super(tokenService, userService);
   }
@@ -50,12 +54,26 @@ export class AuthorizationService extends NestAuthService<
       .then(() => {
         throw new GraphQLError('User with this email already exist');
       })
-      .catch(() => {
-        return this.invitedUserService.create({
+      .catch(async () => {
+        const invited_user = await this.invitedUserService.create({
           email,
           key: randomStringGenerator(),
           role,
         });
+
+        await this.mailService
+          .sendMail({
+            to: invited_user.email,
+            subject: 'Invite to app',
+            text: `${this.configService.get(
+              'app.frontend_url',
+            )}/accept-invite?key=${invited_user.key}`,
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+
+        return invited_user;
       });
   }
 
