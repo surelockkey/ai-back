@@ -123,4 +123,15 @@ export class OpenAiService {
 
     console.log(events.data);
   }
+
+  public async speechToText(audio_url: File): Promise<any> {
+    return await this.openai.createTranscription(
+      audio_url,
+      "whisper-1",
+      undefined,
+      'json',
+      0,
+      'en'
+    );
+  }
 }
