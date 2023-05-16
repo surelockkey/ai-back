@@ -39,6 +39,7 @@ export class UserResolver {
     return this.userService.updateAndReturn(user_id, user);
   }
 
+  // TODO: check if main dispatcher can
   @UseGuards(GqlAuthGuard)
   @Mutation(() => [String])
   public async deleteManyUsers(

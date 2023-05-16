@@ -7,6 +7,8 @@ import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '../authorization/guard/auth.guard';
 import { CurrentUser } from '@tech-slk/nest-auth';
 import { CurrentUserDto } from '../authorization/dto/current-user.dto';
+import { RoleGuard } from '../authorization/decorator/role.decorator';
+import { UserRole } from '../user/enum/user-role.enum';
 
 @Resolver()
 export class SystemSettingsResolver {
@@ -15,6 +17,7 @@ export class SystemSettingsResolver {
     private readonly loggerService: LoggerService,
   ) {}
 
+  @RoleGuard(UserRole.ADMIN)
   @Mutation(() => SystemSettings)
   createSystemSettings(
     @Args('max_tokens', { type: () => Int }) max_tokens: number,
@@ -25,7 +28,7 @@ export class SystemSettingsResolver {
     });
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN)
   @Mutation(() => SystemSettings)
   updateSystemSettings(
     @Args('system_settings', { type: () => UpdateSystemSettingsDto })
