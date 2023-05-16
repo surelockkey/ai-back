@@ -3,19 +3,19 @@ import { Field, InputType, Int, ObjectType } from "@nestjs/graphql";
 @InputType()
 export class CtmGetCallsOptionDto {
     @Field(() => String, { description: 'search string to look for messages with specific callerid, caller_number, called_number, source name, etc.', nullable: true })
-    filter: string;
+    filter?: string;
 
     @Field(() => Int, { description: 'the page number' })
     page: number;
 
     @Field(() => Int, { description: 'the number of items per page, defaults to 10', nullable: true })
-    per_page: number;
+    per_page?: number;
 
     @Field(() => String, { description: 'the start date for the search (YYYY-MM-DD)', nullable: true })
-    start_date: string;
+    start_date?: string;
 
     @Field(() => String, { description: 'the end date for the search (YYYY-MM-DD)', nullable: true })
-    end_date: string;
+    end_date?: string;
 
 }
 
@@ -39,8 +39,8 @@ export class CtmGetCallsDto {
 
 @ObjectType()
 export class CtmCall {
-    @Field(() => Int)
-    id: number;
+    @Field(() => String)
+    id: string;
 
     @Field(() => String)
     sid: string;
