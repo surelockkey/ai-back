@@ -1,3 +1,5 @@
-import { JwtPayload } from "@tech-slk/nest-auth";
+import { JwtPayload } from '@tech-slk/nest-auth';
 
-export interface CurrentUserDto extends JwtPayload { }
+export interface CurrentUserDto extends JwtPayload {
+  email: string;
+}

@@ -1,5 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import {
+  ChangePasswordDto,
   CurrentUser,
   LoginCredential,
   TokenResponse,
@@ -47,7 +48,8 @@ export class AuthorizationResolver {
     login_dto: LoginCredential,
   ): Promise<TokenResponse> {
     return this.loggerService.actionLog({
-      callback: () => this.authorizationService.login(login_dto),
+      callback: () =>
+        this.authorizationService.login(login_dto, { email: login_dto.email }),
       action: 'Tried to login',
     });
   }
@@ -94,5 +96,15 @@ export class AuthorizationResolver {
         this.authorizationService.acceptInviteToApp(accept_invite_dto),
       action: `Tried to accept invite, key: ${accept_invite_dto.key}`,
     });
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => SendDto)
+  changePassword(
+    @Args('passwords', { type: () => ChangePasswordDto })
+    passwords: ChangePasswordDto,
+    @CurrentUser() { email }: CurrentUserDto,
+  ) {
+    return this.authorizationService.changePassword(passwords, email);
   }
 }

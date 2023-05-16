@@ -15,13 +15,13 @@ export class User extends NestUser {
   @Column()
   name: string;
 
-  @Column({ unique: true })
-  @Field(() => String)
-  email: string;
+  // @Column({ unique: true })
+  // @Field(() => String)
+  // email: string;
 
-  @Column()
-  @Field(() => String)
-  password: string;
+  // @Column()
+  // @Field(() => String)
+  // password: string;
 
   @Column({
     type: 'enum',

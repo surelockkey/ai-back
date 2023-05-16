@@ -61,17 +61,13 @@ export class AuthorizationService extends NestAuthService<
           role,
         });
 
-        await this.mailService
-          .sendMail({
-            to: invited_user.email,
-            subject: 'Invite to app',
-            text: `${this.configService.get(
-              'app.frontend_url',
-            )}/accept-invite?key=${invited_user.key}`,
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+        await this.mailService.sendMail({
+          to: invited_user.email,
+          subject: 'Invite to app',
+          text: `${this.configService.get(
+            'app.frontend_url',
+          )}/accept-invite?key=${invited_user.key}`,
+        });
 
         return invited_user;
       });

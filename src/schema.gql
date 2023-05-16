@@ -5,7 +5,11 @@
 input AcceptInviteDto {
   key: String!
   name: String!
-  password: String!
+}
+
+input ChangePasswordDto {
+  new_password: String!
+  old_password: String!
 }
 
 input CreateJobDto {
@@ -270,6 +274,7 @@ type Message {
 type Mutation {
   acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
   assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
+  changePassword(passwords: ChangePasswordDto!): SendDto!
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
   createManyTechsFromWorkiz(techs: [CreateTechFromWorkizDto!]!): [Tech!]!
   createManyTechsSchedules(techs_schedules: [CreateTechScheduleDto!]!): [TechSchedule!]!
@@ -297,6 +302,7 @@ type Mutation {
   sendMessage(prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
   startFineTune: FineTune!
+  updateCurrentUser(user: UpdateCurrentUserDto!): User!
   updateFineTuneItem(fine_tune_item: UpdateFineTuneItemDto!): FineTuneItem!
   updateManyTechsSchedules(techs_schedules: [UpdateTechScheduleDto!]!): [TechSchedule!]!
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
@@ -449,6 +455,10 @@ type TokenResponse {
   refresh_token: String!
 }
 
+input UpdateCurrentUserDto {
+  name: String
+}
+
 input UpdateFineTuneItemDto {
   id: ID!
   prompt: String
@@ -493,7 +503,6 @@ type User {
   id: String!
   logs: [Log!]!
   name: String!
-  password: String!
   role: UserRole!
 }
 
