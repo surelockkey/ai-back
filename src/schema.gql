@@ -5,6 +5,7 @@
 input AcceptInviteDto {
   key: String!
   name: String!
+  password: String!
 }
 
 input ChangePasswordDto {
