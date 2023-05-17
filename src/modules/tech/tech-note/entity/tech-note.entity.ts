@@ -22,7 +22,10 @@ export class TechNote extends BaseEntity {
   @Column()
   note: string;
 
-  @ManyToOne(() => Tech, (tech) => tech.notes)
+  @ManyToOne(() => Tech, (tech) => tech.notes, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'tech_id' })
   tech: Tech;
 }

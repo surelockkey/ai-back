@@ -3,8 +3,6 @@ import { SystemSettingsService } from './system-settings.service';
 import { SystemSettings } from './entity/system-settings.entity';
 import { UpdateSystemSettingsDto } from './dto/system-settings.dto';
 import { LoggerService } from '../logger/logger.service';
-import { UseGuards } from '@nestjs/common';
-import { GqlAuthGuard } from '../authorization/guard/auth.guard';
 import { CurrentUser } from '@tech-slk/nest-auth';
 import { CurrentUserDto } from '../authorization/dto/current-user.dto';
 import { RoleGuard } from '../authorization/decorator/role.decorator';
