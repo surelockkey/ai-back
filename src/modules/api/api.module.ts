@@ -5,6 +5,11 @@ import { GoogleSheetsApiModule } from './google-sheets-api/google-sheets-api.mod
 import { CtmApiModule } from './ctm-api/ctm-api.module';
 
 @Module({
-  imports: [WorkizApiModule, GoogleAdsApiModule, GoogleSheetsApiModule, CtmApiModule],
+  imports: [
+    WorkizApiModule,
+    GoogleAdsApiModule,
+    GoogleSheetsApiModule,
+    CtmApiModule,
+  ],
 })
 export class ApiModule {}

@@ -5,8 +5,8 @@ import { TokenService } from './token.service';
 
 @Global()
 @Module({
-    imports: [TypeOrmModule.forFeature([Token])],
-    providers: [TokenService],
-    exports: [TokenService],
+  imports: [TypeOrmModule.forFeature([Token])],
+  providers: [TokenService],
+  exports: [TokenService],
 })
-export class TokenModule { }
+export class TokenModule {}

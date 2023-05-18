@@ -9,7 +9,6 @@ import { WorkizApiService } from './workiz-api.service';
 import { SendDto } from '@tech-slk/nest-crud';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/modules/authorization/guard/auth.guard';
-// import { WorkizService } from './workiz.service';
 
 @Resolver()
 export class WorkizApiResolver {
