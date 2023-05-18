@@ -6,18 +6,19 @@ import { ConfigType } from '../config/config';
 
 @Injectable()
 export class GqlConfigService implements GqlOptionsFactory {
-    private config: ConfigType['graphql'];
-    constructor(private readonly configService: ConfigService) {
-        this.config = this.configService.get<ConfigType['graphql']>('graphql');
-    };
+  private config: ConfigType['graphql'];
+  constructor(private readonly configService: ConfigService) {
+    this.config = this.configService.get<ConfigType['graphql']>('graphql');
+  }
 
-    createGqlOptions(): ApolloDriverConfig {
-        return {
-            installSubscriptionHandlers: true,
-            autoSchemaFile: 'src/schema.gql',
-            sortSchema: true,
-            context: ({ req, connection }) => connection ? { req: connection.context } : { req },
-            ...this.config,
-        }
-    }
+  createGqlOptions(): ApolloDriverConfig {
+    return {
+      installSubscriptionHandlers: true,
+      autoSchemaFile: 'src/schema.gql',
+      sortSchema: true,
+      context: ({ req, connection }) =>
+        connection ? { req: connection.context } : { req },
+      ...this.config,
+    };
+  }
 }

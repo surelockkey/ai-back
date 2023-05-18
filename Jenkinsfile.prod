@@ -24,11 +24,15 @@ def prod_secrets = [
         [envVar: 'JWT_KEY', vaultKey: 'JWT_KEY'],
         [envVar: 'JWT_ACCESS_EXPIRE', vaultKey: 'JWT_ACCESS_EXPIRE'],
         [envVar: 'JWT_REFRESH_EXPIRE', vaultKey: 'JWT_REFRESH_EXPIRE'],
+        [envVar: 'TOKEN_WORKIZ', vaultKey: 'TOKEN_WORKIZ'],
         [envVar: 'CTM_USER', vaultKey: 'CTM_USER'],
         [envVar: 'CTM_PASSWORD', vaultKey: 'CTM_PASSWORD'],
         [envVar: 'CTM_API_URL', vaultKey: 'CTM_API_URL'],
         [envVar: 'CTM_ACCOUNT_ID', vaultKey: 'CTM_ACCOUNT_ID'],
-        [envVar: 'TOKEN_WORKIZ', vaultKey: 'TOKEN_WORKIZ'],
+        [envVar: 'MAIL_FROM',  vaultKey: 'MAIL_FROM'],
+        [envVar: 'MAIL_HOST',  vaultKey: 'MAIL_HOST'],
+        [envVar: 'MAIL_PASSWORD',  vaultKey: 'MAIL_PASSWORD'],
+        [envVar: 'MAIL_USER',  vaultKey: 'MAIL_USER']
     ]],
 ]
 
@@ -93,6 +97,10 @@ pipeline {
                         echo "CTM_PASSWORD="'"'"${CTM_PASSWORD}"'"' >> .env
                         echo "CTM_API_URL=${CTM_API_URL}" >> .env
                         echo "CTM_ACCOUNT_ID=${CTM_ACCOUNT_ID}" >> .env
+                        echo "MAIL_FROM=${MAIL_FROM}" >> .env
+                        echo "MAIL_HOST=${MAIL_HOST}" >> .env
+                        echo "MAIL_PASSWORD=${MAIL_PASSWORD}" >> .env
+                        echo "MAIL_USER=${MAIL_USER}" >> .env
 
                         sudo docker-compose build --no-cache --build-arg NPM_TOKEN=${NPM_TOKEN} prod
                         sudo docker-compose up -d

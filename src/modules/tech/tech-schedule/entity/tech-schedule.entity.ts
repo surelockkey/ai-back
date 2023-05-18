@@ -18,7 +18,10 @@ export class TechSchedule extends BaseEntity {
   @Column('int')
   work_to: number;
 
-  @ManyToOne(() => Tech, (tech) => tech.schedules)
+  @ManyToOne(() => Tech, (tech) => tech.schedules, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'tech_id' })
   tech: Tech;
 }

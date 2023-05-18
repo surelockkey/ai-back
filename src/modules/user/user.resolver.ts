@@ -7,6 +7,7 @@ import { User } from './entity/user.entity';
 import { UserService } from './user.service';
 import { RoleGuard } from '../authorization/decorator/role.decorator';
 import { UserRole } from './enum/user-role.enum';
+import { UpdateCurrentUserDto } from './dto/user.input';
 @Resolver()
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
@@ -28,6 +29,17 @@ export class UserResolver {
     return this.userService.findAllUsers(user.user_id);
   }
 
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => User)
+  updateCurrentUser(
+    @Args('user', { type: () => UpdateCurrentUserDto })
+    user: UpdateCurrentUserDto,
+    @CurrentUser() { user_id }: CurrentUserDto,
+  ) {
+    return this.userService.updateAndReturn(user_id, user);
+  }
+
+  // TODO: check if main dispatcher can
   @UseGuards(GqlAuthGuard)
   @Mutation(() => [String])
   public async deleteManyUsers(

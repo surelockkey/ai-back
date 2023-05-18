@@ -93,6 +93,26 @@ export class WorkizApiService {
     };
   }
 
+  public async getAllJobsForSave() {
+    const jobs = [];
+
+    let has_more = true;
+    let page = 0;
+
+    while (has_more) {
+      const jobs_to_add = await this.getAllJobsWorkiz(100, page);
+
+      jobs.push(...jobs_to_add.items);
+
+      if (!jobs_to_add.has_more) {
+        has_more = false;
+        page++;
+      }
+    }
+
+    return jobs;
+  }
+
   public async getAllLeadsWorkiz(): Promise<JobDto[]> {
     return axios.get(`${this.apiLink}/lead/all/`).then((result) => {
       return result.data.data;

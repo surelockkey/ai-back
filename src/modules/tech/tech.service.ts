@@ -5,6 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WorkizApiService } from '../api/workiz-api/workiz-api.service';
 import * as moment from 'moment';
+import { CreateTechFromWorkizDto } from './dto/workiz-tech.dto';
+import * as _ from 'lodash';
 
 @Injectable()
 export class TechService extends CrudService<Tech> {
@@ -15,7 +17,39 @@ export class TechService extends CrudService<Tech> {
     super(techRepository);
   }
 
-  public async createTechFromWorkiz(workiz_id: string) {
+  public async getTechsWorkizWithoutAdded() {
+    const workiz_techs = await this.workizApiService.getAllTechWorkiz();
+    const our_techs = await this.techRepository.find();
+
+    const our_techs_workiz_ids = our_techs.map((tech) => tech.workiz_id);
+
+    return workiz_techs.filter(
+      (tech) => !our_techs_workiz_ids.includes(tech.id),
+    );
+  }
+
+  public async createManyTechsFromWorkiz(techs: CreateTechFromWorkizDto[]) {
+    const all_workiz_techs = await this.workizApiService.getAllTechWorkiz();
+
+    return await this.techRepository.save(
+      techs.map(({ workiz_id, state }) => {
+        const { email, name, serviceAreas, skills } = all_workiz_techs.find(
+          (tech) => tech.id === workiz_id,
+        );
+
+        return {
+          email,
+          name,
+          service_areas: serviceAreas,
+          skills,
+          workiz_id,
+          state,
+        };
+      }),
+    );
+  }
+
+  public async createTechFromWorkiz(workiz_id: string, state?: string) {
     const all_workiz_techs = await this.workizApiService.getAllTechWorkiz();
 
     const { email, name, serviceAreas, skills } = all_workiz_techs.find(
@@ -28,6 +62,7 @@ export class TechService extends CrudService<Tech> {
       service_areas: serviceAreas,
       skills,
       workiz_id,
+      state,
     });
   }
 
@@ -36,10 +71,8 @@ export class TechService extends CrudService<Tech> {
     to: number,
     search_value?: string,
     is_available?: boolean,
-    state?: string,
+    states?: string[],
   ) {
-    const date = moment().unix();
-
     const queryBuilder = await this.techRepository
       .createQueryBuilder('tech')
       .leftJoinAndSelect('tech.info', 'tech-info')
@@ -65,6 +98,8 @@ export class TechService extends CrudService<Tech> {
     }
 
     if (typeof is_available === 'boolean') {
+      const date = moment().unix();
+
       if (is_available) {
         queryBuilder.andWhere(
           ':date BETWEEN tech-schedule.work_from AND tech-schedule.work_to',
@@ -74,7 +109,7 @@ export class TechService extends CrudService<Tech> {
         );
       } else {
         queryBuilder.andWhere(
-          ':date NOT BETWEEN tech-schedule.work_from AND tech-schedule.work_to',
+          '(:date NOT BETWEEN tech-schedule.work_from AND tech-schedule.work_to OR tech-schedule.id IS NULL)',
           {
             date,
           },
@@ -82,10 +117,10 @@ export class TechService extends CrudService<Tech> {
       }
     }
 
-    if (state) {
-      queryBuilder.andWhere('tech.state = :state', { state });
+    if (states && states.length) {
+      queryBuilder.andWhere('tech.state IN (:...states)', { states });
     }
 
-    return await queryBuilder.getMany();
+    return await queryBuilder.orderBy('tech.name', 'ASC').getMany();
   }
 }

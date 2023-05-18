@@ -1,5 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import {
+  ChangePasswordDto,
   CurrentUser,
   LoginCredential,
   TokenResponse,
@@ -47,7 +48,8 @@ export class AuthorizationResolver {
     login_dto: LoginCredential,
   ): Promise<TokenResponse> {
     return this.loggerService.actionLog({
-      callback: () => this.authorizationService.login(login_dto),
+      callback: () =>
+        this.authorizationService.login(login_dto, { email: login_dto.email }),
       action: 'Tried to login',
     });
   }
@@ -67,18 +69,20 @@ export class AuthorizationResolver {
     });
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
   @Mutation(() => InvitedUser)
   public async inviteUserToApp(
     @Args('email', { type: () => String })
     email: string,
+    @Args('role', { type: () => UserRole }) role: UserRole,
     @CurrentUser()
-    user: CurrentUserDto,
+    { user_id }: CurrentUserDto,
   ): Promise<InvitedUser> {
     return this.loggerService.actionLog({
-      callback: () => this.authorizationService.inviteUserToApp(email),
+      callback: () =>
+        this.authorizationService.inviteUserToApp(email, role, user_id),
       action: `Tried to invite user with email ${email}`,
-      user_id: user.user_id,
+      user_id: user_id,
     });
   }
 
@@ -92,5 +96,15 @@ export class AuthorizationResolver {
         this.authorizationService.acceptInviteToApp(accept_invite_dto),
       action: `Tried to accept invite, key: ${accept_invite_dto.key}`,
     });
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => SendDto)
+  changePassword(
+    @Args('passwords', { type: () => ChangePasswordDto })
+    passwords: ChangePasswordDto,
+    @CurrentUser() { email }: CurrentUserDto,
+  ) {
+    return this.authorizationService.changePassword(passwords, email);
   }
 }

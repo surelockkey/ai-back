@@ -8,6 +8,11 @@ input AcceptInviteDto {
   password: String!
 }
 
+input ChangePasswordDto {
+  new_password: String!
+  old_password: String!
+}
+
 input CreateJobDto {
   Address: String!
   City: String!
@@ -47,6 +52,11 @@ input CreateTechDto {
   workiz_id: String
 }
 
+input CreateTechFromWorkizDto {
+  state: String
+  workiz_id: String!
+}
+
 input CreateTechInfoDto {
   key: String!
   tech_id: ID!
@@ -83,7 +93,7 @@ type CtmCall {
   duration: Int
   hold_time: Int!
   hour: String!
-  id: Int!
+  id: String!
   month: String!
   name: String!
   notes: String!
@@ -170,6 +180,7 @@ type InvitedUser {
   email: String!
   id: ID!
   key: String!
+  role: UserRole!
 }
 
 type JobDto {
@@ -264,30 +275,36 @@ type Message {
 type Mutation {
   acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
   assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
+  changePassword(passwords: ChangePasswordDto!): SendDto!
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
+  createManyTechsFromWorkiz(techs: [CreateTechFromWorkizDto!]!): [Tech!]!
   createManyTechsSchedules(techs_schedules: [CreateTechScheduleDto!]!): [TechSchedule!]!
   createNewJobWorkiz(createJobDto: CreateJobDto!): SendDto!
   createOrUpdateTechInfo(tech_infos: [CreateOrUpdateTechInfoDto!]!): [TechInfo!]!
   createOrUpdateTechNote(tech_note: CreateOrUpdateTechNoteDto!): TechNote!
   createSystemSettings(max_tokens: Int!): SystemSettings!
   createTech(tech: CreateTechDto!): Tech!
-  createTechFromWorkiz(workiz_id: String!): Tech!
+  createTechFromWorkiz(state: String, workiz_id: String!): Tech!
   createTechInfo(tech_info: CreateTechInfoDto!): TechInfo!
   createTechNote(tech_note: CreateTechNoteDto!): TechNote!
   createTechSchedule(tech_schedule: CreateTechScheduleDto!): TechSchedule!
   deleteFineTuneItem(id: ID!): ID!
+  deleteManyTechsByIds(ids: [ID!]!): [ID!]!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
+  deleteTechById(id: ID!): ID!
   deleteTechInfo(id: ID!): ID!
   deleteTechNote(id: ID!): ID!
   deleteTechSchedule(id: ID!): ID!
-  inviteUserToApp(email: String!): InvitedUser!
+  inviteUserToApp(email: String!, role: UserRole!): InvitedUser!
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!
   prepareFileForFineTune(filename: String!): String!
   registration(registration_dto: RegistrationDto!): User!
   sendMessage(prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
+  speechToText(call_id: String!): Transcription!
   startFineTune: FineTune!
+  updateCurrentUser(user: UpdateCurrentUserDto!): User!
   updateFineTuneItem(fine_tune_item: UpdateFineTuneItemDto!): FineTuneItem!
   updateManyTechsSchedules(techs_schedules: [UpdateTechScheduleDto!]!): [TechSchedule!]!
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
@@ -329,6 +346,7 @@ type PaginatedJobDto {
 }
 
 type Query {
+  findTranscription(call_id: String!): Transcription!
   getAllFiles: [OpenAiFile!]!
   getAllJobsWorkiz(
     offset: Int!
@@ -350,7 +368,8 @@ type Query {
   getSheet(col: String!, row: String!, sheet_id: String!, tab_name: String!): [[String!]!]!
   getSystemSettings: SystemSettings!
   getTechsSchedule: [GoogleSheetsTechSchedule!]!
-  getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, state: String, to: Int!): [TechWithSchedule!]!
+  getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, states: [String!], to: Int!): [TechWithSchedule!]!
+  getTechsWorkizWithoutAdded: [TechnicianWorkiz!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
@@ -439,6 +458,16 @@ type TokenResponse {
   refresh_token: String!
 }
 
+type Transcription {
+  ctm_call_id: String!
+  id: ID!
+  text: String!
+}
+
+input UpdateCurrentUserDto {
+  name: String
+}
+
 input UpdateFineTuneItemDto {
   id: ID!
   prompt: String
@@ -483,7 +512,6 @@ type User {
   id: String!
   logs: [Log!]!
   name: String!
-  password: String!
   role: UserRole!
 }
 

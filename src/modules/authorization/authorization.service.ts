@@ -13,6 +13,8 @@ import { randomStringGenerator } from '@nestjs/common/utils/random-string-genera
 import { LoggerService } from '../logger/logger.service';
 import { RegistrationDto } from './dto/registration.dto';
 import { UserRole } from '../user/enum/user-role.enum';
+import { MailService } from '../mail/mail.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthorizationService extends NestAuthService<
@@ -27,21 +29,47 @@ export class AuthorizationService extends NestAuthService<
     protected readonly invitedUserService: InvitedUserService,
     protected readonly tokenService: TokenService,
     protected readonly loggerService: LoggerService,
+    private readonly mailService: MailService,
+    private readonly configService: ConfigService,
   ) {
     super(tokenService, userService);
   }
 
-  public async inviteUserToApp(email: string): Promise<InvitedUser> {
+  public async inviteUserToApp(
+    email: string,
+    role: UserRole,
+    current_user_id: string,
+  ): Promise<InvitedUser> {
+    const current_user = await this.userService.findOneById(current_user_id);
+
+    if (
+      current_user.role === UserRole.MAIN_DISPATCHER &&
+      role !== UserRole.DISPATCHER
+    ) {
+      throw new GraphQLError(`You don't have permissions`);
+    }
+
     return await this.userService
       .findOne({ email })
       .then(() => {
         throw new GraphQLError('User with this email already exist');
       })
-      .catch(() => {
-        return this.invitedUserService.create({
+      .catch(async () => {
+        const invited_user = await this.invitedUserService.create({
           email,
           key: randomStringGenerator(),
+          role,
         });
+
+        await this.mailService.sendMail({
+          to: invited_user.email,
+          subject: 'Invite to app',
+          text: `${this.configService.get(
+            'app.frontend_url',
+          )}/accept-invite?key=${invited_user.key}`,
+        });
+
+        return invited_user;
       });
   }
 
@@ -65,12 +93,13 @@ export class AuthorizationService extends NestAuthService<
     key,
     ...rest
   }: AcceptInviteDto): Promise<User> {
-    const { email, id } = await this.invitedUserService.findOne({ key });
+    const { email, id, role } = await this.invitedUserService.findOne({ key });
 
     if (!email) throw new GraphQLError("User isn't invited");
 
     const new_user = await this.registration({
       email,
+      role,
       ...rest,
     });
 
