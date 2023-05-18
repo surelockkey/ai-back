@@ -18,6 +18,7 @@ import { TechModule } from './modules/tech/tech.module';
 import { JobModule } from './modules/job/job.module';
 import { MailModule } from './modules/mail/mail.module';
 import { TranscriptionModule } from './modules/transcription/transcription.module';
+import { ItemTemplateModule } from './modules/item-template/item-template.module';
 
 @Module({
   imports: [
@@ -43,7 +44,8 @@ import { TranscriptionModule } from './modules/transcription/transcription.modul
     TechModule,
     JobModule,
     MailModule,
-    TranscriptionModule
+    TranscriptionModule,
+    ItemTemplateModule,
   ],
 })
 export class AppModule {}

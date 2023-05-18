@@ -20,8 +20,10 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   app.use(graphqlUploadExpress({ maxFileSize: 1000000, maxFiles: 10 }));
-  app.enableCors();
-  
+  app.enableCors({
+    allowedHeaders: '*',
+  });
+
   await app.listen(configService.get('app.port'));
 }
 bootstrap();
