@@ -8,19 +8,8 @@ import * as csvParser from 'csv-parser';
 import { GraphQLError } from 'graphql';
 import { ItemCompareResult } from './dto/item-compare-result.dto';
 import { default_items_templates } from './constants/items-templates.constant';
-
-interface ItemTemplateCsv {
-  'UHS SKU': string;
-  'S.L.K SKU': string;
-  Quantity: string;
-}
-
-interface CarItemCsv {
-  'Product Name': string;
-  Quantity: string;
-  Price: string;
-  Cost: string;
-}
+import { ItemTemplateCsv } from './dto/item-template-csv';
+import { CarItemCsv } from './dto/car-item-csv';
 
 @Injectable()
 export class ItemTemplateService extends CrudService<ItemTemplate> {
@@ -51,13 +40,9 @@ export class ItemTemplateService extends CrudService<ItemTemplate> {
   }
 
   public async saveDefaultItemTemplate(
-    car_inventory_id: string,
-    queryRunner: QueryRunner,
+    workiz_id: string,
   ) {
-    return await queryRunner.manager.save(
-      ItemTemplate,
-      default_items_templates.map((item) => ({ ...item, car_inventory_id })),
-    );
+    return this.itemTemplateRepository.save(default_items_templates.map((item) => ({ ...item, workiz_id })))
   }
 
   public async checkItemQuantity(

@@ -141,6 +141,11 @@ input CtmGetCallsOptionDto {
   start_date: String
 }
 
+type FindContainerAndTemplate {
+  container: [WorkizContainerInfo!]!
+  template: [ItemTemplate!]!
+}
+
 input FindPaginationDto {
   skip: Int!
   take: Int!
@@ -193,11 +198,11 @@ type ItemCompareResult {
 }
 
 type ItemTemplate {
-  car_inventory_id: ID!
   id: ID!
   quantity: Int!
   sku: String!
   uhs_sku: String!
+  workiz_id: String!
 }
 
 type JobDto {
@@ -381,7 +386,7 @@ type Query {
   getAllUsersWorkiz: [TechnicianWorkiz!]!
   getAllWorkizLeads: [JobDto!]!
   getCalls(ctmGetCallsOptionDto: CtmGetCallsOptionDto!): CtmGetCallsDto!
-  getContainerById(id: String!): [WorkizContainerInfo!]!
+  getContainerById(id: String!): FindContainerAndTemplate!
   getCurrentUser: User!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!

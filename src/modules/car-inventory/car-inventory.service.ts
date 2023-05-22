@@ -1,72 +1,47 @@
 import { Injectable } from '@nestjs/common';
-import { CrudService } from '@tech-slk/nest-crud';
-import { CarInventory } from './entity/car-inventory.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
-import { CreateCarInventoryDto } from './dto/car-inventory.dto';
-import { ItemTemplateService } from './item-template/item-template.service';
 import { WorkizCoreApiService } from '../api/workiz-api/workiz-core.service';
+import { WorkizContainer, WorkizContainerInfo } from '../api/workiz-api/dto/container.dto';
+import { ItemTemplateService } from './item-template/item-template.service';
+import { ItemTemplate } from './item-template/entity/item-template.entity';
+import { FindContainerAndTemplate } from './dto/find-container-and-template.dto';
+import { GraphQLError } from 'graphql';
 
 @Injectable()
-export class CarInventoryService extends CrudService<CarInventory> {
+export class CarInventoryService {
   constructor(
-    @InjectRepository(CarInventory)
-    private readonly carInventoryRepository: Repository<CarInventory>,
-    private readonly dataSource: DataSource,
-    private readonly itemTemplateService: ItemTemplateService,
     private readonly workizCoreApiService: WorkizCoreApiService,
-  ) {
-    super(carInventoryRepository);
+    private readonly itemTemplateService: ItemTemplateService,
+  ) {}
+
+  public findAllContainers(): Promise<{ data: WorkizContainer[] }> {
+    return this.workizCoreApiService.req({}, '/ajaxc/inv_container/', 'get');
   }
 
-  // public async createCarInventory(car_inventory_dto: CreateCarInventoryDto) {
-  //   const queryRunner = await this.dataSource.createQueryRunner();
-  //   await queryRunner.startTransaction();
+  public async findContainerAndTemplateById(workiz_id: string): Promise<FindContainerAndTemplate> {
+    const container = await this.workizCoreApiService.req({}, `/ajaxc/inv_container_items/getContainersStock/${workiz_id}/`, 'get');
 
-  //   try {
-  //     const car_inventory = await queryRunner.manager.save(
-  //       CarInventory,
-  //       car_inventory_dto,
-  //     );
+    if (!container?.data?.length) {
+      throw new GraphQLError('Container not found');
+    }
 
-  //     await this.itemTemplateService.saveDefaultItemTemplate(
-  //       car_inventory.id,
-  //       queryRunner,
-  //     );
+    const template = await this.findItemTemplate(workiz_id);
 
-  //     await queryRunner.commitTransaction();
+    console.log({
+      container: container.data,
+      template,
+    })
 
-  //     const res = await this.findOneById(car_inventory.id);
-
-  //     //   res.item_templates.forEach((i) => {
-  //     //     if (
-  //     //       !i.id |
-  //     //       !i.car_inventory_id ||
-  //     //       !i.quantity ||
-  //     //       !i.sku ||
-  //     //       !i.uhs_sku
-  //     //     ) {
-  //     //       console.log(i);
-  //     //     }
-  //     //   });
-
-  //     //   console.log('====================================');
-  //     //   console.log(res);
-  //     //   console.log('====================================');
-
-  //     return res;
-  //   } catch (error) {
-  //     await queryRunner.rollbackTransaction();
-  //   } finally {
-  //     await queryRunner.release();
-  //   }
-  // }
-
-  public async findAllContainers () {
-    return await this.workizCoreApiService.req({}, '/ajaxc/inv_container/', 'get');
+    return {
+      container: container.data,
+      template,
+    }
   }
 
-  public async findContainerById (id: string) {
-    return await this.workizCoreApiService.req({}, `/ajaxc/inv_container_items/getContainersStock/${id}/`, 'get');
+  private async findItemTemplate(workiz_id: string): Promise<ItemTemplate[]> {
+    const item_template = await this.itemTemplateService.findAll({ workiz_id  });
+
+    if (item_template.length) return item_template;
+
+    return await this.itemTemplateService.saveDefaultItemTemplate(workiz_id);
   }
 }
