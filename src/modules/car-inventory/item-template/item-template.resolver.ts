@@ -22,6 +22,6 @@ export class ItemTemplateResolver {
     @Args('only_less', { type: () => Boolean, defaultValue: true })
     only_less: boolean,
   ) {
-    return this.itemTemplateService.checkItemQuantity(file);
+    return this.itemTemplateService.checkItemQuantity(file, only_less);
   }
 }

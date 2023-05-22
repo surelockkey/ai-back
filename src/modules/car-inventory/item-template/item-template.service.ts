@@ -2,11 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { CrudService } from '@tech-slk/nest-crud';
 import { ItemTemplate } from './entity/item-template.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { QueryRunner, Repository } from 'typeorm';
 import { FileUpload } from 'graphql-upload';
 import * as csvParser from 'csv-parser';
 import { GraphQLError } from 'graphql';
 import { ItemCompareResult } from './dto/item-compare-result.dto';
+import { default_items_templates } from './constants/items-templates.constant';
 
 interface ItemTemplateCsv {
   'UHS SKU': string;
@@ -31,8 +32,6 @@ export class ItemTemplateService extends CrudService<ItemTemplate> {
   }
 
   public async uploadItemTemplatesFromCsv(file: Promise<FileUpload>) {
-    console.log(file);
-
     const items = await this.readCsv<ItemTemplateCsv>(await file);
 
     return await this.itemTemplateRepository.save(
@@ -48,6 +47,16 @@ export class ItemTemplateService extends CrudService<ItemTemplate> {
             quantity: parseInt(item.Quantity),
           };
         }),
+    );
+  }
+
+  public async saveDefaultItemTemplate(
+    car_inventory_id: string,
+    queryRunner: QueryRunner,
+  ) {
+    return await queryRunner.manager.save(
+      ItemTemplate,
+      default_items_templates.map((item) => ({ ...item, car_inventory_id })),
     );
   }
 

@@ -18,7 +18,8 @@ import { TechModule } from './modules/tech/tech.module';
 import { JobModule } from './modules/job/job.module';
 import { MailModule } from './modules/mail/mail.module';
 import { TranscriptionModule } from './modules/transcription/transcription.module';
-import { ItemTemplateModule } from './modules/item-template/item-template.module';
+import { ItemTemplateModule } from './modules/car-inventory/item-template/item-template.module';
+import { CarInventoryModule } from './modules/car-inventory/car-inventory.module';
 
 @Module({
   imports: [
@@ -45,7 +46,7 @@ import { ItemTemplateModule } from './modules/item-template/item-template.module
     JobModule,
     MailModule,
     TranscriptionModule,
-    ItemTemplateModule,
+    CarInventoryModule,
   ],
 })
 export class AppModule {}
