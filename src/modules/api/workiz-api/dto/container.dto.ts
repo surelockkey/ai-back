@@ -1,8 +1,8 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, ID, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
 export class WorkizContainer {
-    @Field(() => String)
+    @Field(() => ID)
     id: string;
 
     @Field(() => String)
@@ -44,7 +44,7 @@ export class WorkizContainerInfo {
     @Field(() => String)
     cost: string;
 
-    @Field(() => String)
+    @Field(() => ID)
     item_id: string;
 
     @Field(() => String, { nullable: true })
