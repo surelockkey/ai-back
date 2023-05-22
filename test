@@ -1,0 +1,478 @@
+ <!DOCTYPE html>
+<!--[if IEMobile 7]><html class="no-js iem7 oldie signbg"><![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js ie7 oldie signbg" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js ie8 oldie signbg" lang="en"><![endif]-->
+<!--[if (IE 9)&!(IEMobile)]><html class="no-js ie9 signbg" lang="en"><![endif]-->
+<!--[if (gt IE 9)|(gt IEMobile 7)]><!--><html class="no-js signbg" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Workiz - Login</title>
+<meta name="HandheldFriendly" content="True">
+<meta name="google-signin-client_id" content="33225750211-077fd55i1b03pufvatbhuatrtrpvles5.apps.googleusercontent.com">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/css/build.css?v=a-1169">
+<link rel='stylesheet' id='google-fonts-1-css' href='https://fonts.googleapis.com/css?family=Poppins%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&#038;ver=4.9.9' type='text/css' media='all' />
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" sizes="57x57" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/favicon-16x16.png">
+<link rel="manifest" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/manifest.json">
+<link rel="stylesheet" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/css/_css/quotasModal.css?v=a-1169">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/favicons/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="no">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta http-equiv="cleartype" content="on">
+
+<link rel="stylesheet" href="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/css/sign.css?v=a-1169">
+</head>
+<body class=''>
+<div class="flexCol" style="height: 100%">
+<div class="_signHead">
+<img src="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/workizlogo370.svg" alt="" width="114" class="">
+<a href="https://workiz.com"><i class="lnr-x float-right pointer" style="font-size: 2em;"></i></a>
+</div>
+<div class="_signWrap signV1">
+<div class="_signBox _loginWrap ">
+<div>
+<h1>Login</h1>
+<h3 class="thin">New to Workiz? <a href="https://app.workiz.com/sign/" class="_pink">Sign Up</a></h3>
+</div>
+<form method="post" action="https://app.workiz.com/login/" id="form-login" class="" title="Login">
+<div class="__mainForm">
+<div class="__theForm">
+<div class="textinput">
+<input type="text" class="_bigInput margin-top" name="login" id="email" value="" placeholder="Email Address" autocomplete="off">
+<span class="errLabel"></span>
+</div>
+<div class="textinput">
+<input type="password" name="pass" id="password" value="" class="_bigInput margin-top" placeholder="Password" autocomplete="off">
+<span class="errLabel"></span>
+<i class="workizIcon-eye __showPass pointer" onclick="_togglePassword(this)"></i>
+<input type='hidden' name='action' id='action' value='submit' />
+<input type='hidden' name='type' id='type' value='' />
+<input type='hidden' name='connectqb' id='connectqb' value='0' />
+</div>
+<div class="_mt align-right">
+<a class="_pink pointer" onclick="forgot()">Forgot password?</a>
+</div>
+<a type="submit" class="button _loginBtn signSubmit" onclick="_loginBtn()">
+<span class="_buttonText">LOGIN</span>
+<span class="_buttonLoaderText"></span>
+<span class="_buttonLoaderSmall sajHide" style="width: inherit; background: none;">
+<div class='spinnerDots' style="margin-top: -8px;height: 20px;"><div class='bounce1'></div><div class='bounce2'></div><div class='bounce3'></div></div>
+</span>
+</a>
+</div>
+<div class="__emailOr">
+<div class="__divider"></div>
+<div class="__or">OR</div>
+<div class="__divider"></div>
+</div>
+<div class="__social">
+<div id="signUpGoogle" class="customGPlusSignIn _socialSignup __google">
+<span class="icon">
+<img src="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/googlelogo.svg" />
+</span>
+<span class="buttonText">Continue With Google</span>
+</div>
+<div id="signUpFacebook" class="_socialSignup _facebook" onclick="loginFb()">
+<span class="icon">
+<img src="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/img/fblogosvg.svg" width="26" style="margin-left: 12px;" />
+</span>
+<span class="buttonText">Continue With Facebook</span>
+</div>
+<div class="_socialSignup _apple">
+<div id="appleid-signin" style="flex:1; height: 95%;" data-color="white" data-border="true" data-type="sign in" data-border-radius='50'></div>
+</div>
+</div>
+</div>
+</form>
+</div>
+<div class="_forgotWrap sajHide align-left" style="max-width:400px;margin: 0 auto;">
+<h1>Password Reset</h1>
+<p class="_signUp">No worries.</br>We’ll email you instructions to reset your password</p>
+<div class="twelve-columns margin-bottom relative">
+<input type="text" class="_bigInput margin-top" id="lostEmail" placeholder="Email" name="lostEmail">
+<input type="text" class="_bigInput margin-top sajHide" id="lostUser" placeholder="Username" name="lostUser">
+<input type="hidden" id="captcha" name="captcha">
+<span class="errLabel" id="errLabelLostEmail">Please enter a valid Email address</span>
+</div>
+<div class="twelve-columns">
+<div class="columns margin-top">
+<div class="twelve-columns margin-top">
+<button type="submit" class="button _loginBtn _resetPassBtn full-width" onclick="checkMail()">
+<span class="_buttonText">RESET PASSWORD</span>
+<span class="_buttonLoaderText">Resetting</span>
+<span class="_buttonLoaderSmall sajHide" style="margin-top: 10px;"></span>
+</button>
+</div>
+<div class="twelve-columns">
+<p class="margin-left">
+<br>
+<a class="_pink pointer" onclick="toggleLogin()">Back to login</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="_successWrap sajHide" style="max-width:400px;margin: 0 auto;">
+<h1 class="_bigMB">Done!</h1>
+<p class="_signUp">We've sent an email with password reset instructions.</p>
+<p class="_signUp">If the email doesn't show up soon, check your spam folder.</p>
+<div class="twelve-columns margin-top" style="margin-top: 30px !important;">
+<div class="columns margin-top">
+<div class="twelve-columns">
+<button type="submit" class="button _loginBtn full-width" onclick="toggleLogin()">
+<span class="_buttonText">Back to login</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+var RequestHash = 'b6e8f9668e4e3551b091007fe39d927a'
+var AJAX_PATH = 'https://app.workiz.com/ajax/';
+var CAJAX_PATH = 'https://app.workiz.com/ajaxc/';
+var CURRENT_PAGE = '';
+var SOUND_OFF_ON = '';
+var ASSETS_PATH = 'https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/';
+var PAGE_PATH = 'https://app.workiz.com/';
+var MY_URL = PAGE_PATH; //patch 
+var SOCKET_API = 'https://ws.workiz.com/';
+var DISABLE_SOCKET = '';
+var TRACK = '';
+var REGION = 'US';
+var JS_VER = 'a-1169';
+var CUR_VER = 'a-1169'; 
+var WEBSITE_URL = 'https://workiz.com';
+var MAIN_APP_NAME = 'Workiz';
+var SOCKET_ENV = 'app.workiz.com'; 
+</script>
+<script src="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/js/build.js?v=a-1169"></script>
+<script src="https://assets.workiz.com/e423db8e5be3cf9ee02c61fe40935417a94ea0d6/_assets/js/browserCall.js?v=a-1169"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>document.body.classList.add('_noVoice');</script>
+<script type="text/javascript">browserCall.disable()</script>
+<script>NCPAGE = true</script>
+<script>
+				window.intercomSettings = {
+				    app_id: 'j24bh4lc',
+				};
+				(function(){var w=window;var ic=w.Intercom;if(typeof ic==='function'){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/j24bh4lc';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()
+				</script>
+<script>
+            window.beamer_config = {
+                product_id: 'ZNrUUGgM33435',
+                multi_user: true,
+                user_id: -1,
+                top: 8,
+                right: 5,
+                bounce: false
+            };
+        </script>
+<script type='text/javascript' src='https://app.getbeamer.com/js/beamer-embed.js' defer='defer'></script>
+<script>
+				SAJ.frame.loadAsync('https://browser.sentry-cdn.com/6.18.2/bundle.min.js',function(){
+					Sentry.init({dsn: 'https://82e6e7e8f2eb427fa6218e7b4d4c934a@sentry.io/266137'});
+					Sentry.setUser({
+						email: 'Unknown',
+						id: '0'
+						
+					})
+					Sentry.setExtras({ 
+						displayName: 'Unknown',
+						account: 'Unknown',
+						role_str: 'Unknown',
+						is_master:'0',
+						trial:'0'
+					});
+
+				});
+			</script>
+<script>
+</script>
+<script type="text/javascript">
+var SAJ = SAJ || {} ;
+ SAJ.user = SAJ.user || {} ;
+SAJ.user.trial = false;
+SAJ.user.jobNumberMethod = "";
+SAJ.user.jobNumberMethod += "1";
+SAJ.user.baseUrl = "";
+SAJ.user.baseUrl += "https://app.workiz.com/";
+SAJ.user.mapProvider = "";
+SAJ.user.mapProvider += "google";
+SAJ.user.first_name = "";
+SAJ.user.last_name = "";
+SAJ.user.email = "";
+SAJ.user.account_id = "";
+SAJ.user.account_name = "";
+SAJ.user.account_email = "";
+SAJ.user.isVerified = false;
+SAJ.user.snd_number = "";
+SAJ.user.useDialer = true;
+SAJ.user.quotas = null;
+SAJ.user.qb_sync = "";
+SAJ.user.stripe_account_id = "";
+SAJ.user.created = "";
+SAJ.user.region = "";
+SAJ.user.region += "US";
+SAJ.user.currencySymbol = "";
+SAJ.user.id = "";
+SAJ.user.id += "-1";
+SAJ.user.phone = "";
+SAJ.user.converted = 0;
+SAJ.user.freemiumFlag = false;
+SAJ.user.workiz_free = false;
+SAJ.user.account_status = "";
+SAJ.user.useDesktopDialerWeb = true;
+SAJ.user.isIconRenewalActive = true;
+var SAJ = SAJ || {} ;
+SAJ.beta_testing = {"newJobReact":{"value":"FALSE","label":"view","newURL":"root\/newJob\/?newJob=1","oldURL":"job\/?legacySwitch=1","key":"featureAdoption_newJobReact","releaseDate":"2020-11-04"},"jobs":{"value":"FALSE","label":"jobs","newURL":"root\/jobs","oldURL":"jobs\/","key":"featureAdoption_jobs","injectToHistoryBar":true},"voiceWelcome":{"value":"FALSE","key":"voiceWelcome","label":"voiceWelcome"},"maskingWelcome":{"value":"FALSE","key":"maskingWelcome","label":"maskingWelcome"},"scheduleMongo":{"value":"FALSE","key":"scheduleMongo","label":"scheduleMongo"},"desktopPhone":{"value":"FALSE","key":"desktopPhone","label":"Desktop Phone","newURL":"root\/callsReport\/","oldURL":"root\/callsReport\/","releaseDate":"2022-11-04"}};
+var SAJ = SAJ || {} ;
+ SAJ.g = SAJ.g || {} ;
+SAJ.g.account_name = "";
+SAJ.g.account_id = "";
+SAJ.g.username = "";
+SAJ.g.name = "";
+SAJ.g.id = "";
+SAJ.g.id += "-1";
+var SAJ = SAJ || {} ;
+ SAJ.globals = SAJ.globals || {} ;
+SAJ.globals.url = "";
+SAJ.globals.url += "https://app.workiz.com/";
+</script>
+<script>
+
+var captcha = "";
+var login_error = '';
+var ajax_path = 'https://app.workiz.com/ajax/password_forgot/';
+
+function _loginBtn(){
+	$("._loginBtn").addClass('_isLoading');
+	$("#form-login").submit()
+} 
+
+function forgot(){
+	$("._loginWrap").hide();
+	$("._forgotWrap").show();
+}
+
+function _togglePassword(obj) {
+	var p = document.getElementById('password');
+	if($(obj).hasClass("workizIcon-eye")){
+		$(obj).removeClass('workizIcon-eye');
+		$(obj).addClass('workizIcon-eye-crossed');
+		p.type = "text";
+	}else{
+		$(obj).removeClass('workizIcon-eye-crossed');
+		$(obj).addClass('workizIcon-eye');
+		p.type = "password";
+	}
+}
+
+function checkMail(){
+	$("#errLabelLostEmail").hide();
+	var e = $("#lostEmail").val();
+	if(e.trim() =="" || !isEmail(e.trim()))
+	{
+		$("#errLabelLostEmail").show();
+		return;
+	}
+	var auth_type = $("#lostUser").val() == "" ? "quick" : "full";
+	var p = "action=forgot_password&auth_type="+auth_type+"&mail="+e.trim()+"&captcha="+captcha+"&username_f="+$("#lostUser").val();
+	$("._resetPassBtn").addClass('_isLoading');
+	ajx_call(AJAX_PATH+"password_forgot/",p,function(json){
+		if(json.flag)
+		{
+			showSuccess();
+		}
+		else{
+			getCaptchaToken();
+			if(json.err == "DUPLICATE")
+			{
+				$("#errLabelLostEmail").text('Email was not found, maybe you are using a user name?');
+				$("#errLabelLostEmail").show();
+				$("#lostUser").show();	
+			}
+			else{
+				$("#errLabelLostEmail").text(json.msg);
+				$("#errLabelLostEmail").show();
+			}
+		}
+		$("._resetPassBtn").removeClass('_isLoading');
+	})
+}
+function toggleLogin(){
+	if (false) {
+		// User got to the forgot password from the desktop phone, 
+		// if he is already logged in - this will redirect him to the home page
+		window.location.href = window.location.origin + window.location.pathname;
+	} else {
+		$("._forgotWrap").hide();
+		$("._successWrap").hide();
+		$("._loginWrap").show();
+	}
+
+}
+
+function showSuccess(){
+	$("._forgotWrap").hide();
+	$("._successWrap").show();
+}
+
+function googleAuthSuccess(googleUser) {
+	//Get token
+	var token = googleUser.getAuthResponse().id_token;
+	gapi.auth2.getAuthInstance().signOut();
+
+	//Set url
+	var concatChar = window.location.href.indexOf("?") === -1 ? "?" : "&";
+	$("._loginBtn").addClass("_isLoading");
+	window.location.href += concatChar + "social=GOOGLE&token=" + token;
+}
+
+function get(name){
+   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+      return decodeURIComponent(name[1]);
+}
+
+var googleUser = {};
+var bindGoogleButton = function() {
+	if(!document.getElementById('signUpGoogle')) return;
+	gapi.load('auth2', function(){
+		// Retrieve the singleton for the GoogleAuth library and set up the client.
+		auth2 = gapi.auth2.init({
+		client_id: '33225750211-077fd55i1b03pufvatbhuatrtrpvles5.apps.googleusercontent.com',
+		cookiepolicy: 'single_host_origin',
+		// Request scopes in addition to 'profile' and 'email'
+		//scope: 'additional_scope'
+		});
+		attachSignin(document.getElementById('signUpGoogle'));
+	});
+};
+
+function attachSignin(element) {
+	auth2.attachClickHandler(element, {},
+		function(googleUser) {
+			googleAuthSuccess(googleUser)
+		}, function(error) {
+			alert(JSON.stringify(error, undefined, 2));
+	});
+}
+
+/* Why is this function declared twice?
+function checkLoginState() {
+ 	FB.getLoginStatus(function(response) {
+	  	if (response.status === "connected") {
+			var token = response.authResponse.accessToken;
+			var concatChar = window.location.href.indexOf("?") === -1 ? "?" : "&";
+			window.location.href += concatChar + "social=FACEBOOK&token=" + token;
+		}
+	});
+}
+*/
+
+function loginFb(){
+	FB.login(function(response){
+		console.log("response", response);
+		checkLoginState();
+	}, {
+		scope: "email"
+	});
+}
+
+
+//Facebook Auth
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : 590561121395008,
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v4.0'
+    });
+    FB.AppEvents.logPageView();   
+  };
+(function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+function checkLoginState() {
+ 	FB.getLoginStatus(function(response) {
+	  	if (response.status === "connected") {
+			var token = response.authResponse.accessToken;
+			var concatChar = window.location.href.indexOf("?") === -1 ? "?" : "&";
+			$("._loginBtn").addClass("_isLoading");
+			window.location.href += concatChar + "social=FACEBOOK&token=" + token;
+		}
+	});
+}
+
+</script>
+<script src="https://apis.google.com/js/api:client.js?onload=bindGoogleButton" async defer></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v4.0&appId=2114552182177972&autoLogAppEvents=1"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LecbcQUAAAAABk0g3FMOxpg3Nbkpjp4eYDQqdDq"></script>
+<script>
+grecaptcha.ready(function() {
+    getCaptchaToken();
+});
+function getCaptchaToken() {
+	grecaptcha.execute('6LecbcQUAAAAABk0g3FMOxpg3Nbkpjp4eYDQqdDq', {action: 'forgot'}).then(function(token) {
+		captcha = token;
+    });
+}
+</script>
+<script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
+<script>
+
+function initApple() {
+	try {
+		if(typeof AppleID != "undefined") {
+			AppleID.auth.init({
+				clientId : 'com.workiz.webapp',
+				scope : 'email name',
+				redirectURI : window.location.origin + "/login/",
+				usePopup : true 
+			});
+			AppleID.auth.renderButton();
+
+			//Listen for authorization success
+			document.addEventListener('AppleIDSignInOnSuccess', (data) => {
+				//handle successful response
+				var token = data?.detail?.authorization?.id_token;
+				var concatChar = window.location.href.indexOf("?") === -1 ? "?" : "&";
+				$("._loginBtn").addClass("_isLoading");
+				window.location.href += concatChar + "social=APPLE&token=" + token;
+			});
+		}
+	} catch (e) {
+		console.error("apple init failed")
+		console.error(e)
+	}
+};
+
+initApple();
+
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v52afc6f149f6479b8c77fa569edb01181681764108816" integrity="sha512-jGCTpDpBAYDGNYR5ztKt4BQPGef1P0giN6ZGVUi835kFF88FOmmn8jBQWNgrNd8g/Yu421NdgWhwQoaOPFflDw==" data-cf-beacon='{"rayId":"7c9d4875be530b53","version":"2023.4.0","b":1,"token":"8689d6306ccb44a0b74c0fbd3bac3d8c","si":100}' crossorigin="anonymous"></script>
+</body>
+</html>

@@ -407,6 +407,7 @@ type Query {
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
   listModels: String!
+  testApi(method: String!, url: String!): String!
 }
 
 input RegistrationDto {
@@ -425,6 +426,7 @@ type SystemSettings {
   active_model: String!
   id: ID!
   max_tokens: Int!
+  workiz_cookie: String!
 }
 
 type Tech {
@@ -514,6 +516,7 @@ input UpdateFineTuneItemDto {
 
 input UpdateSystemSettingsDto {
   max_tokens: Int!
+  workiz_cookie: String!
 }
 
 input UpdateTechDto {
