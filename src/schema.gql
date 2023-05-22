@@ -298,7 +298,6 @@ type Mutation {
   acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
   assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
   changePassword(passwords: ChangePasswordDto!): SendDto!
-  checkItemQuantity(file: Upload!, only_less: Boolean! = true): [ItemCompareResult!]!
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
   createManyTechsFromWorkiz(techs: [CreateTechFromWorkizDto!]!): [Tech!]!
   createManyTechsSchedules(techs_schedules: [CreateTechScheduleDto!]!): [TechSchedule!]!
@@ -335,7 +334,6 @@ type Mutation {
   updateTechInfo(tech_info: UpdateTechInfoDto!): TechInfo!
   updateTechNote(tech_note: UpdateTechNoteDto!): TechNote!
   updateTechSchedule(tech_schedule: UpdateTechScheduleDto!): TechSchedule!
-  uploadItemTemplatesFromCsv(file: Upload!): [ItemTemplate!]!
 }
 
 type OpenAiFile {
@@ -371,6 +369,7 @@ type PaginatedJobDto {
 
 type Query {
   findTranscription(call_id: String!): Transcription!
+  generateDifferenceReport(only_less: Boolean! = true, workiz_id: String!): [ItemCompareResult!]!
   getAllContainers: [WorkizContainer!]!
   getAllFiles: [OpenAiFile!]!
   getAllJobsWorkiz(
@@ -535,9 +534,6 @@ input UpdateTechScheduleDto {
   work_from: Int
   work_to: Int
 }
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
 
 type User {
   email: String!

@@ -2,14 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { CrudService } from '@tech-slk/nest-crud';
 import { ItemTemplate } from './entity/item-template.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { QueryRunner, Repository } from 'typeorm';
-import { FileUpload } from 'graphql-upload';
-import * as csvParser from 'csv-parser';
-import { GraphQLError } from 'graphql';
+import { Repository } from 'typeorm';
 import { ItemCompareResult } from './dto/item-compare-result.dto';
 import { default_items_templates } from './constants/items-templates.constant';
-import { ItemTemplateCsv } from './dto/item-template-csv';
-import { CarItemCsv } from './dto/car-item-csv';
+import { WorkizContainerInfo } from 'src/modules/api/workiz-api/dto/container.dto';
 
 @Injectable()
 export class ItemTemplateService extends CrudService<ItemTemplate> {
@@ -20,53 +16,34 @@ export class ItemTemplateService extends CrudService<ItemTemplate> {
     super(itemTemplateRepository);
   }
 
-  public async uploadItemTemplatesFromCsv(file: Promise<FileUpload>) {
-    const items = await this.readCsv<ItemTemplateCsv>(await file);
-
-    return await this.itemTemplateRepository.save(
-      items
-        .filter((item) => item['S.L.K SKU'])
-        .map((item) => {
-          if (isNaN(parseInt(item.Quantity))) {
-            throw new GraphQLError('Invalid quantity');
-          }
-          return {
-            sku: item['S.L.K SKU'],
-            uhs_sku: item['UHS SKU'],
-            quantity: parseInt(item.Quantity),
-          };
-        }),
-    );
-  }
-
   public async saveDefaultItemTemplate(
     workiz_id: string,
-  ) {
+  ): Promise<ItemTemplate[]> {
     return this.itemTemplateRepository.save(default_items_templates.map((item) => ({ ...item, workiz_id })))
   }
 
   public async checkItemQuantity(
-    file: Promise<FileUpload>,
+    workiz_container_items: WorkizContainerInfo[],
+    workiz_id: string,
     only_less?: boolean,
-  ) {
-    const car_items = await this.getCarItemsFromFile(file);
-    const template_items = await this.findAll();
-
+  ): Promise<ItemCompareResult[]> {
+    const template_items = await this.itemTemplateRepository.find({ where: { workiz_id } });
     const result: ItemCompareResult[] = [];
+    
     template_items.forEach((template_item) => {
-      const car_item = car_items.find((car_item) =>
-        car_item.name.includes(`(SLK-${template_item.sku})`),
+      const car_item = workiz_container_items.find((car_item) =>
+        car_item.item_name.includes(`(SLK-${template_item.sku})`),
       );
 
       if (car_item) {
-        if (car_item.quantity !== template_item.quantity) {
+        if (Number(car_item.qty) !== template_item.quantity) {
           result.push({
-            name: car_item.name,
+            name: car_item.item_name,
             sku: template_item.sku,
             uhs_sku: template_item.uhs_sku,
-            actual_quantity: car_item.quantity,
+            actual_quantity: Number(car_item.qty) | 0,
             template_quantity: template_item.quantity,
-            difference: car_item.quantity - template_item.quantity,
+            difference: Number(car_item.qty) | 0 - template_item.quantity,
           });
         }
       }
@@ -77,34 +54,5 @@ export class ItemTemplateService extends CrudService<ItemTemplate> {
     }
 
     return result;
-  }
-
-  private async getCarItemsFromFile(file: Promise<FileUpload>) {
-    return (await this.readCsv<CarItemCsv>(await file))
-      .filter((item) => item['Product Name'] && !isNaN(parseInt(item.Quantity)))
-      .map((item) => {
-        return {
-          name: item['Product Name'],
-          quantity: parseInt(item.Quantity),
-          price: item.Price,
-          cost: item.Cost,
-        };
-      });
-  }
-
-  private async readCsv<T>(file: FileUpload): Promise<T[]> {
-    return new Promise((resolve) => {
-      const result: T[] = [];
-
-      file
-        .createReadStream()
-        .pipe(csvParser())
-        .on('data', (data) => {
-          result.push(data);
-        })
-        .on('end', () => {
-          resolve(result);
-        });
-    });
   }
 }
