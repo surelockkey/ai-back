@@ -13,6 +13,13 @@ input ChangePasswordDto {
   old_password: String!
 }
 
+input CreateItemTemplateDto {
+  quantity: Int!
+  sku: String!
+  uhs_sku: String!
+  workiz_id: String!
+}
+
 input CreateJobDto {
   Address: String!
   City: String!
@@ -299,6 +306,7 @@ type Mutation {
   assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
   changePassword(passwords: ChangePasswordDto!): SendDto!
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
+  createItemTemplate(createItemTemplateDto: CreateItemTemplateDto!): ItemTemplate!
   createManyTechsFromWorkiz(techs: [CreateTechFromWorkizDto!]!): [Tech!]!
   createManyTechsSchedules(techs_schedules: [CreateTechScheduleDto!]!): [TechSchedule!]!
   createNewJobWorkiz(createJobDto: CreateJobDto!): SendDto!
@@ -311,6 +319,7 @@ type Mutation {
   createTechNote(tech_note: CreateTechNoteDto!): TechNote!
   createTechSchedule(tech_schedule: CreateTechScheduleDto!): TechSchedule!
   deleteFineTuneItem(id: ID!): ID!
+  deleteItemTemplate(id: ID!): ID!
   deleteManyTechsByIds(ids: [ID!]!): [ID!]!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
   deleteTechById(id: ID!): ID!
@@ -328,6 +337,7 @@ type Mutation {
   startFineTune: FineTune!
   updateCurrentUser(user: UpdateCurrentUserDto!): User!
   updateFineTuneItem(fine_tune_item: UpdateFineTuneItemDto!): FineTuneItem!
+  updateItemTemplate(updateItemTemplateDto: UpdateItemTemplateDto!): ItemTemplate!
   updateManyTechsSchedules(techs_schedules: [UpdateTechScheduleDto!]!): [TechSchedule!]!
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
   updateTech(tech: UpdateTechDto!): Tech!
@@ -499,6 +509,13 @@ input UpdateFineTuneItemDto {
   id: ID!
   prompt: String
   text: String
+}
+
+input UpdateItemTemplateDto {
+  id: ID!
+  quantity: Int!
+  sku: String!
+  uhs_sku: String!
 }
 
 input UpdateSystemSettingsDto {
