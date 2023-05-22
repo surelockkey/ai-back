@@ -1,22 +1,17 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import axios, { AxiosRequestConfig } from "axios";
 import * as FormData from 'form-data';
-import { ConfigType } from "src/core/config/config";
 import { SystemSettingsService } from "src/modules/system-settings/system-settings.service";
 
 export type RestMethods = 'get' | 'post' | 'put' | 'delete';
 
 @Injectable()
 export class WorkizCoreApiService {
-    // private workizConfig: ConfigType['workiz'];
     private cookie: string;
 
     constructor(
-        private readonly configService: ConfigService,
         private readonly systemSettingsService: SystemSettingsService,
     ) {
-        // this.workizConfig = this.configService.get<ConfigType['workiz']>('workiz');
         this.setWorkizCookie();
     }
 
@@ -54,12 +49,12 @@ export class WorkizCoreApiService {
         };
         
         return await axios(conf)
-        .then((r) => {
-            return r;
-        })
-        .catch((e) => {
-            return e
-        });
+            .then((r) => {
+                return r.data;
+            })
+            .catch((e) => {
+                return e
+            });
         
     }
 

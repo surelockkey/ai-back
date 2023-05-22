@@ -8,19 +8,9 @@ input AcceptInviteDto {
   password: String!
 }
 
-type CarInventory {
-  id: ID!
-  item_templates: [ItemTemplate!]!
-  name: String!
-}
-
 input ChangePasswordDto {
   new_password: String!
   old_password: String!
-}
-
-input CreateCarInventoryDto {
-  name: String!
 }
 
 input CreateJobDto {
@@ -304,7 +294,6 @@ type Mutation {
   assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
   changePassword(passwords: ChangePasswordDto!): SendDto!
   checkItemQuantity(file: Upload!, only_less: Boolean! = true): [ItemCompareResult!]!
-  createCarInventory(car_inventory: CreateCarInventoryDto!): CarInventory!
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
   createManyTechsFromWorkiz(techs: [CreateTechFromWorkizDto!]!): [Tech!]!
   createManyTechsSchedules(techs_schedules: [CreateTechScheduleDto!]!): [TechSchedule!]!
@@ -317,7 +306,6 @@ type Mutation {
   createTechInfo(tech_info: CreateTechInfoDto!): TechInfo!
   createTechNote(tech_note: CreateTechNoteDto!): TechNote!
   createTechSchedule(tech_schedule: CreateTechScheduleDto!): TechSchedule!
-  deleteCarInventory(id: ID!): ID!
   deleteFineTuneItem(id: ID!): ID!
   deleteManyTechsByIds(ids: [ID!]!): [ID!]!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
@@ -334,7 +322,6 @@ type Mutation {
   sendMessageToOpenAi(message: String!): String!
   speechToText(call_id: String!): Transcription!
   startFineTune: FineTune!
-  updateCarInventory(car_inventory: UpdateCarInventoryDto!): CarInventory!
   updateCurrentUser(user: UpdateCurrentUserDto!): User!
   updateFineTuneItem(fine_tune_item: UpdateFineTuneItemDto!): FineTuneItem!
   updateManyTechsSchedules(techs_schedules: [UpdateTechScheduleDto!]!): [TechSchedule!]!
@@ -379,7 +366,7 @@ type PaginatedJobDto {
 
 type Query {
   findTranscription(call_id: String!): Transcription!
-  getAllCarInventories: [CarInventory!]!
+  getAllContainers: [WorkizContainer!]!
   getAllFiles: [OpenAiFile!]!
   getAllJobsWorkiz(
     offset: Int!
@@ -394,6 +381,7 @@ type Query {
   getAllUsersWorkiz: [TechnicianWorkiz!]!
   getAllWorkizLeads: [JobDto!]!
   getCalls(ctmGetCallsOptionDto: CtmGetCallsOptionDto!): CtmGetCallsDto!
+  getContainerById(id: String!): [WorkizContainerInfo!]!
   getCurrentUser: User!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!
@@ -499,11 +487,6 @@ type Transcription {
   text: String!
 }
 
-input UpdateCarInventoryDto {
-  id: ID!
-  name: String
-}
-
 input UpdateCurrentUserDto {
   name: String
 }
@@ -563,4 +546,29 @@ enum UserRole {
   ADMIN
   DISPATCHER
   MAIN_DISPATCHER
+}
+
+type WorkizContainer {
+  description: String!
+  id: String!
+  isLowStock: String!
+  is_primary: String!
+  name: String!
+  total_items: String!
+  total_net_value: String!
+  total_unique_items: String!
+  total_value: String!
+}
+
+type WorkizContainerInfo {
+  cost: String!
+  id: String
+  item_id: String!
+  item_name: String!
+  long_desc: String!
+  minimum_at_location: String!
+  price: String!
+  qty: String!
+  total_items: String
+  total_unique_items: String
 }

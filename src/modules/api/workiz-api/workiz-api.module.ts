@@ -8,6 +8,6 @@ import { SystemSettingsModule } from 'src/modules/system-settings/system-setting
 @Module({
   imports: [SystemSettingsModule],
   providers: [WorkizApiService, WorkizApiResolver, WorkizCoreApiService],
-  exports: [WorkizApiService],
+  exports: [WorkizApiService, WorkizCoreApiService],
 })
 export class WorkizApiModule {}
