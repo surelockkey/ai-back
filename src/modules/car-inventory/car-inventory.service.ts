@@ -6,6 +6,7 @@ import { ItemTemplate } from './item-template/entity/item-template.entity';
 import { FindContainerAndTemplate } from './dto/find-container-and-template.dto';
 import { GraphQLError } from 'graphql';
 import { ItemCompareResult } from './item-template/dto/item-compare-result.dto';
+import { FindManyOptions } from 'typeorm';
 
 @Injectable()
 export class CarInventoryService {
@@ -44,11 +45,17 @@ export class CarInventoryService {
   }
 
   private async findItemTemplate(workiz_id: string): Promise<ItemTemplate[]> {
-    const item_template = await this.itemTemplateService.findAll({ workiz_id  });
+    const expression: FindManyOptions<ItemTemplate> = { 
+      where: { workiz_id },
+      order: { sku: 'ASC' }
+    };
+
+    const item_template = await this.itemTemplateService.find(expression);
 
     if (item_template.length) return item_template;
+    await this.itemTemplateService.saveDefaultItemTemplate(workiz_id);
 
-    return await this.itemTemplateService.saveDefaultItemTemplate(workiz_id);
+    return await this.itemTemplateService.find(expression);
   }
 
 }

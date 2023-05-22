@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CrudService } from '@tech-slk/nest-crud';
 import { ItemTemplate } from './entity/item-template.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 import { ItemCompareResult } from './dto/item-compare-result.dto';
 import { default_items_templates } from './constants/items-templates.constant';
 import { WorkizContainerInfo } from 'src/modules/api/workiz-api/dto/container.dto';
@@ -14,6 +14,10 @@ export class ItemTemplateService extends CrudService<ItemTemplate> {
     private readonly itemTemplateRepository: Repository<ItemTemplate>,
   ) {
     super(itemTemplateRepository);
+  }
+
+  public async find(expression: FindManyOptions<ItemTemplate>): Promise<ItemTemplate[]> {
+    return this.itemTemplateRepository.find(expression);
   }
 
   public async saveDefaultItemTemplate(
@@ -29,7 +33,7 @@ export class ItemTemplateService extends CrudService<ItemTemplate> {
   ): Promise<ItemCompareResult[]> {
     const template_items = await this.itemTemplateRepository.find({ where: { workiz_id } });
     const result: ItemCompareResult[] = [];
-    
+
     template_items.forEach((template_item) => {
       const car_item = workiz_container_items.find((car_item) =>
         car_item.item_name.includes(`(SLK-${template_item.sku})`),
