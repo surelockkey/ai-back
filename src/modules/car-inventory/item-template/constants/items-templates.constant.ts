@@ -182,12 +182,12 @@ export const default_items_templates = [
   { sku: '3551', uhs_sku: '1607-625', quantity: 1 },
   { sku: '3721', uhs_sku: 'KMC04-26D-SC1', quantity: 1 },
   {
-    sku: '              3556-R',
+    sku: '3556-R',
     uhs_sku: 'DBALL-SS (RIGHT SIDE)',
     quantity: 1,
   },
   {
-    sku: '               3556-L',
+    sku: '3556-L',
     uhs_sku: 'DBALL-SS (LEFT SIDE)',
     quantity: 1,
   },
