@@ -17,6 +17,7 @@ import { InvitedUser } from '../user/entity/invited-user.entity';
 import { AcceptInviteDto } from './dto/accept-invite.dto';
 import { RoleGuard } from './decorator/role.decorator';
 import { UserRole } from '../user/enum/user-role.enum';
+import { InviteUserDto } from './dto/invite-user.dto';
 
 @Resolver()
 export class AuthorizationResolver {
@@ -55,18 +56,15 @@ export class AuthorizationResolver {
   @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
   @Mutation(() => InvitedUser)
   public async inviteUserToApp(
-    @Args('email', { type: () => String })
-    email: string,
-    @Args('role', { type: () => UserRole }) role: UserRole,
+    @Args('inviteUserDto', { type: () => InviteUserDto })
+    inviteUserDto: InviteUserDto,
     @CurrentUser()
     { user_id }: CurrentUserDto,
-    @Args('workiz_id', { type: () => String, nullable: true })
-    workiz_id?: string,
   ): Promise<InvitedUser> {
     return this.loggerService.actionLog({
       callback: () =>
-        this.authorizationService.inviteUserToApp(email, role, user_id, workiz_id),
-      action: `Tried to invite user with email ${email}`,
+        this.authorizationService.inviteUserToApp(inviteUserDto, user_id),
+      action: `Tried to invite user with email ${inviteUserDto.email}`,
       user_id: user_id,
     });
   }

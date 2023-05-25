@@ -15,6 +15,7 @@ import { RegistrationDto } from './dto/registration.dto';
 import { UserRole } from '../user/enum/user-role.enum';
 import { MailService } from '../mail/mail.service';
 import { ConfigService } from '@nestjs/config';
+import { InviteUserDto } from './dto/invite-user.dto';
 
 @Injectable()
 export class AuthorizationService extends NestAuthService<
@@ -36,10 +37,8 @@ export class AuthorizationService extends NestAuthService<
   }
 
   public async inviteUserToApp(
-    email: string,
-    role: UserRole,
+    { role, email, workiz_id, name }: InviteUserDto,
     current_user_id: string,
-    workiz_id: string,
   ): Promise<InvitedUser> {
     const current_user = await this.userService.findOneById(current_user_id);
 
@@ -61,6 +60,7 @@ export class AuthorizationService extends NestAuthService<
           key: randomStringGenerator(),
           role,
           workiz_id,
+          name,
         });
 
         await this.mailService.sendMail({
