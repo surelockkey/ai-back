@@ -22,6 +22,7 @@ export class InvitedUser extends BaseEntity {
   @Field(() => UserRole)
   role: UserRole;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   workiz_id: string;
 }
