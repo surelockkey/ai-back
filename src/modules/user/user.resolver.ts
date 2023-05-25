@@ -8,9 +8,14 @@ import { UserService } from './user.service';
 import { RoleGuard } from '../authorization/decorator/role.decorator';
 import { UserRole } from './enum/user-role.enum';
 import { UpdateCurrentUserDto } from './dto/user.input';
+import { InvitedUser } from './entity/invited-user.entity';
+import { InvitedUserService } from './invited-user.service';
 @Resolver()
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly invitedUserService: InvitedUserService,
+  ) {}
 
   @UseGuards(GqlAuthGuard)
   @Query(() => User)
@@ -27,6 +32,14 @@ export class UserResolver {
     @CurrentUser() user: CurrentUserDto,
   ): Promise<User[]> {
     return this.userService.findAllUsers(user.user_id);
+  }
+
+  @RoleGuard(UserRole.ADMIN)
+  @Query(() => [InvitedUser])
+  public async getAllInvitedUsers(
+    @CurrentUser() user: CurrentUserDto,
+  ): Promise<InvitedUser[]> {
+    return this.invitedUserService.findAll();
   }
 
   @UseGuards(GqlAuthGuard)
