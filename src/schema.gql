@@ -193,6 +193,7 @@ type InvitedUser {
   id: ID!
   key: String!
   role: UserRole!
+  workiz_id: String!
 }
 
 type ItemCompareResult {
@@ -326,11 +327,10 @@ type Mutation {
   deleteTechInfo(id: ID!): ID!
   deleteTechNote(id: ID!): ID!
   deleteTechSchedule(id: ID!): ID!
-  inviteUserToApp(email: String!, role: UserRole!): InvitedUser!
+  inviteUserToApp(email: String!, role: UserRole!, workiz_id: String): InvitedUser!
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!
   prepareFileForFineTune(filename: String!): String!
-  registration(registration_dto: RegistrationDto!): User!
   sendMessage(prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
   speechToText(call_id: String!): Transcription!
@@ -410,13 +410,6 @@ type Query {
   listFineTunes: String!
   listModels: String!
   testApi(method: String!, url: String!): String!
-}
-
-input RegistrationDto {
-  email: String!
-  name: String!
-  password: String!
-  role: UserRole! = ADMIN
 }
 
 type SendDto {
@@ -503,6 +496,7 @@ type Transcription {
 
 input UpdateCurrentUserDto {
   name: String
+  workiz_id: String
 }
 
 input UpdateFineTuneItemDto {
@@ -558,12 +552,14 @@ type User {
   logs: [Log!]!
   name: String!
   role: UserRole!
+  workiz_id: String
 }
 
 enum UserRole {
   ADMIN
   DISPATCHER
   MAIN_DISPATCHER
+  TECHNICIAN
 }
 
 type WorkizContainer {

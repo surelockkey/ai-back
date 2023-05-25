@@ -39,6 +39,7 @@ export class AuthorizationService extends NestAuthService<
     email: string,
     role: UserRole,
     current_user_id: string,
+    workiz_id: string,
   ): Promise<InvitedUser> {
     const current_user = await this.userService.findOneById(current_user_id);
 
@@ -59,6 +60,7 @@ export class AuthorizationService extends NestAuthService<
           email,
           key: randomStringGenerator(),
           role,
+          workiz_id,
         });
 
         await this.mailService.sendMail({
@@ -93,13 +95,14 @@ export class AuthorizationService extends NestAuthService<
     key,
     ...rest
   }: AcceptInviteDto): Promise<User> {
-    const { email, id, role } = await this.invitedUserService.findOne({ key });
+    const { email, id, role, workiz_id } = await this.invitedUserService.findOne({ key });
 
     if (!email) throw new GraphQLError("User isn't invited");
 
     const new_user = await this.registration({
       email,
       role,
+      workiz_id,
       ...rest,
     });
 

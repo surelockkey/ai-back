@@ -17,4 +17,7 @@ export class InvitedUser extends BaseEntity {
   @Column({ type: 'enum', enum: UserRole })
   @Field(() => UserRole)
   role: UserRole;
+
+  @Field(() => String)
+  workiz_id: string;
 }

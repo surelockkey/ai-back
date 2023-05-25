@@ -25,23 +25,6 @@ export class AuthorizationResolver {
     private readonly loggerService: LoggerService,
   ) {}
 
-  @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
-  @Mutation(() => User)
-  public async registration(
-    @Args('registration_dto', { type: () => RegistrationDto })
-    registration_dto: RegistrationDto,
-    @CurrentUser() user: CurrentUserDto,
-  ): Promise<User> {
-    return this.loggerService.actionLog({
-      callback: () =>
-        this.authorizationService.registrationUser(
-          registration_dto,
-          user.user_id,
-        ),
-      action: 'Tried to register',
-    });
-  }
-
   @Mutation(() => TokenResponse)
   public async login(
     @Args('login_dto', { type: () => LoginCredential })
@@ -77,10 +60,12 @@ export class AuthorizationResolver {
     @Args('role', { type: () => UserRole }) role: UserRole,
     @CurrentUser()
     { user_id }: CurrentUserDto,
+    @Args('workiz_id', { type: () => String, nullable: true })
+    workiz_id?: string,
   ): Promise<InvitedUser> {
     return this.loggerService.actionLog({
       callback: () =>
-        this.authorizationService.inviteUserToApp(email, role, user_id),
+        this.authorizationService.inviteUserToApp(email, role, user_id, workiz_id),
       action: `Tried to invite user with email ${email}`,
       user_id: user_id,
     });
