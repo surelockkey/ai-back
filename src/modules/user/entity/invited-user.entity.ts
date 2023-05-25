@@ -10,7 +10,7 @@ export class InvitedUser extends BaseEntity {
   @Field(() => String)
   email: string;
 
-  @Field(() => String)
+  @Field(() => String, { defaultValue: '' })
   @Column()
   name: string;
 
