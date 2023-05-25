@@ -62,4 +62,14 @@ export class UserResolver {
     await this.userService.deleteManyByIds(user_ids);
     return user_ids;
   }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => [String])
+  public async deleteManyInvitedUsers(
+    @Args('user_ids', { type: () => [ID] })
+    user_ids: string[],
+  ): Promise<string[]> {
+    await this.invitedUserService.deleteManyByIds(user_ids);
+    return user_ids;
+  }
 }
