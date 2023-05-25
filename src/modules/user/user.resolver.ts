@@ -63,7 +63,7 @@ export class UserResolver {
     return user_ids;
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN)
   @Mutation(() => [String])
   public async deleteManyInvitedUsers(
     @Args('user_ids', { type: () => [ID] })
