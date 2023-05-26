@@ -81,7 +81,6 @@ export class UserResolver {
     @Args('search_value', { nullable: true }) search_value?: string,
     @Args('is_available', { nullable: true, type: () => Boolean })
     is_available?: boolean,
-    @Args('states', { nullable: true, type: () => [String] }) states?: string[],
     @Args('role', { nullable: true, type: () => [UserRole] }) role?: UserRole[],
   ) {
     return this.userService.getUsersWithSchedule(
@@ -89,8 +88,12 @@ export class UserResolver {
       to,
       search_value,
       is_available,
-      states,
       role,
     );
+  }
+
+  @Query(() => [String, { nullable: true }], { nullable: true })
+  getUniqueLocations() {
+    return this.userService.getUniqueLocations();
   }
 }

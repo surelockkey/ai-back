@@ -231,6 +231,7 @@ type GoogleSheetsTechSchedule {
 
 input InviteUserDto {
   email: String
+  location: String
   name: String
   role: UserRole = ADMIN
   workiz_id: String
@@ -470,7 +471,8 @@ type Query {
   getTechsSchedule: [GoogleSheetsTechSchedule!]!
   getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, states: [String!], to: Int!): [TechWithSchedule!]!
   getTechsWorkizWithoutAdded: [TechnicianWorkiz!]!
-  getUsersWithSchedule(from: Int!, is_available: Boolean, role: [UserRole!], search_value: String, states: [String!], to: Int!): [UserWithSchedule!]!
+  getUniqueLocations: [String!]
+  getUsersWithSchedule(from: Int!, is_available: Boolean, role: [UserRole!], search_value: String, to: Int!): [UserWithSchedule!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
@@ -561,6 +563,7 @@ type Transcription {
 }
 
 input UpdateCurrentUserDto {
+  location: String
   name: String
   workiz_id: String
 }
@@ -635,6 +638,7 @@ type User {
   email: String!
   id: String!
   info: [UserInfo!]
+  location: String
   logs: [Log!]!
   name: String!
   notes: [UserNote!]
@@ -675,6 +679,7 @@ type UserWithSchedule {
   email: String!
   id: String!
   info: [UserInfo!]
+  location: String
   logs: [Log!]!
   name: String!
   notes: [UserNote!]

@@ -49,7 +49,6 @@ export class UserService extends NestUserService<User> {
     to: number,
     search_value?: string,
     is_available?: boolean,
-    states?: string[],
     role?: UserRole[],
   ) {
     const queryBuilder = await this.userRepository
@@ -77,7 +76,7 @@ export class UserService extends NestUserService<User> {
     }
 
     if (role && role.length) {
-      queryBuilder.andWhere({ role: In(role) });
+      queryBuilder.andWhere('user.role IN (:...role)', { role });
     }
 
     if (typeof is_available === 'boolean') {
@@ -100,10 +99,18 @@ export class UserService extends NestUserService<User> {
       }
     }
 
-    if (states && states.length) {
-      queryBuilder.andWhere('user.state IN (:...states)', { states });
-    }
-
     return await queryBuilder.orderBy('user.name', 'ASC').getMany();
+  }
+
+  public async getUniqueLocations() {
+    const res = await this.userRepository
+      .createQueryBuilder('user')
+      .select('user.location')
+      .distinct(true)
+      .getRawMany();
+
+    return res
+      .filter((loc) => loc.user_location)
+      .map((loc) => loc.user_location);
   }
 }

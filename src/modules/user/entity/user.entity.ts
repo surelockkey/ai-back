@@ -30,6 +30,10 @@ export class User extends NestUser {
   // @Field(() => String)
   // password: string;
 
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  location?: string;
+
   @Column({
     type: 'enum',
     enum: UserRole,
