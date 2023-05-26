@@ -50,6 +50,7 @@ export class UserService extends NestUserService<User> {
     search_value?: string,
     is_available?: boolean,
     role?: UserRole[],
+    locations?: string[],
   ) {
     const queryBuilder = await this.userRepository
       .createQueryBuilder('user')
@@ -77,6 +78,10 @@ export class UserService extends NestUserService<User> {
 
     if (role && role.length) {
       queryBuilder.andWhere('user.role IN (:...role)', { role });
+    }
+
+    if (locations && locations.length) {
+      queryBuilder.andWhere('user.location IN (:...locations)', { locations });
     }
 
     if (typeof is_available === 'boolean') {

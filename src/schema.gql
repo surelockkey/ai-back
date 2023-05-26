@@ -241,6 +241,7 @@ type InvitedUser {
   email: String!
   id: ID!
   key: String!
+  location: String
   name: String!
   role: UserRole!
   workiz_id: String
