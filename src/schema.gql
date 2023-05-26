@@ -105,6 +105,12 @@ input CreateTechScheduleDto {
   work_to: Int!
 }
 
+input CreateTimeTemplateDto {
+  color: String!
+  name: String!
+  value: String!
+}
+
 input CreateUserInfoDto {
   key: String!
   user_id: ID!
@@ -374,6 +380,7 @@ type Mutation {
   createTechInfo(tech_info: CreateTechInfoDto!): TechInfo!
   createTechNote(tech_note: CreateTechNoteDto!): TechNote!
   createTechSchedule(tech_schedule: CreateTechScheduleDto!): TechSchedule!
+  createTimeTemplate(time_template: CreateTimeTemplateDto!): TimeTemplate!
   createUserInfo(user_info: CreateUserInfoDto!): UserInfo!
   createUserNote(user_note: CreateUserNoteDto!): UserNote!
   createUserSchedule(user_schedule: CreateUserScheduleDto!): UserSchedule!
@@ -381,11 +388,13 @@ type Mutation {
   deleteItemTemplate(id: ID!): ID!
   deleteManyInvitedUsers(user_ids: [ID!]!): [String!]!
   deleteManyTechsByIds(ids: [ID!]!): [ID!]!
+  deleteManyUserSchedules(ids: [ID!]!): [ID!]!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
   deleteTechById(id: ID!): ID!
   deleteTechInfo(id: ID!): ID!
   deleteTechNote(id: ID!): ID!
   deleteTechSchedule(id: ID!): ID!
+  deleteTimeTemplate(id: ID!): ID!
   deleteUserInfo(id: ID!): ID!
   deleteUserNote(id: ID!): ID!
   deleteUserSchedule(id: ID!): ID!
@@ -458,6 +467,7 @@ type Query {
   getAllMessages: [Message!]!
   getAllTechs: [Tech!]!
   getAllTechsWorkiz: [TechnicianWorkiz!]!
+  getAllTimeTemplates: [TimeTemplate!]!
   getAllUsers: [User!]!
   getAllUsersWorkiz: [TechnicianWorkiz!]!
   getAllWorkizLeads: [JobDto!]!
@@ -473,7 +483,7 @@ type Query {
   getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, states: [String!], to: Int!): [TechWithSchedule!]!
   getTechsWorkizWithoutAdded: [TechnicianWorkiz!]!
   getUniqueLocations: [String!]
-  getUsersWithSchedule(from: Int!, is_available: Boolean, role: [UserRole!], search_value: String, to: Int!): [UserWithSchedule!]!
+  getUsersWithSchedule(from: Int!, is_available: Boolean, locations: [String!], role: [UserRole!], search_value: String, to: Int!): [UserWithSchedule!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
@@ -550,6 +560,13 @@ type TechnicianWorkiz {
   role: String!
   serviceAreas: [String!]!
   skills: [String!]!
+}
+
+type TimeTemplate {
+  color: String!
+  id: ID!
+  name: String!
+  value: String!
 }
 
 type TokenResponse {

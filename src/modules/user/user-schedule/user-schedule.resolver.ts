@@ -94,6 +94,22 @@ export class UserScheduleResolver {
   }
 
   @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
+  @Mutation(() => [ID])
+  deleteManyUserSchedules(
+    @Args('ids', { type: () => [ID] }) ids: string[],
+    @CurrentUser() { user_id }: CurrentUserDto,
+  ) {
+    return this.loggerService.actionLog({
+      callback: async () => {
+        await this.userScheduleService.deleteManyByIds(ids);
+        return ids;
+      },
+      user_id,
+      action: 'Tried to delete many user schedules',
+    });
+  }
+
+  @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
   @Mutation(() => [UserSchedule])
   createOrUpdateManyUsersSchedules(
     @Args('user_schedules', { type: () => [CreateOrUpdateUserScheduleDto] })
