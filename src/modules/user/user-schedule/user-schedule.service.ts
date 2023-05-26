@@ -4,6 +4,7 @@ import { UserSchedule } from './entity/user-schedule.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {
+  CreateOrUpdateUserScheduleDto,
   CreateUserScheduleDto,
   UpdateUserScheduleDto,
 } from './dto/user-schedule.dto';
@@ -23,6 +24,12 @@ export class UserScheduleService extends CrudService<UserSchedule> {
 
   public async updateManyUsersSchedules(
     users_schedules: UpdateUserScheduleDto[],
+  ) {
+    return await this.userScheduleRepository.save(users_schedules);
+  }
+
+  public async createOrUpdateManyUsersSchedules(
+    users_schedules: CreateOrUpdateUserScheduleDto[],
   ) {
     return await this.userScheduleRepository.save(users_schedules);
   }

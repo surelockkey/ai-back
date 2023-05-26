@@ -21,3 +21,8 @@ export class UpdateUserScheduleDto extends IntersectionType(
   PartialType(OmitType(CreateUserScheduleDto, ['user_id'])),
 ) {}
 
+@InputType()
+export class CreateOrUpdateUserScheduleDto extends IntersectionType(
+  PartialType(PickType(UserScheduleInput, ['id'])),
+  CreateUserScheduleDto,
+) {}

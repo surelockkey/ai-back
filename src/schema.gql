@@ -65,6 +65,13 @@ input CreateOrUpdateUserNoteDto {
   week_start: Int!
 }
 
+input CreateOrUpdateUserScheduleDto {
+  id: ID
+  user_id: ID!
+  work_from: Int!
+  work_to: Int!
+}
+
 input CreateTechDto {
   email: String!
   name: String!
@@ -354,6 +361,7 @@ type Mutation {
   createManyTechsSchedules(techs_schedules: [CreateTechScheduleDto!]!): [TechSchedule!]!
   createManyUsersSchedules(users_schedules: [CreateUserScheduleDto!]!): [UserSchedule!]!
   createNewJobWorkiz(createJobDto: CreateJobDto!): SendDto!
+  createOrUpdateManyUsersSchedules(user_schedules: [CreateOrUpdateUserScheduleDto!]!): [UserSchedule!]!
   createOrUpdateTechInfo(tech_infos: [CreateOrUpdateTechInfoDto!]!): [TechInfo!]!
   createOrUpdateTechNote(tech_note: CreateOrUpdateTechNoteDto!): TechNote!
   createOrUpdateUserInfo(user_infos: [CreateOrUpdateUserInfoDto!]!): [UserInfo!]!
