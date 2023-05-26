@@ -45,9 +45,11 @@ export class User extends NestUser {
   @OneToMany(() => UserSchedule, (user_schedule) => user_schedule.user)
   schedules: UserSchedule[];
 
-  @OneToMany(() => UserInfo, (user_info) => user_info.user)
+  @Field(() => [UserInfo], { nullable: true })
+  @OneToMany(() => UserInfo, (user_info) => user_info.user, { eager: true })
   info: UserInfo[];
 
-  @OneToMany(() => UserNote, (user_note) => user_note.user)
+  @Field(() => [UserNote], { nullable: true })
+  @OneToMany(() => UserNote, (user_note) => user_note.user, { eager: true })
   notes: UserNote[];
 }

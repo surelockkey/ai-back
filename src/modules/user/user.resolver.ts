@@ -1,4 +1,4 @@
-import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from '../authorization/guard/auth.guard';
 import { CurrentUser } from '@tech-slk/nest-auth';
 import { CurrentUserDto } from '../authorization/dto/current-user.dto';
@@ -10,6 +10,7 @@ import { UserRole } from './enum/user-role.enum';
 import { UpdateCurrentUserDto } from './dto/user.input';
 import { InvitedUser } from './entity/invited-user.entity';
 import { InvitedUserService } from './invited-user.service';
+import { UserWithSchedule } from './dto/user-with-schedule.dto';
 @Resolver()
 export class UserResolver {
   constructor(
@@ -71,5 +72,25 @@ export class UserResolver {
   ): Promise<string[]> {
     await this.invitedUserService.deleteManyByIds(user_ids);
     return user_ids;
+  }
+
+  @Query(() => [UserWithSchedule])
+  getUsersWithSchedule(
+    @Args('from', { type: () => Int }) from: number,
+    @Args('to', { type: () => Int }) to: number,
+    @Args('search_value', { nullable: true }) search_value?: string,
+    @Args('is_available', { nullable: true, type: () => Boolean })
+    is_available?: boolean,
+    @Args('states', { nullable: true, type: () => [String] }) states?: string[],
+    @Args('role', { nullable: true, type: () => UserRole }) role?: UserRole,
+  ) {
+    return this.userService.getUsersWithSchedule(
+      from,
+      to,
+      search_value,
+      is_available,
+      states,
+      role,
+    );
   }
 }

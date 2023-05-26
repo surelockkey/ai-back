@@ -462,6 +462,7 @@ type Query {
   getTechsSchedule: [GoogleSheetsTechSchedule!]!
   getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, states: [String!], to: Int!): [TechWithSchedule!]!
   getTechsWorkizWithoutAdded: [TechnicianWorkiz!]!
+  getUsersWithSchedule(from: Int!, is_available: Boolean, role: UserRole, search_value: String, states: [String!], to: Int!): [UserWithSchedule!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
@@ -625,8 +626,10 @@ input UpdateUserScheduleDto {
 type User {
   email: String!
   id: String!
+  info: [UserInfo!]
   logs: [Log!]!
   name: String!
+  notes: [UserNote!]
   role: UserRole!
   workiz_id: String
 }
@@ -658,6 +661,18 @@ type UserSchedule {
   user_id: ID!
   work_from: Int!
   work_to: Int!
+}
+
+type UserWithSchedule {
+  email: String!
+  id: String!
+  info: [UserInfo!]
+  logs: [Log!]!
+  name: String!
+  notes: [UserNote!]
+  role: UserRole!
+  schedules: [UserSchedule!]!
+  workiz_id: String
 }
 
 type WorkizContainer {
