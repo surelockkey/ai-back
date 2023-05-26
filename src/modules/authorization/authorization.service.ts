@@ -37,7 +37,7 @@ export class AuthorizationService extends NestAuthService<
   }
 
   public async inviteUserToApp(
-    { role, email, workiz_id, name }: InviteUserDto,
+    { role, email, workiz_id, name, location }: InviteUserDto,
     current_user_id: string,
   ): Promise<InvitedUser> {
     const current_user = await this.userService.findOneById(current_user_id);
@@ -61,6 +61,7 @@ export class AuthorizationService extends NestAuthService<
           role,
           workiz_id,
           name,
+          location
         });
 
         await this.mailService.sendMail({
