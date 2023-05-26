@@ -470,7 +470,7 @@ type Query {
   getTechsSchedule: [GoogleSheetsTechSchedule!]!
   getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, states: [String!], to: Int!): [TechWithSchedule!]!
   getTechsWorkizWithoutAdded: [TechnicianWorkiz!]!
-  getUsersWithSchedule(from: Int!, is_available: Boolean, role: UserRole, search_value: String, states: [String!], to: Int!): [UserWithSchedule!]!
+  getUsersWithSchedule(from: Int!, is_available: Boolean, role: [UserRole!], search_value: String, states: [String!], to: Int!): [UserWithSchedule!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!

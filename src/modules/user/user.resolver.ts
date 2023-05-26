@@ -82,7 +82,7 @@ export class UserResolver {
     @Args('is_available', { nullable: true, type: () => Boolean })
     is_available?: boolean,
     @Args('states', { nullable: true, type: () => [String] }) states?: string[],
-    @Args('role', { nullable: true, type: () => UserRole }) role?: UserRole,
+    @Args('role', { nullable: true, type: () => [UserRole] }) role?: UserRole[],
   ) {
     return this.userService.getUsersWithSchedule(
       from,
