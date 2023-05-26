@@ -9,14 +9,17 @@ import { UserSchedule } from './user-schedule/entity/user-schedule.entity';
 import { UserNote } from './user-note/entity/user-note.entity';
 import { UserInfo } from './user-info/entity/user-info.entity';
 import { WorkizApiModule } from '../api/workiz-api/workiz-api.module';
+import { UserScheduleModule } from './user-schedule/user-schedule.module';
+import { UserNoteModule } from './user-note/user-note.module';
+import { UserInfoModule } from './user-info/user-info.module';
 
 @Global()
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, InvitedUser]),
-    UserSchedule,
-    UserNote,
-    UserInfo,
+    UserScheduleModule,
+    UserNoteModule,
+    UserInfoModule,
     WorkizApiModule,
   ],
   providers: [UserResolver, UserService, InvitedUserService],

@@ -50,6 +50,21 @@ input CreateOrUpdateTechNoteDto {
   week_start: Int!
 }
 
+input CreateOrUpdateUserInfoDto {
+  id: ID
+  key: String!
+  user_id: ID!
+  value: String!
+}
+
+input CreateOrUpdateUserNoteDto {
+  id: ID
+  note: String!
+  user_id: ID!
+  week_end: Int!
+  week_start: Int!
+}
+
 input CreateTechDto {
   email: String!
   name: String!
@@ -79,6 +94,25 @@ input CreateTechNoteDto {
 
 input CreateTechScheduleDto {
   tech_id: ID!
+  work_from: Int!
+  work_to: Int!
+}
+
+input CreateUserInfoDto {
+  key: String!
+  user_id: ID!
+  value: String!
+}
+
+input CreateUserNoteDto {
+  note: String!
+  user_id: ID!
+  week_end: Int!
+  week_start: Int!
+}
+
+input CreateUserScheduleDto {
+  user_id: ID!
   work_from: Int!
   work_to: Int!
 }
@@ -188,12 +222,20 @@ type GoogleSheetsTechSchedule {
   week_start: String
 }
 
+input InviteUserDto {
+  email: String
+  name: String
+  role: UserRole = ADMIN
+  workiz_id: String
+}
+
 type InvitedUser {
   email: String!
   id: ID!
   key: String!
+  name: String!
   role: UserRole!
-  workiz_id: String!
+  workiz_id: String
 }
 
 type ItemCompareResult {
@@ -310,24 +352,34 @@ type Mutation {
   createItemTemplate(createItemTemplateDto: CreateItemTemplateDto!): ItemTemplate!
   createManyTechsFromWorkiz(techs: [CreateTechFromWorkizDto!]!): [Tech!]!
   createManyTechsSchedules(techs_schedules: [CreateTechScheduleDto!]!): [TechSchedule!]!
+  createManyUsersSchedules(users_schedules: [CreateUserScheduleDto!]!): [UserSchedule!]!
   createNewJobWorkiz(createJobDto: CreateJobDto!): SendDto!
   createOrUpdateTechInfo(tech_infos: [CreateOrUpdateTechInfoDto!]!): [TechInfo!]!
   createOrUpdateTechNote(tech_note: CreateOrUpdateTechNoteDto!): TechNote!
+  createOrUpdateUserInfo(user_infos: [CreateOrUpdateUserInfoDto!]!): [UserInfo!]!
+  createOrUpdateUserNote(user_note: CreateOrUpdateUserNoteDto!): UserNote!
   createSystemSettings(max_tokens: Int!): SystemSettings!
   createTech(tech: CreateTechDto!): Tech!
   createTechFromWorkiz(state: String, workiz_id: String!): Tech!
   createTechInfo(tech_info: CreateTechInfoDto!): TechInfo!
   createTechNote(tech_note: CreateTechNoteDto!): TechNote!
   createTechSchedule(tech_schedule: CreateTechScheduleDto!): TechSchedule!
+  createUserInfo(user_info: CreateUserInfoDto!): UserInfo!
+  createUserNote(user_note: CreateUserNoteDto!): UserNote!
+  createUserSchedule(user_schedule: CreateUserScheduleDto!): UserSchedule!
   deleteFineTuneItem(id: ID!): ID!
   deleteItemTemplate(id: ID!): ID!
+  deleteManyInvitedUsers(user_ids: [ID!]!): [String!]!
   deleteManyTechsByIds(ids: [ID!]!): [ID!]!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
   deleteTechById(id: ID!): ID!
   deleteTechInfo(id: ID!): ID!
   deleteTechNote(id: ID!): ID!
   deleteTechSchedule(id: ID!): ID!
-  inviteUserToApp(email: String!, role: UserRole!, workiz_id: String): InvitedUser!
+  deleteUserInfo(id: ID!): ID!
+  deleteUserNote(id: ID!): ID!
+  deleteUserSchedule(id: ID!): ID!
+  inviteUserToApp(inviteUserDto: InviteUserDto!): InvitedUser!
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!
   prepareFileForFineTune(filename: String!): String!
@@ -339,11 +391,15 @@ type Mutation {
   updateFineTuneItem(fine_tune_item: UpdateFineTuneItemDto!): FineTuneItem!
   updateItemTemplate(updateItemTemplateDto: UpdateItemTemplateDto!): ItemTemplate!
   updateManyTechsSchedules(techs_schedules: [UpdateTechScheduleDto!]!): [TechSchedule!]!
+  updateManyUsersSchedules(users_schedules: [UpdateUserScheduleDto!]!): [UserSchedule!]!
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
   updateTech(tech: UpdateTechDto!): Tech!
   updateTechInfo(tech_info: UpdateTechInfoDto!): TechInfo!
   updateTechNote(tech_note: UpdateTechNoteDto!): TechNote!
   updateTechSchedule(tech_schedule: UpdateTechScheduleDto!): TechSchedule!
+  updateUserInfo(user_info: UpdateUserInfoDto!): UserInfo!
+  updateUserNote(user_note: UpdateUserNoteDto!): UserNote!
+  updateUserSchedule(user_schedule: UpdateUserScheduleDto!): UserSchedule!
 }
 
 type OpenAiFile {
@@ -382,6 +438,7 @@ type Query {
   generateDifferenceReport(only_less: Boolean! = true, workiz_id: String!): [ItemCompareResult!]!
   getAllContainers: [WorkizContainer!]!
   getAllFiles: [OpenAiFile!]!
+  getAllInvitedUsers: [InvitedUser!]!
   getAllJobsWorkiz(
     offset: Int!
 
@@ -546,6 +603,25 @@ input UpdateTechScheduleDto {
   work_to: Int
 }
 
+input UpdateUserInfoDto {
+  id: ID!
+  key: String
+  value: String
+}
+
+input UpdateUserNoteDto {
+  id: ID!
+  note: String
+  week_end: Int
+  week_start: Int
+}
+
+input UpdateUserScheduleDto {
+  id: ID!
+  work_from: Int
+  work_to: Int
+}
+
 type User {
   email: String!
   id: String!
@@ -555,11 +631,33 @@ type User {
   workiz_id: String
 }
 
+type UserInfo {
+  id: ID!
+  key: String!
+  user_id: ID!
+  value: String!
+}
+
+type UserNote {
+  id: ID!
+  note: String!
+  user_id: ID!
+  week_end: Int!
+  week_start: Int!
+}
+
 enum UserRole {
   ADMIN
   DISPATCHER
   MAIN_DISPATCHER
   TECHNICIAN
+}
+
+type UserSchedule {
+  id: ID!
+  user_id: ID!
+  work_from: Int!
+  work_to: Int!
 }
 
 type WorkizContainer {
