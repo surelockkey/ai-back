@@ -50,9 +50,9 @@ export class AuthorizationService extends NestAuthService<
     }
 
     return await this.userService
-      .findOne({ email })
+      .findOneUser({ where: [{ email }, { workiz_id }] })
       .then(() => {
-        throw new GraphQLError('User with this email already exist');
+        throw new GraphQLError('User with this email or workiz id already exist');
       })
       .catch(async () => {
         const invited_user = await this.invitedUserService.create({

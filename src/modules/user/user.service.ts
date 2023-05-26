@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { NestUserService } from '@tech-slk/nest-auth';
 
 import { User } from './entity/user.entity';
-import { In, Repository } from 'typeorm';
+import { FindOneOptions, In, Repository } from 'typeorm';
 import { UserRole } from './enum/user-role.enum';
 import { WorkizApiService } from '../api/workiz-api/workiz-api.service';
 import * as moment from 'moment';
@@ -16,6 +16,10 @@ export class UserService extends NestUserService<User> {
     private readonly workizApiService: WorkizApiService,
   ) {
     super(userRepository);
+  }
+
+  public findOneUser(expression: FindOneOptions<User>): Promise<User> {
+    return this.userRepository.findOne(expression);
   }
 
   public async getUsersWorkizWithoutAdded() {
