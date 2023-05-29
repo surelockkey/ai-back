@@ -29,6 +29,11 @@ export class CarInventoryResolver {
     return (await this.carInventoryService.findAllContainers()).data;
   }
 
+  @Query(() => [Template])
+  async getAllTemplates(): Promise<Template[]> {
+    return this.templateService.findAll();
+  }
+
   @Query(() => FindContainerAndTemplate)
   async getContainerById(
     @Args('id', { type: () => String })
