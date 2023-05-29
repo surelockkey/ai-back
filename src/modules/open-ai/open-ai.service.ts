@@ -6,7 +6,6 @@ import * as FormData from 'form-data';
 import { OpenAiMessageResponse } from './dto/message-response.dto';
 import { ConfigService } from '@nestjs/config';
 import { SystemSettingsService } from 'src/modules/system-settings/system-settings.service';
-import { GoogleAdsApi } from 'google-ads-api';
 
 // import * as ax from 'axios';
 
