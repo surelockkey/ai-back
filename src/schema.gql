@@ -416,6 +416,7 @@ type Mutation {
   updateTechInfo(tech_info: UpdateTechInfoDto!): TechInfo!
   updateTechNote(tech_note: UpdateTechNoteDto!): TechNote!
   updateTechSchedule(tech_schedule: UpdateTechScheduleDto!): TechSchedule!
+  updateTimeTemplate(time_template: UpdateTimeTemplateDto!): TimeTemplate!
   updateUserInfo(user_info: UpdateUserInfoDto!): UserInfo!
   updateUserNote(user_note: UpdateUserNoteDto!): UserNote!
   updateUserSchedule(user_schedule: UpdateUserScheduleDto!): UserSchedule!
@@ -631,6 +632,13 @@ input UpdateTechScheduleDto {
   id: ID!
   work_from: Int
   work_to: Int
+}
+
+input UpdateTimeTemplateDto {
+  color: String
+  id: ID!
+  name: String
+  value: String
 }
 
 input UpdateUserInfoDto {
