@@ -45,6 +45,7 @@ export class TimeTemplateResolver {
     });
   }
 
+  @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
   @Mutation(() => TimeTemplate)
   updateTimeTemplate(
     @Args('time_template', { type: () => UpdateTimeTemplateDto })
