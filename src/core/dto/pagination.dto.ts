@@ -1,6 +1,6 @@
 import { Type } from '@nestjs/common';
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
-import { Min } from 'class-validator';
+import { Min, Max } from 'class-validator';
 
 @InputType()
 export class FindPaginationDto {
@@ -10,6 +10,7 @@ export class FindPaginationDto {
 
   @Field(() => Int)
   @Min(0)
+  @Max(100)
   skip: number;
 }
 
