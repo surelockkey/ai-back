@@ -270,6 +270,44 @@ type ItemTemplate {
   workiz_id: String!
 }
 
+type Job {
+  address: String!
+  city: String!
+  client_id: Float!
+  comments: String!
+  company: String!
+  country: String!
+  created_by: String!
+  created_date: String
+  email: String!
+  first_name: String!
+  id: ID!
+  job_amount_due: String
+  job_date_time: String
+  job_end_date_time: String
+  job_notes: String
+  job_source: String!
+  job_total_price: String
+  job_type: String
+  last_name: String!
+  last_status_update: String
+  latitude: String!
+  longitude: String!
+  payment_due_date: String
+  phone: String!
+  phone_ext: String!
+  postal_code: String!
+  second_phone: String!
+  second_phone_ext: String!
+  serial_id: Float!
+  state: String!
+  status: String!
+  sub_status: String!
+  sub_total: String
+  unit: String!
+  workiz_id: String!
+}
+
 type JobDto {
   Address: String!
   City: String!
@@ -402,6 +440,7 @@ type Mutation {
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!
   prepareFileForFineTune(filename: String!): String!
+  saveAllJobs: [Job!]!
   sendMessage(prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
   speechToText(call_id: String!): Transcription!
@@ -489,6 +528,7 @@ type Query {
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
   listModels: String!
+  sendSqlMessage(message: String!): String!
   testApi(method: String!, url: String!): String!
 }
 

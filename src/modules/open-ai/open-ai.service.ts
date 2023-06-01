@@ -7,6 +7,7 @@ import { OpenAiMessageResponse } from './dto/message-response.dto';
 import { ConfigService } from '@nestjs/config';
 import { SystemSettingsService } from 'src/modules/system-settings/system-settings.service';
 import { GoogleAdsApi } from 'google-ads-api';
+import { DataSource } from 'typeorm';
 
 // import * as ax from 'axios';
 
@@ -18,6 +19,7 @@ export class OpenAiService {
   constructor(
     private readonly configService: ConfigService,
     private readonly systemSettingsService: SystemSettingsService,
+    private readonly dataSource: DataSource,
   ) {
     this.configuration = new Configuration({
       apiKey: this.configService.get<string>('app.open_ai_key'),
@@ -28,9 +30,77 @@ export class OpenAiService {
   public async listModel() {
     const res = await this.openai.listModels();
 
-    console.log(res.data);
+    // console.log(res.data);
+
+    const job_table_info = await this.getTableInfo('job');
+
+    console.log(job_table_info);
 
     return res.data;
+  }
+
+  public async getTableInfo(table_name: string) {
+    const schema = await this.dataSource.query(`
+      SELECT * 
+      FROM "information_schema"."columns" 
+      WHERE ("table_schema" = 'public' AND "table_name" = '${table_name}');
+    `);
+
+    let description = `Table ${table_name}, columns = [`;
+    schema.forEach((item) => {
+      description += `{ column_name: '${item.column_name}', column_is_nullable: '${item.is_nullable}', column_data_type: '${item.data_type}'},`;
+    });
+    description += ']';
+
+    return description;
+  }
+
+  public async sendSqlMessage(message: string) {
+    const job_table_info = await this.getTableInfo('job');
+
+    const res = await this.openai.createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'user',
+          content: `
+            ${job_table_info}
+            User asking question about our company info
+            Please create a PostgresSQL query (be accurate with our database columns data_type and with comparing date) without any comments
+            which will get all related for this question: ${message}`,
+        },
+      ],
+    });
+
+    const query = res.data.choices[0].message.content;
+
+    console.log({
+      query,
+    });
+
+    const data = await this.dataSource.query(query);
+
+    console.log({
+      data,
+    });
+
+    const final_res = await this.openai.createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'user',
+          content: `
+            Act as a CEO assistant of locksmith company.
+            Given the following user question and the related search results, respond to the user using only the results as context.
+            question: ${message} - Search Results: ${JSON.stringify(data)}
+          `,
+        },
+      ],
+    });
+
+    console.log(final_res.data.choices);
+
+    return final_res.data.choices[0].message.content;
   }
 
   public async sendMessage(prompt: string): Promise<OpenAiMessageResponse> {
@@ -127,11 +197,11 @@ export class OpenAiService {
   public async speechToText(audio_url: File): Promise<any> {
     return await this.openai.createTranscription(
       audio_url,
-      "whisper-1",
+      'whisper-1',
       undefined,
       'json',
       0,
-      'en'
+      'en',
     );
   }
 }

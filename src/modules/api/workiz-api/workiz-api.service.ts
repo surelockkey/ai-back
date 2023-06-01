@@ -93,21 +93,28 @@ export class WorkizApiService {
     };
   }
 
-  public async getAllJobsForSave() {
+  public async getAllJobsForSave(): Promise<JobDto[]> {
     const jobs = [];
 
     let has_more = true;
     let page = 0;
 
     while (has_more) {
-      const jobs_to_add = await this.getAllJobsWorkiz(100, page);
+      const jobs_to_add = await this.getAllJobsWorkiz(100, page)
+        .catch((e) => {
+          has_more = false;
+        })
+        .then((jobs_to_add) => {
+          if (jobs_to_add) {
+            jobs.push(...jobs_to_add.items);
+            console.log(jobs_to_add.items.length);
 
-      jobs.push(...jobs_to_add.items);
-
-      if (!jobs_to_add.has_more) {
-        has_more = false;
-        page++;
-      }
+            if (!jobs_to_add.has_more) {
+              has_more = false;
+              page += 100;
+            }
+          }
+        });
     }
 
     return jobs;

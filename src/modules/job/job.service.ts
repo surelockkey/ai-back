@@ -16,8 +16,54 @@ export class JobService extends CrudService<Job> {
     super(jobRepository);
   }
 
-  public async getJob() {
-    // const jobs = (await this.workizApiService.getAllJobsWorkiz());
+  public async saveAllJobs() {
+    const jobs = await this.workizApiService.getAllJobsForSave();
+
+    const res = await this.jobRepository.save(
+      jobs.map((job) => {
+        return {
+          workiz_id: job.UUID,
+          serial_id: job.SerialId,
+          job_date_time: job.JobDateTime,
+          job_end_date_time: job.JobEndDateTime,
+          created_date: job.CreatedDate,
+          job_total_price: job.JobTotalPrice,
+          job_amount_due: job.JobAmountDue,
+          sub_total: job.SubTotal,
+          client_id: job.ClientId,
+          status: job.Status,
+          sub_status: job.SubStatus,
+          payment_due_date: job.PaymentDueDate,
+          phone: job.Phone,
+          second_phone: job.SecondPhone,
+          phone_ext: job.PhoneExt,
+          second_phone_ext: job.SecondPhoneExt,
+          email: job.Email,
+          comments: job.Comments,
+          first_name: job.FirstName,
+          last_name: job.LastName,
+          company: job.Company,
+          address: job.Address,
+          city: job.City,
+          state: job.State,
+          postal_code: job.PostalCode,
+          country: job.Country,
+          unit: job.Unit,
+          latitude: job.Latitude,
+          longitude: job.Longitude,
+          job_type: job.JobType,
+          job_notes: job.JobNotes,
+          job_source: job.JobSource,
+          created_by: job.CreatedBy,
+          last_status_update: job.LastStatusUpdate,
+        };
+      }),
+      { chunk: 100 },
+    );
+
+    console.log(res.length);
+
+    return res;
     // const calls = await this.ctmApiService.getCalls(1);
   }
 }

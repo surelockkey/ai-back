@@ -28,9 +28,14 @@ export class OpenAiResolver {
     return this.openAiService.listFineTunes();
   }
 
-  @RoleGuard(UserRole.ADMIN)
+  // @RoleGuard(UserRole.ADMIN)
   @Query(() => String)
   listModels() {
     return this.openAiService.listModel();
+  }
+
+  @Query(() => String)
+  sendSqlMessage(@Args('message') message: string) {
+    return this.openAiService.sendSqlMessage(message);
   }
 }
