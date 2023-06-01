@@ -8,6 +8,46 @@ input AcceptInviteDto {
   password: String!
 }
 
+type BlogBlock {
+  body_text: String
+  description: String
+  first_list: String
+  headline: String
+  id: ID!
+  last_list: String
+  last_text: String
+  list: String
+  photo: PhotoForBlock
+  position_block: Float
+  styles: String
+  text: String
+  text_left: String
+  text_right: String
+  type_block: String
+}
+
+type BlogMetaInfo {
+  categoric: String
+  constructor_blog_id: ID
+  date_when_will_post_blog: String
+  global_script: String
+  id: ID!
+  meta_tag_description: String
+  meta_tag_title: String
+  schema_script: String
+  url_for_blog: String
+}
+
+type BlogPreview {
+  constructor_blog_id: ID
+  date: String
+  description: String
+  id: ID!
+  photo: PhotoForBlock
+  title: String
+  type_block: String
+}
+
 type CarTemplate {
   id: ID!
   template_id: ID!
@@ -367,15 +407,8 @@ type Mutation {
   updateItemTemplate(updateItemTemplateDto: UpdateItemTemplateDto!): ItemTemplate!
   updateManyUsersSchedules(users_schedules: [UpdateUserScheduleDto!]!): [UserSchedule!]!
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
-<<<<<<< HEAD
-  updateTech(tech: UpdateTechDto!): Tech!
-  updateTechInfo(tech_info: UpdateTechInfoDto!): TechInfo!
-  updateTechNote(tech_note: UpdateTechNoteDto!): TechNote!
-  updateTechSchedule(tech_schedule: UpdateTechScheduleDto!): TechSchedule!
-  updateTimeTemplate(time_template: UpdateTimeTemplateDto!): TimeTemplate!
-=======
   updateTemplate(updateTemplateDto: UpdateTemplateDto!): Template!
->>>>>>> 7c93453 (new cars inventory)
+  updateTimeTemplate(time_template: UpdateTimeTemplateDto!): TimeTemplate!
   updateUserInfo(user_info: UpdateUserInfoDto!): UserInfo!
   updateUserNote(user_note: UpdateUserNoteDto!): UserNote!
   updateUserSchedule(user_schedule: UpdateUserScheduleDto!): UserSchedule!
@@ -412,6 +445,15 @@ type PaginatedJobDto {
   items: [JobDto!]!
 }
 
+type PhotoForBlock {
+  alt: String
+  blog_block_id: ID
+  constructor_blog_id: ID
+  id: ID!
+  link: String
+  title: String
+}
+
 type Query {
   findTranscription(call_id: String!): Transcription!
   generateDifferenceReport(only_less: Boolean! = true, workiz_id: String!): [ItemCompareResult!]!
@@ -426,6 +468,7 @@ type Query {
   ): PaginatedJobDto!
   getAllMessages: [Message!]!
   getAllTechsWorkiz: [TechnicianWorkiz!]!
+  getAllTemplates: [Template!]!
   getAllTimeTemplates: [TimeTemplate!]!
   getAllUsers: [User!]!
   getAllUsersWorkiz: [TechnicianWorkiz!]!
@@ -439,6 +482,7 @@ type Query {
   getSheet(col: String!, row: String!, sheet_id: String!, tab_name: String!): [[String!]!]!
   getSystemSettings: SystemSettings!
   getTechsSchedule: [GoogleSheetsTechSchedule!]!
+  getTemplateById(id: ID!): Template!
   getUniqueLocations: [String!]
   getUsersWithSchedule(from: Int!, is_available: Boolean, locations: [String!], role: [UserRole!], search_value: String, to: Int!): [UserWithSchedule!]!
   getWorkizJobById(id: String!): JobDto!

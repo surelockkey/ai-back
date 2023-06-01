@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@apollo/server": "~4.7.0",
+    "@aws-sdk/client-s3": "~3.342.0",
     "@google-cloud/local-auth": "~2.1.0",
     "@nestjs-modules/mailer": "~1.8.1",
     "@nestjs/apollo": "~11.0.5",
@@ -29,6 +30,8 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/graphql": "~11.0.5",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/schedule": "~2.2.2",
+    "@nestjs/swagger": "~6.3.0",
     "@nestjs/typeorm": "~9.0.1",
     "@tech-slk/nest-auth": "^1.0.30",
     "@tech-slk/nest-crud": "~1.0.11",
