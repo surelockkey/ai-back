@@ -187,21 +187,6 @@ type FineTuneItem {
   text: String!
 }
 
-type GoogleSheetsTechSchedule {
-  active_state: String!
-  friday: String
-  monday: String
-  name: String!
-  note: String
-  saturday: String
-  sunday: String
-  thursday: String
-  tuesday: String
-  wednesday: String
-  week_end: String
-  week_start: String
-}
-
 input InviteUserDto {
   email: String
   location: String
@@ -430,9 +415,7 @@ type Query {
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!
   getLogs(pagination: FindPaginationDto!): LogsPaginated!
-  getSheet(col: String!, row: String!, sheet_id: String!, tab_name: String!): [[String!]!]!
   getSystemSettings: SystemSettings!
-  getTechsSchedule: [GoogleSheetsTechSchedule!]!
   getTemplateById(id: ID!): Template!
   getUniqueLocations: [String!]
   getUsersWithSchedule(from: Int!, is_available: Boolean, locations: [String!], role: [UserRole!], search_value: String, to: Int!): [UserWithSchedule!]!
