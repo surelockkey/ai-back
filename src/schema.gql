@@ -367,15 +367,8 @@ type Mutation {
   updateItemTemplate(updateItemTemplateDto: UpdateItemTemplateDto!): ItemTemplate!
   updateManyUsersSchedules(users_schedules: [UpdateUserScheduleDto!]!): [UserSchedule!]!
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
-<<<<<<< HEAD
-  updateTech(tech: UpdateTechDto!): Tech!
-  updateTechInfo(tech_info: UpdateTechInfoDto!): TechInfo!
-  updateTechNote(tech_note: UpdateTechNoteDto!): TechNote!
-  updateTechSchedule(tech_schedule: UpdateTechScheduleDto!): TechSchedule!
-  updateTimeTemplate(time_template: UpdateTimeTemplateDto!): TimeTemplate!
-=======
   updateTemplate(updateTemplateDto: UpdateTemplateDto!): Template!
->>>>>>> 7c93453 (new cars inventory)
+  updateTimeTemplate(time_template: UpdateTimeTemplateDto!): TimeTemplate!
   updateUserInfo(user_info: UpdateUserInfoDto!): UserInfo!
   updateUserNote(user_note: UpdateUserNoteDto!): UserNote!
   updateUserSchedule(user_schedule: UpdateUserScheduleDto!): UserSchedule!
@@ -426,6 +419,7 @@ type Query {
   ): PaginatedJobDto!
   getAllMessages: [Message!]!
   getAllTechsWorkiz: [TechnicianWorkiz!]!
+  getAllTemplates: [Template!]!
   getAllTimeTemplates: [TimeTemplate!]!
   getAllUsers: [User!]!
   getAllUsersWorkiz: [TechnicianWorkiz!]!
@@ -439,6 +433,7 @@ type Query {
   getSheet(col: String!, row: String!, sheet_id: String!, tab_name: String!): [[String!]!]!
   getSystemSettings: SystemSettings!
   getTechsSchedule: [GoogleSheetsTechSchedule!]!
+  getTemplateById(id: ID!): Template!
   getUniqueLocations: [String!]
   getUsersWithSchedule(from: Int!, is_available: Boolean, locations: [String!], role: [UserRole!], search_value: String, to: Int!): [UserWithSchedule!]!
   getWorkizJobById(id: String!): JobDto!
