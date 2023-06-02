@@ -9,6 +9,8 @@ import { CreateLocationDto } from './dto/create-location.dto';
 import { UseGuards } from '@nestjs/common';
 import { FindPaginationDto } from 'src/core/dto/pagination.dto';
 import { GqlAuthGuard } from 'src/modules/authorization/guard/auth.guard';
+import { UserRole } from 'src/modules/user/enum/user-role.enum';
+import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
 
 @Resolver(() => Location)
 export class LocationGraphResolver {
@@ -48,7 +50,7 @@ export class LocationGraphResolver {
     return await this.locationGraphService.getLocationByStateAndUrl(filter);
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Mutation(() => Location)
   public async createLocation(
     @Args('createLocationDto') createLocationDto: CreateLocationDto,
@@ -56,7 +58,7 @@ export class LocationGraphResolver {
     return await this.locationGraphService.createLocation(createLocationDto);
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Mutation(() => Location)
   public async updateLocation(
     @Args('updateLocationDto') updateLocation: UpdateLocationDto,
@@ -64,7 +66,7 @@ export class LocationGraphResolver {
     return await this.locationGraphService.updateLocation(updateLocation);
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Mutation(() => Location)
   public async deleteLocationById(
     @Args('id', { type: () => String }) id: string,

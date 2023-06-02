@@ -1,11 +1,12 @@
-import { UseGuards, UsePipes } from '@nestjs/common';
+import { UsePipes } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 import { PhotoBlog } from './entity/photo-blog.entity';
 import { PhotoBlogService } from './photo-blog.service';
-import { GqlAuthGuard } from 'src/modules/authorization/guard/auth.guard';
 import { FilePipe } from 'src/modules/upload/pipe/check-file-size.pipe';
 import { IFileUpload } from 'src/modules/upload/type/i-file-upload';
+import { UserRole } from 'src/modules/user/enum/user-role.enum';
+import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
 
 @Resolver(() => PhotoBlog)
 export class PhotoBlogResolver {
@@ -16,7 +17,7 @@ export class PhotoBlogResolver {
     return this.photoService.getAllPhotoBlog();
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Mutation(() => PhotoBlog, { description: 'method to create photo' })
   @UsePipes(FilePipe)
   public async createBlogPhoto(
@@ -25,7 +26,7 @@ export class PhotoBlogResolver {
     return this.photoService.createPhotoBlog(picture);
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Mutation(() => PhotoBlog, { description: 'deleted photo by id' })
   async deleteBlogPhotoById(
     @Args('id', { type: () => String }) id: string,

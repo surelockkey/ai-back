@@ -8,6 +8,8 @@ import { CreateConstructorBlogDto } from './dto/create-constructor-blog.dto';
 import { UpdateConstructorBlogDto } from './dto/update-constructor-blog.dto';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/modules/authorization/guard/auth.guard';
+import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
+import { UserRole } from 'src/modules/user/enum/user-role.enum';
 
 @Resolver(() => ConstructorBlog)
 export class ConstructorBlogResolver {
@@ -35,7 +37,7 @@ export class ConstructorBlogResolver {
     return await this.blogsService.getBlogsFilterByMetaBlogUrl(metaBlogUrl);
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Mutation(() => ConstructorBlog, { description: 'create blog' })
   public async createBlog(
     @Args('createBlog') createBlogObj: CreateConstructorBlogDto,
@@ -43,7 +45,7 @@ export class ConstructorBlogResolver {
     return await this.blogsService.createBlog(createBlogObj);
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Mutation(() => ConstructorBlog, { description: 'change blog posted' })
   public async changeBlogPostStatus(
     @Args('changeBlogPostStatusDto')
@@ -54,7 +56,7 @@ export class ConstructorBlogResolver {
     );
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Mutation(() => ConstructorBlog, { description: 'update blogs' })
   public async updateBlog(
     @Args('updateBlog') updateBlogObj: UpdateConstructorBlogDto,
@@ -62,7 +64,7 @@ export class ConstructorBlogResolver {
     return await this.blogsService.updateBlog(updateBlogObj);
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Mutation(() => ConstructorBlog, { description: 'delete blog by id' })
   async deleteBlogById(
     @Args('id', { type: () => String }) id: string,

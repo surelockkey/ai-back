@@ -7,6 +7,8 @@ import { GqlAuthGuard } from 'src/modules/authorization/guard/auth.guard';
 import { FilePipe } from 'src/modules/upload/pipe/check-file-size.pipe';
 import { IFileUpload } from 'src/modules/upload/type/i-file-upload';
 import { SendDto } from '@tech-slk/nest-crud';
+import { UserRole } from 'src/modules/user/enum/user-role.enum';
+import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
 
 @Resolver(() => LocationPhoto)
 export class LocationPhotoResolver {
@@ -17,7 +19,7 @@ export class LocationPhotoResolver {
     return this.locationPhotoService.getAllLocationPhoto();
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @UsePipes(FilePipe)
   @Mutation(() => LocationPhoto)
   public async createLocationPhoto(
@@ -26,7 +28,7 @@ export class LocationPhotoResolver {
     return this.locationPhotoService.createPhotoLocation(picture);
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Mutation(() => LocationPhoto)
   public async deletePhotoLocationById(
     @Args('id', { type: () => String }) id: string,
@@ -34,7 +36,7 @@ export class LocationPhotoResolver {
     return this.locationPhotoService.deletePhotoLocationById(id);
   }
 
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Mutation(() => SendDto)
   public async deleteManyPhoto(
     @Args('keys', { type: () => [String] }) keys: string[],

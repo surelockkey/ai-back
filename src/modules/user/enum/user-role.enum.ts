@@ -5,6 +5,7 @@ export enum UserRole {
   MAIN_DISPATCHER = 'MAIN_DISPATCHER',
   DISPATCHER = 'DISPATCHER',
   TECHNICIAN = 'TECHNICIAN',
+  SEO = 'SEO',
 }
 
 registerEnumType(UserRole, { name: 'UserRole' });

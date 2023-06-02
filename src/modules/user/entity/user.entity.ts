@@ -1,4 +1,4 @@
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { NestUser } from '@tech-slk/nest-auth';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { UserRole } from '../enum/user-role.enum';
@@ -21,14 +21,6 @@ export class User extends NestUser {
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   workiz_id: string;
-
-  // @Column({ unique: true })
-  // @Field(() => String)
-  // email: string;
-
-  // @Column()
-  // @Field(() => String)
-  // password: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
