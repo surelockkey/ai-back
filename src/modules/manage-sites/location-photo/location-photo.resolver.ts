@@ -1,9 +1,8 @@
-import { UseGuards, UsePipes } from '@nestjs/common';
+import { UsePipes } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 import { LocationPhoto } from './entity/location-photo.entity';
 import { LocationPhotoService } from './location-photo.service';
-import { GqlAuthGuard } from 'src/modules/authorization/guard/auth.guard';
 import { FilePipe } from 'src/modules/upload/pipe/check-file-size.pipe';
 import { IFileUpload } from 'src/modules/upload/type/i-file-upload';
 import { SendDto } from '@tech-slk/nest-crud';
