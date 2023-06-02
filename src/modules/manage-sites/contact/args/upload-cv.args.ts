@@ -1,5 +1,6 @@
 import { ArgsType, Field } from '@nestjs/graphql';
-import { FileUpload, GraphQLUpload } from 'graphql-upload';
+import { FileUpload } from 'graphql-upload';
+import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 
 @ArgsType()
 export class UploadCV {

@@ -12,7 +12,10 @@ import {
 } from '@aws-sdk/client-s3';
 import { IFileUpload } from './type/i-file-upload';
 import { GraphQLError } from 'graphql';
-import { ConfigType } from 'src/utils/Type/config.type';
+
+export declare type ConfigType = {
+  [key: string]: string;
+};
 
 @Injectable()
 export class UploadService {

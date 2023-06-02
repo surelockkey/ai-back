@@ -1,9 +1,9 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
-@Entity('photo_blog')
-export class PhotoBlog {
+@Entity('location_photo')
+export class LocationPhoto {
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -15,10 +15,6 @@ export class PhotoBlog {
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   awsUrl?: string;
-
-  @Field(() => [String], { nullable: true })
-  @Column('text', { array: true, nullable: true, default: [] })
-  blogsLink: string[];
 
   @Generated('increment')
   @Column({ nullable: false, select: false })

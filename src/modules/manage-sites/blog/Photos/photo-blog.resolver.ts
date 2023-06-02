@@ -1,7 +1,7 @@
 import { UseGuards, UsePipes } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { GraphQLUpload } from 'graphql-upload';
-import { PhotoBlog } from './Entity/photo-blog.entity';
+import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
+import { PhotoBlog } from './entity/photo-blog.entity';
 import { PhotoBlogService } from './photo-blog.service';
 import { GqlAuthGuard } from 'src/modules/authorization/guard/auth.guard';
 import { FilePipe } from 'src/modules/upload/pipe/check-file-size.pipe';

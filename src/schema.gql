@@ -1,0 +1,1461 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input AcceptInviteDto {
+  key: String!
+  name: String!
+  password: String!
+}
+
+type Address {
+  id: ID!
+  name: String!
+}
+
+type BlogBlock {
+  body_text: String
+  description: String
+  first_list: String
+  headline: String
+  id: ID!
+  last_list: String
+  last_text: String
+  list: String
+  photo: PhotoForBlock
+  position_block: Float
+  styles: String
+  text: String
+  text_left: String
+  text_right: String
+  type_block: String
+}
+
+type BlogMetaInfo {
+  categoric: String
+  constructor_blog_id: ID
+  date_when_will_post_blog: String
+  global_script: String
+  id: ID!
+  meta_tag_description: String
+  meta_tag_title: String
+  schema_script: String
+  url_for_blog: String
+}
+
+type BlogPreview {
+  constructor_blog_id: ID
+  date: String
+  description: String
+  id: ID!
+  photo: PhotoForBlock
+  title: String
+  type_block: String
+}
+
+type CarTemplate {
+  id: ID!
+  template_id: ID!
+  workiz_id: String!
+}
+
+input ChangeBlogPostStatusDto {
+  id: String!
+  is_posted: Boolean = false
+}
+
+input ChangePasswordDto {
+  new_password: String!
+  old_password: String!
+}
+
+type ConstructorBlog {
+  blocks: [BlogBlock!]!
+  id: ID!
+  is_posted: Boolean
+  metaInfo: BlogMetaInfo
+  post_date: Float
+  post_date_future: Float
+  preview_info: BlogPreview
+}
+
+type ConstructorBlogFilterableWithCountDto {
+  blog: [ConstructorBlog!]
+  blogCount: Float
+}
+
+input CreateBlogBlockDto {
+  body_text: String
+  description: String
+  first_list: String
+  headline: String
+  last_list: String
+  last_text: String
+  list: String
+  photo: CreatePhotoForBlockDto
+  position_block: Float
+  styles: String
+  text: String
+  text_left: String
+  text_right: String
+  type_block: String
+}
+
+input CreateBlogMetaInfoDto {
+  categoric: String
+  constructor_blog_id: ID
+  date_when_will_post_blog: String
+  global_script: String
+  meta_tag_description: String
+  meta_tag_title: String
+  schema_script: String
+  url_for_blog: String
+}
+
+input CreateBlogPreviewDto {
+  constructor_blog_id: ID
+  date: String
+  description: String
+  photo: CreatePhotoForBlockDto
+  title: String
+  type_block: String
+}
+
+input CreateCarTemplateDto {
+  template_id: ID!
+  workiz_id: String!
+}
+
+input CreateConstructorBlogDto {
+  blocks: [CreateBlogBlockDto!]
+  is_posted: Boolean = false
+  metaInfo: CreateBlogMetaInfoDto
+  post_date: Float
+  post_date_future: Float
+  preview_info: CreateBlogPreviewDto
+}
+
+input CreateH2TextDto {
+  H2: String
+  Text: String
+}
+
+input CreateItemTemplateDto {
+  quantity: Int!
+  sku: String!
+  template_id: ID!
+  uhs_sku: String!
+}
+
+input CreateJobDto {
+  Address: String!
+  City: String!
+  Email: String!
+  FirstName: String!
+  JobDateTime: String!
+  JobNotes: String!
+  JobType: String!
+  LastName: String!
+  Metro: String!
+  Phone: String!
+  PostalCode: String!
+  State: String!
+}
+
+input CreateLocationDto {
+  About_city: CreateH2TextDto
+  About_us: CreateH2TextDto
+  Description: String
+  H1: String
+  Hour_24_services: CreateLocationServicesDto
+  Map_link: String
+  Name: String
+  Our_services: CreateLocationServicesDto
+  Phone_number: String
+  Photo: CreateLocationThumbnailDto
+  Prices: CreateLocationPricesDto
+  Rich_template: String
+  State: String
+  Subtitle: String
+  Testimonials: CreateLocationTestimonialsDto
+  Thumbnail: CreateLocationThumbnailDto
+  Title: String
+  Url: String
+  published_at: Float
+}
+
+input CreateLocationPricesDto {
+  H2: String
+  Text: String
+  description_right: String
+  list: [CreateLocationPricesListDto!]
+  location_id: ID
+}
+
+input CreateLocationPricesListDto {
+  name: String
+  price: String
+}
+
+input CreateLocationServicesDto {
+  H2: String
+  List: String
+  Text_after: String
+  Text_before: String
+  hour_24_service_id: ID
+  our_service_id: ID
+}
+
+input CreateLocationTestimonialsDto {
+  H2: String
+  Reviews: [CreateTestimonialsReviewsDto!]
+  Text_before: String
+  location_id: ID
+}
+
+input CreateLocationThumbnailDto {
+  location_photo_id: ID
+  location_thubnail_id: ID
+  name: String
+  url: String
+}
+
+input CreateLocksmithDto {
+  address: [String!]!
+  description: String
+  link_to_map: String!
+  link_to_site: String!
+  mail: String!
+  name: String!
+  owners_name: String
+  owners_phone: String
+  phone: String!
+  photo: String
+  priority: Float
+  schedule: [CreateScheduleDto!]!
+  services: [String!]!
+  url: String
+  zips: [String!]
+}
+
+input CreateOrUpdateUserInfoDto {
+  id: ID
+  key: String!
+  user_id: ID!
+  value: String!
+}
+
+input CreateOrUpdateUserNoteDto {
+  id: ID
+  note: String!
+  user_id: ID!
+  week_end: Int!
+  week_start: Int!
+}
+
+input CreateOrUpdateUserScheduleDto {
+  id: ID
+  user_id: ID!
+  work_from: Int!
+  work_to: Int!
+}
+
+input CreatePhotoForBlockDto {
+  alt: String
+  blog_block_id: ID
+  constructor_blog_id: ID
+  link: String
+  title: String
+}
+
+input CreateRequestDto {
+  address: [String!]!
+  business_mail: String
+  business_name: String!
+  business_phone: String!
+  description: String
+  files: String
+  link_to_map: String!
+  link_to_site: String!
+  owners_name: String
+  owners_phone: String!
+  photo: String
+  schedule: [CreateScheduleDto!]!
+  services: [String!]!
+}
+
+input CreateReviewsDto {
+  email: String!
+  locksmith_id: String!
+  name: String!
+  rating: Float
+  text: String!
+  title: String!
+}
+
+input CreateScheduleDto {
+  close_at: DateTime
+  name: Week!
+  open_at: DateTime
+}
+
+input CreateTemplateDto {
+  name: String!
+}
+
+input CreateTestimonialsReviewsDto {
+  Name: String
+  Photo: String
+  Review_text: String
+  Type_of_service: String
+}
+
+input CreateTimeTemplateDto {
+  color: String!
+  name: String!
+  value: String!
+}
+
+input CreateUserInfoDto {
+  key: String!
+  user_id: ID!
+  value: String!
+}
+
+input CreateUserNoteDto {
+  note: String!
+  user_id: ID!
+  week_end: Int!
+  week_start: Int!
+}
+
+input CreateUserScheduleDto {
+  user_id: ID!
+  work_from: Int!
+  work_to: Int!
+}
+
+type CtmCall {
+  account_id: Int!
+  audio: String
+  billed_amount: Int!
+  billed_at: String!
+  call_status: String!
+  called_at: String!
+  caller_number_format: String!
+  city: String!
+  cnam: String!
+  country: String!
+  day: String!
+  dial_status: String!
+  direction: String!
+  duration: Int
+  hold_time: Int!
+  hour: String!
+  id: String!
+  month: String!
+  name: String!
+  notes: String!
+  postal_code: String!
+  ring_time: Int!
+  sid: String!
+  source: String!
+  source_id: Int!
+  source_sid: String!
+  state: String!
+  status: String!
+  talk_time: Int!
+  tgid: Int!
+  tracking_label: String!
+  tracking_number: String!
+  tracking_number_format: String!
+  unix_time: Int!
+  wait_time: Int!
+}
+
+type CtmGetCallsDto {
+  calls: [CtmCall!]!
+  page: Int!
+  per_page: Int!
+  total_entries: Int!
+  total_pages: Int!
+}
+
+input CtmGetCallsOptionDto {
+  """the end date for the search (YYYY-MM-DD)"""
+  end_date: String
+
+  """
+  search string to look for messages with specific callerid, caller_number, called_number, source name, etc.
+  """
+  filter: String
+
+  """the page number"""
+  page: Int!
+
+  """the number of items per page, defaults to 10"""
+  per_page: Int
+
+  """the start date for the search (YYYY-MM-DD)"""
+  start_date: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input FilterableBlogDto {
+  blockDescription: String
+  limitPaginate: Float
+  metaInfoUrlForBlog: String
+  pagePaginate: Float
+  posted: Boolean
+  previewInfoDate: String
+  previewInfoTitle: String
+  sortField: SortBlogField
+  sortType: SortEnum
+}
+
+"""Chouse which type of sorting would you like to use"""
+enum FilterableLocationEnum {
+  """filter by Description"""
+  Description
+
+  """filter by H1"""
+  H1
+
+  """filter by Map_link"""
+  Map_link
+
+  """filter by Name"""
+  Name
+
+  """filter by Phone_number"""
+  Phone_number
+
+  """filter by Rich_template"""
+  Rich_template
+
+  """filter by State"""
+  State
+
+  """filter by Subtitle"""
+  Subtitle
+
+  """filter by title"""
+  Title
+
+  """filter by Url """
+  Url
+
+  """filter by created_at"""
+  created_at
+
+  """filter by id"""
+  id
+
+  """filter by published_at"""
+  published_at
+
+  """filter by updated_at"""
+  updated_at
+}
+
+type FindContainerAndTemplate {
+  container: [WorkizContainerInfo!]!
+  template: [Template!]!
+}
+
+input FindPaginationDto {
+  skip: Int!
+  take: Int!
+}
+
+type FineTune {
+  created_at: Int!
+  id: ID!
+  model: String!
+  openai_file_id: String!
+  openai_id: String!
+}
+
+type FineTuneItem {
+  deleted: Boolean!
+  id: ID!
+  prompt: String!
+  text: String!
+}
+
+type H2Text {
+  H2: String
+  Text: String
+  id: ID!
+}
+
+input InviteUserDto {
+  email: String
+  location: String
+  name: String
+  role: UserRole = ADMIN
+  workiz_id: String
+}
+
+type InvitedUser {
+  email: String!
+  id: ID!
+  key: String!
+  location: String
+  name: String!
+  role: UserRole!
+  workiz_id: String
+}
+
+type ItemCompareResult {
+  actual_quantity: Int!
+  difference: Int!
+  name: String!
+  sku: String!
+  template_quantity: Int!
+  uhs_sku: String!
+}
+
+type ItemTemplate {
+  id: ID!
+  quantity: Int!
+  sku: String!
+  template_id: ID!
+  uhs_sku: String!
+}
+
+type JobDto {
+  Address: String!
+  City: String!
+  ClientId: Float!
+  Comments: String!
+  Company: String!
+  Country: String!
+  CreatedBy: String!
+  CreatedDate: String
+  Email: String!
+  FirstName: String!
+  JobAmountDue: String
+  JobDateTime: String
+  JobEndDateTime: String
+  JobNotes: String
+  JobSource: String!
+  JobTotalPrice: String
+  JobType: String
+  LastName: String!
+  LastStatusUpdate: String
+  Latitude: String!
+  Longitude: String!
+  PaymentDueDate: String
+  Phone: String!
+  PhoneExt: String!
+  PostalCode: String!
+  SecondPhone: String!
+  SecondPhoneExt: String!
+  SerialId: Float!
+  State: String!
+  Status: String!
+  SubStatus: String!
+  SubTotal: String
+  UUID: String!
+  Unit: String!
+}
+
+type Location {
+  About_city: H2Text
+  About_us: H2Text
+  Description: String
+  H1: String
+  Hour_24_services: LocationServices
+  Map_link: String
+  Name: String
+  Our_services: LocationServices
+  Phone_number: String
+  Photo: LocationThumbnail
+  Prices: LocationPrices
+  Rich_template: String
+  State: String
+  Subtitle: String
+  Testimonials: LocationTestimonials
+  Thumbnail: LocationThumbnail
+  Title: String
+  Url: String
+  created_at: Float!
+  id: ID!
+  published_at: Float
+  updated_at: Float
+}
+
+input LocationFilterStateUrlDto {
+  State: String!
+  Url: String!
+}
+
+input LocationFilterableDto {
+  Description: String
+  H1: String
+  Map_link: String
+  Name: String
+  Phone_number: String
+  Rich_template: String
+  State: String
+  Subtitle: String
+  Title: String
+  Url: String
+  created_at: Float
+  id: ID
+  limitPaginate: Float
+  pagePaginate: Float
+  published_at: Float
+  sortField: FilterableLocationEnum
+  sortType: SortEnum
+  updated_at: Float
+}
+
+type LocationFilterableWithCountDto {
+  location: [Location!]
+  locationCount: Float
+}
+
+type LocationFormatsThumbnail {
+  ext: String
+  hash: String
+  height: Float
+  id: ID!
+  location_formats_id: ID
+  mime: String
+  name: String
+  path: String
+  size: Float
+  url: String
+  width: Float
+}
+
+type LocationPhoto {
+  awsKey: String
+  awsUrl: String
+  id: ID!
+}
+
+type LocationPrices {
+  H2: String
+  Text: String
+  description_right: String
+  id: ID!
+  list: [LocationPricesList!]
+  location_id: ID
+}
+
+type LocationPricesList {
+  id: ID!
+  name: String
+  price: String
+}
+
+type LocationServices {
+  H2: String
+  List: String
+  Text_after: String
+  Text_before: String
+  hour_24_service_id: ID
+  id: ID!
+  our_service_id: ID
+}
+
+type LocationTestimonials {
+  H2: String
+  Reviews: [TestimonialsReviews!]
+  Text_before: String
+  id: ID!
+  location_id: ID
+}
+
+type LocationThumbnail {
+  created_at: Float!
+  id: ID!
+  location_photo_id: ID!
+  location_thubnail_id: ID!
+  name: String
+  updated_at: Float!
+  url: String
+}
+
+type Locksmith {
+  address: [Address!]!
+  description: String
+  id: ID!
+  is_verified: Boolean!
+  link_to_map: String!
+  link_to_site: String!
+  mail: String!
+  name: String!
+  owners_name: String
+  owners_phone: String
+  phone: String!
+  photo: String
+  priority: Float
+  reviews: [Reviews!]!
+  schedule: [Schedule!]!
+  services: [String!]!
+  url: String
+  zips: [String!]
+}
+
+type LocksmithWithCountNewReviewsDto {
+  address: [Address!]!
+  count_new_reviews: Float!
+  description: String
+  id: ID!
+  is_verified: Boolean!
+  link_to_map: String!
+  link_to_site: String!
+  mail: String!
+  name: String!
+  owners_name: String
+  owners_phone: String
+  phone: String!
+  photo: String
+  priority: Float
+  reviews: [Reviews!]!
+  schedule: [Schedule!]!
+  services: [String!]!
+  url: String
+  zips: [String!]
+}
+
+type Log {
+  action: String!
+  created_at: Int!
+  group: LogGroup!
+  id: ID!
+  message: String
+  type: LogType!
+  user_id: ID
+}
+
+enum LogGroup {
+  DEVELOPER
+  USER
+}
+
+enum LogType {
+  ERROR
+  SUCCESS
+  WARNING
+}
+
+type LogWithUser {
+  action: String!
+  created_at: Int!
+  group: LogGroup!
+  id: ID!
+  message: String
+  type: LogType!
+  user: User
+  user_id: ID
+}
+
+input LoginCredential {
+  email: String!
+  password: String!
+}
+
+type LogsPaginated {
+  items: [LogWithUser!]!
+  total: Int!
+}
+
+type Message {
+  created: Int!
+  finish_reason: String!
+  id: ID!
+  openai_id: String!
+  prompt: String!
+  text: String!
+  total_tokens: Int!
+}
+
+type Mutation {
+  acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
+  assignManyTemplateToCar(createCarTemplateDto: [CreateCarTemplateDto!]!): [CarTemplate!]!
+  assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
+
+  """change blog posted"""
+  changeBlogPostStatus(changeBlogPostStatusDto: ChangeBlogPostStatusDto!): ConstructorBlog!
+  changePassword(passwords: ChangePasswordDto!): SendDto!
+
+  """create blog"""
+  createBlog(createBlog: CreateConstructorBlogDto!): ConstructorBlog!
+
+  """method to create photo"""
+  createBlogPhoto(picture: Upload!): PhotoBlog!
+  createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
+  createLocation(createLocationDto: CreateLocationDto!): Location!
+  createLocationPhoto(picture: Upload!): LocationPhoto!
+  createLocksmith(createLocksmithDto: CreateLocksmithDto!): Locksmith!
+  createManyItemTemplates(createItemTemplateDto: [CreateItemTemplateDto!]!): [ItemTemplate!]!
+  createManyTemplates(createTemplateDto: [CreateTemplateDto!]!): [Template!]!
+  createManyUsersSchedules(users_schedules: [CreateUserScheduleDto!]!): [UserSchedule!]!
+  createNewJobWorkiz(createJobDto: CreateJobDto!): SendDto!
+  createOrUpdateManyUsersSchedules(user_schedules: [CreateOrUpdateUserScheduleDto!]!): [UserSchedule!]!
+  createOrUpdateUserInfo(user_infos: [CreateOrUpdateUserInfoDto!]!): [UserInfo!]!
+  createOrUpdateUserNote(user_note: CreateOrUpdateUserNoteDto!): UserNote!
+  createRequest(createRequestDto: CreateRequestDto!): Request!
+  createReviews(createReviewsDto: CreateReviewsDto!): Reviews!
+  createSystemSettings(max_tokens: Int!): SystemSettings!
+  createTimeTemplate(time_template: CreateTimeTemplateDto!): TimeTemplate!
+  createUserInfo(user_info: CreateUserInfoDto!): UserInfo!
+  createUserNote(user_note: CreateUserNoteDto!): UserNote!
+  createUserSchedule(user_schedule: CreateUserScheduleDto!): UserSchedule!
+
+  """delete blog by id"""
+  deleteBlogById(id: String!): ConstructorBlog!
+
+  """deleted photo by id"""
+  deleteBlogPhotoById(id: String!): PhotoBlog!
+  deleteFineTuneItem(id: ID!): ID!
+  deleteLocationById(id: String!): Location!
+  deleteLocksmithById(id: String!): SendDto!
+  deleteManyInvitedUsers(user_ids: [ID!]!): [String!]!
+  deleteManyItemTemplates(ids: [ID!]!): [ID!]!
+  deleteManyPhoto(keys: [String!]!): SendDto!
+  deleteManyTemplates(ids: [ID!]!): [ID!]!
+  deleteManyUserSchedules(ids: [ID!]!): [ID!]!
+  deleteManyUsers(user_ids: [ID!]!): [String!]!
+  deletePhotoLocationById(id: String!): LocationPhoto!
+  deleteRequestById(id: String!): SendDto!
+  deleteTimeTemplate(id: ID!): ID!
+  deleteUserInfo(id: ID!): ID!
+  deleteUserNote(id: ID!): ID!
+  deleteUserSchedule(id: ID!): ID!
+  editLocksmith(updateLocksmithDto: UpdateLocksmithDto!): Locksmith!
+  editRequest(updateRequestDto: UpdateRequestDto!): Request!
+  inviteUserToApp(inviteUserDto: InviteUserDto!): InvitedUser!
+  login(login_dto: LoginCredential!): TokenResponse!
+  logout(refresh_token: String!): SendDto!
+  prepareFileForFineTune(filename: String!): String!
+  reviewReviews(reviewReviewsDto: [ReviewReviewsDto!]!): [ReviewsWithEmailDto!]!
+  sendMessage(prompt: String!): Message!
+  sendMessageToOpenAi(message: String!): String!
+  speechToText(call_id: String!): Transcription!
+  startFineTune: FineTune!
+
+  """update blogs"""
+  updateBlog(updateBlog: UpdateConstructorBlogDto!): ConstructorBlog!
+  updateCurrentUser(user: UpdateCurrentUserDto!): User!
+  updateFineTuneItem(fine_tune_item: UpdateFineTuneItemDto!): FineTuneItem!
+  updateItemTemplate(updateItemTemplateDto: UpdateItemTemplateDto!): ItemTemplate!
+  updateLocation(updateLocationDto: UpdateLocationDto!): Location!
+  updateManyUsersSchedules(users_schedules: [UpdateUserScheduleDto!]!): [UserSchedule!]!
+  updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
+  updateTemplate(updateTemplateDto: UpdateTemplateDto!): Template!
+  updateTimeTemplate(time_template: UpdateTimeTemplateDto!): TimeTemplate!
+  updateUserInfo(user_info: UpdateUserInfoDto!): UserInfo!
+  updateUserNote(user_note: UpdateUserNoteDto!): UserNote!
+  updateUserSchedule(user_schedule: UpdateUserScheduleDto!): UserSchedule!
+  uploadCV(email: String!, file: Upload!, last_name: String!, name: String!, phone: String!): String!
+  uploadFileToLocksmith(file: Upload!, locksmith_id: String!): String!
+  uploadFileToRequest(file: Upload!, request_id: String!): String!
+}
+
+type OpenAiFile {
+  bytes: Int!
+  created_at: Int!
+  filename: String!
+  id: String!
+  object: String!
+  purpose: String!
+  status: String!
+}
+
+type OpenAiFineTune {
+  created_at: Int!
+  events: [OpenAiFineTuneEvent!]!
+  fine_tuned_model: String
+  id: String!
+  model: String!
+  status: String!
+  updated_at: Int!
+}
+
+type OpenAiFineTuneEvent {
+  created_at: Int!
+  level: String!
+  message: String!
+}
+
+type PaginatedJobDto {
+  has_more: Boolean!
+  items: [JobDto!]!
+}
+
+type PhotoBlog {
+  awsKey: String
+  awsUrl: String
+  blogsLink: [String!]
+  id: ID!
+}
+
+type PhotoForBlock {
+  alt: String
+  blog_block_id: ID
+  constructor_blog_id: ID
+  id: ID!
+  link: String
+  title: String
+}
+
+type Query {
+  findTranscription(call_id: String!): Transcription!
+  generateDifferenceReport(only_less: Boolean! = true, workiz_id: String!): [ItemCompareResult!]!
+
+  """get all photo """
+  getAllBlogPhoto: [PhotoBlog!]!
+  getAllContainers: [WorkizContainer!]!
+  getAllFiles: [OpenAiFile!]!
+  getAllInvitedUsers: [InvitedUser!]!
+  getAllJobsWorkiz(
+    offset: Int!
+
+    """Max 100"""
+    records: Int!
+  ): PaginatedJobDto!
+  getAllLocation: [Location!]!
+  getAllLocationPhoto: [LocationPhoto!]!
+  getAllMessages: [Message!]!
+  getAllTechsWorkiz: [TechnicianWorkiz!]!
+  getAllTemplates: [Template!]!
+  getAllTimeTemplates: [TimeTemplate!]!
+  getAllUsers: [User!]!
+  getAllUsersWorkiz: [TechnicianWorkiz!]!
+  getAllWorkizLeads: [JobDto!]!
+
+  """get all blogs"""
+  getBlogs: [ConstructorBlog!]!
+
+  """get 1 blog by id"""
+  getBlogsById(id: String!): ConstructorBlog!
+
+  """this method get blogs by field description which like inputed"""
+  getBlogsFilterByMetaBlogUrl(metaBlogUrl: String!): ConstructorBlog!
+  getCalls(ctmGetCallsOptionDto: CtmGetCallsOptionDto!): CtmGetCallsDto!
+  getContainerById(id: String!): FindContainerAndTemplate!
+  getCurrentUser: User!
+
+  """
+  universal sorting blog method, this method find by inputed field and can be sorted and paginate
+  """
+  getFilteredBlog(filter: FilterableBlogDto!): ConstructorBlogFilterableWithCountDto!
+  getFineTuneList: [FineTuneItem!]!
+  getFullLastFineTune: OpenAiFineTune!
+  getLocationById(id: String!): Location!
+  getLocationByState(state: String!): [Location!]!
+  getLocationByStateAndUrl(filter: LocationFilterStateUrlDto!): Location!
+  getLocationFiltered(filter: LocationFilterableDto!): LocationFilterableWithCountDto!
+  getLocationPaginate(paginate: FindPaginationDto!): [Location!]!
+  getLocksmithById(id: String!): Locksmith!
+  getLocksmithWithUnreviewedReviews: [LocksmithWithCountNewReviewsDto!]!
+  getLogs(pagination: FindPaginationDto!): LogsPaginated!
+  getRequestById(id: String!): Request!
+  getReviewsForConsideration: [ReviewsWithEmailDto!]!
+  getSystemSettings: SystemSettings!
+  getTemplateById(id: ID!): Template!
+  getUniqueLocations: [String!]
+  getUsersWithSchedule(from: Int!, is_available: Boolean, locations: [String!], role: [UserRole!], search_value: String, to: Int!): [UserWithSchedule!]!
+  getWorkizJobById(id: String!): JobDto!
+  getWorkizLeadById(id: String!): JobDto!
+  listFineTunes: String!
+  listModels: String!
+  searchLocksmiths(first: Float, searchValue: String, skip: Float): [Locksmith!]!
+  searchRequests(first: Float, searchValue: String, skip: Float): [Request!]!
+  testApi(method: String!, url: String!): String!
+}
+
+type Request {
+  address: [Address!]!
+  business_mail: String
+  business_name: String!
+  business_phone: String!
+  description: String
+  files: String
+  id: ID!
+  link_to_map: String!
+  link_to_site: String!
+  owners_name: String
+  owners_phone: String!
+  photo: String
+  schedule: [Schedule!]!
+  services: [String!]!
+}
+
+input ReviewReviewsDto {
+  id: ID!
+  status: ReviewsStatus! = UNDER_CONSIDERATION
+}
+
+type Reviews {
+  created_at: Float!
+  id: ID!
+  locksmith_id: String!
+  name: String!
+  rating: Float
+  status: ReviewsStatus
+  text: String!
+  title: String!
+  updated_at: Float!
+}
+
+enum ReviewsStatus {
+  APPROVED
+  REJECTED
+  UNDER_CONSIDERATION
+}
+
+type ReviewsWithEmailDto {
+  created_at: Float!
+  email: String!
+  id: ID!
+  locksmith_id: String!
+  name: String!
+  rating: Float
+  status: ReviewsStatus!
+  text: String!
+  title: String!
+  updated_at: Float!
+}
+
+type Schedule {
+  close_at: DateTime
+  id: ID!
+  name: Week!
+  open_at: DateTime
+}
+
+type SendDto {
+  message: String
+  status: Float
+}
+
+"""Chouse which type of sorting would you like to use"""
+enum SortBlogField {
+  """filter by preview info date"""
+  blog_previw_date
+
+  """filter by blog Meta info date_when_will_post_blog"""
+  date_when_will_post_blog
+
+  """filter by is posted """
+  is_posted
+
+  """filter by meta tag description"""
+  meta_tag_description
+
+  """filter by meta tag title"""
+  meta_tag_title
+
+  """filter by post date"""
+  post_date
+}
+
+"""Choose which type of sorting would you like to use"""
+enum SortEnum {
+  """
+  Items are arranged from lowest to highest value:  0 to 9, and/or A to Z
+  """
+  ASC
+
+  """
+  Items are arranged from high to low or largest to smallest: 9 to 0,  and/or Z to A
+  """
+  DESC
+}
+
+type SystemSettings {
+  active_model: String!
+  id: ID!
+  max_tokens: Int!
+  workiz_cookie: String!
+}
+
+type TechnicianWorkiz {
+  active: Boolean!
+  created: String!
+  email: String!
+  fieldTech: Boolean!
+  id: String!
+  name: String!
+  role: String!
+  serviceAreas: [String!]!
+  skills: [String!]!
+}
+
+type Template {
+  car_templates: [CarTemplate!]
+  id: ID!
+  items: [ItemTemplate!]
+  name: String!
+}
+
+type TestimonialsReviews {
+  Name: String
+  Photo: String
+  Review_text: String
+  Type_of_service: String
+  id: ID!
+}
+
+type TimeTemplate {
+  color: String!
+  id: ID!
+  name: String!
+  value: String!
+}
+
+type TokenResponse {
+  access_token: String!
+  refresh_token: String!
+}
+
+type Transcription {
+  ctm_call_id: String!
+  id: ID!
+  text: String!
+}
+
+input UpdateAddressDto {
+  id: ID
+  name: String
+}
+
+input UpdateBlogBlockDto {
+  body_text: String
+  description: String
+  first_list: String
+  headline: String
+  id: ID
+  last_list: String
+  last_text: String
+  list: String
+  photo: UpdatePhotoForBlockDto
+  position_block: Float
+  styles: String
+  text: String
+  text_left: String
+  text_right: String
+  type_block: String
+}
+
+input UpdateBlogMetaInfoDto {
+  categoric: String
+  constructor_blog_id: ID
+  date_when_will_post_blog: String
+  global_script: String
+  id: ID
+  meta_tag_description: String
+  meta_tag_title: String
+  schema_script: String
+  url_for_blog: String
+}
+
+input UpdateBlogPreviewDto {
+  constructor_blog_id: ID
+  date: String
+  description: String
+  id: ID
+  photo: UpdatePhotoForBlockDto
+  title: String
+  type_block: String
+}
+
+input UpdateConstructorBlogDto {
+  blocks: [UpdateBlogBlockDto!]
+  id: ID!
+  is_posted: Boolean
+  metaInfo: UpdateBlogMetaInfoDto
+  post_date: Float
+  post_date_future: Float
+  preview_info: UpdateBlogPreviewDto
+}
+
+input UpdateCurrentUserDto {
+  location: String
+  name: String
+  workiz_id: String
+}
+
+input UpdateFineTuneItemDto {
+  id: ID!
+  prompt: String
+  text: String
+}
+
+input UpdateH2TextDto {
+  H2: String
+  Text: String
+  id: ID
+}
+
+input UpdateItemTemplateDto {
+  id: ID!
+  quantity: Int!
+  sku: String!
+  uhs_sku: String!
+}
+
+input UpdateLocationDto {
+  About_city: UpdateH2TextDto
+  About_us: UpdateH2TextDto
+  Description: String
+  H1: String
+  Hour_24_services: UpdateLocationServicesDto
+  Map_link: String
+  Name: String
+  Our_services: UpdateLocationServicesDto
+  Phone_number: String
+  Photo: UpdateLocationThumbnailDto
+  Prices: UpdateLocationPricesDto
+  Rich_template: String
+  State: String
+  Subtitle: String
+  Testimonials: UpdateLocationTestimonialsDto
+  Thumbnail: UpdateLocationThumbnailDto
+  Title: String
+  Url: String
+  id: ID!
+  published_at: Float
+  updated_at: Float
+}
+
+input UpdateLocationPricesDto {
+  H2: String
+  Text: String
+  description_right: String
+  id: ID
+  list: [UpdateLocationPricesListDto!]
+  location_id: ID
+}
+
+input UpdateLocationPricesListDto {
+  id: ID
+  name: String
+  price: String
+}
+
+input UpdateLocationServicesDto {
+  H2: String
+  List: String
+  Text_after: String
+  Text_before: String
+  hour_24_service_id: ID
+  id: ID
+  our_service_id: ID
+}
+
+input UpdateLocationTestimonialsDto {
+  H2: String
+  Reviews: [UpdateTestimonialsReviewsDto!]
+  Text_before: String
+  id: ID
+  location_id: ID
+}
+
+input UpdateLocationThumbnailDto {
+  id: ID
+  location_photo_id: ID
+  location_thubnail_id: ID
+  name: String
+  url: String
+}
+
+input UpdateLocksmithDto {
+  address: [UpdateAddressDto!]
+  description: String
+  id: ID!
+  is_verified: Boolean
+  link_to_map: String
+  link_to_site: String
+  mail: String
+  name: String
+  owners_name: String
+  owners_phone: String
+  phone: String
+  photo: String
+  priority: Float
+  schedule: [UpdateScheduleDto!]
+  services: [String!]
+  url: String
+  zips: [String!]
+}
+
+input UpdatePhotoForBlockDto {
+  alt: String
+  blog_block_id: ID
+  constructor_blog_id: ID
+  id: ID
+  link: String
+  title: String
+}
+
+input UpdateRequestDto {
+  address: [UpdateAddressDto!]
+  business_mail: String
+  business_name: String
+  business_phone: String
+  description: String
+  files: String
+  id: ID!
+  link_to_map: String
+  link_to_site: String
+  owners_name: String
+  owners_phone: String
+  photo: String
+  schedule: [UpdateScheduleDto!]
+  services: [String!]
+}
+
+input UpdateScheduleDto {
+  close_at: DateTime
+  id: ID
+  name: Week
+  open_at: DateTime
+}
+
+input UpdateSystemSettingsDto {
+  max_tokens: Int!
+  workiz_cookie: String!
+}
+
+input UpdateTemplateDto {
+  id: ID!
+  name: String!
+}
+
+input UpdateTestimonialsReviewsDto {
+  Name: String
+  Photo: String
+  Review_text: String
+  Type_of_service: String
+  id: ID
+}
+
+input UpdateTimeTemplateDto {
+  color: String
+  id: ID!
+  name: String
+  value: String
+}
+
+input UpdateUserInfoDto {
+  id: ID!
+  key: String
+  value: String
+}
+
+input UpdateUserNoteDto {
+  id: ID!
+  note: String
+  week_end: Int
+  week_start: Int
+}
+
+input UpdateUserScheduleDto {
+  id: ID!
+  work_from: Int
+  work_to: Int
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type User {
+  email: String!
+  id: String!
+  info: [UserInfo!]
+  location: String
+  logs: [Log!]!
+  name: String!
+  notes: [UserNote!]
+  role: UserRole!
+  workiz_id: String
+}
+
+type UserInfo {
+  id: ID!
+  key: String!
+  user_id: ID!
+  value: String!
+}
+
+type UserNote {
+  id: ID!
+  note: String!
+  user_id: ID!
+  week_end: Int!
+  week_start: Int!
+}
+
+enum UserRole {
+  ADMIN
+  DISPATCHER
+  MAIN_DISPATCHER
+  TECHNICIAN
+}
+
+type UserSchedule {
+  id: ID!
+  user_id: ID!
+  work_from: Int!
+  work_to: Int!
+}
+
+type UserWithSchedule {
+  email: String!
+  id: String!
+  info: [UserInfo!]
+  location: String
+  logs: [Log!]!
+  name: String!
+  notes: [UserNote!]
+  role: UserRole!
+  schedules: [UserSchedule!]!
+  workiz_id: String
+}
+
+enum Week {
+  FRIDAY
+  MONDAY
+  SATURDAY
+  SUNDAY
+  THURSDAY
+  TUESDAY
+  WEDNESDAY
+}
+
+type WorkizContainer {
+  description: String!
+  id: String!
+  isLowStock: String!
+  is_primary: String!
+  name: String!
+  total_items: String!
+  total_net_value: String!
+  total_unique_items: String!
+  total_value: String!
+}
+
+type WorkizContainerInfo {
+  cost: String!
+  id: String
+  item_id: String!
+  item_name: String!
+  long_desc: String!
+  minimum_at_location: String!
+  price: String!
+  qty: String!
+  total_items: String
+  total_unique_items: String
+}

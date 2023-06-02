@@ -8,6 +8,7 @@ import ctmConfig from './ctm.config';
 import mailConfig from './mail.config';
 import { MailConfigService } from '../service/mail.service';
 import workizConfig from './workiz.config';
+import awsConfig from './aws.config';
 
 export default [
   appConfig,
@@ -16,7 +17,8 @@ export default [
   jwtConfig,
   ctmConfig,
   mailConfig,
-  workizConfig
+  workizConfig,
+  awsConfig,
 ];
 
 export { GqlConfigService, TypeOrmConfigService, MailConfigService };
@@ -61,5 +63,5 @@ export interface ConfigType {
   workiz: {
     email: string;
     password: string;
-  }
+  };
 }

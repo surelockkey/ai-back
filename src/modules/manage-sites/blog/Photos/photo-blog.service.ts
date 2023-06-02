@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GraphQLError } from 'graphql';
 import { Repository } from 'typeorm';
-import { PhotoBlog } from './Entity/photo-blog.entity';
+import { PhotoBlog } from './entity/photo-blog.entity';
 import { IFileUpload } from 'src/modules/upload/type/i-file-upload';
 import { UploadFileResult } from 'src/modules/upload/type/upload-result';
 import { UploadService } from 'src/modules/upload/upload.service';
@@ -21,7 +21,6 @@ export class PhotoBlogService {
     });
   }
 
-  //todo find out in which moment field blogsLink must be set?
   public async createPhotoBlog(file: IFileUpload): Promise<PhotoBlog> {
     const awsObject: UploadFileResult = await this.uploadService.uploadFile(
       file,
