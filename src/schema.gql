@@ -824,6 +824,7 @@ type Mutation {
   deleteManyItemTemplates(ids: [ID!]!): [ID!]!
   deleteManyPhoto(keys: [String!]!): SendDto!
   deleteManyTemplates(ids: [ID!]!): [ID!]!
+  deleteManyUserInfo(ids: [ID!]!): [ID!]!
   deleteManyUserSchedules(ids: [ID!]!): [ID!]!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
   deletePhotoLocationById(id: String!): LocationPhoto!

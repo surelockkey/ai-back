@@ -11,6 +11,7 @@ import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
 import { UserRole } from 'src/modules/user/enum/user-role.enum';
 import { CurrentUser } from '@tech-slk/nest-auth';
 import { CurrentUserDto } from 'src/modules/authorization/dto/current-user.dto';
+import { async } from 'rxjs';
 
 @Resolver()
 export class UserInfoResolver {
@@ -43,6 +44,22 @@ export class UserInfoResolver {
       callback: () => this.userInfoService.deleteByIdReturnId(id),
       user_id,
       action: 'Tried to delete user info',
+    });
+  }
+
+  @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
+  @Mutation(() => [ID])
+  deleteManyUserInfo(
+    @Args('ids', { type: () => [ID] }) ids: string[],
+    @CurrentUser() { user_id }: CurrentUserDto,
+  ) {
+    return this.loggerService.actionLog({
+      callback: async () => {
+        await this.userInfoService.deleteManyByIds(ids);
+        return ids;
+      },
+      user_id,
+      action: 'Tried to delete many user info',
     });
   }
 
