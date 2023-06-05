@@ -19,6 +19,7 @@ import { MailModule } from './modules/mail/mail.module';
 import { TranscriptionModule } from './modules/transcription/transcription.module';
 import { CarInventoryModule } from './modules/car-inventory/car-inventory.module';
 import { UserModule } from './modules/user/user.module';
+import { ManageSitesModule } from './modules/manage-sites/manage-sites.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { UserModule } from './modules/user/user.module';
     TranscriptionModule,
     CarInventoryModule,
     UserModule,
+    ManageSitesModule,
   ],
 })
 export class AppModule {}
