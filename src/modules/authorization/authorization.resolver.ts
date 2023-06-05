@@ -17,6 +17,7 @@ import { InvitedUser } from '../user/entity/invited-user.entity';
 import { AcceptInviteDto } from './dto/accept-invite.dto';
 import { RoleGuard } from './decorator/role.decorator';
 import { UserRole } from '../user/enum/user-role.enum';
+import { InviteUserDto } from './dto/invite-user.dto';
 
 @Resolver()
 export class AuthorizationResolver {
@@ -24,23 +25,6 @@ export class AuthorizationResolver {
     private readonly authorizationService: AuthorizationService,
     private readonly loggerService: LoggerService,
   ) {}
-
-  @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
-  @Mutation(() => User)
-  public async registration(
-    @Args('registration_dto', { type: () => RegistrationDto })
-    registration_dto: RegistrationDto,
-    @CurrentUser() user: CurrentUserDto,
-  ): Promise<User> {
-    return this.loggerService.actionLog({
-      callback: () =>
-        this.authorizationService.registrationUser(
-          registration_dto,
-          user.user_id,
-        ),
-      action: 'Tried to register',
-    });
-  }
 
   @Mutation(() => TokenResponse)
   public async login(
@@ -72,16 +56,15 @@ export class AuthorizationResolver {
   @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
   @Mutation(() => InvitedUser)
   public async inviteUserToApp(
-    @Args('email', { type: () => String })
-    email: string,
-    @Args('role', { type: () => UserRole }) role: UserRole,
+    @Args('inviteUserDto', { type: () => InviteUserDto })
+    inviteUserDto: InviteUserDto,
     @CurrentUser()
     { user_id }: CurrentUserDto,
   ): Promise<InvitedUser> {
     return this.loggerService.actionLog({
       callback: () =>
-        this.authorizationService.inviteUserToApp(email, role, user_id),
-      action: `Tried to invite user with email ${email}`,
+        this.authorizationService.inviteUserToApp(inviteUserDto, user_id),
+      action: `Tried to invite user with email ${inviteUserDto.email}`,
       user_id: user_id,
     });
   }

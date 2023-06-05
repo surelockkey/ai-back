@@ -9,11 +9,14 @@ import { WorkizApiService } from './workiz-api.service';
 import { SendDto } from '@tech-slk/nest-crud';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/modules/authorization/guard/auth.guard';
-// import { WorkizService } from './workiz.service';
+import { RestMethods, WorkizCoreApiService } from './workiz-core.service';
 
 @Resolver()
 export class WorkizApiResolver {
-  constructor(private readonly workizApiService: WorkizApiService) {}
+  constructor(
+    private readonly workizApiService: WorkizApiService,
+    private readonly workizCoreApiService: WorkizCoreApiService,
+  ) {}
 
   @UseGuards(GqlAuthGuard)
   @Query(() => [TechnicianWorkiz])
@@ -71,5 +74,15 @@ export class WorkizApiResolver {
   @Query(() => JobDto)
   async getWorkizJobById(@Args('id') id: string): Promise<JobDto> {
     return await this.workizApiService.getJobWorkizById(id);
+  }
+
+  @Query(() => String)
+  async testApi(
+    @Args('url') url: string,
+    @Args('method') method: RestMethods
+  ): Promise<string> {
+    const a =  await this.workizCoreApiService.req({}, url, method);
+    console.log(a, '@@')
+    return '';
   }
 }

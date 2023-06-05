@@ -6,7 +6,6 @@ import { CtmGetCallsDto, CtmGetCallsOptionDto } from './dto/ctm-get-calls.dto';
 export class CtmApiResolver {
   constructor(private readonly ctmApiService: CtmApiService) {}
 
-
   @Query(() => CtmGetCallsDto)
   async getCalls(
     @Args('ctmGetCallsOptionDto', { type: () => CtmGetCallsOptionDto })

@@ -2,7 +2,7 @@ import { InputType, OmitType, PartialType } from '@nestjs/graphql';
 import { User } from '../entity/user.entity';
 
 @InputType()
-export class UserInput extends OmitType(User, ['logs']) {}
+export class UserInput extends OmitType(User, ['logs', 'info', 'notes']) {}
 
 @InputType()
 export class UpdateCurrentUserDto extends PartialType(

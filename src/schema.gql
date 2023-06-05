@@ -8,9 +8,27 @@ input AcceptInviteDto {
   password: String!
 }
 
+type CarTemplate {
+  id: ID!
+  template_id: ID!
+  workiz_id: String!
+}
+
 input ChangePasswordDto {
   new_password: String!
   old_password: String!
+}
+
+input CreateCarTemplateDto {
+  template_id: ID!
+  workiz_id: String!
+}
+
+input CreateItemTemplateDto {
+  quantity: Int!
+  sku: String!
+  template_id: ID!
+  uhs_sku: String!
 }
 
 input CreateJobDto {
@@ -28,50 +46,53 @@ input CreateJobDto {
   State: String!
 }
 
-input CreateOrUpdateTechInfoDto {
+input CreateOrUpdateUserInfoDto {
   id: ID
   key: String!
-  tech_id: ID!
+  user_id: ID!
   value: String!
 }
 
-input CreateOrUpdateTechNoteDto {
+input CreateOrUpdateUserNoteDto {
   id: ID
   note: String!
-  tech_id: ID!
+  user_id: ID!
   week_end: Int!
   week_start: Int!
 }
 
-input CreateTechDto {
-  email: String!
+input CreateOrUpdateUserScheduleDto {
+  id: ID
+  user_id: ID!
+  work_from: Int!
+  work_to: Int!
+}
+
+input CreateTemplateDto {
   name: String!
-  service_areas: [String!]
-  skills: [String!]
-  state: String
-  workiz_id: String
 }
 
-input CreateTechFromWorkizDto {
-  state: String
-  workiz_id: String!
-}
-
-input CreateTechInfoDto {
-  key: String!
-  tech_id: ID!
+input CreateTimeTemplateDto {
+  color: String!
+  name: String!
   value: String!
 }
 
-input CreateTechNoteDto {
+input CreateUserInfoDto {
+  key: String!
+  user_id: ID!
+  value: String!
+}
+
+input CreateUserNoteDto {
   note: String!
-  tech_id: ID!
+  user_id: ID!
   week_end: Int!
   week_start: Int!
 }
 
-input CreateTechScheduleDto {
-  tech_id: ID!
+input CreateUserScheduleDto {
+  user_id: ID!
   work_from: Int!
   work_to: Int!
 }
@@ -141,6 +162,11 @@ input CtmGetCallsOptionDto {
   start_date: String
 }
 
+type FindContainerAndTemplate {
+  container: [WorkizContainerInfo!]!
+  template: [Template!]!
+}
+
 input FindPaginationDto {
   skip: Int!
   take: Int!
@@ -161,26 +187,39 @@ type FineTuneItem {
   text: String!
 }
 
-type GoogleSheetsTechSchedule {
-  active_state: String!
-  friday: String
-  monday: String
-  name: String!
-  note: String
-  saturday: String
-  sunday: String
-  thursday: String
-  tuesday: String
-  wednesday: String
-  week_end: String
-  week_start: String
+input InviteUserDto {
+  email: String
+  location: String
+  name: String
+  role: UserRole = ADMIN
+  workiz_id: String
 }
 
 type InvitedUser {
   email: String!
   id: ID!
   key: String!
+  location: String
+  name: String!
   role: UserRole!
+  workiz_id: String
+}
+
+type ItemCompareResult {
+  actual_quantity: Int!
+  difference: Int!
+  name: String!
+  sku: String!
+  template_quantity: Int!
+  uhs_sku: String!
+}
+
+type ItemTemplate {
+  id: ID!
+  quantity: Int!
+  sku: String!
+  template_id: ID!
+  uhs_sku: String!
 }
 
 type JobDto {
@@ -274,44 +313,51 @@ type Message {
 
 type Mutation {
   acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
+  assignManyTemplateToCar(createCarTemplateDto: [CreateCarTemplateDto!]!): [CarTemplate!]!
   assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
   changePassword(passwords: ChangePasswordDto!): SendDto!
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
-  createManyTechsFromWorkiz(techs: [CreateTechFromWorkizDto!]!): [Tech!]!
-  createManyTechsSchedules(techs_schedules: [CreateTechScheduleDto!]!): [TechSchedule!]!
+  createManyItemTemplates(createItemTemplateDto: [CreateItemTemplateDto!]!): [ItemTemplate!]!
+  createManyTemplates(createTemplateDto: [CreateTemplateDto!]!): [Template!]!
+  createManyUsersSchedules(users_schedules: [CreateUserScheduleDto!]!): [UserSchedule!]!
   createNewJobWorkiz(createJobDto: CreateJobDto!): SendDto!
-  createOrUpdateTechInfo(tech_infos: [CreateOrUpdateTechInfoDto!]!): [TechInfo!]!
-  createOrUpdateTechNote(tech_note: CreateOrUpdateTechNoteDto!): TechNote!
+  createOrUpdateManyUsersSchedules(user_schedules: [CreateOrUpdateUserScheduleDto!]!): [UserSchedule!]!
+  createOrUpdateUserInfo(user_infos: [CreateOrUpdateUserInfoDto!]!): [UserInfo!]!
+  createOrUpdateUserNote(user_note: CreateOrUpdateUserNoteDto!): UserNote!
   createSystemSettings(max_tokens: Int!): SystemSettings!
-  createTech(tech: CreateTechDto!): Tech!
-  createTechFromWorkiz(state: String, workiz_id: String!): Tech!
-  createTechInfo(tech_info: CreateTechInfoDto!): TechInfo!
-  createTechNote(tech_note: CreateTechNoteDto!): TechNote!
-  createTechSchedule(tech_schedule: CreateTechScheduleDto!): TechSchedule!
+  createTimeTemplate(time_template: CreateTimeTemplateDto!): TimeTemplate!
+  createUserInfo(user_info: CreateUserInfoDto!): UserInfo!
+  createUserNote(user_note: CreateUserNoteDto!): UserNote!
+  createUserSchedule(user_schedule: CreateUserScheduleDto!): UserSchedule!
   deleteFineTuneItem(id: ID!): ID!
-  deleteManyTechsByIds(ids: [ID!]!): [ID!]!
+  deleteManyInvitedUsers(user_ids: [ID!]!): [String!]!
+  deleteManyItemTemplates(ids: [ID!]!): [ID!]!
+  deleteManyTemplates(ids: [ID!]!): [ID!]!
+  deleteManyUserInfo(ids: [ID!]!): [ID!]!
+  deleteManyUserSchedules(ids: [ID!]!): [ID!]!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
-  deleteTechById(id: ID!): ID!
-  deleteTechInfo(id: ID!): ID!
-  deleteTechNote(id: ID!): ID!
-  deleteTechSchedule(id: ID!): ID!
-  inviteUserToApp(email: String!, role: UserRole!): InvitedUser!
+  deleteTimeTemplate(id: ID!): ID!
+  deleteUserInfo(id: ID!): ID!
+  deleteUserNote(id: ID!): ID!
+  deleteUserSchedule(id: ID!): ID!
+  inviteUserToApp(inviteUserDto: InviteUserDto!): InvitedUser!
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!
   prepareFileForFineTune(filename: String!): String!
-  registration(registration_dto: RegistrationDto!): User!
   sendMessage(prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
   speechToText(call_id: String!): Transcription!
   startFineTune: FineTune!
   updateCurrentUser(user: UpdateCurrentUserDto!): User!
   updateFineTuneItem(fine_tune_item: UpdateFineTuneItemDto!): FineTuneItem!
-  updateManyTechsSchedules(techs_schedules: [UpdateTechScheduleDto!]!): [TechSchedule!]!
+  updateItemTemplate(updateItemTemplateDto: UpdateItemTemplateDto!): ItemTemplate!
+  updateManyUsersSchedules(users_schedules: [UpdateUserScheduleDto!]!): [UserSchedule!]!
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
-  updateTech(tech: UpdateTechDto!): Tech!
-  updateTechInfo(tech_info: UpdateTechInfoDto!): TechInfo!
-  updateTechNote(tech_note: UpdateTechNoteDto!): TechNote!
-  updateTechSchedule(tech_schedule: UpdateTechScheduleDto!): TechSchedule!
+  updateTemplate(updateTemplateDto: UpdateTemplateDto!): Template!
+  updateTimeTemplate(time_template: UpdateTimeTemplateDto!): TimeTemplate!
+  updateUserInfo(user_info: UpdateUserInfoDto!): UserInfo!
+  updateUserNote(user_note: UpdateUserNoteDto!): UserNote!
+  updateUserSchedule(user_schedule: UpdateUserScheduleDto!): UserSchedule!
 }
 
 type OpenAiFile {
@@ -347,7 +393,10 @@ type PaginatedJobDto {
 
 type Query {
   findTranscription(call_id: String!): Transcription!
+  generateDifferenceReport(only_less: Boolean! = true, workiz_id: String!): [ItemCompareResult!]!
+  getAllContainers: [WorkizContainer!]!
   getAllFiles: [OpenAiFile!]!
+  getAllInvitedUsers: [InvitedUser!]!
   getAllJobsWorkiz(
     offset: Int!
 
@@ -355,32 +404,27 @@ type Query {
     records: Int!
   ): PaginatedJobDto!
   getAllMessages: [Message!]!
-  getAllTechs: [Tech!]!
   getAllTechsWorkiz: [TechnicianWorkiz!]!
+  getAllTemplates: [Template!]!
+  getAllTimeTemplates: [TimeTemplate!]!
   getAllUsers: [User!]!
   getAllUsersWorkiz: [TechnicianWorkiz!]!
   getAllWorkizLeads: [JobDto!]!
   getCalls(ctmGetCallsOptionDto: CtmGetCallsOptionDto!): CtmGetCallsDto!
+  getContainerById(id: String!): FindContainerAndTemplate!
   getCurrentUser: User!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!
   getLogs(pagination: FindPaginationDto!): LogsPaginated!
-  getSheet(col: String!, row: String!, sheet_id: String!, tab_name: String!): [[String!]!]!
   getSystemSettings: SystemSettings!
-  getTechsSchedule: [GoogleSheetsTechSchedule!]!
-  getTechsWithSchedule(from: Int!, is_available: Boolean, search_value: String, states: [String!], to: Int!): [TechWithSchedule!]!
-  getTechsWorkizWithoutAdded: [TechnicianWorkiz!]!
+  getTemplateById(id: ID!): Template!
+  getUniqueLocations: [String!]
+  getUsersWithSchedule(userWithScheduleDto: UserWithScheduleDto!): [UserWithSchedule!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
   listModels: String!
-}
-
-input RegistrationDto {
-  email: String!
-  name: String!
-  password: String!
-  role: UserRole! = ADMIN
+  testApi(method: String!, url: String!): String!
 }
 
 type SendDto {
@@ -392,53 +436,7 @@ type SystemSettings {
   active_model: String!
   id: ID!
   max_tokens: Int!
-}
-
-type Tech {
-  email: String!
-  id: ID!
-  info: [TechInfo!]!
-  name: String!
-  notes: [TechNote!]!
-  service_areas: [String!]
-  skills: [String!]
-  state: String
-  workiz_id: String
-}
-
-type TechInfo {
-  id: ID!
-  key: String!
-  tech_id: ID!
-  value: String!
-}
-
-type TechNote {
-  id: ID!
-  note: String!
-  tech_id: ID!
-  week_end: Int!
-  week_start: Int!
-}
-
-type TechSchedule {
-  id: ID!
-  tech_id: ID!
-  work_from: Int!
-  work_to: Int!
-}
-
-type TechWithSchedule {
-  email: String!
-  id: ID!
-  info: [TechInfo!]!
-  name: String!
-  notes: [TechNote!]!
-  schedules: [TechSchedule!]!
-  service_areas: [String!]
-  skills: [String!]
-  state: String
-  workiz_id: String
+  workiz_cookie: String!
 }
 
 type TechnicianWorkiz {
@@ -453,6 +451,20 @@ type TechnicianWorkiz {
   skills: [String!]!
 }
 
+type Template {
+  car_templates: [CarTemplate!]
+  id: ID!
+  items: [ItemTemplate!]
+  name: String!
+}
+
+type TimeTemplate {
+  color: String!
+  id: ID!
+  name: String!
+  value: String!
+}
+
 type TokenResponse {
   access_token: String!
   refresh_token: String!
@@ -465,7 +477,9 @@ type Transcription {
 }
 
 input UpdateCurrentUserDto {
+  location: String
   name: String
+  workiz_id: String
 }
 
 input UpdateFineTuneItemDto {
@@ -474,34 +488,44 @@ input UpdateFineTuneItemDto {
   text: String
 }
 
+input UpdateItemTemplateDto {
+  id: ID!
+  quantity: Int!
+  sku: String!
+  uhs_sku: String!
+}
+
 input UpdateSystemSettingsDto {
   max_tokens: Int!
+  workiz_cookie: String!
 }
 
-input UpdateTechDto {
-  email: String
+input UpdateTemplateDto {
+  id: ID!
+  name: String!
+}
+
+input UpdateTimeTemplateDto {
+  color: String
   id: ID!
   name: String
-  service_areas: [String!]
-  skills: [String!]
-  state: String
-  workiz_id: String
+  value: String
 }
 
-input UpdateTechInfoDto {
+input UpdateUserInfoDto {
   id: ID!
   key: String
   value: String
 }
 
-input UpdateTechNoteDto {
+input UpdateUserNoteDto {
   id: ID!
   note: String
   week_end: Int
   week_start: Int
 }
 
-input UpdateTechScheduleDto {
+input UpdateUserScheduleDto {
   id: ID!
   work_from: Int
   work_to: Int
@@ -510,13 +534,87 @@ input UpdateTechScheduleDto {
 type User {
   email: String!
   id: String!
+  info: [UserInfo!]
+  location: String
   logs: [Log!]!
   name: String!
+  notes: [UserNote!]
   role: UserRole!
+  workiz_id: String
+}
+
+type UserInfo {
+  id: ID!
+  key: String!
+  user_id: ID!
+  value: String!
+}
+
+type UserNote {
+  id: ID!
+  note: String!
+  user_id: ID!
+  week_end: Int!
+  week_start: Int!
 }
 
 enum UserRole {
   ADMIN
   DISPATCHER
   MAIN_DISPATCHER
+  TECHNICIAN
+}
+
+type UserSchedule {
+  id: ID!
+  user_id: ID!
+  work_from: Int!
+  work_to: Int!
+}
+
+type UserWithSchedule {
+  email: String!
+  id: String!
+  info: [UserInfo!]
+  location: String
+  logs: [Log!]!
+  name: String!
+  notes: [UserNote!]
+  role: UserRole!
+  schedules: [UserSchedule!]!
+  workiz_id: String
+}
+
+input UserWithScheduleDto {
+  from: Int!
+  is_available: Boolean
+  locations: [String!]
+  role: [UserRole!]
+  search_value: String
+  to: Int!
+}
+
+type WorkizContainer {
+  description: String!
+  id: String!
+  isLowStock: String!
+  is_primary: String!
+  name: String!
+  total_items: String!
+  total_net_value: String!
+  total_unique_items: String!
+  total_value: String!
+}
+
+type WorkizContainerInfo {
+  cost: String!
+  id: String
+  item_id: String!
+  item_name: String!
+  long_desc: String!
+  minimum_at_location: String!
+  price: String!
+  qty: String!
+  total_items: String
+  total_unique_items: String
 }

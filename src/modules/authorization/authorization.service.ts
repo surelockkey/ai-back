@@ -15,6 +15,7 @@ import { RegistrationDto } from './dto/registration.dto';
 import { UserRole } from '../user/enum/user-role.enum';
 import { MailService } from '../mail/mail.service';
 import { ConfigService } from '@nestjs/config';
+import { InviteUserDto } from './dto/invite-user.dto';
 
 @Injectable()
 export class AuthorizationService extends NestAuthService<
@@ -36,8 +37,7 @@ export class AuthorizationService extends NestAuthService<
   }
 
   public async inviteUserToApp(
-    email: string,
-    role: UserRole,
+    { role, email, workiz_id, name, location }: InviteUserDto,
     current_user_id: string,
   ): Promise<InvitedUser> {
     const current_user = await this.userService.findOneById(current_user_id);
@@ -50,15 +50,20 @@ export class AuthorizationService extends NestAuthService<
     }
 
     return await this.userService
-      .findOne({ email })
+      .findOneUser({ where: [{ email }, { workiz_id }] })
       .then(() => {
-        throw new GraphQLError('User with this email already exist');
+        throw new GraphQLError(
+          'User with this email or workiz id already exist',
+        );
       })
       .catch(async () => {
         const invited_user = await this.invitedUserService.create({
           email,
           key: randomStringGenerator(),
           role,
+          workiz_id,
+          name,
+          location,
         });
 
         await this.mailService.sendMail({
@@ -93,13 +98,16 @@ export class AuthorizationService extends NestAuthService<
     key,
     ...rest
   }: AcceptInviteDto): Promise<User> {
-    const { email, id, role } = await this.invitedUserService.findOne({ key });
+    const { email, id, role, workiz_id, location } =
+      await this.invitedUserService.findOne({ key });
 
     if (!email) throw new GraphQLError("User isn't invited");
 
     const new_user = await this.registration({
       email,
       role,
+      workiz_id,
+      location,
       ...rest,
     });
 

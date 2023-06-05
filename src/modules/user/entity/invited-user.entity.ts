@@ -10,11 +10,23 @@ export class InvitedUser extends BaseEntity {
   @Field(() => String)
   email: string;
 
+  @Field(() => String)
+  @Column({ default: '' })
+  name: string;
+
   @Column({ unique: true })
   @Field(() => String)
   key: string;
 
+  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
+  location: string;
+
   @Column({ type: 'enum', enum: UserRole })
   @Field(() => UserRole)
   role: UserRole;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  workiz_id: string;
 }

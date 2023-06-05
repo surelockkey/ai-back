@@ -1,4 +1,4 @@
-import { Field, InputType, OmitType, PickType } from '@nestjs/graphql';
+import { Field, InputType, PickType } from '@nestjs/graphql';
 import { PasswordValidation } from '@tech-slk/nest-auth';
 import { UserInput } from 'src/modules/user/dto/user.input';
 
