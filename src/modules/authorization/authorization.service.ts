@@ -98,7 +98,7 @@ export class AuthorizationService extends NestAuthService<
     key,
     ...rest
   }: AcceptInviteDto): Promise<User> {
-    const { email, id, role, workiz_id } =
+    const { email, id, role, workiz_id, location } =
       await this.invitedUserService.findOne({ key });
 
     if (!email) throw new GraphQLError("User isn't invited");
@@ -107,6 +107,7 @@ export class AuthorizationService extends NestAuthService<
       email,
       role,
       workiz_id,
+      location,
       ...rest,
     });
 

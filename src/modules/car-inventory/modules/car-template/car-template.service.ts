@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CrudService } from '@tech-slk/nest-crud';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { CarTemplate } from './entity/car-template.entity';
 import { CreateCarTemplateDto } from './dto/car-template.dto';
 
@@ -12,6 +12,10 @@ export class CarTemplateService extends CrudService<CarTemplate> {
     private readonly carTemplateRepository: Repository<CarTemplate>,
   ) {
     super(carTemplateRepository);
+  }
+
+  public findOneItem(expression: FindOneOptions<CarTemplate>) {
+    return this.carTemplateRepository.findOne(expression);
   }
 
   public async createMany(createCarTemplateDto: CreateCarTemplateDto[]): Promise<CarTemplate[]> {

@@ -7,9 +7,6 @@ import { ItemCompareResult } from './dto/item-compare-result.dto';
 import { TemplateService } from './modules/template/template.service';
 import { CarTemplateService } from './modules/car-template/car-template.service';
 import { DataSource } from 'typeorm';
-import { Template } from './modules/template/entity/template.entity';
-import { CreateTemplateDto } from './modules/template/dto/template.dto';
-import { CarTemplate } from './modules/car-template/entity/car-template.entity';
 
 @Injectable()
 export class CarInventoryService {
@@ -50,10 +47,13 @@ export class CarInventoryService {
 
   public async generateDifferenceReport(workiz_id: string, only_less: boolean): Promise<ItemCompareResult[]> {
     const container_items = await this.findContainer(workiz_id);
-    const template_items = (await this.carTemplateService.findOne({ workiz_id }))?.template?.items;
+    const template_items = (await this.carTemplateService.findOneItem({ 
+      where: { workiz_id },
+      relations: ['template']
+     }))?.template?.items;
     const result: ItemCompareResult[] = [];
 
-    template_items.forEach((template_item) => {
+    template_items?.forEach((template_item) => {
       const car_item = container_items.find((car_item) =>
         car_item.item_name.includes(`(SLK-${template_item.sku})`),
       );
@@ -69,6 +69,15 @@ export class CarInventoryService {
             difference: Number(car_item.qty) | 0 - template_item.quantity,
           });
         }
+      } else {
+        result.push({
+          name: '',
+          sku: template_item.sku,
+          uhs_sku: template_item.uhs_sku,
+          actual_quantity: 0,
+          template_quantity: template_item.quantity,
+          difference: -template_item.quantity,
+        });
       }
     });
 
