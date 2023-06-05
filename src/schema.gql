@@ -419,7 +419,7 @@ type Query {
   getSystemSettings: SystemSettings!
   getTemplateById(id: ID!): Template!
   getUniqueLocations: [String!]
-  getUsersWithSchedule(from: Int!, is_available: Boolean, locations: [String!], role: [UserRole!], search_value: String, to: Int!): [UserWithSchedule!]!
+  getUsersWithSchedule(userWithScheduleDto: UserWithScheduleDto!): [UserWithSchedule!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
@@ -583,6 +583,15 @@ type UserWithSchedule {
   role: UserRole!
   schedules: [UserSchedule!]!
   workiz_id: String
+}
+
+input UserWithScheduleDto {
+  from: Int!
+  is_available: Boolean
+  locations: [String!]
+  role: [UserRole!]
+  search_value: String
+  to: Int!
 }
 
 type WorkizContainer {
