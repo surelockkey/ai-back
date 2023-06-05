@@ -4,7 +4,7 @@ import {
   CreateLocationServicesDto,
   CreateLocationTestimonialsDto,
   CreateLocationThumbnailDto,
-} from '../../Location/dto/create-location.dto';
+} from '../../location/dto/create-location.dto';
 
 // TODO: Add H2
 
