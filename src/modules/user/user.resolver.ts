@@ -1,4 +1,4 @@
-import { Args, ID, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Args, ID, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { GqlAuthGuard } from "../authorization/guard/auth.guard";
 import { CurrentUser } from "@tech-slk/nest-auth";
 import { CurrentUserDto } from "../authorization/dto/current-user.dto";
