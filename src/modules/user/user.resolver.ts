@@ -1,4 +1,4 @@
-import { Args, ID, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Args, ID, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { GqlAuthGuard } from "../authorization/guard/auth.guard";
 import { CurrentUser } from "@tech-slk/nest-auth";
 import { CurrentUserDto } from "../authorization/dto/current-user.dto";
@@ -7,7 +7,7 @@ import { User } from "./entity/user.entity";
 import { UserService } from "./user.service";
 import { RoleGuard } from "../authorization/decorator/role.decorator";
 import { UserRole } from "./enum/user-role.enum";
-import { UpdateCurrentUserDto } from "./dto/user.input";
+import { UpdateCurrentUserDto, UpdateUserDto } from "./dto/user.input";
 import { InvitedUser } from "./entity/invited-user.entity";
 import { InvitedUserService } from "./invited-user.service";
 import {
@@ -38,12 +38,13 @@ export class UserResolver {
     return this.userService.findAllUsers(user.user_id);
   }
 
-  @RoleGuard(UserRole.ADMIN)
+  @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
   @Query(() => [InvitedUser])
   public async getAllInvitedUsers(
-    @CurrentUser() user: CurrentUserDto
+    @CurrentUser() { user_id }: CurrentUserDto
   ): Promise<InvitedUser[]> {
-    return this.invitedUserService.findAll();
+    const user = await this.userService.findOneById(user_id);
+    return this.invitedUserService.findAllInvitedUsers(user.role);
   }
 
   @UseGuards(GqlAuthGuard)
@@ -54,6 +55,15 @@ export class UserResolver {
     @CurrentUser() { user_id }: CurrentUserDto
   ) {
     return this.userService.updateAndReturn(user_id, user);
+  }
+
+  @RoleGuard(UserRole.ADMIN)
+  @Mutation(() => User)
+  updateUser(
+    @Args("user", { type: () => UpdateUserDto })
+    { id, ...rest }: UpdateUserDto,
+  ) {
+    return this.userService.updateAndReturn(id, rest);
   }
 
   // TODO: check if main dispatcher can
