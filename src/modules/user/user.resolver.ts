@@ -41,9 +41,10 @@ export class UserResolver {
   @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
   @Query(() => [InvitedUser])
   public async getAllInvitedUsers(
-    @CurrentUser() user: CurrentUserDto
+    @CurrentUser() { user_id }: CurrentUserDto
   ): Promise<InvitedUser[]> {
-    return this.invitedUserService.findAllInvitedUsers(user.user_id);
+    const user = await this.userService.findOneById(user_id);
+    return this.invitedUserService.findAllInvitedUsers(user.role);
   }
 
   @UseGuards(GqlAuthGuard)

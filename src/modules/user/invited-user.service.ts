@@ -17,12 +17,10 @@ export class InvitedUserService extends CrudService<InvitedUser> {
     super(invitedUserRepository);
   }
 
-  public async findAllInvitedUsers(current_user_id: string) {
-    const { role: current_user_role } = await this.findOneById(current_user_id);
-
+  public async findAllInvitedUsers(user_role: UserRole) {
     return await this.findAll({
       role:
-        current_user_role === UserRole.MAIN_DISPATCHER
+      user_role === UserRole.MAIN_DISPATCHER
           ? In([UserRole.MAIN_DISPATCHER, UserRole.DISPATCHER])
           : undefined,
     });

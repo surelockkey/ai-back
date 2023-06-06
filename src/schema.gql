@@ -313,6 +313,7 @@ input CreateTestimonialsReviewsDto {
 input CreateTimeTemplateDto {
   color: String!
   name: String!
+  value: String!
 }
 
 input CreateUserInfoDto {
@@ -1112,14 +1113,7 @@ type TimeTemplate {
   color: String!
   id: ID!
   name: String!
-  ranges: [TimeTemplateRange!]
-}
-
-type TimeTemplateRange {
-  id: ID!
-  time_template_id: ID!
-  work_from: Int!
-  work_to: Int!
+  value: String!
 }
 
 type TokenResponse {
@@ -1353,6 +1347,7 @@ input UpdateTimeTemplateDto {
   color: String
   id: ID!
   name: String
+  value: String
 }
 
 input UpdateUserInfoDto {
@@ -1407,6 +1402,7 @@ type UserNote {
 enum UserRole {
   ADMIN
   DISPATCHER
+  LOGISTIC
   MAIN_DISPATCHER
   SEO
   TECHNICIAN
