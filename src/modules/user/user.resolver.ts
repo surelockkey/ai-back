@@ -7,7 +7,7 @@ import { User } from "./entity/user.entity";
 import { UserService } from "./user.service";
 import { RoleGuard } from "../authorization/decorator/role.decorator";
 import { UserRole } from "./enum/user-role.enum";
-import { UpdateCurrentUserDto } from "./dto/user.input";
+import { UpdateCurrentUserDto, UpdateUserDto } from "./dto/user.input";
 import { InvitedUser } from "./entity/invited-user.entity";
 import { InvitedUserService } from "./invited-user.service";
 import {
@@ -55,6 +55,15 @@ export class UserResolver {
     @CurrentUser() { user_id }: CurrentUserDto
   ) {
     return this.userService.updateAndReturn(user_id, user);
+  }
+
+  @RoleGuard(UserRole.ADMIN)
+  @Mutation(() => User)
+  updateUser(
+    @Args("user", { type: () => UpdateUserDto })
+    { id, ...rest }: UpdateUserDto,
+  ) {
+    return this.userService.updateAndReturn(id, rest);
   }
 
   // TODO: check if main dispatcher can
