@@ -18,6 +18,7 @@ import { UploadFileToRequestArgs } from './args/upload-file-to-request.args';
 import { FileInArgsPipe } from 'src/modules/upload/pipe/check-file-size-in-args.pipe';
 import { UserRole } from 'src/modules/user/enum/user-role.enum';
 import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
+import { SearchLocksmithDto } from './dto/search-locksmith.dto';
 
 @Resolver()
 export class FormMemberResolver {
@@ -55,9 +56,8 @@ export class FormMemberResolver {
   @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Query(() => [Locksmith])
   public searchLocksmiths(
-    @Args('searchValue', { nullable: true }) searchValue: string,
-    @Args('skip', { nullable: true }) skip: number,
-    @Args('first', { nullable: true }) first: number,
+    @Args('options', { type: () => SearchLocksmithDto })
+    { searchValue, first, skip }: SearchLocksmithDto,
   ) {
     return this.formMemberService.searchLocksmiths(searchValue, first, skip);
   }
