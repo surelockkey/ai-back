@@ -855,6 +855,7 @@ type Mutation {
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
   updateTemplate(updateTemplateDto: UpdateTemplateDto!): Template!
   updateTimeTemplate(time_template: UpdateTimeTemplateDto!): TimeTemplate!
+  updateUser(user: UpdateUserDto!): User!
   updateUserInfo(user_info: UpdateUserInfoDto!): UserInfo!
   updateUserNote(user_note: UpdateUserNoteDto!): UserNote!
   updateUserSchedule(user_schedule: UpdateUserScheduleDto!): UserSchedule!
@@ -1350,6 +1351,14 @@ input UpdateTimeTemplateDto {
   value: String
 }
 
+input UpdateUserDto {
+  id: ID
+  location: String
+  name: String
+  role: UserRole = ADMIN
+  workiz_id: String
+}
+
 input UpdateUserInfoDto {
   id: ID!
   key: String
@@ -1402,10 +1411,7 @@ type UserNote {
 enum UserRole {
   ADMIN
   DISPATCHER
-<<<<<<< HEAD
-=======
   LOGISTIC
->>>>>>> cdf33405ee66b845dc704286027495b25bdad913
   MAIN_DISPATCHER
   SEO
   TECHNICIAN
