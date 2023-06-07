@@ -68,7 +68,7 @@ pipeline {
         stage('Build and Run PROD') {
             agent {
                 node {
-                    label 'dev-ai'
+                    label 'crm-fe-dev'
                 }
             }
             steps {

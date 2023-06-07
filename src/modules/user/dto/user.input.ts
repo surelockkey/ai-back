@@ -8,3 +8,9 @@ export class UserInput extends OmitType(User, ['logs', 'info', 'notes']) {}
 export class UpdateCurrentUserDto extends PartialType(
   OmitType(UserInput, ['id', 'role', 'email']),
 ) {}
+
+
+@InputType()
+export class UpdateUserDto extends PartialType(
+  OmitType(UserInput, ['email', 'schedules', 'password']),
+) {}
