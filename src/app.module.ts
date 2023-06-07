@@ -14,12 +14,12 @@ import config, {
 import { AuthorizationModule } from './modules/authorization/authorization.module';
 import { LoggerModule } from './modules/logger/logger.module';
 import { ApiModule } from './modules/api/api.module';
-import { JobModule } from './modules/job/job.module';
 import { MailModule } from './modules/mail/mail.module';
 import { TranscriptionModule } from './modules/transcription/transcription.module';
 import { CarInventoryModule } from './modules/car-inventory/car-inventory.module';
 import { UserModule } from './modules/user/user.module';
 import { ManageSitesModule } from './modules/manage-sites/manage-sites.module';
+import { ParserModule } from './modules/parser/parser.module';
 
 @Module({
   imports: [
@@ -42,12 +42,12 @@ import { ManageSitesModule } from './modules/manage-sites/manage-sites.module';
     AuthorizationModule,
     LoggerModule,
     ApiModule,
-    JobModule,
     MailModule,
     TranscriptionModule,
     CarInventoryModule,
     UserModule,
     ManageSitesModule,
+    ParserModule,
   ],
 })
 export class AppModule {}

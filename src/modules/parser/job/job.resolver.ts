@@ -1,5 +1,6 @@
-import { Mutation, Resolver } from '@nestjs/graphql';
+import { Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JobService } from './job.service';
+import { JobCustom } from './entity/job-custom.entity';
 import { Job } from './entity/job.entity';
 
 @Resolver()
@@ -8,6 +9,11 @@ export class JobResolver {
 
   @Mutation(() => [Job])
   saveAllJobs() {
-    return this.jobService.saveAllJobs();
+    return this.jobService.getAllJobs();
+  }
+
+  @Query(() => JobCustom)
+  getJobCustom() {
+    return 'test';
   }
 }

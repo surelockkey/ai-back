@@ -63,5 +63,6 @@ export interface ConfigType {
   workiz: {
     email: string;
     password: string;
+    cookie: string;
   };
 }

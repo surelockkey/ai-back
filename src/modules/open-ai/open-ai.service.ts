@@ -47,7 +47,8 @@ export class OpenAiService {
 
     let description = `Table ${table_name}, columns = [`;
     schema.forEach((item) => {
-      description += `{ column_name: '${item.column_name}', column_is_nullable: '${item.is_nullable}', column_data_type: '${item.data_type}'},`;
+      // description += `{ column_name: '${item.column_name}', column_is_nullable: '${item.is_nullable}', column_data_type: '${item.data_type}'},`;
+      description += `{name:${item.column_name},type:${item.data_type}},`;
     });
     description += ']';
 
@@ -56,20 +57,123 @@ export class OpenAiService {
 
   public async sendSqlMessage(message: string) {
     const job_table_info = await this.getTableInfo('job');
+    const job_bonuses_table_info = await this.getTableInfo('job_bonuses');
+    const job_car_key_type_table_info = await this.getTableInfo(
+      'job_car_key_type',
+    );
+    const job_checklist_dispatch_table_info = await this.getTableInfo(
+      'job_checklist_dispatch',
+    );
+    const job_coordinators_checklist_table_info = await this.getTableInfo(
+      'job_coordinators_checklist',
+    );
+    const job_custom_table_info = await this.getTableInfo('job_custom');
+    const job_custom_field_tech_table_info = await this.getTableInfo(
+      'job_custom_field_tech',
+    );
+    const job_custom_fields_table_info = await this.getTableInfo(
+      'job_custom_fields',
+    );
+    const job_discount_table_info = await this.getTableInfo('job_discount');
+    const job_dispatchers_table_info = await this.getTableInfo(
+      'job_dispatchers',
+    );
+    const job_file_table_info = await this.getTableInfo('job_file');
+    const job_item_table_info = await this.getTableInfo('job_item');
+    const job_other_contact_table_info = await this.getTableInfo(
+      'job_other_contact',
+    );
+    const job_payment_table_info = await this.getTableInfo('job_payment');
+    const job_prop_table_info = await this.getTableInfo('job_prop');
+    const job_service_fee_totals_table_info = await this.getTableInfo(
+      'job_service_fee_totals',
+    );
+    const job_tech_table_info = await this.getTableInfo('job_tech');
+    const job_type_info_table_info = await this.getTableInfo('job_type_info');
 
-    const res = await this.openai.createChatCompletion({
-      model: 'gpt-3.5-turbo',
-      messages: [
-        {
-          role: 'user',
-          content: `
+    console.log(`
+    ${job_table_info}
+    ${job_table_info}
+    ${job_bonuses_table_info}
+    ${job_car_key_type_table_info}
+    ${job_checklist_dispatch_table_info}
+    ${job_coordinators_checklist_table_info}
+    ${job_custom_table_info}
+    ${job_custom_field_tech_table_info}
+    ${job_custom_fields_table_info}
+    ${job_discount_table_info}
+    ${job_dispatchers_table_info}
+    ${job_file_table_info}
+    ${job_item_table_info}
+    ${job_other_contact_table_info}
+    ${job_payment_table_info}
+    ${job_prop_table_info}
+    ${job_service_fee_totals_table_info}
+    ${job_tech_table_info}
+    ${job_type_info_table_info}
+    User asking question about our company info
+    Please create a PostgresSQL query (be accurate with our database columns data_type and with comparing date) without any comments
+    which will get all related for this question: ${message}`);
+
+    const res = await this.openai
+      .createChatCompletion({
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'user',
+            content: `
             ${job_table_info}
+            ${job_table_info}
+            ${job_bonuses_table_info}`,
+          },
+          {
+            role: 'user',
+            content: `
+            ${job_car_key_type_table_info}
+            ${job_checklist_dispatch_table_info}
+            ${job_coordinators_checklist_table_info}`,
+          },
+          {
+            role: 'user',
+            content: `
+            ${job_custom_table_info}
+            ${job_custom_field_tech_table_info}
+            ${job_custom_fields_table_info}`,
+          },
+          {
+            role: 'user',
+            content: `
+            ${job_discount_table_info}
+            ${job_dispatchers_table_info}
+            ${job_file_table_info}`,
+          },
+          {
+            role: 'user',
+            content: `
+            ${job_item_table_info}
+            ${job_other_contact_table_info}
+            ${job_payment_table_info}`,
+          },
+          {
+            role: 'user',
+            content: `
+            ${job_prop_table_info}
+            ${job_service_fee_totals_table_info}
+            ${job_tech_table_info}
+            ${job_type_info_table_info}
             User asking question about our company info
             Please create a PostgresSQL query (be accurate with our database columns data_type and with comparing date) without any comments
             which will get all related for this question: ${message}`,
-        },
-      ],
-    });
+          },
+        ],
+      })
+      .then((r) => r)
+      .catch((e) => {
+        console.log(e.response);
+        return e;
+      });
+
+    console.log(res.response.data);
 
     const query = res.data.choices[0].message.content;
 
