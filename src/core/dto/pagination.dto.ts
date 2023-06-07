@@ -6,11 +6,11 @@ import { Min, Max } from 'class-validator';
 export class FindPaginationDto {
   @Field(() => Int)
   @Min(1)
+  @Max(100)
   take: number;
 
   @Field(() => Int)
   @Min(0)
-  @Max(100)
   skip: number;
 }
 
