@@ -48,7 +48,7 @@ export class CreateReviewsDto {
   @Field(() => Number, { nullable: true }) //defaultValue: 5
   rating?: number;
 
-  @IsExist('Locksmith')
+  // @IsExist('Locksmith')
   @Field(() => String)
   locksmith_id: string;
 }
