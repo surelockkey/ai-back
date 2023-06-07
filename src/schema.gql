@@ -1402,6 +1402,10 @@ type UserNote {
 enum UserRole {
   ADMIN
   DISPATCHER
+<<<<<<< HEAD
+=======
+  LOGISTIC
+>>>>>>> cdf33405ee66b845dc704286027495b25bdad913
   MAIN_DISPATCHER
   SEO
   TECHNICIAN
