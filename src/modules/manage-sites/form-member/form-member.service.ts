@@ -386,8 +386,7 @@ export class FormMemberService {
   public async createReviews(
     create_reviews_dto: CreateReviewsDto,
   ): Promise<Reviews> {
-    const reviews = this.reviewsRepository.create(create_reviews_dto);
-    return await this.reviewsRepository.save(reviews);
+    return await this.reviewsRepository.save(create_reviews_dto);
   }
 
   public async reviewReviews(
