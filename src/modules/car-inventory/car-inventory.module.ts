@@ -8,14 +8,11 @@ import { CarTemplateModule } from './modules/car-template/car-template.module';
 
 @Module({
   imports: [
-    WorkizApiModule, 
+    WorkizApiModule,
     TemplateModule,
     ItemTemplateModule,
-    CarTemplateModule
+    CarTemplateModule,
   ],
-  providers: [
-    CarInventoryService, 
-    CarInventoryResolver,
-  ],
+  providers: [CarInventoryService, CarInventoryResolver],
 })
 export class CarInventoryModule {}

@@ -4,11 +4,17 @@ import { WorkizContainer } from '../api/workiz-api/dto/container.dto';
 import { FindContainerAndTemplate } from './dto/find-container-and-template.dto';
 import { ItemCompareResult } from './dto/item-compare-result.dto';
 import { ItemTemplateService } from './modules/item-template/item-template.service';
-import { CreateItemTemplateDto, UpdateItemTemplateDto } from './modules/item-template/dto/item-template.dto';
+import {
+  CreateItemTemplateDto,
+  UpdateItemTemplateDto,
+} from './modules/item-template/dto/item-template.dto';
 import { ItemTemplate } from './modules/item-template/entity/item-template.entity';
 import { TemplateService } from './modules/template/template.service';
 import { Template } from './modules/template/entity/template.entity';
-import { CreateTemplateDto, UpdateTemplateDto } from './modules/template/dto/template.dto';
+import {
+  CreateTemplateDto,
+  UpdateTemplateDto,
+} from './modules/template/dto/template.dto';
 import { CreateCarTemplateDto } from './modules/car-template/dto/car-template.dto';
 import { CarTemplate } from './modules/car-template/entity/car-template.entity';
 import { CarTemplateService } from './modules/car-template/car-template.service';
@@ -37,7 +43,7 @@ export class CarInventoryResolver {
   @Query(() => Template)
   async getTemplateById(
     @Args('id', { type: () => ID })
-    id: string
+    id: string,
   ): Promise<Template> {
     return this.templateService.findOneById(id);
   }
@@ -45,8 +51,8 @@ export class CarInventoryResolver {
   @Query(() => FindContainerAndTemplate)
   async getContainerById(
     @Args('id', { type: () => String })
-    id: string
-  ): Promise<FindContainerAndTemplate> {   
+    id: string,
+  ): Promise<FindContainerAndTemplate> {
     return await this.carInventoryService.findContainerAndTemplateById(id);
   }
 
@@ -57,13 +63,24 @@ export class CarInventoryResolver {
     @Args('only_less', { type: () => Boolean, defaultValue: true })
     only_less: boolean,
   ) {
-    return this.carInventoryService.generateDifferenceReport(workiz_id, only_less);
+    return this.carInventoryService.generateDifferenceReport(
+      workiz_id,
+      only_less,
+    );
+  }
+
+  @Query(() => [ItemCompareResult])
+  generateDifferenceReportForAll(
+    @Args('only_less', { type: () => Boolean, defaultValue: true })
+    only_less: boolean,
+  ) {
+    return this.carInventoryService.generateDifferenceReportForAll(only_less);
   }
 
   @Mutation(() => [CarTemplate])
   assignManyTemplateToCar(
     @Args('createCarTemplateDto', { type: () => [CreateCarTemplateDto] })
-    createCarTemplateDto: CreateCarTemplateDto[]
+    createCarTemplateDto: CreateCarTemplateDto[],
   ): Promise<CarTemplate[]> {
     return this.carTemplateService.createMany(createCarTemplateDto);
   }
@@ -73,7 +90,7 @@ export class CarInventoryResolver {
   @Mutation(() => [ID])
   async deleteManyItemTemplates(
     @Args('ids', { type: () => [ID] })
-    ids: string[]
+    ids: string[],
   ): Promise<string[]> {
     await this.itemTemplateService.deleteManyByIds(ids);
     return ids;
@@ -82,7 +99,7 @@ export class CarInventoryResolver {
   @Mutation(() => ItemTemplate)
   updateItemTemplate(
     @Args('updateItemTemplateDto', { type: () => UpdateItemTemplateDto })
-    updateItemTemplateDto: UpdateItemTemplateDto
+    updateItemTemplateDto: UpdateItemTemplateDto,
   ): Promise<ItemTemplate> {
     const { id, ...updateDto } = updateItemTemplateDto;
     return this.itemTemplateService.updateAndReturn(id, updateDto);
@@ -91,7 +108,7 @@ export class CarInventoryResolver {
   @Mutation(() => [ItemTemplate])
   createManyItemTemplates(
     @Args('createItemTemplateDto', { type: () => [CreateItemTemplateDto] })
-    createItemTemplateDto: CreateItemTemplateDto[]
+    createItemTemplateDto: CreateItemTemplateDto[],
   ): Promise<ItemTemplate[]> {
     return this.itemTemplateService.createMany(createItemTemplateDto);
   }
@@ -101,7 +118,7 @@ export class CarInventoryResolver {
   @Mutation(() => [ID])
   async deleteManyTemplates(
     @Args('ids', { type: () => [ID] })
-    ids: string[]
+    ids: string[],
   ): Promise<string[]> {
     await this.templateService.deleteManyByIds(ids);
     return ids;
@@ -110,7 +127,7 @@ export class CarInventoryResolver {
   @Mutation(() => Template)
   updateTemplate(
     @Args('updateTemplateDto', { type: () => UpdateTemplateDto })
-    updateTemplateDto: UpdateTemplateDto
+    updateTemplateDto: UpdateTemplateDto,
   ): Promise<Template> {
     const { id, ...updateDto } = updateTemplateDto;
     return this.templateService.updateAndReturn(id, updateDto);
@@ -119,7 +136,7 @@ export class CarInventoryResolver {
   @Mutation(() => [Template])
   createManyTemplates(
     @Args('createTemplateDto', { type: () => [CreateTemplateDto] })
-    createTemplateDto: CreateTemplateDto[]
+    createTemplateDto: CreateTemplateDto[],
   ): Promise<Template[]> {
     return this.templateService.createMany(createTemplateDto);
   }
