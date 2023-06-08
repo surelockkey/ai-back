@@ -972,7 +972,7 @@ type Query {
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
   listModels: String!
-  searchLocksmiths(first: Float, searchValue: String, skip: Float): [Locksmith!]!
+  searchLocksmiths(options: SearchLocksmithDto!): [Locksmith!]!
   searchRequests(first: Float, searchValue: String, skip: Float): [Request!]!
   testApi(method: String!, url: String!): String!
 }
@@ -1035,6 +1035,12 @@ type Schedule {
   id: ID!
   name: Week!
   open_at: DateTime
+}
+
+input SearchLocksmithDto {
+  first: Int
+  searchValue: String
+  skip: Int
 }
 
 type SendDto {
