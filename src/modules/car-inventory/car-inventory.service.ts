@@ -10,7 +10,7 @@ import { ItemCompareResult } from './dto/item-compare-result.dto';
 import { TemplateService } from './modules/template/template.service';
 import { CarTemplateService } from './modules/car-template/car-template.service';
 import { DataSource } from 'typeorm';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 @Injectable()
 export class CarInventoryService {
@@ -57,17 +57,35 @@ export class CarInventoryService {
     return container.data;
   }
 
-  public async generateDifferenceReportForAll(only_less: boolean) {
+  public async generateDifferenceReportForAll() {
     const { data: containers } = await this.findAllContainers();
 
     const all_differences = await Promise.all(
       containers.map((container) => {
-        return this.findContainer(container.id);
+        return this.generateDifferenceReport(container.id, true);
       }),
     );
 
-    console.log(all_differences.flat());
-    // console.log(all_differences);
+    // console.log(all_test, all_differences.length, Object.keys(all_test).length);
+
+    const res = _(all_differences.flat())
+      .groupBy((item) => `${item.sku}_${item.uhs_sku}`)
+      .map((items, key) => {
+        const skus = key.split('_');
+        return {
+          sku: skus[0],
+          uhs_sku: skus[1],
+          name: items[0].name,
+          length: items.length,
+          actual_quantity: _.sumBy(items, 'actual_quantity'),
+          template_quantity: _.sumBy(items, 'template_quantity'),
+          difference: _.sumBy(items, 'difference'),
+          items,
+        };
+      })
+      .value();
+
+    return res;
   }
 
   public async generateDifferenceReport(
@@ -75,6 +93,8 @@ export class CarInventoryService {
     only_less: boolean,
   ): Promise<ItemCompareResult[]> {
     const container_items = await this.findContainer(workiz_id);
+
+
     const template_items = (
       await this.carTemplateService.findOneItem({
         where: { workiz_id },
@@ -85,7 +105,7 @@ export class CarInventoryService {
 
     template_items?.forEach((template_item) => {
       const car_item = container_items.find((car_item) =>
-        car_item.item_name.includes(`(SLK-${template_item.sku})`),
+        car_item.item_name.includes(`${template_item.sku}`),
       );
 
       if (car_item) {
@@ -96,7 +116,7 @@ export class CarInventoryService {
             uhs_sku: template_item.uhs_sku,
             actual_quantity: Number(car_item.qty) | 0,
             template_quantity: template_item.quantity,
-            difference: Number(car_item.qty) | (0 - template_item.quantity),
+            difference: Number(car_item.qty) - template_item.quantity,
           });
         }
       } else {
@@ -112,7 +132,7 @@ export class CarInventoryService {
     });
 
     if (only_less) {
-      result.filter((item) => item.difference < 0);
+      return result.filter((item) => item.difference < 0);
     }
 
     return result;

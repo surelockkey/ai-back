@@ -70,11 +70,8 @@ export class CarInventoryResolver {
   }
 
   @Query(() => [ItemCompareResult])
-  generateDifferenceReportForAll(
-    @Args('only_less', { type: () => Boolean, defaultValue: true })
-    only_less: boolean,
-  ) {
-    return this.carInventoryService.generateDifferenceReportForAll(only_less);
+  generateDifferenceReportForAll() {
+    return this.carInventoryService.generateDifferenceReportForAll();
   }
 
   @Mutation(() => [CarTemplate])

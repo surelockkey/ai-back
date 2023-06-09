@@ -914,7 +914,7 @@ type PhotoForBlock {
 type Query {
   findTranscription(call_id: String!): Transcription!
   generateDifferenceReport(only_less: Boolean! = true, workiz_id: String!): [ItemCompareResult!]!
-  generateDifferenceReportForAll(only_less: Boolean! = true): [ItemCompareResult!]!
+  generateDifferenceReportForAll: [ItemCompareResult!]!
 
   """get all photo """
   getAllBlogPhoto: [PhotoBlog!]!
