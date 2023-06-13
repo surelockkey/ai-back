@@ -1,7 +1,10 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class ItemCompareResult {
+  @Field(() => String)
+  template_item_id: string;
+
   @Field(() => String)
   name: string;
 

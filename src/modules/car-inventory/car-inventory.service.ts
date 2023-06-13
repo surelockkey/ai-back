@@ -117,6 +117,7 @@ export class CarInventoryService {
             actual_quantity: Number(car_item.qty) | 0,
             template_quantity: template_item.quantity,
             difference: Number(car_item.qty) - template_item.quantity,
+            template_item_id: template_item.id
           });
         }
       } else {
@@ -127,6 +128,7 @@ export class CarInventoryService {
           actual_quantity: 0,
           template_quantity: template_item.quantity,
           difference: -template_item.quantity,
+          template_item_id: template_item.id
         });
       }
     });
