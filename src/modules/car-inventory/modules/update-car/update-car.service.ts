@@ -26,9 +26,9 @@ export class UpdateCarService extends CrudService<UpdateCarRequest> implements O
         this.createTriggers();
     }
 
-    public async findRequests(): Promise<UpdateCarRequest[]> {
+    public async findRequests(user_id: string): Promise<UpdateCarRequest[]> {
         const find_user = await this.userService.findOne({
-            id: '84279d6f-1861-40bb-8c87-1a5634baac51',
+            id: user_id,
         });
 
         const user_containers = await this.workizApiService.req({}, '/ajaxc/inv_container_users/', 'get');

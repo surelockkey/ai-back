@@ -25,6 +25,8 @@ import { RoleGuard } from "../authorization/decorator/role.decorator";
 import { UserRole } from "../user/enum/user-role.enum";
 import { IsNull, Not } from "typeorm";
 import { FindRequestsForUpdateCar } from "./modules/update-car/dto/find-requests.dto";
+import { CurrentUser } from "@tech-slk/nest-auth";
+import { CurrentUserDto } from "../authorization/dto/current-user.dto";
 
 @Resolver()
 export class CarInventoryResolver {
@@ -148,10 +150,13 @@ export class CarInventoryResolver {
 
   // Update Car
 
-  // @RoleGuard(UserRole.ADMIN, UserRole.TECHNICIAN)
+  @RoleGuard(UserRole.ADMIN, UserRole.TECHNICIAN)
   @Query(() => [FindRequestsForUpdateCar])
-  async findUpdateCarRequests(): Promise<FindRequestsForUpdateCar[]> {
-    return this.updateCarService.findRequests();
+  async findUpdateCarRequests(
+    @CurrentUser()
+    { user_id }: CurrentUserDto,
+  ): Promise<FindRequestsForUpdateCar[]> {
+    return this.updateCarService.findRequests(user_id);
   }
 
   @RoleGuard(UserRole.ADMIN, UserRole.LOGISTIC)
@@ -172,7 +177,7 @@ export class CarInventoryResolver {
     });
   }
 
-  // @RoleGuard(UserRole.ADMIN, UserRole.LOGISTIC)
+  @RoleGuard(UserRole.ADMIN, UserRole.LOGISTIC)
   @Mutation(() => [UpdateCarRequest])
   async createRequestForCarItems(
     @Args('createUpdateCarDto', { type: () => [CreateUpdateCarDto] })
