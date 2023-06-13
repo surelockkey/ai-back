@@ -13,6 +13,11 @@ type Address {
   name: String!
 }
 
+input ApproveUpdateCarDto {
+  approved_quantity: Int!
+  id: ID!
+}
+
 type BlogBlock {
   body_text: String
   description: String
@@ -316,6 +321,11 @@ input CreateTimeTemplateDto {
   value: String!
 }
 
+input CreateUpdateCarDto {
+  item_template_id: ID!
+  requested_quantity: Int!
+}
+
 input CreateUserInfoDto {
   key: String!
   user_id: ID!
@@ -523,6 +533,7 @@ type ItemCompareResult {
 type ItemTemplate {
   id: ID!
   quantity: Int!
+  requests: [UpdateCarRequest!]
   sku: String!
   template_id: ID!
   uhs_sku: String!
@@ -781,6 +792,7 @@ type Message {
 
 type Mutation {
   acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
+  approveRequestForCarItems(approveUpdateCarDto: [ApproveUpdateCarDto!]!): [UpdateCarRequest!]!
   assignManyTemplateToCar(createCarTemplateDto: [CreateCarTemplateDto!]!): [CarTemplate!]!
   assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
 
@@ -805,6 +817,7 @@ type Mutation {
   createOrUpdateUserInfo(user_infos: [CreateOrUpdateUserInfoDto!]!): [UserInfo!]!
   createOrUpdateUserNote(user_note: CreateOrUpdateUserNoteDto!): UserNote!
   createRequest(createRequestDto: CreateRequestDto!): Request!
+  createRequestForCarItems(createUpdateCarDto: [CreateUpdateCarDto!]!): [UpdateCarRequest!]!
   createReviews(createReviewsDto: CreateReviewsDto!): Reviews!
   createSystemSettings(max_tokens: Int!): SystemSettings!
   createTimeTemplate(time_template: CreateTimeTemplateDto!): TimeTemplate!
@@ -844,6 +857,7 @@ type Mutation {
   sendMessageToOpenAi(message: String!): String!
   speechToText(call_id: String!): Transcription!
   startFineTune: FineTune!
+  submitRequestForCarItems(submitUpdateCarDto: [SubmitUpdateCarDto!]!): [UpdateCarRequest!]!
 
   """update blogs"""
   updateBlog(updateBlog: UpdateConstructorBlogDto!): ConstructorBlog!
@@ -912,7 +926,10 @@ type PhotoForBlock {
 }
 
 type Query {
+  findApprovedUpdateCarRequests: [UpdateCarRequest!]!
+  findSubmittedUpdateCarRequests: [UpdateCarRequest!]!
   findTranscription(call_id: String!): Transcription!
+  findUpdateCarRequests: [UpdateCarRequest!]!
   generateDifferenceReport(only_less: Boolean! = true, workiz_id: String!): [ItemCompareResult!]!
   generateDifferenceReportForAll: [ItemCompareResult!]!
 
@@ -1083,6 +1100,11 @@ enum SortEnum {
   DESC
 }
 
+input SubmitUpdateCarDto {
+  id: ID!
+  submitted_quantity: Int!
+}
+
 type SystemSettings {
   active_model: String!
   id: ID!
@@ -1178,6 +1200,17 @@ input UpdateBlogPreviewDto {
   photo: UpdatePhotoForBlockDto
   title: String
   type_block: String
+}
+
+type UpdateCarRequest {
+  approved_at: Int!
+  approved_quantity: Int
+  id: ID!
+  item_template_id: ID!
+  requested_at: Int!
+  requested_quantity: Int!
+  submitted_at: Int!
+  submitted_quantity: Int
 }
 
 input UpdateConstructorBlogDto {
