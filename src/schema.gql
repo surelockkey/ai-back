@@ -482,6 +482,18 @@ input FindPaginationDto {
   take: Int!
 }
 
+type FindRequestsForUpdateCar {
+  approved_at: Int
+  approved_quantity: Int
+  id: ID!
+  item_template: ItemTemplate!
+  item_template_id: ID!
+  requested_at: Int!
+  requested_quantity: Int!
+  submitted_at: Int
+  submitted_quantity: Int
+}
+
 type FineTune {
   created_at: Int!
   id: ID!
@@ -526,6 +538,7 @@ type ItemCompareResult {
   difference: Int!
   name: String!
   sku: String!
+  template_item_id: String!
   template_quantity: Int!
   uhs_sku: String!
 }
@@ -926,10 +939,10 @@ type PhotoForBlock {
 }
 
 type Query {
-  findApprovedUpdateCarRequests: [UpdateCarRequest!]!
-  findSubmittedUpdateCarRequests: [UpdateCarRequest!]!
+  findApprovedUpdateCarRequests: [FindRequestsForUpdateCar!]!
+  findSubmittedUpdateCarRequests: [FindRequestsForUpdateCar!]!
   findTranscription(call_id: String!): Transcription!
-  findUpdateCarRequests: [UpdateCarRequest!]!
+  findUpdateCarRequests: [FindRequestsForUpdateCar!]!
   generateDifferenceReport(only_less: Boolean! = true, workiz_id: String!): [ItemCompareResult!]!
   generateDifferenceReportForAll: [ItemCompareResult!]!
 
@@ -1203,13 +1216,13 @@ input UpdateBlogPreviewDto {
 }
 
 type UpdateCarRequest {
-  approved_at: Int!
+  approved_at: Int
   approved_quantity: Int
   id: ID!
   item_template_id: ID!
   requested_at: Int!
   requested_quantity: Int!
-  submitted_at: Int!
+  submitted_at: Int
   submitted_quantity: Int
 }
 

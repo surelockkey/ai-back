@@ -22,11 +22,11 @@ export class UpdateCarRequest extends BaseEntity {
     @Column({ type: 'bigint' })
     requested_at: number;
 
-    @Field(() => Int)
+    @Field(() => Int, { nullable: true })
     @Column({ type: 'bigint', nullable: true })
     approved_at: number;
 
-    @Field(() => Int)
+    @Field(() => Int, { nullable: true })
     @Column({ type: 'bigint', nullable: true })
     submitted_at: number;
 

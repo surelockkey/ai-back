@@ -24,6 +24,7 @@ import { ApproveUpdateCarDto, CreateUpdateCarDto, SubmitUpdateCarDto } from "./m
 import { RoleGuard } from "../authorization/decorator/role.decorator";
 import { UserRole } from "../user/enum/user-role.enum";
 import { IsNull, Not } from "typeorm";
+import { FindRequestsForUpdateCar } from "./modules/update-car/dto/find-requests.dto";
 
 @Resolver()
 export class CarInventoryResolver {
@@ -147,15 +148,15 @@ export class CarInventoryResolver {
 
   // Update Car
 
-  @RoleGuard(UserRole.ADMIN, UserRole.TECHNICIAN)
-  @Query(() => [UpdateCarRequest])
-  async findUpdateCarRequests(): Promise<UpdateCarRequest[]> {
+  // @RoleGuard(UserRole.ADMIN, UserRole.TECHNICIAN)
+  @Query(() => [FindRequestsForUpdateCar])
+  async findUpdateCarRequests(): Promise<FindRequestsForUpdateCar[]> {
     return this.updateCarService.findRequests();
   }
 
   @RoleGuard(UserRole.ADMIN, UserRole.LOGISTIC)
-  @Query(() => [UpdateCarRequest])
-  async findApprovedUpdateCarRequests(): Promise<UpdateCarRequest[]> {
+  @Query(() => [FindRequestsForUpdateCar])
+  async findApprovedUpdateCarRequests(): Promise<FindRequestsForUpdateCar[]> {
     return this.updateCarService.findAll({
       approved_at: Not(IsNull()),
       submitted_at: IsNull()
@@ -163,15 +164,15 @@ export class CarInventoryResolver {
   }
 
   @RoleGuard(UserRole.ADMIN, UserRole.LOGISTIC)
-  @Query(() => [UpdateCarRequest])
-  async findSubmittedUpdateCarRequests(): Promise<UpdateCarRequest[]> {
+  @Query(() => [FindRequestsForUpdateCar])
+  async findSubmittedUpdateCarRequests(): Promise<FindRequestsForUpdateCar[]> {
     return this.updateCarService.findAll({
       approved_at: Not(IsNull()),
       submitted_at: Not(IsNull()),
     });
   }
 
-  @RoleGuard(UserRole.ADMIN, UserRole.LOGISTIC)
+  // @RoleGuard(UserRole.ADMIN, UserRole.LOGISTIC)
   @Mutation(() => [UpdateCarRequest])
   async createRequestForCarItems(
     @Args('createUpdateCarDto', { type: () => [CreateUpdateCarDto] })
