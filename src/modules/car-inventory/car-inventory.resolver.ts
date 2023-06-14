@@ -162,19 +162,13 @@ export class CarInventoryResolver {
   @RoleGuard(UserRole.ADMIN, UserRole.LOGISTIC)
   @Query(() => [FindRequestsForUpdateCar])
   async findApprovedUpdateCarRequests(): Promise<FindRequestsForUpdateCar[]> {
-    return this.updateCarService.findAll({
-      approved_at: Not(IsNull()),
-      submitted_at: IsNull()
-    });
+    return this.updateCarService.findApprovedRequests();
   }
 
   @RoleGuard(UserRole.ADMIN, UserRole.LOGISTIC)
   @Query(() => [FindRequestsForUpdateCar])
   async findSubmittedUpdateCarRequests(): Promise<FindRequestsForUpdateCar[]> {
-    return this.updateCarService.findAll({
-      approved_at: Not(IsNull()),
-      submitted_at: Not(IsNull()),
-    });
+    return this.updateCarService.findSubmittedRequests();
   }
 
   @RoleGuard(UserRole.ADMIN, UserRole.LOGISTIC)
