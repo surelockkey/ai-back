@@ -39,12 +39,28 @@ export class UpdateCarService extends CrudService<UpdateCarRequest> implements O
         }
 
         return this.updateCarRequestRepository.createQueryBuilder('update_car_request')
-            .leftJoinAndSelect('update_car_request.item_template', 'item_template')
-            .leftJoinAndSelect('item_template.template', 'template')
-            .leftJoinAndSelect('template.car_templates', 'car_templates')
-            .where('car_templates.workiz_id = :id', { id: user_container.container_id })
-            .andWhere('approved_at IS NULL')
-            .getMany();
+          .leftJoinAndSelect('update_car_request.item_template', 'item_template')
+          .leftJoinAndSelect('item_template.template', 'template')
+          .leftJoinAndSelect('template.car_templates', 'car_templates')
+          .where('car_templates.workiz_id = :id', { id: user_container.container_id })
+          .andWhere('approved_at IS NULL')
+          .getMany();
+    }
+
+    public async findApprovedRequests(): Promise<UpdateCarRequest[]> {
+      return this.updateCarRequestRepository.createQueryBuilder('update_car_request')
+        .leftJoinAndSelect('update_car_request.item_template', 'item_template')
+        .where('update_car_request.approved_at IS NOT NULL')
+        .andWhere('update_car_request.submitted_at IS NULL')
+        .getMany();
+    }
+
+    public async findSubmittedRequests(): Promise<UpdateCarRequest[]> {
+      return this.updateCarRequestRepository.createQueryBuilder('update_car_request')
+        .leftJoinAndSelect('update_car_request.item_template', 'item_template')
+        .where('update_car_request.approved_at IS NOT NULL')
+        .andWhere('update_car_request.submitted_at IS NOT NULL')
+        .getMany();
     }
 
     public async createRequestForCarItems(
