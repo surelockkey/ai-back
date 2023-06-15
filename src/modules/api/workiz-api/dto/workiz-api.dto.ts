@@ -173,4 +173,11 @@ export class JobDto {
 
   @Field(() => String, { nullable: true })
   LastStatusUpdate: string;
+
+  manager_note: string;
+
+  Team: {
+    id: string,
+    Name: string,
+  }[]
 }

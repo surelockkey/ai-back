@@ -6,6 +6,8 @@ import * as FormData from 'form-data';
 import { OpenAiMessageResponse } from './dto/message-response.dto';
 import { ConfigService } from '@nestjs/config';
 import { SystemSettingsService } from 'src/modules/system-settings/system-settings.service';
+import { DataSource } from 'typeorm';
+import { InjectDataSource } from '@nestjs/typeorm';
 
 // import * as ax from 'axios';
 
@@ -17,6 +19,7 @@ export class OpenAiService {
   constructor(
     private readonly configService: ConfigService,
     private readonly systemSettingsService: SystemSettingsService,
+    @InjectDataSource() private readonly dataSource: DataSource
   ) {
     this.configuration = new Configuration({
       apiKey: this.configService.get<string>('app.open_ai_key'),
@@ -132,5 +135,60 @@ export class OpenAiService {
       0,
       'en'
     );
+  }
+
+  public async sendSqlMessage(message: string) {
+    const res = await this.openai
+      .createChatCompletion({
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'user',
+            content: `
+            ### Postgres SQL tables, with their properties:
+            #
+            # Job(uuid, start_date, end_date, created_date, total_price, amount_due, client_id, status, phone, second_phone, email, client_name, city, state, postal_code, job_type, job_note, job_source, technician_name, dispatcher_name, address, manager_notes)
+            #
+            ### Please create a PostgresSQL query without any comments which will get all related for this question: ${message}`,
+          },
+        ],
+      })
+      .then((r) => r)
+      .catch((e) => {
+        console.log(e.response);
+        return e;
+      });
+
+    console.log(res.response);
+
+    const query = res.data.choices[0].message.content;
+
+    console.log({
+      query,
+    });
+
+    const data = await this.dataSource.query(query);
+
+    console.log({
+      data,
+    });
+
+    const final_res = await this.openai.createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'user',
+          content: `
+            Act as a assistant of locksmith company.
+            Given the following user question and the related search results, respond to the user using only the results as context.
+            question: ${message} - Search Results: ${JSON.stringify(data)}
+          `,
+        },
+      ],
+    });
+
+    console.log(final_res.data.choices);
+
+    return final_res.data.choices[0].message.content;
   }
 }

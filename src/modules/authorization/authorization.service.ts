@@ -40,7 +40,7 @@ export class AuthorizationService extends NestAuthService<
     { role, email, workiz_id, name, location }: InviteUserDto,
     current_user_id: string,
   ): Promise<InvitedUser> {
-    const is_email_already_exist = await this.userService.findOne({ email });
+    const is_email_already_exist = await this.userService.findOneWithoutError({ email });
     
     if (is_email_already_exist) {
       throw new GraphQLError('User with this email already exist');
