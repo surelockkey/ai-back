@@ -74,6 +74,11 @@ input ChangePasswordDto {
   old_password: String!
 }
 
+enum ChatType {
+  DEFAULT
+  WITH_API
+}
+
 type ConstructorBlog {
   blocks: [BlogBlock!]!
   id: ID!
@@ -801,6 +806,7 @@ type Message {
   prompt: String!
   text: String!
   total_tokens: Int!
+  type: ChatType!
 }
 
 type Mutation {
@@ -866,7 +872,7 @@ type Mutation {
   logout(refresh_token: String!): SendDto!
   prepareFileForFineTune(filename: String!): String!
   reviewReviews(reviewReviewsDto: [ReviewReviewsDto!]!): [ReviewsWithEmailDto!]!
-  sendMessage(prompt: String!): Message!
+  sendMessage(chat_type: ChatType! = DEFAULT, prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
   speechToText(call_id: String!): Transcription!
   startFineTune: FineTune!
@@ -959,7 +965,7 @@ type Query {
   ): PaginatedJobDto!
   getAllLocation: [Location!]!
   getAllLocationPhoto: [LocationPhoto!]!
-  getAllMessages: [Message!]!
+  getAllMessages(chat_type: ChatType! = DEFAULT): [Message!]!
   getAllTechsWorkiz: [TechnicianWorkiz!]!
   getAllTemplates: [Template!]!
   getAllTimeTemplates: [TimeTemplate!]!
