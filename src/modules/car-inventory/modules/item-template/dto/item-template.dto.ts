@@ -5,7 +5,7 @@ import { ItemTemplate } from '../entity/item-template.entity';
 export class ItemTemplateInput extends ItemTemplate {}
 
 @InputType()
-export class UpdateItemTemplateDto extends OmitType(ItemTemplateInput, ['template', 'template_id']) {}
+export class UpdateItemTemplateDto extends OmitType(ItemTemplateInput, ['template', 'template_id', 'requests']) {}
 
 @InputType()
-export class CreateItemTemplateDto extends OmitType(ItemTemplateInput, ['id']) {}
+export class CreateItemTemplateDto extends OmitType(ItemTemplateInput, ['id', 'template', 'requests']) {}

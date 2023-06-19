@@ -18,13 +18,18 @@ export class CarTemplateService extends CrudService<CarTemplate> {
     return this.carTemplateRepository.findOne(expression);
   }
 
-  public async createMany(createCarTemplateDto: CreateCarTemplateDto[]): Promise<CarTemplate[]> {
-    return (await this.carTemplateRepository.createQueryBuilder()
-      .insert()
-      .into(CarTemplate)
-      .values(createCarTemplateDto)
-      .returning('*')
-      .orUpdate(['template_id'], ['workiz_id'] )
-      .execute()).generatedMaps as CarTemplate[];
+  public async createMany(
+    createCarTemplateDto: CreateCarTemplateDto[],
+  ): Promise<CarTemplate[]> {
+    return (
+      await this.carTemplateRepository
+        .createQueryBuilder()
+        .insert()
+        .into(CarTemplate)
+        .values(createCarTemplateDto)
+        .returning('*')
+        .orUpdate(['template_id'], ['workiz_id'])
+        .execute()
+    ).generatedMaps as CarTemplate[];
   }
 }

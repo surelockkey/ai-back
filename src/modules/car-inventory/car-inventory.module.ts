@@ -5,13 +5,17 @@ import { WorkizApiModule } from '../api/workiz-api/workiz-api.module';
 import { TemplateModule } from './modules/template/template.module';
 import { ItemTemplateModule } from './modules/item-template/item-template.module';
 import { CarTemplateModule } from './modules/car-template/car-template.module';
+import { UpdateCarModule } from './modules/update-car/update-car.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [
-    WorkizApiModule, 
+    WorkizApiModule,
     TemplateModule,
     ItemTemplateModule,
-    CarTemplateModule
+    CarTemplateModule,
+    UpdateCarModule,
+    UserModule,
   ],
   providers: [
     CarInventoryService, 

@@ -14,7 +14,9 @@ export class TemplateService extends CrudService<Template> {
     super(templateRepository);
   }
 
-  public createMany(createTemplateDto: CreateTemplateDto[]): Promise<Template[]> {
+  public createMany(
+    createTemplateDto: CreateTemplateDto[],
+  ): Promise<Template[]> {
     return this.templateRepository.save(createTemplateDto);
   }
 }
