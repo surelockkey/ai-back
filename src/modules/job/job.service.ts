@@ -38,6 +38,8 @@ export class JobService extends CrudService<Job> {
   private async getJobsByRange(current_page: number) {
     try {
       return await this.workizCoreApiService.req(
+        '/ajaxc/job/jobReport/',
+        'post',
         {
           page: current_page,
           pageSize: 500,
@@ -61,8 +63,6 @@ export class JobService extends CrudService<Job> {
             company: [],
           },
         },
-        '/ajaxc/job/jobReport/',
-        'post'
       );  
     } catch (e) {
       console.log(e);
@@ -72,7 +72,6 @@ export class JobService extends CrudService<Job> {
   private async getFullJob(job_id: string){
     try {
       const job = await this.workizCoreApiService.req(
-        {},
         `/ajaxc/job/get/${job_id}/`,
         'post',
       );

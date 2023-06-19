@@ -42,6 +42,8 @@ export class CarInventoryResolver {
 
   @Query(() => [WorkizContainer])
   async getAllContainers(): Promise<WorkizContainer[]> {
+    console.log(await this.carInventoryService.findAllContainers());
+    
     return (await this.carInventoryService.findAllContainers()).data;
   }
 

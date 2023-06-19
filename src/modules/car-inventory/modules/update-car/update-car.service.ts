@@ -31,7 +31,7 @@ export class UpdateCarService extends CrudService<UpdateCarRequest> implements O
             id: user_id,
         });
 
-        const user_containers = await this.workizApiService.req({}, '/ajaxc/inv_container_users/', 'get');
+        const user_containers = await this.workizApiService.req('/ajaxc/inv_container_users/', 'get');
         const user_container = user_containers.data.find((user_container) => user_container.user_id === find_user.workiz_id);
 
         if (!user_container) {

@@ -22,7 +22,7 @@ export class CarInventoryService {
   ) {}
 
   public findAllContainers(): Promise<{ data: WorkizContainer[] }> {
-    return this.workizCoreApiService.req({}, '/ajaxc/inv_container/', 'get');
+    return this.workizCoreApiService.req('/ajaxc/inv_container/', 'get');
   }
 
   public async findContainerAndTemplateById(
@@ -45,7 +45,6 @@ export class CarInventoryService {
     workiz_id: string,
   ): Promise<WorkizContainerInfo[]> {
     const container = await this.workizCoreApiService.req(
-      {},
       `/ajaxc/inv_container_items/getContainersStock/${workiz_id}/`,
       'get',
     );
