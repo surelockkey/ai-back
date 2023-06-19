@@ -5,8 +5,8 @@ import { Column, Entity } from 'typeorm';
 @Entity()
 @ObjectType()
 export class Job extends BaseEntity {
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   uuid: string;
 
   @Field(() => String, { nullable: true })
@@ -17,8 +17,8 @@ export class Job extends BaseEntity {
   @Column({ nullable: true })
   end_date: Date;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   created_date: Date;
 
   @Field(() => Number, { nullable: true })
@@ -29,16 +29,16 @@ export class Job extends BaseEntity {
   @Column('decimal', { nullable: true })
   amount_due: number;
 
-  @Field(() => Number)
-  @Column()
+  @Field(() => Number, { nullable: true })
+  @Column({ nullable: true })
   client_id: number;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   status: string;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   phone: string;
 
   @Field(() => String, { nullable: true })
@@ -49,44 +49,44 @@ export class Job extends BaseEntity {
   @Column({ nullable: true })
   email: string;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   client_name: string;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   city: string;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   state: string;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   postal_code: string;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   job_type: string;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   job_note: string;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   job_source: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   technician_name: string;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   dispatcher_name: string;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   address: string;
 
   @Field(() => String, { nullable: true })

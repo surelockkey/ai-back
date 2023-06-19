@@ -17,11 +17,11 @@ export class WorkizCoreApiService {
 
     
     public async req(params: object, url: string, method: RestMethods = 'post') {
-        const data = new FormData();
+        // const data = new FormData();
         
-        Object.keys(params).forEach((param_name) => {
-            data.append(param_name, params[param_name]);
-        })
+        // Object.keys(params).forEach((param_name) => {
+        //     data.append(param_name, params[param_name]);
+        // })
         
         const conf: AxiosRequestConfig<any> = {
             method,
@@ -45,7 +45,7 @@ export class WorkizCoreApiService {
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
                 cookie: this.cookie,
             },
-            data: data
+            data: params
         };
         
         return await axios(conf)
