@@ -1,6 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from '@tech-slk/nest-crud';
 import { Column, Entity } from 'typeorm';
+import { ChatType } from '../enum/chat-type.enum';
 
 @Entity('message')
 @ObjectType()
@@ -28,4 +29,12 @@ export class Message extends BaseEntity {
   @Field(() => String)
   @Column()
   openai_id: string;
+
+  @Column({
+    type: 'enum',
+    enum: ChatType,
+    default: ChatType.DEFAULT,
+  })
+  @Field(() => ChatType, { defaultValue: ChatType.DEFAULT })
+  type: ChatType;
 }

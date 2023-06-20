@@ -81,7 +81,7 @@ export class WorkizApiResolver {
     @Args('url') url: string,
     @Args('method') method: RestMethods
   ): Promise<string> {
-    const a =  await this.workizCoreApiService.req({}, url, method);
+    const a =  await this.workizCoreApiService.req(url, method);
     console.log(a, '@@')
     return '';
   }

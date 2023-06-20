@@ -5,139 +5,91 @@ import { Column, Entity } from 'typeorm';
 @Entity()
 @ObjectType()
 export class Job extends BaseEntity {
-  @Field(() => String)
-  @Column()
-  workiz_id: string;
-
-  @Field(() => Number)
-  @Column('int')
-  serial_id: number;
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  uuid: string;
 
   @Field(() => String, { nullable: true })
-  @Column()
-  job_date_time: string;
+  @Column({ nullable: true })
+  start_date: Date;
 
   @Field(() => String, { nullable: true })
-  @Column()
-  job_end_date_time: string;
+  @Column({ nullable: true })
+  end_date: Date;
 
   @Field(() => String, { nullable: true })
-  @Column()
-  created_date: string;
+  @Column({ nullable: true })
+  created_date: Date;
 
-  @Field(() => String, { nullable: true })
-  @Column()
-  job_total_price: string;
+  @Field(() => Number, { nullable: true })
+  @Column('decimal', { nullable: true })
+  total_price: number;
 
-  @Field(() => String, { nullable: true })
-  @Column()
-  job_amount_due: string;
+  @Field(() => Number, { nullable: true })
+  @Column('decimal', { nullable: true })
+  amount_due: number;
 
-  @Field(() => String, { nullable: true })
-  @Column()
-  sub_total: string;
-
-  @Field(() => Number)
-  @Column('int')
+  @Field(() => Number, { nullable: true })
+  @Column({ nullable: true })
   client_id: number;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   status: string;
 
-  @Field(() => String)
-  @Column()
-  sub_status: string;
-
   @Field(() => String, { nullable: true })
-  @Column()
-  payment_due_date: string;
-
-  @Field(() => String)
-  @Column()
+  @Column({ nullable: true })
   phone: string;
 
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   second_phone: string;
 
-  @Field(() => String)
-  @Column()
-  phone_ext: string;
-
-  @Field(() => String)
-  @Column()
-  second_phone_ext: string;
-
-  @Field(() => String)
-  @Column()
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   email: string;
 
-  @Field(() => String)
-  @Column()
-  comments: string;
-
-  @Field(() => String)
-  @Column()
-  first_name: string;
-
-  @Field(() => String)
-  @Column()
-  last_name: string;
-
-  @Field(() => String)
-  @Column()
-  company: string;
-
-  @Field(() => String)
-  @Column()
-  address: string;
-
-  @Field(() => String)
-  @Column()
-  city: string;
-
-  @Field(() => String)
-  @Column()
-  state: string;
-
-  @Field(() => String)
-  @Column()
-  postal_code: string;
-
-  @Field(() => String)
-  @Column()
-  country: string;
-
-  @Field(() => String)
-  @Column()
-  unit: string;
-
-  @Field(() => String)
-  @Column()
-  latitude: string;
-
-  @Field(() => String)
-  @Column()
-  longitude: string;
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  client_name: string;
 
   @Field(() => String, { nullable: true })
-  @Column()
+  @Column({ nullable: true })
+  city: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  state: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  postal_code: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   job_type: string;
 
   @Field(() => String, { nullable: true })
-  @Column()
-  job_notes: string;
-
-  @Field(() => String)
-  @Column()
-  job_source: string;
-
-  @Field(() => String)
-  @Column()
-  created_by: string;
+  @Column({ nullable: true })
+  job_note: string;
 
   @Field(() => String, { nullable: true })
-  @Column()
-  last_status_update: string;
+  @Column({ nullable: true })
+  job_source: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  technician_name: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  dispatcher_name: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  address: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  manager_notes: string;
 }

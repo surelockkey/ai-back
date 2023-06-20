@@ -13,6 +13,11 @@ type Address {
   name: String!
 }
 
+input ApproveUpdateCarDto {
+  approved_quantity: Int!
+  id: ID!
+}
+
 type BlogBlock {
   body_text: String
   description: String
@@ -67,6 +72,11 @@ input ChangeBlogPostStatusDto {
 input ChangePasswordDto {
   new_password: String!
   old_password: String!
+}
+
+enum ChatType {
+  DEFAULT
+  WITH_API
 }
 
 type ConstructorBlog {
@@ -316,6 +326,11 @@ input CreateTimeTemplateDto {
   value: String!
 }
 
+input CreateUpdateCarDto {
+  item_template_id: ID!
+  requested_quantity: Int!
+}
+
 input CreateUserInfoDto {
   key: String!
   user_id: ID!
@@ -472,6 +487,18 @@ input FindPaginationDto {
   take: Int!
 }
 
+type FindRequestsForUpdateCar {
+  approved_at: Int
+  approved_quantity: Int
+  id: ID!
+  item_template: ItemTemplate!
+  item_template_id: ID!
+  requested_at: Int!
+  requested_quantity: Int!
+  submitted_at: Int
+  submitted_quantity: Int
+}
+
 type FineTune {
   created_at: Int!
   id: ID!
@@ -516,6 +543,7 @@ type ItemCompareResult {
   difference: Int!
   name: String!
   sku: String!
+  template_item_id: String!
   template_quantity: Int!
   uhs_sku: String!
 }
@@ -523,6 +551,7 @@ type ItemCompareResult {
 type ItemTemplate {
   id: ID!
   quantity: Int!
+  requests: [UpdateCarRequest!]
   sku: String!
   template_id: ID!
   uhs_sku: String!
@@ -777,10 +806,12 @@ type Message {
   prompt: String!
   text: String!
   total_tokens: Int!
+  type: ChatType!
 }
 
 type Mutation {
   acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
+  approveRequestForCarItems(approveUpdateCarDto: [ApproveUpdateCarDto!]!): [UpdateCarRequest!]!
   assignManyTemplateToCar(createCarTemplateDto: [CreateCarTemplateDto!]!): [CarTemplate!]!
   assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
 
@@ -805,6 +836,7 @@ type Mutation {
   createOrUpdateUserInfo(user_infos: [CreateOrUpdateUserInfoDto!]!): [UserInfo!]!
   createOrUpdateUserNote(user_note: CreateOrUpdateUserNoteDto!): UserNote!
   createRequest(createRequestDto: CreateRequestDto!): Request!
+  createRequestForCarItems(createUpdateCarDto: [CreateUpdateCarDto!]!): [UpdateCarRequest!]!
   createReviews(createReviewsDto: CreateReviewsDto!): Reviews!
   createSystemSettings(max_tokens: Int!): SystemSettings!
   createTimeTemplate(time_template: CreateTimeTemplateDto!): TimeTemplate!
@@ -840,10 +872,11 @@ type Mutation {
   logout(refresh_token: String!): SendDto!
   prepareFileForFineTune(filename: String!): String!
   reviewReviews(reviewReviewsDto: [ReviewReviewsDto!]!): [ReviewsWithEmailDto!]!
-  sendMessage(prompt: String!): Message!
+  sendMessage(chat_type: ChatType! = DEFAULT, prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
   speechToText(call_id: String!): Transcription!
   startFineTune: FineTune!
+  submitRequestForCarItems(submitUpdateCarDto: [SubmitUpdateCarDto!]!): [UpdateCarRequest!]!
 
   """update blogs"""
   updateBlog(updateBlog: UpdateConstructorBlogDto!): ConstructorBlog!
@@ -912,7 +945,10 @@ type PhotoForBlock {
 }
 
 type Query {
+  findApprovedUpdateCarRequests: [FindRequestsForUpdateCar!]!
+  findSubmittedUpdateCarRequests: [FindRequestsForUpdateCar!]!
   findTranscription(call_id: String!): Transcription!
+  findUpdateCarRequests: [FindRequestsForUpdateCar!]!
   generateDifferenceReport(only_less: Boolean! = true, workiz_id: String!): [ItemCompareResult!]!
   generateDifferenceReportForAll: [ItemCompareResult!]!
 
@@ -929,7 +965,7 @@ type Query {
   ): PaginatedJobDto!
   getAllLocation: [Location!]!
   getAllLocationPhoto: [LocationPhoto!]!
-  getAllMessages: [Message!]!
+  getAllMessages(chat_type: ChatType! = DEFAULT): [Message!]!
   getAllTechsWorkiz: [TechnicianWorkiz!]!
   getAllTemplates: [Template!]!
   getAllTimeTemplates: [TimeTemplate!]!
@@ -955,6 +991,7 @@ type Query {
   getFilteredBlog(filter: FilterableBlogDto!): ConstructorBlogFilterableWithCountDto!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!
+  getJobs: PaginatedJobDto!
   getLocationById(id: String!): Location!
   getLocationByState(state: String!): [Location!]!
   getLocationByStateAndUrl(filter: LocationFilterStateUrlDto!): Location!
@@ -975,6 +1012,7 @@ type Query {
   listModels: String!
   searchLocksmiths(options: SearchLocksmithDto!): [Locksmith!]!
   searchRequests(first: Float, searchValue: String, skip: Float): [Request!]!
+  sendSqlMessage(message: String!): String!
   testApi(method: String!, url: String!): String!
 }
 
@@ -1083,6 +1121,11 @@ enum SortEnum {
   DESC
 }
 
+input SubmitUpdateCarDto {
+  id: ID!
+  submitted_quantity: Int!
+}
+
 type SystemSettings {
   active_model: String!
   id: ID!
@@ -1178,6 +1221,17 @@ input UpdateBlogPreviewDto {
   photo: UpdatePhotoForBlockDto
   title: String
   type_block: String
+}
+
+type UpdateCarRequest {
+  approved_at: Int
+  approved_quantity: Int
+  id: ID!
+  item_template_id: ID!
+  requested_at: Int!
+  requested_quantity: Int!
+  submitted_at: Int
+  submitted_quantity: Int
 }
 
 input UpdateConstructorBlogDto {
