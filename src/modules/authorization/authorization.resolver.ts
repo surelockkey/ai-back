@@ -18,6 +18,7 @@ import { AcceptInviteDto } from './dto/accept-invite.dto';
 import { RoleGuard } from './decorator/role.decorator';
 import { UserRole } from '../user/enum/user-role.enum';
 import { InviteUserDto } from './dto/invite-user.dto';
+import { RegistrationCustomerDto } from './dto/registration-customer.dto';
 
 @Resolver()
 export class AuthorizationResolver {
@@ -67,6 +68,14 @@ export class AuthorizationResolver {
       action: `Tried to invite user with email ${inviteUserDto.email}`,
       user_id: user_id,
     });
+  }
+
+  @Mutation(() => User)
+  registrationCustomer(
+    @Args('registration_dto', { type: () => RegistrationCustomerDto })
+    registration_dto: RegistrationCustomerDto,
+  ) {
+    return this.authorizationService.registrationCustomer(registration_dto);
   }
 
   @Mutation(() => User)

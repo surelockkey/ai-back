@@ -1,11 +1,18 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { NestUser } from '@tech-slk/nest-auth';
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 import { UserRole } from '../enum/user-role.enum';
 import { Log } from 'src/modules/logger/entity/log.entity';
 import { UserSchedule } from 'src/modules/user/user-schedule/entity/user-schedule.entity';
 import { UserInfo } from 'src/modules/user/user-info/entity/user-info.entity';
 import { UserNote } from 'src/modules/user/user-note/entity/user-note.entity';
+import { UserCustomerInfo } from '../user-customer-info/entity/user-customer-info.entity';
 
 @Entity('user')
 @ObjectType()
@@ -48,4 +55,12 @@ export class User extends NestUser {
   @Field(() => [UserNote], { nullable: true })
   @OneToMany(() => UserNote, (user_note) => user_note.user, { eager: true })
   notes: UserNote[];
+
+  @Field(() => UserCustomerInfo, { nullable: true })
+  @OneToOne(
+    () => UserCustomerInfo,
+    (user_custom_info) => user_custom_info.user,
+    { nullable: true, eager: true },
+  )
+  customer_info: UserCustomerInfo;
 }

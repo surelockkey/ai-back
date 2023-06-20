@@ -53,6 +53,17 @@ type BlogPreview {
   type_block: String
 }
 
+type Car {
+  id: ID!
+  make: String!
+  model: String!
+  year: Int!
+}
+
+type CarMake {
+  car_make: String!
+}
+
 type CarTemplate {
   id: ID!
   template_id: ID!
@@ -121,6 +132,12 @@ input CreateBlogPreviewDto {
   type_block: String
 }
 
+input CreateCarDto {
+  make: String!
+  model: String!
+  year: Int!
+}
+
 input CreateCarTemplateDto {
   template_id: ID!
   workiz_id: String!
@@ -160,6 +177,14 @@ input CreateJobDto {
   Phone: String!
   PostalCode: String!
   State: String!
+}
+
+input CreateKeyDto {
+  car_ids: [ID!]
+  custom_price: Float
+  estimate_price: String
+  name: String!
+  photo: Upload
 }
 
 input CreateLocationDto {
@@ -258,6 +283,15 @@ input CreateOrUpdateUserScheduleDto {
   user_id: ID!
   work_from: Int!
   work_to: Int!
+}
+
+input CreateOrderDto {
+  address: String!
+  key_service_type: KeyServiceType!
+  keys: [OrderKeyDto!]
+  notes: String!
+  phone: String!
+  service_type: ServiceType!
 }
 
 input CreatePhotoForBlockDto {
@@ -404,6 +438,11 @@ input CtmGetCallsOptionDto {
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type File {
+  format: String!
+  id: ID!
+}
 
 input FilterableBlogDto {
   blockDescription: String
@@ -563,6 +602,29 @@ type JobDto {
   SubTotal: String
   UUID: String!
   Unit: String!
+}
+
+type Key {
+  cars: [KeyCar!]
+  custom_price: Float
+  estimate_price: String
+  id: ID!
+  name: String!
+  photo: File
+  photo_id: String
+}
+
+type KeyCar {
+  car_id: ID!
+  id: ID!
+  key_id: ID!
+}
+
+enum KeyServiceType {
+  CAR_KEY_COPY
+  CAR_KEY_POGROMING
+  IGNITION_CHANGE_REPAIR
+  NEW_CAR_KEY
 }
 
 type Location {
@@ -781,6 +843,7 @@ type Message {
 
 type Mutation {
   acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
+  addManyCarsToKey(car_ids: [ID!]!, key_id: ID!): [KeyCar!]!
   assignManyTemplateToCar(createCarTemplateDto: [CreateCarTemplateDto!]!): [CarTemplate!]!
   assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
 
@@ -793,7 +856,9 @@ type Mutation {
 
   """method to create photo"""
   createBlogPhoto(picture: Upload!): PhotoBlog!
+  createCar(carDto: CreateCarDto!): Car!
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
+  createKey(key_dto: CreateKeyDto!): Key!
   createLocation(createLocationDto: CreateLocationDto!): Location!
   createLocationPhoto(picture: Upload!): LocationPhoto!
   createLocksmith(createLocksmithDto: CreateLocksmithDto!): Locksmith!
@@ -804,6 +869,7 @@ type Mutation {
   createOrUpdateManyUsersSchedules(user_schedules: [CreateOrUpdateUserScheduleDto!]!): [UserSchedule!]!
   createOrUpdateUserInfo(user_infos: [CreateOrUpdateUserInfoDto!]!): [UserInfo!]!
   createOrUpdateUserNote(user_note: CreateOrUpdateUserNoteDto!): UserNote!
+  createOrder(order_dto: CreateOrderDto!): Order!
   createRequest(createRequestDto: CreateRequestDto!): Request!
   createReviews(createReviewsDto: CreateReviewsDto!): Reviews!
   createSystemSettings(max_tokens: Int!): SystemSettings!
@@ -818,10 +884,13 @@ type Mutation {
   """deleted photo by id"""
   deleteBlogPhotoById(id: String!): PhotoBlog!
   deleteFineTuneItem(id: ID!): ID!
+  deleteKey(id: ID!): ID!
+  deleteKeyCar(id: ID!): ID!
   deleteLocationById(id: String!): Location!
   deleteLocksmithById(id: String!): SendDto!
   deleteManyInvitedUsers(user_ids: [ID!]!): [String!]!
   deleteManyItemTemplates(ids: [ID!]!): [ID!]!
+  deleteManyKeyCar(ids: [ID!]!): [ID!]!
   deleteManyPhoto(keys: [String!]!): SendDto!
   deleteManyTemplates(ids: [ID!]!): [ID!]!
   deleteManyUserInfo(ids: [ID!]!): [ID!]!
@@ -839,6 +908,7 @@ type Mutation {
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!
   prepareFileForFineTune(filename: String!): String!
+  registrationCustomer(registration_dto: RegistrationCustomerDto!): User!
   reviewReviews(reviewReviewsDto: [ReviewReviewsDto!]!): [ReviewsWithEmailDto!]!
   sendMessage(prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
@@ -850,12 +920,14 @@ type Mutation {
   updateCurrentUser(user: UpdateCurrentUserDto!): User!
   updateFineTuneItem(fine_tune_item: UpdateFineTuneItemDto!): FineTuneItem!
   updateItemTemplate(updateItemTemplateDto: UpdateItemTemplateDto!): ItemTemplate!
+  updateKey(key_dto: UpdateKeyDto!): Key!
   updateLocation(updateLocationDto: UpdateLocationDto!): Location!
   updateManyUsersSchedules(users_schedules: [UpdateUserScheduleDto!]!): [UserSchedule!]!
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
   updateTemplate(updateTemplateDto: UpdateTemplateDto!): Template!
   updateTimeTemplate(time_template: UpdateTimeTemplateDto!): TimeTemplate!
   updateUser(user: UpdateUserDto!): User!
+  updateUserCustomerInfo(user_customer_info_dto: UpdateUserCustomerInfoDto!): UserCustomerInfo!
   updateUserInfo(user_info: UpdateUserInfoDto!): UserInfo!
   updateUserNote(user_note: UpdateUserNoteDto!): UserNote!
   updateUserSchedule(user_schedule: UpdateUserScheduleDto!): UserSchedule!
@@ -890,6 +962,29 @@ type OpenAiFineTuneEvent {
   message: String!
 }
 
+type Order {
+  address: String!
+  id: ID!
+  key_service_type: KeyServiceType!
+  keys: [OrderKey!]!
+  notes: String!
+  phone: String!
+  service_type: ServiceType!
+}
+
+type OrderKey {
+  count: Int
+  id: ID!
+  key: Key!
+  key_id: ID!
+  order_id: ID!
+}
+
+input OrderKeyDto {
+  count: Int
+  key_id: ID!
+}
+
 type PaginatedJobDto {
   has_more: Boolean!
   items: [JobDto!]!
@@ -918,6 +1013,7 @@ type Query {
 
   """get all photo """
   getAllBlogPhoto: [PhotoBlog!]!
+  getAllCars: [Car!]!
   getAllContainers: [WorkizContainer!]!
   getAllFiles: [OpenAiFile!]!
   getAllInvitedUsers: [InvitedUser!]!
@@ -955,6 +1051,8 @@ type Query {
   getFilteredBlog(filter: FilterableBlogDto!): ConstructorBlogFilterableWithCountDto!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!
+  getKeyByID(id: ID!): Key!
+  getKeysByCar(car_id: ID!): [Key!]!
   getLocationById(id: String!): Location!
   getLocationByState(state: String!): [Location!]!
   getLocationByStateAndUrl(filter: LocationFilterStateUrlDto!): Location!
@@ -973,9 +1071,19 @@ type Query {
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
   listModels: String!
+  searchCars(make: String, model: String): [Car!]!
   searchLocksmiths(options: SearchLocksmithDto!): [Locksmith!]!
   searchRequests(first: Float, searchValue: String, skip: Float): [Request!]!
   testApi(method: String!, url: String!): String!
+}
+
+input RegistrationCustomerDto {
+  customer_info: UserCustomerInfoDto!
+  email: String!
+  location: String
+  name: String!
+  password: String!
+  workiz_id: String
 }
 
 type Request {
@@ -1047,6 +1155,17 @@ input SearchLocksmithDto {
 type SendDto {
   message: String
   status: Float
+}
+
+enum ServiceType {
+  AUTOMOTIVE
+  CAR_KEY_DUPLICATION
+  COMMERCIAL
+  EMERGENCY
+  MOBILE
+  RESIDENTIAL
+  SAFES
+  SECURITY
 }
 
 """Chouse which type of sorting would you like to use"""
@@ -1215,6 +1334,14 @@ input UpdateItemTemplateDto {
   uhs_sku: String!
 }
 
+input UpdateKeyDto {
+  custom_price: Float
+  estimate_price: String
+  id: ID!
+  name: String
+  photo: Upload
+}
+
 input UpdateLocationDto {
   About_city: UpdateH2TextDto
   About_us: UpdateH2TextDto
@@ -1358,6 +1485,12 @@ input UpdateTimeTemplateDto {
   value: String
 }
 
+input UpdateUserCustomerInfoDto {
+  address: String
+  id: ID!
+  phone: String
+}
+
 input UpdateUserDto {
   id: ID
   location: String
@@ -1389,6 +1522,7 @@ input UpdateUserScheduleDto {
 scalar Upload
 
 type User {
+  customer_info: UserCustomerInfo
   email: String!
   id: String!
   info: [UserInfo!]
@@ -1398,6 +1532,18 @@ type User {
   notes: [UserNote!]
   role: UserRole!
   workiz_id: String
+}
+
+type UserCustomerInfo {
+  address: String
+  id: ID!
+  phone: String
+  user_id: ID!
+}
+
+input UserCustomerInfoDto {
+  address: String
+  phone: String
 }
 
 type UserInfo {
@@ -1417,6 +1563,7 @@ type UserNote {
 
 enum UserRole {
   ADMIN
+  CUSTOMER
   DISPATCHER
   LOGISTIC
   MAIN_DISPATCHER
@@ -1432,6 +1579,7 @@ type UserSchedule {
 }
 
 type UserWithSchedule {
+  customer_info: UserCustomerInfo
   email: String!
   id: String!
   info: [UserInfo!]
