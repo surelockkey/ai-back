@@ -13,6 +13,7 @@ import { UserSchedule } from 'src/modules/user/user-schedule/entity/user-schedul
 import { UserInfo } from 'src/modules/user/user-info/entity/user-info.entity';
 import { UserNote } from 'src/modules/user/user-note/entity/user-note.entity';
 import { UserCustomerInfo } from '../user-customer-info/entity/user-customer-info.entity';
+import { Order } from 'src/modules/customer-app/order/entity/order.entity';
 
 @Entity('user')
 @ObjectType()
@@ -63,4 +64,7 @@ export class User extends NestUser {
     { nullable: true, eager: true },
   )
   customer_info: UserCustomerInfo;
+
+  @OneToMany(() => Order, (order) => order.customer)
+  orders: Order[];
 }

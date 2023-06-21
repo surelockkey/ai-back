@@ -7,6 +7,7 @@ export class UserInput extends OmitType(User, [
   'info',
   'notes',
   'customer_info',
+  'orders',
 ]) {}
 
 @InputType()

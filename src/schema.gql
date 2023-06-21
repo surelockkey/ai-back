@@ -286,11 +286,11 @@ input CreateOrUpdateUserScheduleDto {
 }
 
 input CreateOrderDto {
-  address: String!
+  address: String
   key_service_type: KeyServiceType!
   keys: [OrderKeyDto!]
   notes: String!
-  phone: String!
+  phone: String
   service_type: ServiceType!
 }
 
@@ -964,12 +964,14 @@ type OpenAiFineTuneEvent {
 
 type Order {
   address: String!
+  customer: User!
   id: ID!
   key_service_type: KeyServiceType!
   keys: [OrderKey!]!
   notes: String!
   phone: String!
   service_type: ServiceType!
+  user_id: ID!
 }
 
 type OrderKey {
@@ -1026,6 +1028,7 @@ type Query {
   getAllLocation: [Location!]!
   getAllLocationPhoto: [LocationPhoto!]!
   getAllMessages: [Message!]!
+  getAllOrders: [Order!]!
   getAllTechsWorkiz: [TechnicianWorkiz!]!
   getAllTemplates: [Template!]!
   getAllTimeTemplates: [TimeTemplate!]!
@@ -1061,6 +1064,8 @@ type Query {
   getLocksmithById(id: String!): Locksmith!
   getLocksmithWithUnreviewedReviews: [LocksmithWithCountNewReviewsDto!]!
   getLogs(pagination: FindPaginationDto!): LogsPaginated!
+  getMyOrders: [Order!]!
+  getOrderById(id: ID!): Order!
   getRequestById(id: String!): Request!
   getReviewsForConsideration: [ReviewsWithEmailDto!]!
   getSystemSettings: SystemSettings!

@@ -6,6 +6,7 @@ import { DataSource, Repository } from 'typeorm';
 import { OrderKey } from './entity/order-key.entity';
 import { CreateOrderDto } from './dto/order.dto';
 import { GraphQLError } from 'graphql';
+import { UserCustomerInfoService } from 'src/modules/user/user-customer-info/user-customer-info.service';
 
 @Injectable()
 export class OrderService extends CrudService<Order> {
@@ -15,18 +16,36 @@ export class OrderService extends CrudService<Order> {
     @InjectRepository(OrderKey)
     private readonly orderKeyRepository: Repository<OrderKey>,
     private readonly dataSource: DataSource,
+    private readonly userCustomerInfoService: UserCustomerInfoService,
   ) {
     super(orderRepository);
   }
 
-  public async createOrder(create_order_dto: CreateOrderDto) {
-    const { keys, ...order_dto } = create_order_dto;
-
+  public async createOrder(create_order_dto: CreateOrderDto, user_id: string) {
     const queryRunner = await this.dataSource.createQueryRunner();
     await queryRunner.startTransaction();
 
     try {
-      const order = await queryRunner.manager.save(Order, order_dto);
+      const { keys, ...order_dto } = create_order_dto;
+
+      if (!order_dto.address || !order_dto.phone) {
+        const { address, phone } = await this.userCustomerInfoService.findOne({
+          user_id,
+        });
+
+        if (!order_dto.address) {
+          order_dto.address = address;
+        }
+
+        if (!order_dto.phone) {
+          order_dto.address = phone;
+        }
+      }
+
+      const order = await queryRunner.manager.save(Order, {
+        ...order_dto,
+        user_id,
+      });
 
       await queryRunner.manager.save(
         OrderKey,
