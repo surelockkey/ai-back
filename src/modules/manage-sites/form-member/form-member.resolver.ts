@@ -19,6 +19,7 @@ import { FileInArgsPipe } from 'src/modules/upload/pipe/check-file-size-in-args.
 import { UserRole } from 'src/modules/user/enum/user-role.enum';
 import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
 import { SearchLocksmithDto } from './dto/search-locksmith.dto';
+import { LocksmithsWithCount } from './dto/locksmith-with-count.dto';
 
 @Resolver()
 export class FormMemberResolver {
@@ -54,7 +55,7 @@ export class FormMemberResolver {
   }
 
   @RoleGuard(UserRole.ADMIN, UserRole.SEO)
-  @Query(() => [Locksmith])
+  @Query(() => LocksmithsWithCount)
   public searchLocksmiths(
     @Args('options') { searchValue, skip, first }: SearchLocksmithDto,
   ) {

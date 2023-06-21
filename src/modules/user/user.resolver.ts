@@ -1,31 +1,31 @@
-import { Args, ID, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { GqlAuthGuard } from "../authorization/guard/auth.guard";
-import { CurrentUser } from "@tech-slk/nest-auth";
-import { CurrentUserDto } from "../authorization/dto/current-user.dto";
-import { UseGuards } from "@nestjs/common";
-import { User } from "./entity/user.entity";
-import { UserService } from "./user.service";
-import { RoleGuard } from "../authorization/decorator/role.decorator";
-import { UserRole } from "./enum/user-role.enum";
-import { UpdateCurrentUserDto, UpdateUserDto } from "./dto/user.input";
-import { InvitedUser } from "./entity/invited-user.entity";
-import { InvitedUserService } from "./invited-user.service";
+import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { GqlAuthGuard } from '../authorization/guard/auth.guard';
+import { CurrentUser } from '@tech-slk/nest-auth';
+import { CurrentUserDto } from '../authorization/dto/current-user.dto';
+import { UseGuards } from '@nestjs/common';
+import { User } from './entity/user.entity';
+import { UserService } from './user.service';
+import { RoleGuard } from '../authorization/decorator/role.decorator';
+import { UserRole } from './enum/user-role.enum';
+import { UpdateCurrentUserDto, UpdateUserDto } from './dto/user.input';
+import { InvitedUser } from './entity/invited-user.entity';
+import { InvitedUserService } from './invited-user.service';
 import {
   UserWithSchedule,
   UserWithScheduleDto,
-} from "./dto/user-with-schedule.dto";
+} from './dto/user-with-schedule.dto';
 @Resolver()
 export class UserResolver {
   constructor(
     private readonly userService: UserService,
-    private readonly invitedUserService: InvitedUserService
+    private readonly invitedUserService: InvitedUserService,
   ) {}
 
   @UseGuards(GqlAuthGuard)
   @Query(() => User)
   public async getCurrentUser(
     @CurrentUser()
-    { user_id }: CurrentUserDto
+    { user_id }: CurrentUserDto,
   ): Promise<User> {
     return this.userService.findOne({ id: user_id });
   }
@@ -33,7 +33,7 @@ export class UserResolver {
   @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
   @Query(() => [User])
   public async getAllUsers(
-    @CurrentUser() user: CurrentUserDto
+    @CurrentUser() user: CurrentUserDto,
   ): Promise<User[]> {
     return this.userService.findAllUsers(user.user_id);
   }
@@ -41,7 +41,7 @@ export class UserResolver {
   @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
   @Query(() => [InvitedUser])
   public async getAllInvitedUsers(
-    @CurrentUser() { user_id }: CurrentUserDto
+    @CurrentUser() { user_id }: CurrentUserDto,
   ): Promise<InvitedUser[]> {
     const user = await this.userService.findOneById(user_id);
     return this.invitedUserService.findAllInvitedUsers(user.role);
@@ -50,46 +50,49 @@ export class UserResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation(() => User)
   updateCurrentUser(
-    @Args("user", { type: () => UpdateCurrentUserDto })
+    @Args('user', { type: () => UpdateCurrentUserDto })
     user: UpdateCurrentUserDto,
-    @CurrentUser() { user_id }: CurrentUserDto
+    @CurrentUser() { user_id }: CurrentUserDto,
   ) {
     return this.userService.updateAndReturn(user_id, user);
   }
 
-  @RoleGuard(UserRole.ADMIN)
+  @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
   @Mutation(() => User)
   updateUser(
-    @Args("user", { type: () => UpdateUserDto })
-    { id, ...rest }: UpdateUserDto,
+    @Args('user', { type: () => UpdateUserDto })
+    user: UpdateUserDto,
+    @CurrentUser() { user_id }: CurrentUserDto,
   ) {
-    return this.userService.updateAndReturn(id, rest);
+    return this.userService.updateUser(user, user_id);
   }
 
-  // TODO: check if main dispatcher can
-  @UseGuards(GqlAuthGuard)
+  @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
   @Mutation(() => [String])
   public async deleteManyUsers(
-    @Args("user_ids", { type: () => [ID] })
-    user_ids: string[]
+    @Args('user_ids', { type: () => [ID] })
+    user_ids: string[],
+    @CurrentUser() { user_id }: CurrentUserDto,
   ): Promise<string[]> {
-    await this.userService.deleteManyByIds(user_ids);
-    return user_ids;
+    return await this.userService.deleteManyUsers(user_ids, user_id);
   }
 
-  @RoleGuard(UserRole.ADMIN)
+  @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
   @Mutation(() => [String])
   public async deleteManyInvitedUsers(
-    @Args("user_ids", { type: () => [ID] })
-    user_ids: string[]
+    @Args('user_ids', { type: () => [ID] })
+    user_ids: string[],
+    @CurrentUser() { user_id }: CurrentUserDto,
   ): Promise<string[]> {
-    await this.invitedUserService.deleteManyByIds(user_ids);
-    return user_ids;
+    return await this.invitedUserService.deleteManyInvitedUsers(
+      user_ids,
+      user_id,
+    );
   }
 
   @Query(() => [UserWithSchedule])
   getUsersWithSchedule(
-    @Args("userWithScheduleDto", { type: () => UserWithScheduleDto })
+    @Args('userWithScheduleDto', { type: () => UserWithScheduleDto })
     {
       from,
       to,
@@ -97,7 +100,7 @@ export class UserResolver {
       is_available,
       role,
       locations,
-    }: UserWithScheduleDto
+    }: UserWithScheduleDto,
   ) {
     return this.userService.getUsersWithSchedule(
       from,
@@ -105,8 +108,18 @@ export class UserResolver {
       search_value,
       is_available,
       role,
-      locations
+      locations,
     );
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Query(() => UserWithSchedule)
+  getMySchedule(
+    @Args('from', { type: () => Int }) from: number,
+    @Args('to', { type: () => Int }) to: number,
+    @CurrentUser() { user_id }: CurrentUserDto,
+  ) {
+    return this.userService.getUserSchedule(user_id, from, to);
   }
 
   @Query(() => [String, { nullable: true }], { nullable: true })

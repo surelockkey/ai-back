@@ -7,6 +7,8 @@ import { FindOneOptions, In, Repository } from 'typeorm';
 import { UserRole } from './enum/user-role.enum';
 import { WorkizApiService } from '../api/workiz-api/workiz-api.service';
 import * as moment from 'moment';
+import { UpdateUserDto } from './dto/user.input';
+import { GraphQLError } from 'graphql';
 
 @Injectable()
 export class UserService extends NestUserService<User> {
@@ -39,9 +41,51 @@ export class UserService extends NestUserService<User> {
     return await this.findAll({
       role:
         current_user_role === UserRole.MAIN_DISPATCHER
-          ? In([UserRole.MAIN_DISPATCHER, UserRole.DISPATCHER])
+          ? In([
+              UserRole.MAIN_DISPATCHER,
+              UserRole.DISPATCHER,
+              UserRole.TECHNICIAN,
+            ])
           : undefined,
     });
+  }
+
+  public async deleteManyUsers(user_ids: string[], current_user_id: string) {
+    const { role: current_user_role } = await this.findOneById(current_user_id);
+
+    await this.userRepository.delete({
+      id: In(user_ids),
+      role:
+        current_user_role === UserRole.MAIN_DISPATCHER
+          ? In([
+              UserRole.MAIN_DISPATCHER,
+              UserRole.DISPATCHER,
+              UserRole.TECHNICIAN,
+            ])
+          : undefined,
+    });
+
+    return user_ids;
+  }
+
+  public async updateUser(user_dto: UpdateUserDto, current_user_id: string) {
+    const current_user = await this.findOneById(current_user_id);
+
+    if (current_user.role === UserRole.MAIN_DISPATCHER) {
+      const user_to_update = await this.findOneById(user_dto.id);
+
+      if (
+        ![
+          UserRole.MAIN_DISPATCHER,
+          UserRole.DISPATCHER,
+          UserRole.TECHNICIAN,
+        ].includes(user_to_update.role)
+      ) {
+        throw new GraphQLError(`You don't have permissions`);
+      }
+    }
+
+    return await this.updateAndReturn(user_dto.id, user_dto);
   }
 
   public async getUsersWithSchedule(
@@ -59,6 +103,10 @@ export class UserService extends NestUserService<User> {
         'user.notes',
         'user-note',
         'user-note.week_start = :from AND user-note.week_end = :to',
+        {
+          from,
+          to,
+        },
       )
       .leftJoinAndSelect(
         'user.schedules',
@@ -105,6 +153,32 @@ export class UserService extends NestUserService<User> {
     }
 
     return await queryBuilder.orderBy('user.name', 'ASC').getMany();
+  }
+
+  public async getUserSchedule(user_id: string, from: number, to: number) {
+    return await this.userRepository
+      .createQueryBuilder('user')
+      .where({ id: user_id })
+      .leftJoinAndSelect('user.info', 'user-info')
+      .leftJoinAndSelect(
+        'user.notes',
+        'user-note',
+        'user-note.week_start = :from AND user-note.week_end = :to',
+        {
+          from,
+          to,
+        },
+      )
+      .leftJoinAndSelect(
+        'user.schedules',
+        'user-schedule',
+        'user-schedule.work_from BETWEEN :from AND :to OR user-schedule.work_to BETWEEN :from AND :to',
+        {
+          from,
+          to,
+        },
+      )
+      .getOne();
   }
 
   public async getUniqueLocations() {

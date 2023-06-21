@@ -23,6 +23,7 @@ import { UtilsService } from '../utils/utils.service';
 import { IFileUpload } from 'src/modules/upload/type/i-file-upload';
 import { UploadFileResult } from 'src/modules/upload/type/upload-result';
 import { BucketName } from 'src/modules/upload/enum/bucket.enum';
+import { LocksmithsWithCount } from './dto/locksmith-with-count.dto';
 
 @Injectable()
 export class FormMemberService {
@@ -195,7 +196,7 @@ export class FormMemberService {
     searchValue?: string,
     first?: number,
     skip?: number,
-  ): Promise<Locksmith[]> {
+  ): Promise<LocksmithsWithCount> {
     const locksmiths = this.getLocksmith();
 
     // Searching
@@ -224,8 +225,12 @@ export class FormMemberService {
       locksmiths.take(first);
     }
 
-    const result = await locksmiths.getMany();
-    return this.checkLocksmithPhotoAndSetDefault(result);
+    const [items, count] = await locksmiths.getManyAndCount();
+
+    return {
+      items,
+      count,
+    };
   }
 
   public async searchLocksmithsFromController(
