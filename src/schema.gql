@@ -756,6 +756,11 @@ type LocksmithWithCountNewReviewsDto {
   zips: [String!]
 }
 
+type LocksmithsWithCount {
+  count: Int!
+  items: [Locksmith!]!
+}
+
 type Log {
   action: String!
   created_at: Int!
@@ -1010,7 +1015,7 @@ type Query {
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
   listModels: String!
-  searchLocksmiths(options: SearchLocksmithDto!): [Locksmith!]!
+  searchLocksmiths(options: SearchLocksmithDto!): LocksmithsWithCount!
   searchRequests(first: Float, searchValue: String, skip: Float): [Request!]!
   sendSqlMessage(message: String!): String!
   testApi(method: String!, url: String!): String!
