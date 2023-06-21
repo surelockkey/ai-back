@@ -1005,6 +1005,7 @@ type Query {
   getLocksmithById(id: String!): Locksmith!
   getLocksmithWithUnreviewedReviews: [LocksmithWithCountNewReviewsDto!]!
   getLogs(pagination: FindPaginationDto!): LogsPaginated!
+  getMySchedule(from: Int!, to: Int!): UserWithSchedule!
   getRequestById(id: String!): Request!
   getReviewsForConsideration: [ReviewsWithEmailDto!]!
   getSystemSettings: SystemSettings!

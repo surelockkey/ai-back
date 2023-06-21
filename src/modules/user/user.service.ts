@@ -103,6 +103,10 @@ export class UserService extends NestUserService<User> {
         'user.notes',
         'user-note',
         'user-note.week_start = :from AND user-note.week_end = :to',
+        {
+          from,
+          to,
+        },
       )
       .leftJoinAndSelect(
         'user.schedules',
@@ -149,6 +153,32 @@ export class UserService extends NestUserService<User> {
     }
 
     return await queryBuilder.orderBy('user.name', 'ASC').getMany();
+  }
+
+  public async getUserSchedule(user_id: string, from: number, to: number) {
+    return await this.userRepository
+      .createQueryBuilder('user')
+      .where({ id: user_id })
+      .leftJoinAndSelect('user.info', 'user-info')
+      .leftJoinAndSelect(
+        'user.notes',
+        'user-note',
+        'user-note.week_start = :from AND user-note.week_end = :to',
+        {
+          from,
+          to,
+        },
+      )
+      .leftJoinAndSelect(
+        'user.schedules',
+        'user-schedule',
+        'user-schedule.work_from BETWEEN :from AND :to OR user-schedule.work_to BETWEEN :from AND :to',
+        {
+          from,
+          to,
+        },
+      )
+      .getOne();
   }
 
   public async getUniqueLocations() {

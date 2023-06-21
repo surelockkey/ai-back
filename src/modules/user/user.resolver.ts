@@ -1,4 +1,4 @@
-import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GqlAuthGuard } from '../authorization/guard/auth.guard';
 import { CurrentUser } from '@tech-slk/nest-auth';
 import { CurrentUserDto } from '../authorization/dto/current-user.dto';
@@ -110,6 +110,16 @@ export class UserResolver {
       role,
       locations,
     );
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Query(() => UserWithSchedule)
+  getMySchedule(
+    @Args('from', { type: () => Int }) from: number,
+    @Args('to', { type: () => Int }) to: number,
+    @CurrentUser() { user_id }: CurrentUserDto,
+  ) {
+    return this.userService.getUserSchedule(user_id, from, to);
   }
 
   @Query(() => [String, { nullable: true }], { nullable: true })
