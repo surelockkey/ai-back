@@ -52,7 +52,7 @@ export class AuthorizationService extends NestAuthService<
 
     if (
       current_user.role === UserRole.MAIN_DISPATCHER &&
-      [
+      ![
         UserRole.DISPATCHER,
         UserRole.MAIN_DISPATCHER,
         UserRole.TECHNICIAN,
