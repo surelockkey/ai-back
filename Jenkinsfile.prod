@@ -31,7 +31,12 @@ def prod_secrets = [
         [envVar: 'MAIL_FROM',  vaultKey: 'MAIL_FROM'],
         [envVar: 'MAIL_HOST',  vaultKey: 'MAIL_HOST'],
         [envVar: 'MAIL_PASSWORD',  vaultKey: 'MAIL_PASSWORD'],
-        [envVar: 'MAIL_USER',  vaultKey: 'MAIL_USER']
+        [envVar: 'MAIL_USER',  vaultKey: 'MAIL_USER'],
+        [envVar: 'AWS_ACCESS_KEY_ID',  vaultKey: 'AWS_ACCESS_KEY_ID'],
+        [envVar: 'AWS_SECRET_ACCESS_KEY',  vaultKey: 'AWS_SECRET_ACCESS_KEY'],
+        [envVar: 'AWS_BUCKET',  vaultKey: 'AWS_BUCKET'],
+        [envVar: 'AWS_REGION',  vaultKey: 'AWS_REGION'],
+        [envVar: 'AWS_BUCKET_LOCKSMITH',  vaultKey: 'AWS_BUCKET_LOCKSMITH'],
     ]],
 ]
 
@@ -100,6 +105,11 @@ pipeline {
                         echo "MAIL_HOST=${MAIL_HOST}" >> .env
                         echo "MAIL_PASSWORD=${MAIL_PASSWORD}" >> .env
                         echo "MAIL_USER=${MAIL_USER}" >> .env
+                        echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> .env
+                        echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> .env
+                        echo "AWS_BUCKET=${AWS_BUCKET}" >> .env
+                        echo "AWS_REGION=${AWS_REGION}" >> .env
+                        echo "AWS_BUCKET_LOCKSMITH=${AWS_BUCKET_LOCKSMITH}" >> .env
 
                         sudo docker-compose build --no-cache --build-arg NPM_TOKEN=${NPM_TOKEN} prod
                         sudo docker-compose up -d
