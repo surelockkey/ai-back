@@ -6,6 +6,7 @@ import { InvitedUser } from './entity/invited-user.entity';
 import { CrudService } from '@tech-slk/nest-crud';
 import { UserRole } from './enum/user-role.enum';
 import { UserService } from './user.service';
+import { GraphQLError } from 'graphql';
 
 @Injectable()
 export class InvitedUserService extends CrudService<InvitedUser> {
@@ -38,7 +39,7 @@ export class InvitedUserService extends CrudService<InvitedUser> {
       current_user_id,
     );
 
-    await this.invitedUserRepository.delete({
+    const users = await this.userService.findAll({
       id: In(user_ids),
       role:
         current_user_role === UserRole.MAIN_DISPATCHER
@@ -48,6 +49,14 @@ export class InvitedUserService extends CrudService<InvitedUser> {
               UserRole.TECHNICIAN,
             ])
           : undefined,
+    });
+
+    if (users.length !== user_ids.length) {
+      throw new GraphQLError('Invalid ids');
+    }
+
+    await this.invitedUserRepository.delete({
+      id: In(user_ids),
     });
 
     return user_ids;
