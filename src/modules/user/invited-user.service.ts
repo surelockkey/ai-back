@@ -39,7 +39,7 @@ export class InvitedUserService extends CrudService<InvitedUser> {
       current_user_id,
     );
 
-    const users = await this.userService.findAll({
+    const users = await this.findAll({
       id: In(user_ids),
       role:
         current_user_role === UserRole.MAIN_DISPATCHER
