@@ -2,6 +2,8 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsOptional, IsPositive } from 'class-validator';
 import { UniqueUrl } from '../decorator/unique-url.decorator';
 import { CreateScheduleDto } from './create-schedule.dto';
+import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
+import { IFileUpload } from 'src/modules/upload/type/i-file-upload';
 
 @InputType()
 export class CreateLocksmithDto {
@@ -21,6 +23,9 @@ export class CreateLocksmithDto {
   @UniqueUrl()
   @Field(() => String, { nullable: true })
   url?: string;
+
+  @Field(() => GraphQLUpload, { nullable: true })
+  file?: Promise<IFileUpload>;
 
   @Field(() => String)
   link_to_map: string;

@@ -68,7 +68,7 @@ export class FormMemberService {
   public async createLocksmith(
     locksmith_dto: CreateLocksmithDto,
   ): Promise<Locksmith> {
-    const { address, schedule, ...locksmith } = locksmith_dto;
+    const { address, schedule, file, ...locksmith } = locksmith_dto;
     const saved_schedule = await this.dataSource
       .getRepository<Schedule>('Schedule')
       .save(schedule);
@@ -86,6 +86,10 @@ export class FormMemberService {
     const locks = this.locksmithRepository.create({
       ...locksmith,
     });
+
+    if (file) {
+      await this.uploadFileToLocksmithGql(file, locks.id);
+    }
 
     return await this.locksmithRepository.save({
       ...locks,

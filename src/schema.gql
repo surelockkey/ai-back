@@ -233,6 +233,7 @@ input CreateLocationThumbnailDto {
 input CreateLocksmithDto {
   address: [String!]!
   description: String
+  file: Upload
   link_to_map: String!
   link_to_site: String!
   mail: String!
@@ -1343,6 +1344,7 @@ input UpdateLocationThumbnailDto {
 input UpdateLocksmithDto {
   address: [UpdateAddressDto!]
   description: String
+  file: Upload
   id: ID!
   is_verified: Boolean
   link_to_map: String
