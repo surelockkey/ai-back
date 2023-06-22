@@ -38,7 +38,7 @@ export class UploadService {
     file: IFileUpload,
     bucket_name?: BucketName,
   ): Promise<UploadFileResult> {
-    const file_buffer = file.createReadStream();
+    const file_buffer = await this.createBuffer(file);
     const key = await this.generateRandKeyForImg();
     const data = await this.uploadToS3({
       Bucket: bucket_name
@@ -46,11 +46,22 @@ export class UploadService {
         : this.aws_config.bucket,
       Key: String(key),
       Body: file_buffer,
-      CacheControl: 'no-cache',
+      // CacheControl: 'no-cache',
       ContentType: file.mimetype,
       ContentLength: file.filesize,
     });
     return data;
+  }
+
+  public async createBuffer(file: IFileUpload): Promise<Buffer> {
+    const { createReadStream } = file;
+    const stream = createReadStream();
+    const chunks = [];
+    for await (const chunk of stream) {
+      chunks.push(chunk);
+    }
+
+    return Buffer.concat(chunks);
   }
 
   private async uploadToS3(
