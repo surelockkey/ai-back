@@ -53,7 +53,7 @@ export class UserService extends NestUserService<User> {
   public async deleteManyUsers(user_ids: string[], current_user_id: string) {
     const { role: current_user_role } = await this.findOneById(current_user_id);
 
-    await this.userRepository.delete({
+    const users = await this.findAll({
       id: In(user_ids),
       role:
         current_user_role === UserRole.MAIN_DISPATCHER
@@ -63,6 +63,14 @@ export class UserService extends NestUserService<User> {
               UserRole.TECHNICIAN,
             ])
           : undefined,
+    });
+
+    if (users.length !== user_ids.length) {
+      throw new GraphQLError('Invalid ids');
+    }
+
+    await this.userRepository.delete({
+      id: In(user_ids),
     });
 
     return user_ids;
