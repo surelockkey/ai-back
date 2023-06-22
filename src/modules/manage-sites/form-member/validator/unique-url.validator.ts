@@ -18,10 +18,12 @@ export class UniqueUrlValidator implements ValidatorConstraintInterface {
     if (!value) {
       return true;
     }
+
+    const queryRunner = await this.dataSource.createQueryRunner();
     // const entityName = validationArguments.constraints[0];
-    const record: Locksmith = await this.dataSource
-      .getRepository<Locksmith>('Locksmith')
-      .findOne({ where: { url: value } });
+    const record: Locksmith = await queryRunner.manager.findOne(Locksmith, {
+      where: { url: value },
+    });
 
     if (
       record &&
