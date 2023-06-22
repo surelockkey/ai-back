@@ -5,14 +5,14 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { GraphQLError } from 'graphql';
-import { DataSource } from 'typeorm';
 import { UpdateLocksmithDto } from '../dto/update-locksmith.dto';
 import { Locksmith } from '../entity/locksmith.entity';
+import { DataSource } from 'typeorm';
 
 @ValidatorConstraint({ name: 'UniqueUrl', async: true })
 @Injectable()
 export class UniqueUrlValidator implements ValidatorConstraintInterface {
-  constructor(protected dataSource: DataSource) {}
+  constructor(private readonly dataSource: DataSource) {}
 
   async validate(value: string, validationArguments: ValidationArguments) {
     if (!value) {
@@ -20,7 +20,6 @@ export class UniqueUrlValidator implements ValidatorConstraintInterface {
     }
 
     const queryRunner = await this.dataSource.createQueryRunner();
-    // const entityName = validationArguments.constraints[0];
     const record: Locksmith = await queryRunner.manager.findOne(Locksmith, {
       where: { url: value },
     });

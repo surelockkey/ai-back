@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import * as graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
+import { useContainer } from 'class-validator';
 
 async function bootstrap() {
   console.log({
@@ -25,6 +26,8 @@ async function bootstrap() {
   app.enableCors({
     allowedHeaders: '*',
   });
+
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   await app.listen(configService.get('app.port'));
 }
