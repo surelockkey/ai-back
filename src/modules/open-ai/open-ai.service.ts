@@ -207,7 +207,7 @@ export class OpenAiService {
         ],
       }).catch(e => {
         console.log(e.response.data)
-        throw new GraphQLError(e.response.data);
+        throw e.response.data;
       });
 
       return {
