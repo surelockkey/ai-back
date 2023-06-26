@@ -38,6 +38,7 @@ def prod_secrets = [
         [envVar: 'AWS_BUCKET',  vaultKey: 'AWS_BUCKET'],
         [envVar: 'AWS_REGION',  vaultKey: 'AWS_REGION'],
         [envVar: 'AWS_BUCKET_LOCKSMITH',  vaultKey: 'AWS_BUCKET_LOCKSMITH'],
+        [envVar: 'TOKEN_WORKIZ', vaultKey: 'TOKEN_WORKIZ'],
     ]],
 ]
 

@@ -25,8 +25,6 @@ import { LocksmithsWithCount } from './dto/locksmith-with-count.dto';
 export class FormMemberResolver {
   constructor(private readonly formMemberService: FormMemberService) {}
 
-  //todo find out which method used (controller or this resolver)
-  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Mutation(() => Request)
   public createRequest(
     @Args('createRequestDto', { type: () => CreateRequestDto })

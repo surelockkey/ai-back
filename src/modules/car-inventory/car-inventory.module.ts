@@ -17,9 +17,6 @@ import { UserModule } from '../user/user.module';
     UpdateCarModule,
     UserModule,
   ],
-  providers: [
-    CarInventoryService, 
-    CarInventoryResolver,
-  ],
+  providers: [CarInventoryService, CarInventoryResolver],
 })
 export class CarInventoryModule {}

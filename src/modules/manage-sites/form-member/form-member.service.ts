@@ -87,15 +87,17 @@ export class FormMemberService {
       ...locksmith,
     });
 
-    if (file) {
-      await this.uploadFileToLocksmithGql(file, locks.id);
-    }
-
-    return await this.locksmithRepository.save({
+    const saved_lock = await this.locksmithRepository.save({
       ...locks,
       schedule: saved_schedule,
       address: saved_addresses,
     });
+
+    if (file) {
+      await this.uploadFileToLocksmithGql(file, saved_lock.id);
+    }
+
+    return this.locksmithRepository.findOne({ where: { id: saved_lock.id } });
   }
 
   public async editRequest(update_request_dto: UpdateRequestDto) {
@@ -352,6 +354,8 @@ export class FormMemberService {
     file: Promise<IFileUpload>,
     locksmith_id: string,
   ): Promise<string> {
+    console.log({ file });
+
     const data: UploadFileResult = await this.uploadService.uploadFile(
       await file,
       BucketName.AWS_BUCKET_LOCKSMITH,

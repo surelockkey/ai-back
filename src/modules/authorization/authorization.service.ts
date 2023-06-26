@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { NestAuthService } from '@tech-slk/nest-auth';
+import { LoginCredential, NestAuthService } from '@tech-slk/nest-auth';
 import { User } from '../user/entity/user.entity';
 import { UserService } from '../user/user.service';
 import { CurrentUserDto } from './dto/current-user.dto';
@@ -34,6 +34,14 @@ export class AuthorizationService extends NestAuthService<
     private readonly configService: ConfigService,
   ) {
     super(tokenService, userService);
+  }
+
+  public async loginEmailPass(login_dto: LoginCredential) {
+    const user = await this.userService.findOne({ email: login_dto.email });
+    return await this.login(login_dto, {
+      email: login_dto.email,
+      role: user.role,
+    });
   }
 
   public async inviteUserToApp(

@@ -6,6 +6,7 @@ import { Log } from 'src/modules/logger/entity/log.entity';
 import { UserSchedule } from 'src/modules/user/user-schedule/entity/user-schedule.entity';
 import { UserInfo } from 'src/modules/user/user-info/entity/user-info.entity';
 import { UserNote } from 'src/modules/user/user-note/entity/user-note.entity';
+import { UserScheduleRequest } from '../user-schedule-request/entity/user-schedule-request.entity';
 
 @Entity('user')
 @ObjectType()
@@ -48,4 +49,10 @@ export class User extends NestUser {
   @Field(() => [UserNote], { nullable: true })
   @OneToMany(() => UserNote, (user_note) => user_note.user, { eager: true })
   notes: UserNote[];
+
+  @OneToMany(
+    () => UserScheduleRequest,
+    (user_schedule_request) => user_schedule_request.user,
+  )
+  schedule_requests: UserScheduleRequest[];
 }
