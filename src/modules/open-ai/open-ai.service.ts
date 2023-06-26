@@ -245,7 +245,9 @@ export class OpenAiService {
         #
         ### Please create a PostgresSQL query without any comments which will get all related for this question: ${message}.
         Be accurate with job status, acceptable status: Submitted, Canceled, In progress, Pending, done pending approval, new, Done.
-        Be accurate with call is_active, acceptable values: '1', '0'`,
+        Be accurate with call is_active, acceptable values: '1', '0'.
+        Be accurate with call status, acceptable status: canceled, busy, ringing, failed, in-progress, initiated, completed, no-answer.
+        Be accurate with call call_duration, format is hh:mm:ss.`,
         },
       ],
     })
