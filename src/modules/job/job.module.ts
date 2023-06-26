@@ -5,9 +5,11 @@ import { JobService } from './job.service';
 import { JobResolver } from './job.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Job } from './entity/job.entity';
+import { Call } from './entity/call.entity';
+import { ActivityLog } from './entity/activity-log.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Job]), CtmApiModule, WorkizApiModule],
+  imports: [TypeOrmModule.forFeature([Job, Call, ActivityLog]), CtmApiModule, WorkizApiModule],
   providers: [JobService, JobResolver],
 })
 export class JobModule {}

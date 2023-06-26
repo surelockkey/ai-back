@@ -31,9 +31,4 @@ export class OpenAiResolver {
   listModels() {
     return this.openAiService.listModel();
   }
-
-  @Query(() => String)
-  sendSqlMessage(@Args('message') message: string) {
-    return this.openAiService.sendSqlMessage(message);
-  }
 }
