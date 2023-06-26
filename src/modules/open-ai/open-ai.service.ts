@@ -245,7 +245,7 @@ export class OpenAiService {
         #
         ### Please create a PostgresSQL query without any comments which will get all related for this question: ${message}.
         Be accurate with job status, acceptable status: Submitted, Canceled, In progress, Pending, done pending approval, new, Done.
-        Be accurate with call is_active, acceptable values: 1, 0`,
+        Be accurate with call is_active, acceptable values: '1', '0'`,
         },
       ],
     })
