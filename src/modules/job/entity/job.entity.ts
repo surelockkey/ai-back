@@ -92,4 +92,28 @@ export class Job extends BaseEntity {
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   manager_notes: string;
+
+  @Field(() => Number, { nullable: true })
+  @Column('decimal', { nullable: true })
+  tip_amount: number;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  job_timezone: string;
+
+  @Field(() => Number, { nullable: true })
+  @Column('decimal', { nullable: true })
+  tax_amount: number;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  tax_precent: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  job_id: string;
+
+  @Field(() => Number, { nullable: true })
+  @Column('decimal', { nullable: true })
+  avg_duration: number;
 }

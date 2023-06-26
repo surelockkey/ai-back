@@ -10,6 +10,7 @@ import { DataSource } from "typeorm";
 import { InjectDataSource } from "@nestjs/typeorm";
 import * as moment from "moment";
 import { Message } from "../chat/entity/message.entity";
+import { GraphQLError } from "graphql";
 
 // import * as ax from 'axios';
 
@@ -160,42 +161,37 @@ export class OpenAiService {
 
   public async sendSqlMessage(message: string) {
     try {
-      const res = await this.openai
-        .createChatCompletion({
-          model: "gpt-3.5-turbo",
-          messages: [
-            {
-              role: "user",
-              content: `
-            ### Postgres SQL tables, with their properties:
-            #
-            # Job(uuid, start_date, end_date, created_date, total_price, amount_due, client_id, status, phone, second_phone, email, client_name, city, state, postal_code, job_type, job_note, job_source, technician_name, dispatcher_name, address, manager_notes)
-            #
-            ###
-            ### Acceptable status: Submitted, Canceled, In progress, Pending, done pending approval, new, Done
-            ### Please create a PostgresSQL query without any comments which will get all related for this question: ${message}`,
-            },
-          ],
-        })
-        .then((r) => r)
-        .catch((e) => {
-          console.log(e.response);
-          return e;
+      let number_of_generated_queries = 0;
+      const queries: string[] = [];
+
+      while (number_of_generated_queries < 3) {
+        await this.generateSqlQuery(message).then((res) => {
+          const query = res.data.choices[0].message.content;
+          queries.push(query);
+        }).catch((e) => console.log(e));
+        number_of_generated_queries++;
+      }
+
+      const the_best_query = this.mode(queries);
+
+      console.log({
+        the_best_query,
+        queries,
+      });
+
+      const data = await this.dataSource.query(the_best_query).catch(async ()=> {
+        const broken_query_index = queries.findIndex((query) => query === the_best_query);
+        queries.splice(broken_query_index, 1);
+
+        return await this.dataSource.query(queries[0]).catch(async ()=> {
+          const broken_query_index = queries.findIndex((query) => query === the_best_query);
+          queries.splice(broken_query_index, 1);
+          
+          return await this.dataSource.query(queries[0]);
         });
-
-      console.log(res.response);
-
-      const query = res.data.choices[0].message.content;
-
-      console.log({
-        query,
       });
 
-      const data = await this.dataSource.query(query);
-
-      console.log({
-        data,
-      });
+      console.log(data)
 
       const final_res = await this.openai.createChatCompletion({
         model: "gpt-3.5-turbo",
@@ -209,9 +205,10 @@ export class OpenAiService {
           `,
           },
         ],
+      }).catch(e => {
+        console.log(e.response.data)
+        throw new GraphQLError(e.response.data);
       });
-
-      console.log(final_res.data.choices[0].message.content);
 
       return {
         id: final_res.data.id,
@@ -221,13 +218,61 @@ export class OpenAiService {
         finish_reason: final_res.data.choices[0].finish_reason,
       };
     } catch (e) {
+      console.log(111, e)
       return {
         id: '',
         created: moment().unix(),
-        text: `Please try to change your question, I can't find any information based on this question`,
+        text: e.error ? e.error.message : `Please try to change your question, I can't find any information based on this question`,
         total_tokens: 0,
         finish_reason: 'error',
       };
     }
+  }
+
+  private async generateSqlQuery(message: string) {
+    return await this.openai
+    .createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "user",
+          content: `
+        ### Postgres SQL tables, with their properties:
+        #
+        # job(start_date, end_date, created_date, total_price, amount_due, client_id, status, phone, second_phone, email, client_name, city, state, postal_code, job_type, job_note, job_source, technician_name, dispatcher_name, address, manager_notes, job_id)
+        # call(call_id, call_sid, created, from, to, recording_url, from_zip, to_zip, call_duration, call_status, direction, job_id, is_active, client_id, ad_group_id, phoneNumber, timeInt)
+        # activity_log(activity_id, account_id, text, uid, uname, job_id, uuid, timestamp, timeInt, time, searchTerm)
+        #
+        ### Please create a PostgresSQL query without any comments which will get all related for this question: ${message}.
+        Be accurate with job status, acceptable status: Submitted, Canceled, In progress, Pending, done pending approval, new, Done`,
+        },
+      ],
+    })
+    .then((r) => r)
+    .catch((e) => {
+      console.log(e.response);
+      return e;
+    });
+  }
+
+  private mode(array: string[]) {
+      if(array.length == 0)
+          return null;
+      var modeMap = {};
+      var maxEl = array[0], maxCount = 1;
+      for(var i = 0; i < array.length; i++)
+      {
+          var el = array[i];
+          if(modeMap[el] == null)
+              modeMap[el] = 1;
+          else
+              modeMap[el]++;  
+          if(modeMap[el] > maxCount)
+          {
+              maxEl = el;
+              maxCount = modeMap[el];
+          }
+      }
+      return maxEl;
   }
 }
