@@ -1517,6 +1517,7 @@ type UserWithSchedule {
   name: String!
   notes: [UserNote!]
   role: UserRole!
+  schedule_requests: [UserScheduleRequest!]!
   schedules: [UserSchedule!]!
   workiz_id: String
 }

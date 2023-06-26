@@ -1,12 +1,16 @@
-import { Field, InputType, Int, ObjectType } from "@nestjs/graphql";
-import { User } from "../entity/user.entity";
-import { UserSchedule } from "../user-schedule/entity/user-schedule.entity";
-import { UserRole } from "../enum/user-role.enum";
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
+import { User } from '../entity/user.entity';
+import { UserSchedule } from '../user-schedule/entity/user-schedule.entity';
+import { UserRole } from '../enum/user-role.enum';
+import { UserScheduleRequest } from '../user-schedule-request/entity/user-schedule-request.entity';
 
 @ObjectType()
 export class UserWithSchedule extends User {
   @Field(() => [UserSchedule])
   schedules: UserSchedule[];
+
+  @Field(() => [UserScheduleRequest])
+  schedule_requests: UserScheduleRequest[];
 }
 
 @InputType()

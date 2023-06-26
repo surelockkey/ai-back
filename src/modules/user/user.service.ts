@@ -124,6 +124,15 @@ export class UserService extends NestUserService<User> {
           from,
           to,
         },
+      )
+      .leftJoinAndSelect(
+        'user.schedule_requests',
+        'user-schedule-request',
+        'user-schedule-request.from BETWEEN :from AND :to OR user-schedule-request.to BETWEEN :from AND :to',
+        {
+          from,
+          to,
+        },
       );
 
     if (search_value) {
@@ -181,6 +190,15 @@ export class UserService extends NestUserService<User> {
         'user.schedules',
         'user-schedule',
         'user-schedule.work_from BETWEEN :from AND :to OR user-schedule.work_to BETWEEN :from AND :to',
+        {
+          from,
+          to,
+        },
+      )
+      .leftJoinAndSelect(
+        'user.schedule_requests',
+        'user-schedule-request',
+        'user-schedule-request.from BETWEEN :from AND :to OR user-schedule-request.to BETWEEN :from AND :to',
         {
           from,
           to,
