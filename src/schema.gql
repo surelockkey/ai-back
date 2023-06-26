@@ -997,7 +997,7 @@ type Query {
   getFilteredBlog(filter: FilterableBlogDto!): ConstructorBlogFilterableWithCountDto!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!
-  getJobs: PaginatedJobDto!
+  getJobs: String!
   getLocationById(id: String!): Location!
   getLocationByState(state: String!): [Location!]!
   getLocationByStateAndUrl(filter: LocationFilterStateUrlDto!): Location!
@@ -1019,7 +1019,6 @@ type Query {
   listModels: String!
   searchLocksmiths(options: SearchLocksmithDto!): LocksmithsWithCount!
   searchRequests(first: Float, searchValue: String, skip: Float): [Request!]!
-  sendSqlMessage(message: String!): String!
   testApi(method: String!, url: String!): String!
 }
 

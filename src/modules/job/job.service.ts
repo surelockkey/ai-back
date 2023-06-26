@@ -6,23 +6,66 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { PaginatedJobDto } from "../api/workiz-api/dto/workiz-api.dto";
 import { WorkizCoreApiService } from "../api/workiz-api/workiz-core.service";
+import * as moment from "moment";
+import { Call } from "./entity/call.entity";
+import { ActivityLog } from "./entity/activity-log.entity";
 
 @Injectable()
 export class JobService extends CrudService<Job> {
   constructor(
     @InjectRepository(Job) private readonly jobRepository: Repository<Job>,
     private readonly workizApiService: WorkizApiService,
-    private readonly workizCoreApiService: WorkizCoreApiService
+    private readonly workizCoreApiService: WorkizCoreApiService,
+    @InjectRepository(Call) private readonly callRepository: Repository<Call>,
+    @InjectRepository(ActivityLog) private readonly activityLogRepository: Repository<ActivityLog>,
   ) {
     super(jobRepository);
   }
 
-  public async getJob(): Promise<PaginatedJobDto> {
+  public async jobLoop() {
+    await this.jobRepository
+    .createQueryBuilder('job')
+    .delete()
+    .from(Job)
+    .execute();
+
+    await this.callRepository
+    .createQueryBuilder('call')
+    .delete()
+    .from(Call)
+    .execute();
+
+    await this.activityLogRepository
+    .createQueryBuilder('activityLog')
+    .delete()
+    .from(ActivityLog)
+    .execute();
+
+
+    const current_date = moment();
+    let year = 18;
+    let month = 1;
+
+    while(!(Number(current_date.format('YYYY')) <= year && Number(current_date.format('M')) < month)) {
+      await this.getJob(year, month);
+
+      month++;
+
+      if (month > 12) {
+        month = 1;
+        year+= 1;
+      }
+
+      console.log(month, year)
+    }
+  }
+
+  public async getJob(year: number, month: number): Promise<PaginatedJobDto> {
     let current_page = 1;
-    let total_pages = (await this.getJobsByRange(current_page)).pages;
+    let total_pages = (await this.getJobsByRange(current_page, year, month)).pages;
 
     while (current_page < total_pages) {
-      const req = (await this.getJobsByRange(current_page));
+      const req = (await this.getJobsByRange(current_page, year, month));
       const jobs = req.aaData;
           
       await Promise.all((jobs || [])?.map(async (job) => {
@@ -35,8 +78,16 @@ export class JobService extends CrudService<Job> {
     return { items: [], has_more: true };
   }
 
-  private async getJobsByRange(current_page: number) {
+  private async getJobsByRange(current_page: number, year: number, month: number) {
     try {
+      let month_to = month + 1;
+      let year_to = year;
+
+      if (month === 12) {
+        month_to = 1;
+        year_to = year + 1; 
+      }
+
       return await this.workizCoreApiService.req(
         '/ajaxc/job/jobReport/',
         'post',
@@ -46,7 +97,7 @@ export class JobService extends CrudService<Job> {
           sorted: [{ id: "created", desc: true }],
           filtered: [],
           sSearch: "",
-          final_q: `2.6.23_1.7.23`,
+          final_q: `1.${month}.${year}_1.${month_to}.${year_to}`,
           timeQueryChanged: false,
           pickerParams: { report_by: 3 },
           react: true,
@@ -75,6 +126,55 @@ export class JobService extends CrudService<Job> {
         `/ajaxc/job/get/${job_id}/`,
         'post',
       );
+
+      const activities = (await this.workizCoreApiService.req(
+        `/ajaxc/job/jobTimelineFull/${job.data.job_id}/`,
+        'post',
+        {}
+      )).data;
+
+      let activity_counter = 0;
+
+      while (activity_counter < activities.length) {
+        if (activities[activity_counter]._type === 'calls') {
+          await this.callRepository.save({
+            call_id: activities[activity_counter].id,
+            call_sid: activities[activity_counter].call_sid,
+            created: activities[activity_counter].created,
+            from: activities[activity_counter].from,
+            to: activities[activity_counter].to,
+            recording_url: activities[activity_counter].recording_url,
+            from_zip: activities[activity_counter].from_zip,
+            to_zip: activities[activity_counter].to_zip,
+            call_duration: activities[activity_counter].call_duration,
+            call_status: activities[activity_counter].call_status,
+            direction: activities[activity_counter].direction,
+            job_id: activities[activity_counter].job_id,
+            is_active: activities[activity_counter].is_active,
+            client_id: activities[activity_counter].client_id,
+            ad_group_id: activities[activity_counter].ad_group_id,
+            phoneNumber: activities[activity_counter].phoneNumber,
+            timeInt: activities[activity_counter].timeInt,
+            time: activities[activity_counter].time,
+          });
+        } else {
+          await this.activityLogRepository.save({
+            activity_id: activities[activity_counter].id,
+            account_id: activities[activity_counter].account_id,
+            text: activities[activity_counter].text,
+            uid: activities[activity_counter].uid,
+            uname: activities[activity_counter].uname,
+            job_id: activities[activity_counter].job_id,
+            uuid: activities[activity_counter].uuid,
+            timestamp: activities[activity_counter].timestamp,
+            timeInt: activities[activity_counter].timeInt,
+            time: activities[activity_counter].time,
+            searchTerm: activities[activity_counter].searchTerm,
+          });
+        }
+
+        activity_counter++;
+      }
   
       await this.jobRepository.save({
         uuid: job.data.uuid,
@@ -98,6 +198,12 @@ export class JobService extends CrudService<Job> {
         technician_name: job.data.techs[0] && job.data.techs[0].technition,
         dispatcher_name: job.data.user_created,
         address: job.data.address,
+        tip_amount: job.data.tip_amount,
+        job_timezone: job.data.job_timezone,
+        tax_amount: job.data.tax_amount,
+        tax_precent: job.data.tax_precent,
+        job_id: job.data.job_id,
+        avg_duration: job.data.avg_duration,
       })
     } catch(e) {
       console.log(e);   
