@@ -32,8 +32,7 @@ export class AuthorizationResolver {
     login_dto: LoginCredential,
   ): Promise<TokenResponse> {
     return this.loggerService.actionLog({
-      callback: () =>
-        this.authorizationService.login(login_dto, { email: login_dto.email }),
+      callback: () => this.authorizationService.loginEmailPass(login_dto),
       action: 'Tried to login',
     });
   }

@@ -351,6 +351,12 @@ input CreateUserScheduleDto {
   work_to: Int!
 }
 
+input CreateUserScheduleRequestDto {
+  day: String!
+  from: Int!
+  to: Int!
+}
+
 type CtmCall {
   account_id: Int!
   audio: String
@@ -849,6 +855,7 @@ type Mutation {
   createUserInfo(user_info: CreateUserInfoDto!): UserInfo!
   createUserNote(user_note: CreateUserNoteDto!): UserNote!
   createUserSchedule(user_schedule: CreateUserScheduleDto!): UserSchedule!
+  createUserScheduleRequest(schedule_request: CreateUserScheduleRequestDto!): UserScheduleRequest!
 
   """delete blog by id"""
   deleteBlogById(id: String!): ConstructorBlog!
@@ -871,6 +878,7 @@ type Mutation {
   deleteUserInfo(id: ID!): ID!
   deleteUserNote(id: ID!): ID!
   deleteUserSchedule(id: ID!): ID!
+  deleteUserScheduleRequest(id: ID!): ID!
   editLocksmith(updateLocksmithDto: UpdateLocksmithDto!): Locksmith!
   editRequest(updateRequestDto: UpdateRequestDto!): Request!
   inviteUserToApp(inviteUserDto: InviteUserDto!): InvitedUser!
@@ -1491,6 +1499,14 @@ type UserSchedule {
   user_id: ID!
   work_from: Int!
   work_to: Int!
+}
+
+type UserScheduleRequest {
+  day: String!
+  from: Int!
+  id: ID!
+  to: Int!
+  user_id: ID!
 }
 
 type UserWithSchedule {
