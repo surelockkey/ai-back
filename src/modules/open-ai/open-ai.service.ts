@@ -277,8 +277,8 @@ export class OpenAiService {
         column_name    |        data_type          
         ---------------+-----------------------------
          created       | timestamp without time zone
-         "timeInt"       | integer
-         "phoneNumber"   | character varying
+         "timeInt"     | integer
+         "phoneNumber" | character varying
          from          | character varying
          to            | character varying
          recording_url | character varying
