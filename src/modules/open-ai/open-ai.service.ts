@@ -240,17 +240,61 @@ export class OpenAiService {
           role: "user",
           content: `
         ### Postgres SQL tables, with their properties:
-        #
-        # job(start_date, end_date, created_date, total_price, amount_due, client_id, status, phone, second_phone, email, client_name, city, state, postal_code, job_type, job_note, job_source, technician_name, dispatcher_name, address, manager_notes, job_id)
-        # call(call_id, call_sid, created, from, to, recording_url, from_zip, to_zip, call_duration, call_status, direction, job_id, is_active, client_id, ad_group_id, phoneNumber, timeInt)
-        # activity_log(activity_id, account_id, text, uid, uname, job_id, uuid, timestamp, timeInt, time, searchTerm)
-        #
-        ### Please create a PostgresSQL query without any comments which will get all related for this question: ${message}.
-        Acceptable job status: Submitted, Canceled, In progress, Pending, done pending approval, new, Done.
-        Acceptable job created_date type: timestamp without time zone.
-        Acceptable call is_active, acceptable values: '1', '0'.
-        Acceptable call status, acceptable status: canceled, busy, ringing, failed, in-progress, initiated, completed, no-answer.
-        Acceptable call call_duration, format is hh:mm:ss.`,
+        Table 'job'
+        
+           column_name   |          data_type          
+        -----------------+-----------------------------
+         avg_duration    | numeric
+         client_id       | integer
+         start_date      | timestamp without time zone
+         end_date        | timestamp without time zone
+         total_price     | numeric
+         amount_due      | numeric
+         created_date    | timestamp without time zone
+         tip_amount      | numeric
+         tax_amount      | numeric
+         job_type        | character varying
+         job_source      | character varying
+         manager_notes   | character varying
+         job_id          | character varying
+         tax_precent     | character varying
+         job_timezone    | character varying
+         client_name     | character varying
+         job_note        | character varying
+         technician_name | character varying
+         dispatcher_name | character varying
+         status          | character varying ( Acceptable values: Submitted, Canceled, In progress, Pending, done pending approval, new, Done )
+         phone           | character varying
+         second_phone    | character varying
+         email           | character varying
+         address         | character varying
+         city            | character varying
+         state           | character varying
+         postal_code     | character varying
+
+        Table 'call'
+
+        column_name    |        data_type          
+        ---------------+-----------------------------
+         created       | timestamp without time zone
+         "timeInt"       | integer
+         "phoneNumber"   | character varying
+         from          | character varying
+         to            | character varying
+         recording_url | character varying
+         from_zip      | character varying
+         to_zip        | character varying
+         call_duration | character varying ( Acceptable format: hh:mm:ss )
+         call_status   | character varying ( Acceptable values: canceled, busy, ringing, failed, in-progress, initiated, completed, no-answer )
+         direction     | character varying
+         job_id        | character varying
+         is_active     | character varying ( Acceptable values: '1', '0' )
+         client_id     | character varying
+         ad_group_id   | character varying
+         call_id       | character varying
+         call_sid      | character varying
+        
+        ### Please create a PostgresSQL query without any comments which will get all related for this question: ${message}.`,
         },
       ],
     })
