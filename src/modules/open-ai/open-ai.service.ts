@@ -168,18 +168,19 @@ export class OpenAiService {
         await this.generateSqlQuery(message).then((res) => {
           const query = res.data.choices[0].message.content;
           queries.push(query);
+          console.log(queries.length, ' Query arr')
         }).catch((e) => console.log(e));
         number_of_generated_queries++;
       }
-
+      
       const the_best_query = this.mode(queries);
 
       console.log({
         the_best_query,
-        queries,
       });
 
-      const data = await this.dataSource.query(the_best_query).catch(async ()=> {
+      const data = await this.dataSource.query(the_best_query)
+      .catch(async ()=> {
         const broken_query_index = queries.findIndex((query) => query === the_best_query);
         queries.splice(broken_query_index, 1);
 
@@ -216,6 +217,7 @@ export class OpenAiService {
         text: final_res.data.choices[0].message.content.replace("\n\n", ""),
         total_tokens: final_res.data.usage.total_tokens,
         finish_reason: final_res.data.choices[0].finish_reason,
+        database_result: JSON.stringify(data),
       };
     } catch (e) {
       console.log(111, e)
@@ -244,10 +246,11 @@ export class OpenAiService {
         # activity_log(activity_id, account_id, text, uid, uname, job_id, uuid, timestamp, timeInt, time, searchTerm)
         #
         ### Please create a PostgresSQL query without any comments which will get all related for this question: ${message}.
-        Be accurate with job status, acceptable status: Submitted, Canceled, In progress, Pending, done pending approval, new, Done.
-        Be accurate with call is_active, acceptable values: '1', '0'.
-        Be accurate with call status, acceptable status: canceled, busy, ringing, failed, in-progress, initiated, completed, no-answer.
-        Be accurate with call call_duration, format is hh:mm:ss.`,
+        Acceptable job status: Submitted, Canceled, In progress, Pending, done pending approval, new, Done.
+        Acceptable job created_date type: timestamp without time zone.
+        Acceptable call is_active, acceptable values: '1', '0'.
+        Acceptable call status, acceptable status: canceled, busy, ringing, failed, in-progress, initiated, completed, no-answer.
+        Acceptable call call_duration, format is hh:mm:ss.`,
         },
       ],
     })

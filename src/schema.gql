@@ -812,6 +812,7 @@ type LogsPaginated {
 
 type Message {
   created: Int!
+  database_result: String
   finish_reason: String!
   id: ID!
   openai_id: String!
