@@ -39,9 +39,6 @@ export class OpenAiService {
   }
 
   public async sendMessage(prompt: string, context?: Message[]): Promise<OpenAiMessageResponse> {
-    const system_settings =
-      await this.systemSettingsService.getSystemSettings();
-
     const prev_messages: ChatCompletionRequestMessage[] = [];
 
     context.forEach((message) => {
@@ -56,8 +53,6 @@ export class OpenAiService {
     });
 
     const res = await this.openai.createChatCompletion({
-      // model: 'text-davinci-003',
-      // model: system_settings.active_model,
       model: 'gpt-3.5-turbo',
       messages: [
         ...prev_messages,
@@ -162,37 +157,21 @@ export class OpenAiService {
   public async sendSqlMessage(message: string) {
     try {
       let number_of_generated_queries = 0;
-      const queries: string[] = [];
+      let data: any;
 
-      while (number_of_generated_queries < 3) {
-        await this.generateSqlQuery(message).then((res) => {
-          const query = res.data.choices[0].message.content;
-          queries.push(query);
-          console.log(queries.length, ' Query arr')
-        }).catch((e) => console.log(e));
+      while (number_of_generated_queries < 3 && !data) {
+        await this.generateSqlQuery(message)
+        .then((res) => {
+          data = res;
+        })
+        
         number_of_generated_queries++;
+        console.log(number_of_generated_queries, data)
       }
-      
-      const the_best_query = this.mode(queries);
 
-      console.log({
-        the_best_query,
-      });
-
-      const data = await this.dataSource.query(the_best_query)
-      .catch(async ()=> {
-        const broken_query_index = queries.findIndex((query) => query === the_best_query);
-        queries.splice(broken_query_index, 1);
-
-        return await this.dataSource.query(queries[0]).catch(async ()=> {
-          const broken_query_index = queries.findIndex((query) => query === the_best_query);
-          queries.splice(broken_query_index, 1);
-          
-          return await this.dataSource.query(queries[0]);
-        });
-      });
-
-      console.log(data)
+      if (!data) {
+        throw new GraphQLError('Nothing found');
+      }
 
       const final_res = await this.openai.createChatCompletion({
         model: "gpt-3.5-turbo",
@@ -272,6 +251,7 @@ export class OpenAiService {
          state           | character varying
          postal_code     | character varying
 
+
         Table 'call'
 
         column_name    |        data_type          
@@ -279,15 +259,15 @@ export class OpenAiService {
          created       | timestamp without time zone
          "timeInt"     | integer
          "phoneNumber" | character varying
-         from          | character varying
-         to            | character varying
+         from          | character varying ( It is a phone number )
+         to            | character varying ( It is a phone number )
          recording_url | character varying
          from_zip      | character varying
          to_zip        | character varying
          call_duration | character varying ( Acceptable format: hh:mm:ss )
          call_status   | character varying ( Acceptable values: canceled, busy, ringing, failed, in-progress, initiated, completed, no-answer )
-         direction     | character varying
-         job_id        | character varying
+         direction     | character varying ( Acceptable values: inbound, outgoing )
+         job_id        | character varying ( Foreign key to table job )
          is_active     | character varying ( Acceptable values: '1', '0' )
          client_id     | character varying
          ad_group_id   | character varying
@@ -298,31 +278,11 @@ export class OpenAiService {
         },
       ],
     })
-    .then((r) => r)
+    .then(async (r) => {
+      return await this.dataSource.query(r.data.choices[0].message.content);
+    })
     .catch((e) => {
       console.log(e.response);
-      return e;
     });
-  }
-
-  private mode(array: string[]) {
-      if(array.length == 0)
-          return null;
-      var modeMap = {};
-      var maxEl = array[0], maxCount = 1;
-      for(var i = 0; i < array.length; i++)
-      {
-          var el = array[i];
-          if(modeMap[el] == null)
-              modeMap[el] = 1;
-          else
-              modeMap[el]++;  
-          if(modeMap[el] > maxCount)
-          {
-              maxEl = el;
-              maxCount = modeMap[el];
-          }
-      }
-      return maxEl;
   }
 }
