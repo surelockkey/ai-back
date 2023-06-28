@@ -5,7 +5,6 @@ import { User } from '../../entity/user.entity';
 
 @Entity()
 @ObjectType()
-@Unique('unique_user_schedule_request_for_day', ['user_id', 'day'])
 export class UserScheduleRequest extends BaseEntity {
   @Field(() => Int)
   @Column('int')
@@ -16,12 +15,8 @@ export class UserScheduleRequest extends BaseEntity {
   to: number;
 
   @Field(() => ID)
-  @Column('uuid')
-  user_id: string;
-
-  @Field(() => String)
   @Column()
-  day: string;
+  user_id: string;
 
   @ManyToOne(() => User, (user) => user.schedule_requests)
   @JoinColumn({ name: 'user_id' })

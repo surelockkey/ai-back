@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { UserRole } from '../enum/user-role.enum';
 import { GraphQLError } from 'graphql';
+import { CreateUserScheduleRequestDto } from './dto/user-schedule-request.dto';
 
 @Injectable()
 export class UserScheduleRequestService extends CrudService<UserScheduleRequest> {
@@ -35,5 +36,9 @@ export class UserScheduleRequestService extends CrudService<UserScheduleRequest>
     }
 
     return id;
+  }
+
+  public createOrUpdateUserScheduleRequest(createUserScheduleRequestDto: CreateUserScheduleRequestDto[]): Promise<UserScheduleRequest[]> {
+    return this.userScheduleRequestRepository.save(createUserScheduleRequestDto);
   }
 }
