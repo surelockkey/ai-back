@@ -28,7 +28,7 @@ export class UserScheduleRequestService extends CrudService<UserScheduleRequest>
       res = await this.deleteMany(ids, current_user_id);
     }
 
-    if (res.affected !== 1) {
+    if (res.affected < 1) {
       throw new GraphQLError('Failed to delete');
     }
 
@@ -43,7 +43,7 @@ export class UserScheduleRequestService extends CrudService<UserScheduleRequest>
     return this.userScheduleRequestRepository.createQueryBuilder('user_schedule_request')
     .delete()
     .from(UserScheduleRequest)
-    .where("id IN :ids", { ids })
+    .where("id IN (:...ids)", { ids })
     .andWhere(user_id ? 'user_id = :user_id' : 'true', { ...(user_id && { user_id }) })
     .execute()
   }
