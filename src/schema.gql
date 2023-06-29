@@ -271,6 +271,12 @@ input CreateOrUpdateUserScheduleDto {
   work_to: Int!
 }
 
+input CreateOrUpdateUserScheduleRequestDto {
+  id: ID
+  work_from: Int!
+  work_to: Int!
+}
+
 input CreatePhotoForBlockDto {
   alt: String
   blog_block_id: ID
@@ -347,11 +353,6 @@ input CreateUserNoteDto {
 
 input CreateUserScheduleDto {
   user_id: ID!
-  work_from: Int!
-  work_to: Int!
-}
-
-input CreateUserScheduleRequestDto {
   work_from: Int!
   work_to: Int!
 }
@@ -847,7 +848,7 @@ type Mutation {
   createOrUpdateManyUsersSchedules(user_schedules: [CreateOrUpdateUserScheduleDto!]!): [UserSchedule!]!
   createOrUpdateUserInfo(user_infos: [CreateOrUpdateUserInfoDto!]!): [UserInfo!]!
   createOrUpdateUserNote(user_note: CreateOrUpdateUserNoteDto!): UserNote!
-  createOrUpdateUserScheduleRequest(schedule_request: [CreateUserScheduleRequestDto!]!): [UserScheduleRequest!]!
+  createOrUpdateUserScheduleRequest(schedule_request: [CreateOrUpdateUserScheduleRequestDto!]!): [UserScheduleRequest!]!
   createRequest(createRequestDto: CreateRequestDto!): Request!
   createRequestForCarItems(createUpdateCarDto: [CreateUpdateCarDto!]!): [UpdateCarRequest!]!
   createReviews(createReviewsDto: CreateReviewsDto!): Reviews!

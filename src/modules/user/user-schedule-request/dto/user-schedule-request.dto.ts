@@ -1,4 +1,4 @@
-import { InputType, OmitType } from '@nestjs/graphql';
+import { Field, ID, InputType, OmitType } from '@nestjs/graphql';
 import { UserScheduleRequest } from '../entity/user-schedule-request.entity';
 
 @InputType()
@@ -7,7 +7,10 @@ export class UserScheduleRequestInput extends OmitType(UserScheduleRequest, [
 ]) {}
 
 @InputType()
-export class CreateUserScheduleRequestDto extends OmitType(
+export class CreateOrUpdateUserScheduleRequestDto extends OmitType(
   UserScheduleRequestInput,
   ['id', 'user_id'],
-) {}
+) {
+  @Field(() => ID, { nullable: true })
+  id?: string;
+}

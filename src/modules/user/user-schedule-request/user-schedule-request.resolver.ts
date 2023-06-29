@@ -3,7 +3,7 @@ import { UserScheduleRequestService } from './user-schedule-request.service';
 import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
 import { UserRole } from '../enum/user-role.enum';
 import { UserScheduleRequest } from './entity/user-schedule-request.entity';
-import { CreateUserScheduleRequestDto } from './dto/user-schedule-request.dto';
+import { CreateOrUpdateUserScheduleRequestDto } from './dto/user-schedule-request.dto';
 import { CurrentUser } from '@tech-slk/nest-auth';
 import { CurrentUserDto } from 'src/modules/authorization/dto/current-user.dto';
 
@@ -16,8 +16,8 @@ export class UserScheduleRequestResolver {
   @RoleGuard(UserRole.DISPATCHER, UserRole.TECHNICIAN, UserRole.MAIN_DISPATCHER)
   @Mutation(() => [UserScheduleRequest])
   createOrUpdateUserScheduleRequest(
-    @Args('schedule_request', { type: () => [CreateUserScheduleRequestDto] })
-    schedule_request: CreateUserScheduleRequestDto[],
+    @Args('schedule_request', { type: () => [CreateOrUpdateUserScheduleRequestDto] })
+    schedule_request: CreateOrUpdateUserScheduleRequestDto[],
     @CurrentUser() { user_id }: CurrentUserDto,
   ) {
     return this.userScheduleRequestService.createOrUpdateUserScheduleRequest(
