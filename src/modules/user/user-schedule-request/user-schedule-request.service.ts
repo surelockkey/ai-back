@@ -16,29 +16,35 @@ export class UserScheduleRequestService extends CrudService<UserScheduleRequest>
     super(userScheduleRequestRepository);
   }
 
-  public async deleteUserScheduleRequest(
-    id: string,
+  public async deleteManyUserScheduleRequest(
+    ids: string[],
     user_role: UserRole,
     current_user_id: string,
   ) {
     let res: DeleteResult;
     if ([UserRole.ADMIN || UserRole.MAIN_DISPATCHER].includes(user_role)) {
-      res = await this.userScheduleRequestRepository.delete({ id });
+      res = await this.deleteMany(ids);
     } else {
-      res = await this.userScheduleRequestRepository.delete({
-        user_id: current_user_id,
-        id,
-      });
+      res = await this.deleteMany(ids, current_user_id);
     }
 
     if (res.affected !== 1) {
       throw new GraphQLError('Failed to delete');
     }
 
-    return id;
+    return ids;
   }
 
   public createOrUpdateUserScheduleRequest(createUserScheduleRequestDto: CreateUserScheduleRequestDto[]): Promise<UserScheduleRequest[]> {
     return this.userScheduleRequestRepository.save(createUserScheduleRequestDto);
+  }
+
+  private deleteMany(ids: string[], user_id?: string) {
+    return this.userScheduleRequestRepository.createQueryBuilder('user_schedule_request')
+    .delete()
+    .from(UserScheduleRequest)
+    .where("id IN :ids", { ids })
+    .andWhere(user_id ? 'user_id = :user_id' : 'true', { user_id })
+    .execute()
   }
 }

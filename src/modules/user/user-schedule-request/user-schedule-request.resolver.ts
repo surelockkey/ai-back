@@ -34,15 +34,33 @@ export class UserScheduleRequestResolver {
     UserRole.MAIN_DISPATCHER,
     UserRole.ADMIN,
   )
-  @Mutation(() => ID)
-  deleteUserScheduleRequest(
-    @Args('id', { type: () => ID }) id: string,
+  @Mutation(() => [ID])
+  deleteManyUserScheduleRequest(
+    @Args('ids', { type: () => [ID] }) ids: string[],
     @CurrentUser() { user_id, role }: CurrentUserDto,
-  ): Promise<string> {
-    return this.userScheduleRequestService.deleteUserScheduleRequest(
-      id,
+  ): Promise<string[]> {
+    return this.userScheduleRequestService.deleteManyUserScheduleRequest(
+      ids,
       role,
       user_id,
     );
   }
+
+  // @RoleGuard(
+  //   UserRole.DISPATCHER,
+  //   UserRole.TECHNICIAN,
+  //   UserRole.MAIN_DISPATCHER,
+  //   UserRole.ADMIN,
+  // )
+  // @Mutation(() => ID)
+  // deleteUserScheduleRequest(
+  //   @Args('id', { type: () => ID }) id: string,
+  //   @CurrentUser() { user_id, role }: CurrentUserDto,
+  // ): Promise<string> {
+  //   return this.userScheduleRequestService.deleteUserScheduleRequest(
+  //     id,
+  //     role,
+  //     user_id,
+  //   );
+  // }
 }

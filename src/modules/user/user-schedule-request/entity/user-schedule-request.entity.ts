@@ -8,11 +8,11 @@ import { User } from '../../entity/user.entity';
 export class UserScheduleRequest extends BaseEntity {
   @Field(() => Int)
   @Column('int')
-  from: number;
+  work_from: number;
 
   @Field(() => Int)
   @Column('int')
-  to: number;
+  work_to: number;
 
   @Field(() => ID)
   @Column()
