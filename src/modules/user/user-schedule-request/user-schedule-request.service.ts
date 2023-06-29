@@ -44,7 +44,7 @@ export class UserScheduleRequestService extends CrudService<UserScheduleRequest>
     .delete()
     .from(UserScheduleRequest)
     .where("id IN :ids", { ids })
-    .andWhere(user_id ? 'user_id = :user_id' : 'true', { user_id })
+    .andWhere(user_id ? 'user_id = :user_id' : 'true', { ...(user_id && { user_id }) })
     .execute()
   }
 }
