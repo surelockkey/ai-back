@@ -9,7 +9,7 @@ export class UserScheduleRequestInput extends OmitType(UserScheduleRequest, [
 @InputType()
 export class CreateOrUpdateUserScheduleRequestDto extends OmitType(
   UserScheduleRequestInput,
-  ['id', 'user_id'],
+  ['id', 'user_id', 'status'],
 ) {
   @Field(() => ID, { nullable: true })
   id?: string;

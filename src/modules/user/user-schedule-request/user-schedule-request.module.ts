@@ -7,5 +7,6 @@ import { UserScheduleRequest } from './entity/user-schedule-request.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([UserScheduleRequest])],
   providers: [UserScheduleRequestService, UserScheduleRequestResolver],
+  exports: [UserScheduleRequestService],
 })
 export class UserScheduleRequestModule {}

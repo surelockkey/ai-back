@@ -128,7 +128,7 @@ export class UserService extends NestUserService<User> {
       .leftJoinAndSelect(
         'user.schedule_requests',
         'user-schedule-request',
-        'user-schedule-request.work_from BETWEEN :from AND :to OR user-schedule-request.work_to BETWEEN :from AND :to',
+        `(user-schedule-request.work_from BETWEEN :from AND :to OR user-schedule-request.work_to BETWEEN :from AND :to) AND user-schedule-request.status = 'REQUESTED'`,
         {
           from,
           to,

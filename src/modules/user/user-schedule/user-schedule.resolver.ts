@@ -11,6 +11,7 @@ import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
 import { UserRole } from 'src/modules/user/enum/user-role.enum';
 import { CurrentUserDto } from 'src/modules/authorization/dto/current-user.dto';
 import { CurrentUser } from '@tech-slk/nest-auth';
+import { UserScheduleRequest } from '../user-schedule-request/entity/user-schedule-request.entity';
 
 @Resolver()
 export class UserScheduleResolver {
@@ -18,6 +19,34 @@ export class UserScheduleResolver {
     private readonly userScheduleService: UserScheduleService,
     private readonly loggerService: LoggerService,
   ) {}
+
+  @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
+  @Mutation(() => [UserSchedule])
+  approveUserScheduleRequest(
+    @Args('request_ids', { type: () => [ID] })
+    request_ids: string[],
+    @CurrentUser() { user_id }: CurrentUserDto,
+  ): Promise<UserSchedule[]> {
+    return this.loggerService.actionLog({
+      callback: () => this.userScheduleService.approveUserScheduleRequest(request_ids),
+      user_id,
+      action: 'Tried to approve user schedule request',
+    });
+  }
+
+  @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
+  @Mutation(() => [UserScheduleRequest])
+  declineUserScheduleRequest(
+    @Args('request_ids', { type: () => [ID] })
+    request_ids: string[],
+    @CurrentUser() { user_id }: CurrentUserDto,
+  ): Promise<UserScheduleRequest[]> {
+    return this.loggerService.actionLog({
+      callback: () => this.userScheduleService.declineUserScheduleRequest(request_ids),
+      user_id,
+      action: 'Tried to decline user schedule request',
+    });
+  }
 
   @RoleGuard(UserRole.ADMIN, UserRole.MAIN_DISPATCHER)
   @Mutation(() => UserSchedule)

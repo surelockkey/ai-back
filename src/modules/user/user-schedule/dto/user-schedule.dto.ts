@@ -13,6 +13,7 @@ export class UserScheduleInput extends UserSchedule {}
 @InputType()
 export class CreateUserScheduleDto extends OmitType(UserScheduleInput, [
   'id',
+  'user',
 ]) {}
 
 @InputType()

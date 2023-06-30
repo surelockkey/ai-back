@@ -825,6 +825,7 @@ type Message {
 type Mutation {
   acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
   approveRequestForCarItems(approveUpdateCarDto: [ApproveUpdateCarDto!]!): [UpdateCarRequest!]!
+  approveUserScheduleRequest(request_ids: [ID!]!): [UserSchedule!]!
   assignManyTemplateToCar(createCarTemplateDto: [CreateCarTemplateDto!]!): [CarTemplate!]!
   assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
 
@@ -857,6 +858,7 @@ type Mutation {
   createUserInfo(user_info: CreateUserInfoDto!): UserInfo!
   createUserNote(user_note: CreateUserNoteDto!): UserNote!
   createUserSchedule(user_schedule: CreateUserScheduleDto!): UserSchedule!
+  declineUserScheduleRequest(request_ids: [ID!]!): [UserScheduleRequest!]!
 
   """delete blog by id"""
   deleteBlogById(id: String!): ConstructorBlog!
@@ -1503,9 +1505,21 @@ type UserSchedule {
 
 type UserScheduleRequest {
   id: ID!
+  status: UserScheduleRequestStatus!
   user_id: ID!
   work_from: Int!
   work_to: Int!
+}
+
+enum UserScheduleRequestStatus {
+  """When Main Dispatcher approved some requested schedule"""
+  APPROVED
+
+  """When Main Dispatcher declined some requested schedule"""
+  DECLINED
+
+  """When Technician / Dispatcher requested some schedule"""
+  REQUESTED
 }
 
 type UserWithSchedule {
