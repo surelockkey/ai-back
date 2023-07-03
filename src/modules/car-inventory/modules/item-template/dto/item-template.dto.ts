@@ -5,7 +5,13 @@ import { ItemTemplate } from '../entity/item-template.entity';
 export class ItemTemplateInput extends ItemTemplate {}
 
 @InputType()
-export class UpdateItemTemplateDto extends OmitType(ItemTemplateInput, ['template', 'template_id', 'requests']) {}
+export class UpdateItemTemplateDto extends OmitType(ItemTemplateInput, [
+  'template',
+  'template_id',
+]) {}
 
 @InputType()
-export class CreateItemTemplateDto extends OmitType(ItemTemplateInput, ['id', 'template', 'requests']) {}
+export class CreateItemTemplateDto extends OmitType(ItemTemplateInput, [
+  'id',
+  'template',
+]) {}

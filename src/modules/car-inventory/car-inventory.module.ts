@@ -6,6 +6,7 @@ import { TemplateModule } from './modules/template/template.module';
 import { ItemTemplateModule } from './modules/item-template/item-template.module';
 import { CarTemplateModule } from './modules/car-template/car-template.module';
 import { UserModule } from '../user/user.module';
+import { InventoryRequestModule } from './modules/inventory-request/inventory-request.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UserModule } from '../user/user.module';
     ItemTemplateModule,
     CarTemplateModule,
     UserModule,
+    InventoryRequestModule,
   ],
   providers: [CarInventoryService, CarInventoryResolver],
 })
