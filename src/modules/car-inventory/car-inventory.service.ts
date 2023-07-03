@@ -93,7 +93,6 @@ export class CarInventoryService {
   ): Promise<ItemCompareResult[]> {
     const container_items = await this.findContainer(workiz_id);
 
-
     const template_items = (
       await this.carTemplateService.findOneItem({
         where: { workiz_id },
@@ -116,7 +115,7 @@ export class CarInventoryService {
             actual_quantity: Number(car_item.qty) | 0,
             template_quantity: template_item.quantity,
             difference: Number(car_item.qty) - template_item.quantity,
-            template_item_id: template_item.id
+            template_item_id: template_item.id,
           });
         }
       } else {
@@ -127,7 +126,7 @@ export class CarInventoryService {
           actual_quantity: 0,
           template_quantity: template_item.quantity,
           difference: -template_item.quantity,
-          template_item_id: template_item.id
+          template_item_id: template_item.id,
         });
       }
     });
