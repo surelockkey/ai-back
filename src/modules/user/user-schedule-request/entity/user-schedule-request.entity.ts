@@ -2,26 +2,30 @@ import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from '@tech-slk/nest-crud';
 import { Column, Entity, JoinColumn, ManyToOne, Unique } from 'typeorm';
 import { User } from '../../entity/user.entity';
+import { UserScheduleRequestStatus } from '../enum/user-schedule-request-status.enum';
 
 @Entity()
 @ObjectType()
-@Unique('unique_user_schedule_request_for_day', ['user_id', 'day'])
 export class UserScheduleRequest extends BaseEntity {
   @Field(() => Int)
   @Column('int')
-  from: number;
+  work_from: number;
 
   @Field(() => Int)
   @Column('int')
-  to: number;
+  work_to: number;
+
+  @Field(() => UserScheduleRequestStatus)
+  @Column({
+    type: 'enum',
+    enum: UserScheduleRequestStatus,
+    default: UserScheduleRequestStatus.REQUESTED,
+  })
+  status: UserScheduleRequestStatus;
 
   @Field(() => ID)
-  @Column('uuid')
-  user_id: string;
-
-  @Field(() => String)
   @Column()
-  day: string;
+  user_id: string;
 
   @ManyToOne(() => User, (user) => user.schedule_requests)
   @JoinColumn({ name: 'user_id' })

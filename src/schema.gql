@@ -296,6 +296,7 @@ input CreateOrUpdateUserScheduleDto {
   work_to: Int!
 }
 
+<<<<<<< HEAD
 input CreateOrderDto {
   address: String
   key_service_type: KeyServiceType!
@@ -303,6 +304,12 @@ input CreateOrderDto {
   notes: String!
   phone: String
   service_type: ServiceType!
+=======
+input CreateOrUpdateUserScheduleRequestDto {
+  id: ID
+  work_from: Int!
+  work_to: Int!
+>>>>>>> b0128bf98c0602d8fc70bc5f5b693f254594d37c
 }
 
 input CreatePhotoForBlockDto {
@@ -383,12 +390,6 @@ input CreateUserScheduleDto {
   user_id: ID!
   work_from: Int!
   work_to: Int!
-}
-
-input CreateUserScheduleRequestDto {
-  day: String!
-  from: Int!
-  to: Int!
 }
 
 type CtmCall {
@@ -874,6 +875,7 @@ type LogsPaginated {
 
 type Message {
   created: Int!
+  database_result: String
   finish_reason: String!
   id: ID!
   openai_id: String!
@@ -887,6 +889,7 @@ type Mutation {
   acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
   addManyCarsToKey(car_ids: [ID!]!, key_id: ID!): [KeyCar!]!
   approveRequestForCarItems(approveUpdateCarDto: [ApproveUpdateCarDto!]!): [UpdateCarRequest!]!
+  approveUserScheduleRequest(request_ids: [ID!]!): [UserSchedule!]!
   assignManyTemplateToCar(createCarTemplateDto: [CreateCarTemplateDto!]!): [CarTemplate!]!
   assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
 
@@ -912,7 +915,11 @@ type Mutation {
   createOrUpdateManyUsersSchedules(user_schedules: [CreateOrUpdateUserScheduleDto!]!): [UserSchedule!]!
   createOrUpdateUserInfo(user_infos: [CreateOrUpdateUserInfoDto!]!): [UserInfo!]!
   createOrUpdateUserNote(user_note: CreateOrUpdateUserNoteDto!): UserNote!
+<<<<<<< HEAD
   createOrder(order_dto: CreateOrderDto!): Order!
+=======
+  createOrUpdateUserScheduleRequest(schedule_request: [CreateOrUpdateUserScheduleRequestDto!]!): [UserScheduleRequest!]!
+>>>>>>> b0128bf98c0602d8fc70bc5f5b693f254594d37c
   createRequest(createRequestDto: CreateRequestDto!): Request!
   createRequestForCarItems(createUpdateCarDto: [CreateUpdateCarDto!]!): [UpdateCarRequest!]!
   createReviews(createReviewsDto: CreateReviewsDto!): Reviews!
@@ -921,7 +928,7 @@ type Mutation {
   createUserInfo(user_info: CreateUserInfoDto!): UserInfo!
   createUserNote(user_note: CreateUserNoteDto!): UserNote!
   createUserSchedule(user_schedule: CreateUserScheduleDto!): UserSchedule!
-  createUserScheduleRequest(schedule_request: CreateUserScheduleRequestDto!): UserScheduleRequest!
+  declineUserScheduleRequest(request_ids: [ID!]!): [UserScheduleRequest!]!
 
   """delete blog by id"""
   deleteBlogById(id: String!): ConstructorBlog!
@@ -939,6 +946,7 @@ type Mutation {
   deleteManyPhoto(keys: [String!]!): SendDto!
   deleteManyTemplates(ids: [ID!]!): [ID!]!
   deleteManyUserInfo(ids: [ID!]!): [ID!]!
+  deleteManyUserScheduleRequest(ids: [ID!]!): [ID!]!
   deleteManyUserSchedules(ids: [ID!]!): [ID!]!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
   deletePhotoLocationById(id: String!): LocationPhoto!
@@ -947,7 +955,6 @@ type Mutation {
   deleteUserInfo(id: ID!): ID!
   deleteUserNote(id: ID!): ID!
   deleteUserSchedule(id: ID!): ID!
-  deleteUserScheduleRequest(id: ID!): ID!
   editLocksmith(updateLocksmithDto: UpdateLocksmithDto!): Locksmith!
   editRequest(updateRequestDto: UpdateRequestDto!): Request!
   inviteUserToApp(inviteUserDto: InviteUserDto!): InvitedUser!
@@ -1653,11 +1660,22 @@ type UserSchedule {
 }
 
 type UserScheduleRequest {
-  day: String!
-  from: Int!
   id: ID!
-  to: Int!
+  status: UserScheduleRequestStatus!
   user_id: ID!
+  work_from: Int!
+  work_to: Int!
+}
+
+enum UserScheduleRequestStatus {
+  """When Main Dispatcher approved some requested schedule"""
+  APPROVED
+
+  """When Main Dispatcher declined some requested schedule"""
+  DECLINED
+
+  """When Technician / Dispatcher requested some schedule"""
+  REQUESTED
 }
 
 type UserWithSchedule {

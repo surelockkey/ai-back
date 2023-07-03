@@ -3,7 +3,7 @@ import { UserScheduleRequestService } from './user-schedule-request.service';
 import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
 import { UserRole } from '../enum/user-role.enum';
 import { UserScheduleRequest } from './entity/user-schedule-request.entity';
-import { CreateUserScheduleRequestDto } from './dto/user-schedule-request.dto';
+import { CreateOrUpdateUserScheduleRequestDto } from './dto/user-schedule-request.dto';
 import { CurrentUser } from '@tech-slk/nest-auth';
 import { CurrentUserDto } from 'src/modules/authorization/dto/current-user.dto';
 
@@ -14,16 +14,18 @@ export class UserScheduleRequestResolver {
   ) {}
 
   @RoleGuard(UserRole.DISPATCHER, UserRole.TECHNICIAN, UserRole.MAIN_DISPATCHER)
-  @Mutation(() => UserScheduleRequest)
-  createUserScheduleRequest(
-    @Args('schedule_request', { type: () => CreateUserScheduleRequestDto })
-    schedule_request: CreateUserScheduleRequestDto,
+  @Mutation(() => [UserScheduleRequest])
+  createOrUpdateUserScheduleRequest(
+    @Args('schedule_request', { type: () => [CreateOrUpdateUserScheduleRequestDto] })
+    schedule_request: CreateOrUpdateUserScheduleRequestDto[],
     @CurrentUser() { user_id }: CurrentUserDto,
   ) {
-    return this.userScheduleRequestService.create({
-      ...schedule_request,
-      user_id,
-    });
+    return this.userScheduleRequestService.createOrUpdateUserScheduleRequest(
+      schedule_request.map((r) => ({
+        ...r,
+        user_id
+      }))
+    );
   }
 
   @RoleGuard(
@@ -32,13 +34,13 @@ export class UserScheduleRequestResolver {
     UserRole.MAIN_DISPATCHER,
     UserRole.ADMIN,
   )
-  @Mutation(() => ID)
-  deleteUserScheduleRequest(
-    @Args('id', { type: () => ID }) id: string,
+  @Mutation(() => [ID])
+  deleteManyUserScheduleRequest(
+    @Args('ids', { type: () => [ID] }) ids: string[],
     @CurrentUser() { user_id, role }: CurrentUserDto,
-  ): Promise<string> {
-    return this.userScheduleRequestService.deleteUserScheduleRequest(
-      id,
+  ): Promise<string[]> {
+    return this.userScheduleRequestService.deleteManyUserScheduleRequest(
+      ids,
       role,
       user_id,
     );
