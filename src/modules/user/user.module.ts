@@ -10,16 +10,18 @@ import { UserScheduleModule } from './user-schedule/user-schedule.module';
 import { UserNoteModule } from './user-note/user-note.module';
 import { UserInfoModule } from './user-info/user-info.module';
 import { UserScheduleRequestModule } from './user-schedule-request/user-schedule-request.module';
+import { UserCustomerInfoModule } from './user-customer-info/user-customer-info.module';
 
 @Global()
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, InvitedUser]),
-    UserScheduleModule,
     UserNoteModule,
     UserInfoModule,
     WorkizApiModule,
     UserScheduleRequestModule,
+    UserScheduleModule,
+    UserCustomerInfoModule,
   ],
   providers: [UserResolver, UserService, InvitedUserService],
   exports: [UserService, InvitedUserService],
