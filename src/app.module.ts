@@ -20,6 +20,7 @@ import { TranscriptionModule } from './modules/transcription/transcription.modul
 import { CarInventoryModule } from './modules/car-inventory/car-inventory.module';
 import { UserModule } from './modules/user/user.module';
 import { ManageSitesModule } from './modules/manage-sites/manage-sites.module';
+import { CustomerAppModule } from './modules/customer-app/customer-app.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { ManageSitesModule } from './modules/manage-sites/manage-sites.module';
     CarInventoryModule,
     UserModule,
     ManageSitesModule,
+    CustomerAppModule,
   ],
 })
 export class AppModule {}

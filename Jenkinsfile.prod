@@ -24,6 +24,7 @@ def prod_secrets = [
         [envVar: 'JWT_KEY', vaultKey: 'JWT_KEY'],
         [envVar: 'JWT_ACCESS_EXPIRE', vaultKey: 'JWT_ACCESS_EXPIRE'],
         [envVar: 'JWT_REFRESH_EXPIRE', vaultKey: 'JWT_REFRESH_EXPIRE'],
+        [envVar: 'TOKEN_WORKIZ', vaultKey: 'TOKEN_WORKIZ'],
         [envVar: 'CTM_USER', vaultKey: 'CTM_USER'],
         [envVar: 'CTM_PASSWORD', vaultKey: 'CTM_PASSWORD'],
         [envVar: 'CTM_API_URL', vaultKey: 'CTM_API_URL'],

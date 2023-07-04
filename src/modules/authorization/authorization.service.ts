@@ -16,6 +16,8 @@ import { UserRole } from '../user/enum/user-role.enum';
 import { MailService } from '../mail/mail.service';
 import { ConfigService } from '@nestjs/config';
 import { InviteUserDto } from './dto/invite-user.dto';
+import { RegistrationCustomerDto } from './dto/registration-customer.dto';
+import { UserCustomerInfoService } from '../user/user-customer-info/user-customer-info.service';
 
 @Injectable()
 export class AuthorizationService extends NestAuthService<
@@ -32,6 +34,7 @@ export class AuthorizationService extends NestAuthService<
     protected readonly loggerService: LoggerService,
     private readonly mailService: MailService,
     private readonly configService: ConfigService,
+    private readonly userCustomerInfoService: UserCustomerInfoService,
   ) {
     super(tokenService, userService);
   }
@@ -112,6 +115,24 @@ export class AuthorizationService extends NestAuthService<
     }
 
     return this.registration(registration_dto);
+  }
+
+  public async registrationCustomer(
+    registration_dto: RegistrationCustomerDto,
+  ): Promise<User> {
+    const { customer_info, ...user_dto } = registration_dto;
+
+    const user = await this.registration({
+      ...user_dto,
+      role: UserRole.CUSTOMER,
+    });
+
+    await this.userCustomerInfoService.create({
+      ...customer_info,
+      user_id: user.id,
+    });
+
+    return await this.userService.findOneById(user.id);
   }
 
   public async acceptInviteToApp({
