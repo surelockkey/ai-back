@@ -1,9 +1,18 @@
-import { Field, ID } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from '@tech-slk/nest-crud';
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 import { InventoryRequest } from '../../entity/inventory-request.entity';
 import { File } from 'src/modules/file/entity/file.entity';
+import { TechInventoryItem } from '../../tech-inventory-item/entity/tech-inventory-item.entity';
 
+@ObjectType()
 @Entity()
 export class InventoryRequestInvoice extends BaseEntity {
   @Field(() => ID)
@@ -16,9 +25,8 @@ export class InventoryRequestInvoice extends BaseEntity {
 
   @ManyToOne(
     () => InventoryRequest,
-    (inventory_request) => inventory_request.logist_items,
+    (inventory_request) => inventory_request.request_invoices,
     {
-      eager: true,
       onDelete: 'CASCADE',
       onUpdate: 'CASCADE',
     },
@@ -26,9 +34,18 @@ export class InventoryRequestInvoice extends BaseEntity {
   @JoinColumn({ name: 'inventory_request_id' })
   inventory_request: InventoryRequest;
 
+  @Field(() => File)
   @OneToOne(() => File, (file) => file.inventory_request_invoice, {
     eager: true,
   })
   @JoinColumn({ name: 'file_id' })
   file: File;
+
+  @Field(() => [TechInventoryItem])
+  @OneToMany(
+    () => TechInventoryItem,
+    (tech_inventory_item) => tech_inventory_item.request_invoice,
+    { eager: true },
+  )
+  tech_items: TechInventoryItem[];
 }

@@ -7,5 +7,6 @@ import { TechInventoryItem } from './entity/tech-inventory-item.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([TechInventoryItem])],
   providers: [TechInventoryItemService, TechInventoryItemResolver],
+  exports: [TechInventoryItemService],
 })
 export class TechInventoryItemModule {}

@@ -1,8 +1,9 @@
-import { Field, ID, Int } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from '@tech-slk/nest-crud';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { InventoryRequest } from '../../entity/inventory-request.entity';
 
+@ObjectType()
 @Entity()
 export class LogistInventoryItem extends BaseEntity {
   @Field(() => String)
@@ -20,6 +21,10 @@ export class LogistInventoryItem extends BaseEntity {
   @ManyToOne(
     () => InventoryRequest,
     (inventory_request) => inventory_request.logist_items,
+    {
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    },
   )
   @JoinColumn({ name: 'inventory_request_id' })
   inventory_request: InventoryRequest;

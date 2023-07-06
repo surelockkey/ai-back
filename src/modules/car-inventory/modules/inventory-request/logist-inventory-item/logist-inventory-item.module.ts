@@ -7,5 +7,6 @@ import { LogistInventoryItem } from './entity/logist-inventory-item.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([LogistInventoryItem])],
   providers: [LogistInventoryItemService, LogistInventoryItemResolver],
+  exports: [LogistInventoryItemService],
 })
 export class LogistInventoryItemModule {}

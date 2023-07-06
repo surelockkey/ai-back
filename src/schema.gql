@@ -2,6 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AcceptInventoryRequestByLogistDto {
+  id: ID!
+  tech_items: [UpdateTechInventoryItemDto!]
+}
+
+input AcceptInventoryRequestByTechDto {
+  id: ID!
+  request_invoices: [InventoryRequestInvoiceDto!]!
+}
+
 input AcceptInviteDto {
   key: String!
   name: String!
@@ -160,6 +170,11 @@ input CreateConstructorBlogDto {
 input CreateH2TextDto {
   H2: String
   Text: String
+}
+
+input CreateInventoryRequestDto {
+  logist_items: [LogistInventoryItemDto!]!
+  tech_id: ID!
 }
 
 input CreateItemTemplateDto {
@@ -544,6 +559,35 @@ type H2Text {
   id: ID!
 }
 
+type InventoryRequest {
+  created_at: Float!
+  id: ID!
+  logist_items: [LogistInventoryItem!]!
+  request_invoices: [InventoryRequestInvoice!]!
+  status: InventoryRequestStatus!
+  tech: User!
+  tech_id: ID!
+}
+
+type InventoryRequestInvoice {
+  file: File!
+  file_id: ID!
+  id: ID!
+  inventory_request_id: ID!
+  tech_items: [TechInventoryItem!]!
+}
+
+input InventoryRequestInvoiceDto {
+  file: Upload!
+  tech_items: [TechInventoryItemDto!]!
+}
+
+enum InventoryRequestStatus {
+  APPROVED_BY_LOGIST
+  APPROVED_BY_TECH
+  REQUESTED
+}
+
 input InviteUserDto {
   email: String
   location: String
@@ -844,6 +888,18 @@ input LoginCredential {
   password: String!
 }
 
+type LogistInventoryItem {
+  id: ID!
+  inventory_request_id: ID!
+  qty: Int!
+  sku: String!
+}
+
+input LogistInventoryItemDto {
+  qty: Int!
+  sku: String!
+}
+
 type LogsPaginated {
   items: [LogWithUser!]!
   total: Int!
@@ -862,6 +918,8 @@ type Message {
 }
 
 type Mutation {
+  acceptInventoryRequestByLogist(inventory_request: AcceptInventoryRequestByLogistDto!): InventoryRequest!
+  acceptInventoryRequestByTech(inventory_request: AcceptInventoryRequestByTechDto!): InventoryRequest!
   acceptInvite(accept_invite_dto: AcceptInviteDto!): User!
   addManyCarsToKey(car_ids: [ID!]!, key_id: ID!): [KeyCar!]!
   approveUserScheduleRequest(request_ids: [ID!]!): [UserSchedule!]!
@@ -879,6 +937,7 @@ type Mutation {
   createBlogPhoto(picture: Upload!): PhotoBlog!
   createCar(carDto: CreateCarDto!): Car!
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
+  createInventoryRequest(inventory_request_dto: CreateInventoryRequestDto!): InventoryRequest!
   createKey(key_dto: CreateKeyDto!): Key!
   createLocation(createLocationDto: CreateLocationDto!): Location!
   createLocationPhoto(picture: Upload!): LocationPhoto!
@@ -1011,6 +1070,11 @@ input OrderKeyDto {
   key_id: ID!
 }
 
+type PaginatedInventoryRequests {
+  items: [InventoryRequest!]!
+  total: Int!
+}
+
 type PaginatedJobDto {
   has_more: Boolean!
   items: [JobDto!]!
@@ -1078,6 +1142,8 @@ type Query {
   getFilteredBlog(filter: FilterableBlogDto!): ConstructorBlogFilterableWithCountDto!
   getFineTuneList: [FineTuneItem!]!
   getFullLastFineTune: OpenAiFineTune!
+  getInventoryRequestById(id: ID!): InventoryRequest!
+  getInventoryRequests(pagination: FindPaginationDto!): PaginatedInventoryRequests!
   getJobs: String!
   getKeyByID(id: ID!): Key!
   getKeysByCar(car_id: ID!): [Key!]!
@@ -1238,6 +1304,19 @@ type SystemSettings {
   id: ID!
   max_tokens: Int!
   workiz_cookie: String!
+}
+
+type TechInventoryItem {
+  id: ID!
+  inventory_request_id: ID!
+  qty: Int!
+  request_invoice_id: ID!
+  sku: String!
+}
+
+input TechInventoryItemDto {
+  qty: Int!
+  sku: String!
 }
 
 type TechnicianWorkiz {
@@ -1495,6 +1574,12 @@ input UpdateScheduleDto {
 input UpdateSystemSettingsDto {
   max_tokens: Int!
   workiz_cookie: String!
+}
+
+input UpdateTechInventoryItemDto {
+  id: ID!
+  qty: Int
+  sku: String
 }
 
 input UpdateTemplateDto {

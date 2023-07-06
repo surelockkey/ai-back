@@ -16,15 +16,17 @@ export class UserScheduleRequestResolver {
   @RoleGuard(UserRole.DISPATCHER, UserRole.TECHNICIAN, UserRole.MAIN_DISPATCHER)
   @Mutation(() => [UserScheduleRequest])
   createOrUpdateUserScheduleRequest(
-    @Args('schedule_request', { type: () => [CreateOrUpdateUserScheduleRequestDto] })
+    @Args('schedule_request', {
+      type: () => [CreateOrUpdateUserScheduleRequestDto],
+    })
     schedule_request: CreateOrUpdateUserScheduleRequestDto[],
     @CurrentUser() { user_id }: CurrentUserDto,
   ) {
     return this.userScheduleRequestService.createOrUpdateUserScheduleRequest(
       schedule_request.map((r) => ({
         ...r,
-        user_id
-      }))
+        user_id,
+      })),
     );
   }
 
