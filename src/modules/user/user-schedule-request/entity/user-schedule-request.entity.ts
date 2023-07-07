@@ -27,7 +27,10 @@ export class UserScheduleRequest extends BaseEntity {
   @Column()
   user_id: string;
 
-  @ManyToOne(() => User, (user) => user.schedule_requests)
+  @ManyToOne(() => User, (user) => user.schedule_requests, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   user: User;
 }
