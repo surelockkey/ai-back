@@ -51,6 +51,7 @@ export class LocksmithResolver {
     return this.locksmithService.findOneById(id);
   }
 
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Mutation(() => Locksmith)
   updateLocksmith(
     @Args('locksmith', { type: () => UpdateLocksmithDto })
