@@ -6,6 +6,7 @@ import { StatisticsCounterModule } from './statistics-counter/statistics-counter
 import { LocationPhotoModule } from './location-photo/location-photo.module';
 import { LocationModule } from './location/location.module';
 import { FormMemberModule } from './form-member/form-member.module';
+import { LocksmithModule } from './locksmith/locksmith.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { FormMemberModule } from './form-member/form-member.module';
     LocationModule,
     LocationPhotoModule,
     FormMemberModule,
+    LocksmithModule,
   ],
 })
 export class ManageSitesModule {}

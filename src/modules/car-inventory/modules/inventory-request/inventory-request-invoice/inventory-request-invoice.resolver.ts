@@ -8,22 +8,5 @@ import { QueryRunner } from 'typeorm';
 export class InventoryRequestInvoiceResolver {
   constructor(
     private readonly inventoryRequestInvoiceService: InventoryRequestInvoiceService,
-    private readonly fileService: FileService,
   ) {}
-
-  public async createManyInvoices(
-    invoices: InventoryRequestInvoiceDto[],
-    queryRunner: QueryRunner,
-  ) {
-    const files = await this.fileService.uploadManyPhotos(
-      invoices.map((invoice) => invoice.file),
-      queryRunner.manager,
-      queryRunner,
-    );
-
-    // const all = await Promise.all(invoices.map((invoice) => {
-    //     const { file } = invoice;
-    //     await this.fileService.uploadManyPhotos()
-    // }));
-  }
 }

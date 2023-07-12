@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Field, InputType } from '@nestjs/graphql';
-import { Week } from '../enum/week.enum';
+import { Week } from '../../locksmith/locksmith-schedule/enum/week.enum';
 
 @InputType('CreateScheduleDto')
 export class CreateScheduleDto {

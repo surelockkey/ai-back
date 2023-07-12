@@ -267,21 +267,22 @@ input CreateLocationThumbnailDto {
 
 input CreateLocksmithDto {
   address: [String!]!
+  confirmed: Boolean
   description: String
   file: Upload
+  file_url: String
+  is_verified: Boolean! = false
   link_to_map: String!
   link_to_site: String!
   mail: String!
   name: String!
-  owners_name: String
-  owners_phone: String
+  owner_name: String
+  owner_phone: String
   phone: String!
-  photo: String
   priority: Float
-  schedule: [CreateScheduleDto!]!
+  schedules: [LocksmithScheduleDto!]!
   services: [String!]!
   url: String
-  zips: [String!]
 }
 
 input CreateOrUpdateUserInfoDto {
@@ -327,37 +328,6 @@ input CreatePhotoForBlockDto {
   constructor_blog_id: ID
   link: String
   title: String
-}
-
-input CreateRequestDto {
-  address: [String!]!
-  business_mail: String
-  business_name: String!
-  business_phone: String!
-  description: String
-  files: String
-  link_to_map: String!
-  link_to_site: String!
-  owners_name: String
-  owners_phone: String!
-  photo: String
-  schedule: [CreateScheduleDto!]!
-  services: [String!]!
-}
-
-input CreateReviewsDto {
-  email: String!
-  locksmith_id: String!
-  name: String!
-  rating: Float
-  text: String!
-  title: String!
-}
-
-input CreateScheduleDto {
-  close_at: DateTime
-  name: Week!
-  open_at: DateTime
 }
 
 input CreateTemplateDto {
@@ -804,51 +774,51 @@ type LocationThumbnail {
 }
 
 type Locksmith {
-  address: [Address!]!
+  address: [String!]!
+  confirmed: Boolean
   description: String
+  file_id: ID
+  file_url: String
   id: ID!
   is_verified: Boolean!
   link_to_map: String!
   link_to_site: String!
   mail: String!
   name: String!
-  owners_name: String
-  owners_phone: String
+  owner_name: String
+  owner_phone: String
   phone: String!
-  photo: String
   priority: Float
-  reviews: [Reviews!]!
-  schedule: [Schedule!]!
+  reviews: [LocksmithReview!]!
+  schedules: [LocksmithSchedule!]!
   services: [String!]!
   url: String
-  zips: [String!]
 }
 
-type LocksmithWithCountNewReviewsDto {
-  address: [Address!]!
-  count_new_reviews: Float!
-  description: String
+type LocksmithReview {
+  created_at: Float!
   id: ID!
-  is_verified: Boolean!
-  link_to_map: String!
-  link_to_site: String!
-  mail: String!
+  locksmith_id: String!
   name: String!
-  owners_name: String
-  owners_phone: String
-  phone: String!
-  photo: String
-  priority: Float
-  reviews: [Reviews!]!
-  schedule: [Schedule!]!
-  services: [String!]!
-  url: String
-  zips: [String!]
+  rating: Float
+  status: ReviewStatus
+  text: String!
+  title: String!
+  updated_at: Float!
 }
 
-type LocksmithsWithCount {
-  count: Int!
-  items: [Locksmith!]!
+type LocksmithSchedule {
+  close_at: DateTime
+  id: ID!
+  locksmith_id: ID!
+  name: Week!
+  open_at: DateTime
+}
+
+input LocksmithScheduleDto {
+  close_at: DateTime
+  name: Week!
+  open_at: DateTime
 }
 
 type Log {
@@ -941,7 +911,7 @@ type Mutation {
   createKey(key_dto: CreateKeyDto!): Key!
   createLocation(createLocationDto: CreateLocationDto!): Location!
   createLocationPhoto(picture: Upload!): LocationPhoto!
-  createLocksmith(createLocksmithDto: CreateLocksmithDto!): Locksmith!
+  createLocksmith(locksmith: CreateLocksmithDto!): Locksmith!
   createManyItemTemplates(createItemTemplateDto: [CreateItemTemplateDto!]!): [ItemTemplate!]!
   createManyTemplates(createTemplateDto: [CreateTemplateDto!]!): [Template!]!
   createManyUsersSchedules(users_schedules: [CreateUserScheduleDto!]!): [UserSchedule!]!
@@ -951,8 +921,6 @@ type Mutation {
   createOrUpdateUserNote(user_note: CreateOrUpdateUserNoteDto!): UserNote!
   createOrUpdateUserScheduleRequest(schedule_request: [CreateOrUpdateUserScheduleRequestDto!]!): [UserScheduleRequest!]!
   createOrder(order_dto: CreateOrderDto!): Order!
-  createRequest(createRequestDto: CreateRequestDto!): Request!
-  createReviews(createReviewsDto: CreateReviewsDto!): Reviews!
   createSystemSettings(max_tokens: Int!): SystemSettings!
   createTimeTemplate(time_template: CreateTimeTemplateDto!): TimeTemplate!
   createUserInfo(user_info: CreateUserInfoDto!): UserInfo!
@@ -969,7 +937,6 @@ type Mutation {
   deleteKey(id: ID!): ID!
   deleteKeyCar(id: ID!): ID!
   deleteLocationById(id: String!): Location!
-  deleteLocksmithById(id: String!): SendDto!
   deleteManyInvitedUsers(user_ids: [ID!]!): [String!]!
   deleteManyItemTemplates(ids: [ID!]!): [ID!]!
   deleteManyKeyCar(ids: [ID!]!): [ID!]!
@@ -980,19 +947,16 @@ type Mutation {
   deleteManyUserSchedules(ids: [ID!]!): [ID!]!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
   deletePhotoLocationById(id: String!): LocationPhoto!
-  deleteRequestById(id: String!): SendDto!
   deleteTimeTemplate(id: ID!): ID!
   deleteUserInfo(id: ID!): ID!
   deleteUserNote(id: ID!): ID!
   deleteUserSchedule(id: ID!): ID!
-  editLocksmith(updateLocksmithDto: UpdateLocksmithDto!): Locksmith!
-  editRequest(updateRequestDto: UpdateRequestDto!): Request!
   inviteUserToApp(inviteUserDto: InviteUserDto!): InvitedUser!
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!
   prepareFileForFineTune(filename: String!): String!
   registrationCustomer(registration_dto: RegistrationCustomerDto!): User!
-  reviewReviews(reviewReviewsDto: [ReviewReviewsDto!]!): [ReviewsWithEmailDto!]!
+  requestLocksmith(locksmith: RequestLocksmithDto!): Locksmith!
   sendMessage(chat_type: ChatType! = DEFAULT, prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
   speechToText(call_id: String!): Transcription!
@@ -1005,6 +969,7 @@ type Mutation {
   updateItemTemplate(updateItemTemplateDto: UpdateItemTemplateDto!): ItemTemplate!
   updateKey(key_dto: UpdateKeyDto!): Key!
   updateLocation(updateLocationDto: UpdateLocationDto!): Location!
+  updateLocksmith(locksmith: UpdateLocksmithDto!): Locksmith!
   updateManyUsersSchedules(users_schedules: [UpdateUserScheduleDto!]!): [UserSchedule!]!
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
   updateTemplate(updateTemplateDto: UpdateTemplateDto!): Template!
@@ -1015,8 +980,6 @@ type Mutation {
   updateUserNote(user_note: UpdateUserNoteDto!): UserNote!
   updateUserSchedule(user_schedule: UpdateUserScheduleDto!): UserSchedule!
   uploadCV(email: String!, file: Upload!, last_name: String!, name: String!, phone: String!): String!
-  uploadFileToLocksmith(file: Upload!, locksmith_id: String!): String!
-  uploadFileToRequest(file: Upload!, request_id: String!): String!
 }
 
 type OpenAiFile {
@@ -1078,6 +1041,11 @@ type PaginatedInventoryRequests {
 type PaginatedJobDto {
   has_more: Boolean!
   items: [JobDto!]!
+}
+
+type PaginatedLocksmith {
+  items: [Locksmith!]!
+  total: Int!
 }
 
 type PhotoBlog {
@@ -1152,14 +1120,12 @@ type Query {
   getLocationByStateAndUrl(filter: LocationFilterStateUrlDto!): Location!
   getLocationFiltered(filter: LocationFilterableDto!): LocationFilterableWithCountDto!
   getLocationPaginate(paginate: FindPaginationDto!): [Location!]!
-  getLocksmithById(id: String!): Locksmith!
-  getLocksmithWithUnreviewedReviews: [LocksmithWithCountNewReviewsDto!]!
+  getLocksmithById(id: ID!): Locksmith!
+  getLocksmiths(confirmed: Boolean!, pagination: FindPaginationDto!, search_value: String): PaginatedLocksmith!
   getLogs(pagination: FindPaginationDto!): LogsPaginated!
   getMyOrders: [Order!]!
   getMySchedule(from: Int!, to: Int!): UserWithSchedule!
   getOrderById(id: ID!): Order!
-  getRequestById(id: String!): Request!
-  getReviewsForConsideration: [ReviewsWithEmailDto!]!
   getSystemSettings: SystemSettings!
   getTemplateById(id: ID!): Template!
   getUniqueLocations: [String!]
@@ -1169,8 +1135,6 @@ type Query {
   listFineTunes: String!
   listModels: String!
   searchCars(make: String, model: String): [Car!]!
-  searchLocksmiths(options: SearchLocksmithDto!): LocksmithsWithCount!
-  searchRequests(first: Float, searchValue: String, skip: Float): [Request!]!
   testApi(method: String!, url: String!): String!
 }
 
@@ -1183,26 +1147,27 @@ input RegistrationCustomerDto {
   workiz_id: String
 }
 
-type Request {
-  address: [Address!]!
-  business_mail: String
-  business_name: String!
-  business_phone: String!
+input RequestLocksmithDto {
+  address: [String!]!
   description: String
-  files: String
-  id: ID!
+  file: Upload
+  file_url: String
   link_to_map: String!
   link_to_site: String!
-  owners_name: String
-  owners_phone: String!
-  photo: String
-  schedule: [Schedule!]!
+  mail: String!
+  name: String!
+  owner_name: String
+  owner_phone: String
+  phone: String!
+  schedules: [LocksmithScheduleDto!]!
   services: [String!]!
+  url: String
 }
 
-input ReviewReviewsDto {
-  id: ID!
-  status: ReviewsStatus! = UNDER_CONSIDERATION
+enum ReviewStatus {
+  APPROVED
+  REJECTED
+  UNDER_CONSIDERATION
 }
 
 type Reviews {
@@ -1223,30 +1188,11 @@ enum ReviewsStatus {
   UNDER_CONSIDERATION
 }
 
-type ReviewsWithEmailDto {
-  created_at: Float!
-  email: String!
-  id: ID!
-  locksmith_id: String!
-  name: String!
-  rating: Float
-  status: ReviewsStatus!
-  text: String!
-  title: String!
-  updated_at: Float!
-}
-
 type Schedule {
   close_at: DateTime
   id: ID!
   name: Week!
   open_at: DateTime
-}
-
-input SearchLocksmithDto {
-  first: Int
-  searchValue: String
-  skip: Int
 }
 
 type SendDto {
@@ -1362,11 +1308,6 @@ type Transcription {
   ctm_call_id: String!
   id: ID!
   text: String!
-}
-
-input UpdateAddressDto {
-  id: ID
-  name: String
 }
 
 input UpdateBlogBlockDto {
@@ -1518,24 +1459,31 @@ input UpdateLocationThumbnailDto {
 }
 
 input UpdateLocksmithDto {
-  address: [UpdateAddressDto!]
+  address: [String!]
+  confirmed: Boolean
   description: String
   file: Upload
+  file_url: String
   id: ID!
-  is_verified: Boolean
+  is_verified: Boolean = false
   link_to_map: String
   link_to_site: String
   mail: String
   name: String
-  owners_name: String
-  owners_phone: String
+  owner_name: String
+  owner_phone: String
   phone: String
-  photo: String
   priority: Float
-  schedule: [UpdateScheduleDto!]
+  schedules: [UpdateLocksmithScheduleDto!]
   services: [String!]
   url: String
-  zips: [String!]
+}
+
+input UpdateLocksmithScheduleDto {
+  close_at: DateTime
+  id: ID!
+  name: Week
+  open_at: DateTime
 }
 
 input UpdatePhotoForBlockDto {
@@ -1545,30 +1493,6 @@ input UpdatePhotoForBlockDto {
   id: ID
   link: String
   title: String
-}
-
-input UpdateRequestDto {
-  address: [UpdateAddressDto!]
-  business_mail: String
-  business_name: String
-  business_phone: String
-  description: String
-  files: String
-  id: ID!
-  link_to_map: String
-  link_to_site: String
-  owners_name: String
-  owners_phone: String
-  photo: String
-  schedule: [UpdateScheduleDto!]
-  services: [String!]
-}
-
-input UpdateScheduleDto {
-  close_at: DateTime
-  id: ID
-  name: Week
-  open_at: DateTime
 }
 
 input UpdateSystemSettingsDto {

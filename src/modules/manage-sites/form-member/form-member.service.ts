@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, In, Repository } from 'typeorm';
 import { CreateLocksmithDto } from './dto/create-locksmith.dto';
 import { Address } from './entity/address.entity';
-import { Locksmith } from './entity/locksmith.entity';
+import { LocksmithOld } from './entity/locksmith.entity';
 import { Schedule } from './entity/schedule.entity';
 import { Request } from './entity/request.entity';
 import { CreateRequestDto } from './dto/create-request.dto';
@@ -28,8 +28,8 @@ import { LocksmithsWithCount } from './dto/locksmith-with-count.dto';
 @Injectable()
 export class FormMemberService {
   constructor(
-    @InjectRepository(Locksmith)
-    private locksmithRepository: Repository<Locksmith>,
+    @InjectRepository(LocksmithOld)
+    private locksmithRepository: Repository<LocksmithOld>,
     @InjectRepository(Request) private requestRepository: Repository<Request>,
     @InjectRepository(Reviews) private reviewsRepository: Repository<Reviews>,
     private dataSource: DataSource,
@@ -67,7 +67,7 @@ export class FormMemberService {
 
   public async createLocksmith(
     locksmith_dto: CreateLocksmithDto,
-  ): Promise<Locksmith> {
+  ): Promise<LocksmithOld> {
     const { address, schedule, file, ...locksmith } = locksmith_dto;
     const saved_schedule = await this.dataSource
       .getRepository<Schedule>('Schedule')
@@ -243,7 +243,7 @@ export class FormMemberService {
     searchValue?: string,
     first?: number,
     skip?: number,
-  ): Promise<Locksmith[]> {
+  ): Promise<LocksmithOld[]> {
     const locksmiths = this.getLocksmith();
 
     // Searching
@@ -276,8 +276,8 @@ export class FormMemberService {
   }
 
   private checkLocksmithPhotoAndSetDefault(
-    locksmiths: Locksmith[],
-  ): Locksmith[] {
+    locksmiths: LocksmithOld[],
+  ): LocksmithOld[] {
     locksmiths.forEach((locksmith) => {
       if (!locksmith.photo) {
         locksmith.photo = this.configService.get('DEFAULT_LOCKSMITH_PHOTO');
@@ -378,7 +378,7 @@ export class FormMemberService {
     return request;
   }
 
-  public async getLocksmithById(id: string): Promise<Locksmith> {
+  public async getLocksmithById(id: string): Promise<LocksmithOld> {
     const locksmith = await this.locksmithRepository.findOne({
       where: { id },
       relations: { reviews: true },
@@ -390,7 +390,7 @@ export class FormMemberService {
     return locksmith;
   }
 
-  public async getLocksmithByUrl(url: string): Promise<Locksmith> {
+  public async getLocksmithByUrl(url: string): Promise<LocksmithOld> {
     return await this.getLocksmith()
       .where('locksmith.url = :url', { url })
       .getOne();

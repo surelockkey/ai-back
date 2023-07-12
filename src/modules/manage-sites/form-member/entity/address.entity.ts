@@ -7,7 +7,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Locksmith } from './locksmith.entity';
+import { LocksmithOld } from './locksmith.entity';
 import { Request } from './request.entity';
 
 @ObjectType()
@@ -36,10 +36,10 @@ export class Address {
   @JoinColumn({ name: 'request_id' })
   request: Request;
 
-  @ManyToOne(() => Locksmith, (locksmith) => locksmith.address, {
+  @ManyToOne(() => LocksmithOld, (locksmith) => locksmith.address, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'locksmith_id' })
-  locksmith: Locksmith;
+  locksmith: LocksmithOld;
 }

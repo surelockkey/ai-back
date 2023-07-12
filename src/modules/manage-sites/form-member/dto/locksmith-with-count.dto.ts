@@ -1,10 +1,10 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Locksmith } from '../entity/locksmith.entity';
+import { LocksmithOld } from '../entity/locksmith.entity';
 
 @ObjectType()
 export class LocksmithsWithCount {
-  @Field(() => [Locksmith])
-  items: Locksmith[];
+  @Field(() => [LocksmithOld])
+  items: LocksmithOld[];
 
   @Field(() => Int)
   count: number;

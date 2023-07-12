@@ -5,7 +5,7 @@ import { IFileUpload } from 'src/modules/upload/type/i-file-upload';
 
 @ArgsType()
 export class UploadFileToLocksmithArgs {
-  @IsExist('Locksmith')
+  @IsExist('LocksmithOld')
   @Field(() => String)
   locksmith_id!: string;
 

@@ -1,15 +1,15 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Address } from './address.entity';
-import { Reviews } from './reviews.entity';
-import { Schedule } from './schedule.entity';
+import { BaseEntity } from '@tech-slk/nest-crud';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { LocksmithSchedule } from '../locksmith-schedule/entity/locksmith-schedule.entity';
+import { LocksmithReview } from '../locksmith-review/entity/locksmith-review.entity';
 
 @ObjectType()
-@Entity('locksmith-old')
-export class LocksmithOld {
-  @Field(() => ID)
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+@Entity()
+export class Locksmith extends BaseEntity {
+  @Field(() => Boolean, { nullable: true })
+  @Column('boolean', { default: false })
+  confirmed?: boolean;
 
   @Field(() => String)
   @Column()
@@ -37,45 +37,51 @@ export class LocksmithOld {
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  owners_name?: string;
+  owner_name?: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  owners_phone?: string;
+  owner_phone?: string;
 
   @Field(() => [String])
   @Column('character varying', { array: true })
   services: string[];
 
+  @Field(() => ID, { nullable: true })
+  @Column('uuid', { nullable: true })
+  file_id: string;
+
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  photo?: string;
-
-  @Field(() => [String], { nullable: true })
-  @Column('character varying', { array: true, default: '{}', nullable: true })
-  zips: string[];
+  file_url: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   description?: string;
 
-  @Field(() => [Schedule])
-  @OneToMany(() => Schedule, (schedule) => schedule.locksmith, { eager: true })
-  schedule: Schedule[];
-
-  @Field(() => [Address])
-  @OneToMany(() => Address, (address) => address.locksmith, { eager: true })
-  address: Address[];
+  @Field(() => [String])
+  @Column('character varying', { array: true })
+  address: string[];
 
   @Field(() => Number, { nullable: true })
   @Column({ type: 'int', nullable: true })
   priority?: number;
 
-  @Field(() => [Reviews])
-  @OneToMany(() => Reviews, (reviews) => reviews.locksmith)
-  reviews: Reviews[];
-
   @Field(() => Boolean, { defaultValue: false })
   @Column({ type: 'boolean', default: false })
   is_verified?: boolean;
+
+  @Field(() => [LocksmithSchedule])
+  @OneToMany(
+    () => LocksmithSchedule,
+    (locksmith_schedule) => locksmith_schedule.locksmith,
+    { eager: true },
+  )
+  schedules: LocksmithSchedule[];
+
+  @Field(() => [LocksmithReview])
+  @OneToMany(() => LocksmithReview, (reviews) => reviews.locksmith, {
+    eager: true,
+  })
+  reviews: LocksmithReview[];
 }

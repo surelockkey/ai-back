@@ -1,4 +1,5 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { BaseEntity } from '@tech-slk/nest-crud';
 import { IsNumber, IsOptional, Max, Min } from 'class-validator';
 import {
   Column,
@@ -6,18 +7,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ReviewsStatus } from '../enum/reviews-status.enum';
-import { LocksmithOld } from './locksmith.entity';
+import { ReviewStatus } from '../enum/reviews-status.enum';
+import { Locksmith } from '../../entity/locksmith.entity';
 
 @ObjectType()
-@Entity('reviews')
-export class Reviews {
-  @Field(() => ID)
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+@Entity()
+export class LocksmithReview extends BaseEntity {
   @Column({ select: false })
   email: string;
 
@@ -33,25 +29,21 @@ export class Reviews {
   @Column()
   text: string;
 
-  @Field(() => ReviewsStatus, { nullable: true })
+  @Field(() => ReviewStatus, { nullable: true })
   @Column({
     type: 'enum',
-    enum: ReviewsStatus,
-    default: ReviewsStatus.UNDER_CONSIDERATION,
+    enum: ReviewStatus,
+    default: ReviewStatus.UNDER_CONSIDERATION,
   })
-  status: ReviewsStatus;
+  status: ReviewStatus;
 
   @IsOptional()
   @IsNumber()
-  @Min(1, { message: 'The minimum alloved value is 1' })
-  @Max(5, { message: 'The maximum alloved value is 5' })
-  @Field(() => Number, { nullable: true }) //defaultValue: 5
+  @Min(1, { message: 'The minimum allowed value is 1' })
+  @Max(5, { message: 'The maximum allowed value is 5' })
+  @Field(() => Number, { nullable: true })
   @Column({ nullable: true })
   rating?: number;
-
-  @Field(() => String)
-  @Column()
-  locksmith_id: string;
 
   @Field(() => Number)
   @CreateDateColumn({
@@ -68,10 +60,14 @@ export class Reviews {
   })
   updated_at?: number;
 
-  @ManyToOne(() => LocksmithOld, (locksmith) => locksmith.reviews, {
+  @Field(() => String)
+  @Column('uuid')
+  locksmith_id: string;
+
+  @ManyToOne(() => Locksmith, (locksmith) => locksmith.reviews, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'locksmith_id' })
-  locksmith: LocksmithOld;
+  locksmith: Locksmith;
 }

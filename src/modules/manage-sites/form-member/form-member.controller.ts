@@ -6,7 +6,7 @@ import {
   ApiResponse,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { Locksmith } from './entity/locksmith.entity';
+import { LocksmithOld } from './entity/locksmith.entity';
 import { FormMemberService } from './form-member.service';
 import { Request } from './entity/request.entity';
 
@@ -15,14 +15,16 @@ export class FormMemberController {
   constructor(private readonly formMemberService: FormMemberService) {}
 
   @Get('search/:key_word')
-  searchLocksmith(@Param('key_word') key_word?: string): Promise<Locksmith[]> {
+  searchLocksmith(
+    @Param('key_word') key_word?: string,
+  ): Promise<LocksmithOld[]> {
     return this.formMemberService.searchLocksmithsFromController(key_word, 10);
   }
 
   @Get('locksmith-url/:locksmith_url')
   getLocksmithByUrl(
     @Param('locksmith_url') locksmith_url: string,
-  ): Promise<Locksmith> {
+  ): Promise<LocksmithOld> {
     return this.formMemberService.getLocksmithByUrl(locksmith_url);
   }
 

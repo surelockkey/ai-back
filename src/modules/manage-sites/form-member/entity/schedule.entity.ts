@@ -7,9 +7,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Week } from '../enum/week.enum';
-import { Locksmith } from './locksmith.entity';
+import { LocksmithOld } from './locksmith.entity';
 import { Request } from './request.entity';
+import { Week } from '../../locksmith/locksmith-schedule/enum/week.enum';
 
 @ObjectType()
 @Entity('schedule')
@@ -47,10 +47,10 @@ export class Schedule {
   @JoinColumn({ name: 'request_id' })
   request: Request;
 
-  @ManyToOne(() => Locksmith, (locksmith) => locksmith.schedule, {
+  @ManyToOne(() => LocksmithOld, (locksmith) => locksmith.schedule, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'locksmith_id' })
-  locksmith: Locksmith;
+  locksmith: LocksmithOld;
 }

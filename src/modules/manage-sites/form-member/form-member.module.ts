@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Address } from './entity/address.entity';
-import { Locksmith } from './entity/locksmith.entity';
+import { LocksmithOld } from './entity/locksmith.entity';
 import { Request } from './entity/request.entity';
 import { Reviews } from './entity/reviews.entity';
 import { Schedule } from './entity/schedule.entity';
@@ -14,7 +14,13 @@ import { UtilsModule } from '../utils/utils.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Locksmith, Request, Address, Schedule, Reviews]),
+    TypeOrmModule.forFeature([
+      LocksmithOld,
+      Request,
+      Address,
+      Schedule,
+      Reviews,
+    ]),
     UtilsModule,
   ],
   providers: [
