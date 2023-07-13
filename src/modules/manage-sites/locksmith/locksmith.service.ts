@@ -147,4 +147,28 @@ export class LocksmithService extends CrudService<Locksmith> {
 
     return { items, total };
   }
+
+  public async getLocksmithWithUnreviewedReviews() {
+    return await this.locksmithRepository
+      .createQueryBuilder('locksmith')
+      .leftJoinAndSelect('locksmith.schedules', 'schedule')
+      .leftJoinAndMapMany(
+        'locksmith.reviews',
+        LocksmithReview,
+        'review',
+        'locksmith.id = review.locksmith_id AND review.status = :status',
+        { status: ReviewStatus.UNDER_CONSIDERATION },
+      )
+      .loadRelationCountAndMap(
+        'locksmith.count_new_reviews',
+        'locksmith.reviews',
+        'new_reviews',
+        (qb) =>
+          qb.andWhere('new_reviews.status = :status', {
+            status: ReviewStatus.UNDER_CONSIDERATION,
+          }),
+      )
+      .where('review IS NOT NULL')
+      .getMany();
+  }
 }

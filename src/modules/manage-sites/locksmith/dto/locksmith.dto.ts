@@ -2,6 +2,7 @@ import {
   Field,
   InputType,
   IntersectionType,
+  ObjectType,
   OmitType,
   PartialType,
   PickType,
@@ -54,4 +55,10 @@ export class UpdateLocksmithDto extends IntersectionType(
 
   @Field(() => [UpdateLocksmithScheduleDto], { nullable: true })
   schedules?: UpdateLocksmithScheduleDto[];
+}
+
+@ObjectType()
+export class LocksmithWithCountNewReviewsDto extends Locksmith {
+  @Field(() => Number)
+  count_new_reviews: number;
 }

@@ -10,6 +10,7 @@ import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
 import { UserRole } from 'src/modules/user/enum/user-role.enum';
 import { FindPaginationDto } from 'src/core/dto/pagination.dto';
 import { PaginatedLocksmith } from './dto/paginated-locksmith.dto';
+import { LocksmithWithCountNewReviewsDto } from '../form-member/dto/locksmith-with-count-new-rewiews.dto';
 
 @Resolver()
 export class LocksmithResolver {
@@ -58,5 +59,11 @@ export class LocksmithResolver {
     locksmith: UpdateLocksmithDto,
   ) {
     return this.locksmithService.updateLocksmith(locksmith);
+  }
+
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
+  @Query(() => [LocksmithWithCountNewReviewsDto])
+  public getLocksmithWithUnreviewedReviews() {
+    return this.locksmithService.getLocksmithWithUnreviewedReviews();
   }
 }

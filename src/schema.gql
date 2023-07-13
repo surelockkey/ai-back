@@ -807,6 +807,19 @@ type LocksmithReview {
   updated_at: Float!
 }
 
+type LocksmithReviewWithEmail {
+  created_at: Float!
+  email: String!
+  id: ID!
+  locksmith_id: String!
+  name: String!
+  rating: Float
+  status: ReviewStatus
+  text: String!
+  title: String!
+  updated_at: Float!
+}
+
 type LocksmithSchedule {
   close_at: DateTime
   id: ID!
@@ -819,6 +832,28 @@ input LocksmithScheduleDto {
   close_at: DateTime
   name: Week!
   open_at: DateTime
+}
+
+type LocksmithWithCountNewReviewsDto {
+  address: [Address!]!
+  count_new_reviews: Float!
+  description: String
+  id: ID!
+  is_verified: Boolean!
+  link_to_map: String!
+  link_to_site: String!
+  mail: String!
+  name: String!
+  owners_name: String
+  owners_phone: String
+  phone: String!
+  photo: String
+  priority: Float
+  reviews: [Reviews!]!
+  schedule: [Schedule!]!
+  services: [String!]!
+  url: String
+  zips: [String!]
 }
 
 type Log {
@@ -957,6 +992,8 @@ type Mutation {
   prepareFileForFineTune(filename: String!): String!
   registrationCustomer(registration_dto: RegistrationCustomerDto!): User!
   requestLocksmith(locksmith: RequestLocksmithDto!): Locksmith!
+  requestLocksmithReview(review: RequestLocksmithReviewDto!): LocksmithReview!
+  reviewManyLocksmithReviews(reviews: [ReviewLocksmithReviewDto!]!): [LocksmithReview!]!
   sendMessage(chat_type: ChatType! = DEFAULT, prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
   speechToText(call_id: String!): Transcription!
@@ -1121,6 +1158,7 @@ type Query {
   getLocationFiltered(filter: LocationFilterableDto!): LocationFilterableWithCountDto!
   getLocationPaginate(paginate: FindPaginationDto!): [Location!]!
   getLocksmithById(id: ID!): Locksmith!
+  getLocksmithWithUnreviewedReviews: [LocksmithWithCountNewReviewsDto!]!
   getLocksmiths(confirmed: Boolean!, pagination: FindPaginationDto!, search_value: String): PaginatedLocksmith!
   getLogs(pagination: FindPaginationDto!): LogsPaginated!
   getMyOrders: [Order!]!
@@ -1129,6 +1167,7 @@ type Query {
   getSystemSettings: SystemSettings!
   getTemplateById(id: ID!): Template!
   getUniqueLocations: [String!]
+  getUnreviewedReviews: [LocksmithReviewWithEmail!]!
   getUsersWithSchedule(userWithScheduleDto: UserWithScheduleDto!): [UserWithSchedule!]!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
@@ -1162,6 +1201,20 @@ input RequestLocksmithDto {
   schedules: [LocksmithScheduleDto!]!
   services: [String!]!
   url: String
+}
+
+input RequestLocksmithReviewDto {
+  email: String!
+  locksmith_id: String!
+  name: String!
+  rating: Float
+  text: String!
+  title: String!
+}
+
+input ReviewLocksmithReviewDto {
+  id: ID!
+  status: ReviewStatus
 }
 
 enum ReviewStatus {
