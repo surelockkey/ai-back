@@ -23,6 +23,7 @@ export class LocksmithScheduleService extends CrudService<LocksmithSchedule> {
     queryRunner: QueryRunner,
   ) {
     return await queryRunner.manager.save(
+      LocksmithSchedule,
       schedules.map((schedule) => ({ ...schedule, locksmith_id })),
     );
   }
