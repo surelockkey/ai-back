@@ -95,6 +95,18 @@ enum ChatType {
   WITH_API
 }
 
+type ConstructedMetaInfo {
+  categoric: String
+  constructed_page_id: ID
+  date_when_will_post_blog: String
+  global_script: String
+  id: ID!
+  meta_tag_description: String
+  meta_tag_title: String
+  schema_script: String
+  url_for_blog: String
+}
+
 type ConstructorBlog {
   blocks: [BlogBlock!]!
   id: ID!
