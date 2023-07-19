@@ -63,7 +63,13 @@ export class LocksmithResolver {
 
   @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Query(() => [LocksmithWithCountNewReviewsDto])
-  public getLocksmithWithUnreviewedReviews() {
+  getLocksmithWithUnreviewedReviews() {
     return this.locksmithService.getLocksmithWithUnreviewedReviews();
+  }
+
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
+  @Mutation(() => ID)
+  deleteLocksmithById(@Args('id', { type: () => ID }) id: string) {
+    return this.locksmithService.deleteByIdReturnId(id);
   }
 }
