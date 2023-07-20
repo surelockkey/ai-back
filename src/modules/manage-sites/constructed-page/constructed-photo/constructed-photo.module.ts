@@ -7,5 +7,6 @@ import { ConstructedPhotoService } from './constructed-photo.service';
 @Module({
   imports: [TypeOrmModule.forFeature([ConstructedPhoto])],
   providers: [ConstructedPhotoResolver, ConstructedPhotoService],
+  exports: [ConstructedPhotoService],
 })
 export class ConstructedPhotoModule {}

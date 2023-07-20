@@ -34,8 +34,8 @@ export class ConstructedMetaInfo extends BaseEntity {
   @Column({ nullable: true })
   url_for_blog?: string;
 
-  @Field(() => ID, { nullable: true })
-  @Column({ nullable: true })
+  @Field(() => ID)
+  @Column('uuid')
   constructed_page_id?: string;
 
   @OneToOne(

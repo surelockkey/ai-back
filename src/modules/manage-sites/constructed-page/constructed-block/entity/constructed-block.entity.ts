@@ -1,6 +1,8 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from '@tech-slk/nest-crud';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
+import { ConstructedPage } from '../../entity/constructed-page.entity';
+import { ConstructedPhoto } from '../../constructed-photo/entity/constructed-photo.entity';
 
 @ObjectType()
 @Entity()
@@ -58,9 +60,26 @@ export class ConstructedBlock extends BaseEntity {
   body_text?: string;
 
   @Field(() => ID)
-  @Column()
+  @Column('uuid')
   constructed_page_id: string;
 
-  // TODO: Add photo
-  //   photo?: PhotoForBlock;
+  @ManyToOne(
+    () => ConstructedPage,
+    (constructed_page) => constructed_page.blocks,
+    { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
+  )
+  constructed_page: ConstructedPage;
+
+  @Field(() => ID, { nullable: true })
+  @Column({ type: 'uuid', nullable: true })
+  constructed_photo_id: string;
+
+  @Field(() => ConstructedPhoto, { nullable: true })
+  @OneToOne(
+    () => ConstructedPhoto,
+    (constructed_photo) => constructed_photo.block,
+    { nullable: true, eager: true },
+  )
+  @JoinColumn({ name: 'constructed_photo_id' })
+  photo: ConstructedPhoto;
 }
