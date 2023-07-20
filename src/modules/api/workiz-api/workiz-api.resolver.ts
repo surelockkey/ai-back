@@ -79,10 +79,20 @@ export class WorkizApiResolver {
   @Query(() => String)
   async testApi(
     @Args('url') url: string,
-    @Args('method') method: RestMethods
+    @Args('method') method: RestMethods,
   ): Promise<string> {
-    const a =  await this.workizCoreApiService.req(url, method);
-    console.log(a, '@@')
+    const a = await this.workizCoreApiService.req(url, method);
+    console.log(a, '@@');
     return '';
+  }
+
+  @Query(() => String)
+  getWorkizClients() {
+    return this.workizCoreApiService.getClients();
+  }
+
+  @Query(() => String)
+  getAllJ() {
+    return this.workizCoreApiService.getAllJobs();
   }
 }

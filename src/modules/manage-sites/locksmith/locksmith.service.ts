@@ -79,7 +79,7 @@ export class LocksmithService extends CrudService<Locksmith> {
           await file,
           current_locksmith.file_id,
         );
-      } else {
+      } else if (file) {
         await this.fileService.uploadImageSharp(
           await file,
           queryRunner.manager,

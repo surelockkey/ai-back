@@ -1090,6 +1090,7 @@ type Mutation {
   deleteKey(id: ID!): ID!
   deleteKeyCar(id: ID!): ID!
   deleteLocationById(id: String!): Location!
+  deleteLocksmithById(id: ID!): ID!
   deleteManyInvitedUsers(user_ids: [ID!]!): [String!]!
   deleteManyItemTemplates(ids: [ID!]!): [ID!]!
   deleteManyKeyCar(ids: [ID!]!): [ID!]!
@@ -1230,6 +1231,7 @@ type Query {
   getAllContainers: [WorkizContainer!]!
   getAllFiles: [OpenAiFile!]!
   getAllInvitedUsers: [InvitedUser!]!
+  getAllJ: String!
   getAllJobsWorkiz(
     offset: Int!
 
@@ -1288,6 +1290,7 @@ type Query {
   getUniqueLocations: [String!]
   getUnreviewedReviews: [LocksmithReviewWithEmail!]!
   getUsersWithSchedule(userWithScheduleDto: UserWithScheduleDto!): [UserWithSchedule!]!
+  getWorkizClients: String!
   getWorkizJobById(id: String!): JobDto!
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!

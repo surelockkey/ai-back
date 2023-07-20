@@ -1,14 +1,14 @@
-import { Injectable } from "@nestjs/common";
-import { WorkizApiService } from "../api/workiz-api/workiz-api.service";
-import { CrudService } from "@tech-slk/nest-crud";
-import { Job } from "./entity/job.entity";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { PaginatedJobDto } from "../api/workiz-api/dto/workiz-api.dto";
-import { WorkizCoreApiService } from "../api/workiz-api/workiz-core.service";
-import * as moment from "moment";
-import { Call } from "./entity/call.entity";
-import { ActivityLog } from "./entity/activity-log.entity";
+import { Injectable } from '@nestjs/common';
+import { WorkizApiService } from '../api/workiz-api/workiz-api.service';
+import { CrudService } from '@tech-slk/nest-crud';
+import { Job } from './entity/job.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { PaginatedJobDto } from '../api/workiz-api/dto/workiz-api.dto';
+import { WorkizCoreApiService } from '../api/workiz-api/workiz-core.service';
+import * as moment from 'moment';
+import { Call } from './entity/call.entity';
+import { ActivityLog } from './entity/activity-log.entity';
 
 @Injectable()
 export class JobService extends CrudService<Job> {
@@ -17,60 +17,68 @@ export class JobService extends CrudService<Job> {
     private readonly workizApiService: WorkizApiService,
     private readonly workizCoreApiService: WorkizCoreApiService,
     @InjectRepository(Call) private readonly callRepository: Repository<Call>,
-    @InjectRepository(ActivityLog) private readonly activityLogRepository: Repository<ActivityLog>,
+    @InjectRepository(ActivityLog)
+    private readonly activityLogRepository: Repository<ActivityLog>,
   ) {
     super(jobRepository);
   }
 
   public async jobLoop() {
     await this.jobRepository
-    .createQueryBuilder('job')
-    .delete()
-    .from(Job)
-    .execute();
+      .createQueryBuilder('job')
+      .delete()
+      .from(Job)
+      .execute();
 
     await this.callRepository
-    .createQueryBuilder('call')
-    .delete()
-    .from(Call)
-    .execute();
+      .createQueryBuilder('call')
+      .delete()
+      .from(Call)
+      .execute();
 
     await this.activityLogRepository
-    .createQueryBuilder('activityLog')
-    .delete()
-    .from(ActivityLog)
-    .execute();
-
+      .createQueryBuilder('activityLog')
+      .delete()
+      .from(ActivityLog)
+      .execute();
 
     const current_date = moment();
     let year = 18;
     let month = 1;
 
-    while(!(Number(current_date.format('YYYY')) <= year && Number(current_date.format('M')) < month)) {
+    while (
+      !(
+        Number(current_date.format('YYYY')) <= year &&
+        Number(current_date.format('M')) < month
+      )
+    ) {
       await this.getJob(year, month);
 
       month++;
 
       if (month > 12) {
         month = 1;
-        year+= 1;
+        year += 1;
       }
 
-      console.log(month, year)
+      console.log(month, year);
     }
   }
 
   public async getJob(year: number, month: number): Promise<PaginatedJobDto> {
     let current_page = 1;
-    let total_pages = (await this.getJobsByRange(current_page, year, month)).pages;
+    let total_pages = (await this.getJobsByRange(current_page, year, month))
+      .pages;
 
     while (current_page < total_pages) {
-      const req = (await this.getJobsByRange(current_page, year, month));
+      const req = await this.getJobsByRange(current_page, year, month);
       const jobs = req.aaData;
-          
-      await Promise.all((jobs || [])?.map(async (job) => {
-        await this.getFullJob(job.uuid)
-      }))
+
+      await Promise.all(
+        (jobs || [])?.map(async (job) => {
+          await this.getFullJob(job.uuid);
+        }),
+      );
 
       current_page++;
     }
@@ -78,14 +86,18 @@ export class JobService extends CrudService<Job> {
     return { items: [], has_more: true };
   }
 
-  private async getJobsByRange(current_page: number, year: number, month: number) {
+  private async getJobsByRange(
+    current_page: number,
+    year: number,
+    month: number,
+  ) {
     try {
       let month_to = month + 1;
       let year_to = year;
 
       if (month === 12) {
         month_to = 1;
-        year_to = year + 1; 
+        year_to = year + 1;
       }
 
       return await this.workizCoreApiService.req(
@@ -94,9 +106,9 @@ export class JobService extends CrudService<Job> {
         {
           page: current_page,
           pageSize: 500,
-          sorted: [{ id: "created", desc: true }],
+          sorted: [{ id: 'created', desc: true }],
           filtered: [],
-          sSearch: "",
+          sSearch: '',
           final_q: `1.${month}.${year}_1.${month_to}.${year_to}`,
           timeQueryChanged: false,
           pickerParams: { report_by: 3 },
@@ -114,24 +126,26 @@ export class JobService extends CrudService<Job> {
             company: [],
           },
         },
-      );  
+      );
     } catch (e) {
       console.log(e);
     }
   }
 
-  private async getFullJob(job_id: string){
+  private async getFullJob(job_id: string) {
     try {
       const job = await this.workizCoreApiService.req(
         `/ajaxc/job/get/${job_id}/`,
         'post',
       );
 
-      const activities = (await this.workizCoreApiService.req(
-        `/ajaxc/job/jobTimelineFull/${job.data.job_id}/`,
-        'post',
-        {}
-      )).data;
+      const activities = (
+        await this.workizCoreApiService.req(
+          `/ajaxc/job/jobTimelineFull/${job.data.job_id}/`,
+          'post',
+          {},
+        )
+      ).data;
 
       let activity_counter = 0;
 
@@ -175,7 +189,7 @@ export class JobService extends CrudService<Job> {
 
         activity_counter++;
       }
-  
+
       await this.jobRepository.save({
         uuid: job.data.uuid,
         start_date: job.data.job_date,
@@ -204,48 +218,46 @@ export class JobService extends CrudService<Job> {
         tax_precent: job.data.tax_precent,
         job_id: job.data.job_id,
         avg_duration: job.data.avg_duration,
-      })
-    } catch(e) {
-      console.log(e);   
+      });
+    } catch (e) {
+      console.log(e);
     }
   }
 }
 
+// while (current_page < total_pages) {
+//   const data = await this.workizCoreApiService.req(
+//     {
+//       page: current_page,
+//       pageSize: 50,
+//       sorted: [{ id: "created", desc: true }],
+//       filtered: [],
+//       sSearch: "",
+//       final_q: "1.5.19_1.4.20",
+//       timeQueryChanged: false,
+//       pickerParams: { report_by: 3 },
+//       react: true,
+//       withCsv: false,
+//       pickerOn: true,
+//       filters: {
+//         user: [],
+//         tag: [],
+//         metro: [],
+//         type: [],
+//         status: [],
+//         created_by: [],
+//         source: [],
+//         company: [],
+//       },
+//     },
+//     '/ajaxc/job/jobReport/',
+//     'post'
+//   );
 
+//   total_pages = data.total;
 
-    // while (current_page < total_pages) {
-    //   const data = await this.workizCoreApiService.req(
-    //     {
-    //       page: current_page,
-    //       pageSize: 50,
-    //       sorted: [{ id: "created", desc: true }],
-    //       filtered: [],
-    //       sSearch: "",
-    //       final_q: "1.5.19_1.4.20",
-    //       timeQueryChanged: false,
-    //       pickerParams: { report_by: 3 },
-    //       react: true,
-    //       withCsv: false,
-    //       pickerOn: true,
-    //       filters: {
-    //         user: [],
-    //         tag: [],
-    //         metro: [],
-    //         type: [],
-    //         status: [],
-    //         created_by: [],
-    //         source: [],
-    //         company: [],
-    //       },
-    //     },
-    //     '/ajaxc/job/jobReport/',
-    //     'post'
-    //   );    
-  
-    //   total_pages = data.total;
-  
-    //   jobs.push(...data.aaData);
-    //   current_page++;
+//   jobs.push(...data.aaData);
+//   current_page++;
 
-    //   console.log(current_page, total_pages, jobs.length)
-    // }
+//   console.log(current_page, total_pages, jobs.length)
+// }
