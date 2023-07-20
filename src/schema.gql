@@ -95,6 +95,113 @@ enum ChatType {
   WITH_API
 }
 
+type ConstructedBlock {
+  body_text: String
+  constructed_page_id: ID!
+  constructed_photo_id: ID
+  description: String
+  first_list: String
+  headline: String
+  id: ID!
+  last_list: String
+  last_text: String
+  list: String
+  photo: ConstructedPhoto
+  position_block: Float
+  styles: String
+  text: String
+  text_left: String
+  text_right: String
+  type_block: String
+}
+
+input ConstructedBlockDto {
+  body_text: String
+  description: String
+  first_list: String
+  headline: String
+  last_list: String
+  last_text: String
+  list: String
+  photo: ConstructedPhotoDto
+  position_block: Float
+  styles: String
+  text: String
+  text_left: String
+  text_right: String
+  type_block: String
+}
+
+type ConstructedMetaInfo {
+  categoric: String
+  constructed_page_id: ID!
+  date_when_will_post_blog: String
+  global_script: String
+  id: ID!
+  meta_tag_description: String
+  meta_tag_title: String
+  schema_script: String
+  url_for_blog: String
+}
+
+input ConstructedMetaInfoDto {
+  categoric: String
+  date_when_will_post_blog: String
+  global_script: String
+  meta_tag_description: String
+  meta_tag_title: String
+  schema_script: String
+  url_for_blog: String
+}
+
+type ConstructedPage {
+  blocks: [ConstructedBlock!]
+  id: ID!
+  is_posted: Boolean
+  meta_info: ConstructedMetaInfo
+  post_date: Float
+  preview: ConstructedPreview
+  type: ConstructedPageType!
+}
+
+enum ConstructedPageType {
+  BLOG
+  LOCATION
+}
+
+type ConstructedPhoto {
+  alt: String
+  file: File!
+  file_id: ID!
+  id: ID!
+  title: String
+}
+
+input ConstructedPhotoDto {
+  alt: String
+  file: Upload!
+  title: String
+}
+
+type ConstructedPreview {
+  constructed_page_id: ID!
+  constructed_photo_id: ID
+  date: String
+  description: String
+  id: ID!
+  photo: ConstructedPhoto
+  title: String
+  type_block: String
+}
+
+input ConstructedPreviewDto {
+  date: String
+  description: String
+  photo: ConstructedPhotoDto
+  title: String
+  type_block: String
+}
+
 type ConstructorBlog {
   blocks: [BlogBlock!]!
   id: ID!
@@ -156,6 +263,15 @@ input CreateCarDto {
 input CreateCarTemplateDto {
   template_id: ID!
   workiz_id: String!
+}
+
+input CreateConstructedPageDto {
+  blocks: [ConstructedBlockDto!]
+  is_posted: Boolean
+  meta_info: ConstructedMetaInfoDto
+  post_date: Float
+  preview: ConstructedPreviewDto
+  type: ConstructedPageType!
 }
 
 input CreateConstructorBlogDto {
@@ -941,6 +1057,7 @@ type Mutation {
   """method to create photo"""
   createBlogPhoto(picture: Upload!): PhotoBlog!
   createCar(carDto: CreateCarDto!): Car!
+  createConstructedPage(constructed_page: CreateConstructedPageDto!): ConstructedPage!
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
   createInventoryRequest(inventory_request_dto: CreateInventoryRequestDto!): InventoryRequest!
   createKey(key_dto: CreateKeyDto!): Key!
@@ -968,6 +1085,7 @@ type Mutation {
 
   """deleted photo by id"""
   deleteBlogPhotoById(id: String!): PhotoBlog!
+  deleteConstructedPageById(id: ID!): ID!
   deleteFineTuneItem(id: ID!): ID!
   deleteKey(id: ID!): ID!
   deleteKeyCar(id: ID!): ID!
@@ -1138,6 +1256,7 @@ type Query {
   """this method get blogs by field description which like inputed"""
   getBlogsFilterByMetaBlogUrl(metaBlogUrl: String!): ConstructorBlog!
   getCalls(ctmGetCallsOptionDto: CtmGetCallsOptionDto!): CtmGetCallsDto!
+  getConstructedPages: [ConstructedPage!]!
   getContainerById(id: String!): FindContainerAndTemplate!
   getCurrentUser: User!
 
