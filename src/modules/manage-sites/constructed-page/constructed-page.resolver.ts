@@ -15,7 +15,7 @@ export class ConstructedPageResolver {
   @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Query(() => [ConstructedPage])
   getConstructedPages(@Args() args: GetConstructedPagesArgs) {
-    return this.constructedPageService.findAll();
+    return this.constructedPageService.getConstructedPages(args);
   }
 
   @RoleGuard(UserRole.ADMIN, UserRole.SEO)
