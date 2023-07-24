@@ -4,6 +4,7 @@ import { ConstructedPage } from './entity/constructed-page.entity';
 import { CreateConstructedPageDto } from './dto/constructed-page.dto';
 import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
 import { UserRole } from 'src/modules/user/enum/user-role.enum';
+import { GetConstructedPagesArgs } from './args/get-constructed-pages.args';
 
 @Resolver()
 export class ConstructedPageResolver {
@@ -13,7 +14,7 @@ export class ConstructedPageResolver {
 
   @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Query(() => [ConstructedPage])
-  getConstructedPages() {
+  getConstructedPages(@Args() args: GetConstructedPagesArgs) {
     return this.constructedPageService.findAll();
   }
 

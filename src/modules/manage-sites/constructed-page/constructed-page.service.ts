@@ -8,6 +8,7 @@ import { GraphQLError } from 'graphql';
 import { ConstructedBlockService } from './constructed-block/constructed-block.service';
 import { ConstructedMetaInfoService } from './constructed-meta-info/constructed-meta-info.service';
 import { ConstructedPreviewService } from './constructed-preview/constructed-preview.service';
+import { GetConstructedPagesArgs } from './args/get-constructed-pages.args';
 
 @Injectable()
 export class ConstructedPageService extends CrudService<ConstructedPage> {
@@ -20,6 +21,17 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
     private readonly constructedPreviewService: ConstructedPreviewService,
   ) {
     super(constructedPageRepository);
+  }
+
+  public async getConstructedPages({
+    pagination,
+    type,
+    is_posted,
+  }: GetConstructedPagesArgs) {
+    return this.constructedPageRepository.find({
+      where: { is_posted, type },
+      ...pagination,
+    });
   }
 
   public async createConstructedPage(
