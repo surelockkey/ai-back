@@ -40,6 +40,20 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
     });
   }
 
+  public async getConstructedPageById(id: string) {
+    return this.constructedPageRepository.findOne({
+      where: { id },
+      order: { blocks: { position_block: 'ASC' } },
+    });
+  }
+
+  public async getConstructedPageByUrl(url: string) {
+    return this.constructedPageRepository.findOne({
+      where: { meta_info: { url_for_blog: url } },
+      order: { blocks: { position_block: 'ASC' } },
+    });
+  }
+
   public async createConstructedPage(
     constructed_page_dto: CreateConstructedPageDto,
   ) {

@@ -22,6 +22,18 @@ export class ConstructedPageResolver {
   }
 
   @RoleGuard(UserRole.ADMIN, UserRole.SEO)
+  @Query(() => ConstructedPage)
+  getConstructedPageById(@Args('id', { type: () => ID }) id: string) {
+    return this.constructedPageService.getConstructedPageById(id);
+  }
+
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
+  @Query(() => ConstructedPage)
+  getConstructedPageByUrl(@Args('url') url: string) {
+    return this.constructedPageService.getConstructedPageByUrl(url);
+  }
+
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Mutation(() => ConstructedPage)
   createConstructedPage(
     @Args('constructed_page', { type: () => CreateConstructedPageDto })
