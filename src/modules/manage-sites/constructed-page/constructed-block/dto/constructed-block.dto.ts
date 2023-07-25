@@ -1,6 +1,9 @@
 import { Field, InputType, OmitType, PartialType } from '@nestjs/graphql';
 import { ConstructedBlock } from '../entity/constructed-block.entity';
-import { ConstructedPhotoDto } from '../../constructed-photo/dto/constructed-photo.dto';
+import {
+  ConstructedPhotoDto,
+  UpdateConstructedPhotoDto,
+} from '../../constructed-photo/dto/constructed-photo.dto';
 
 @InputType()
 export class ConstructedBlockInput extends OmitType(ConstructedBlock, [
@@ -25,6 +28,6 @@ export class UpdateOrCreateConstructedBlockDto extends PartialType(
     'constructed_page_id',
   ]),
 ) {
-  @Field(() => ConstructedPhotoDto, { nullable: true })
-  photo?: ConstructedPhotoDto;
+  @Field(() => UpdateConstructedPhotoDto, { nullable: true })
+  photo?: UpdateConstructedPhotoDto;
 }

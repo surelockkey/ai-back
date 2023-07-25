@@ -68,6 +68,7 @@ export class ConstructedBlock extends BaseEntity {
     (constructed_page) => constructed_page.blocks,
     { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
   )
+  @JoinColumn({ name: 'constructed_page_id' })
   constructed_page: ConstructedPage;
 
   @Field(() => ID, { nullable: true })

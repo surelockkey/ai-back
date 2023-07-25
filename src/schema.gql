@@ -1706,7 +1706,7 @@ input UpdateOrCreateConstructedBlockDto {
   last_list: String
   last_text: String
   list: String
-  photo: ConstructedPhotoDto
+  photo: UpdateConstructedPhotoDto
   position_block: Float
   styles: String
   text: String

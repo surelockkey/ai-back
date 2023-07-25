@@ -53,12 +53,14 @@ export class ConstructedPhotoService extends CrudService<ConstructedPhoto> {
       );
     }
 
-    return await queryRunner.manager.update(
-      ConstructedPhoto,
-      {
-        id: constructed_photo_id,
-      },
-      constructed_photo_dto,
-    );
+    if (Object.keys(constructed_photo_dto).length) {
+      return await queryRunner.manager.update(
+        ConstructedPhoto,
+        {
+          id: constructed_photo_id,
+        },
+        constructed_photo_dto,
+      );
+    }
   }
 }

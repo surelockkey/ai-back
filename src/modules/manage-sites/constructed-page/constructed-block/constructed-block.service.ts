@@ -8,6 +8,7 @@ import {
   UpdateOrCreateConstructedBlockDto,
 } from './dto/constructed-block.dto';
 import { ConstructedPhotoService } from '../constructed-photo/constructed-photo.service';
+import { ConstructedPhotoDto } from '../constructed-photo/dto/constructed-photo.dto';
 
 @Injectable()
 export class ConstructedBlockService extends CrudService<ConstructedBlock> {
@@ -72,7 +73,7 @@ export class ConstructedBlockService extends CrudService<ConstructedBlock> {
           } else {
             const constructed_photo =
               await this.constructedPhotoService.createConstructedPhotoTransactional(
-                photo,
+                photo as ConstructedPhotoDto,
                 queryRunner,
               );
             constructed_photo_id = constructed_photo.id;
@@ -80,7 +81,7 @@ export class ConstructedBlockService extends CrudService<ConstructedBlock> {
         } else if (!id && photo) {
           const constructed_photo =
             await this.constructedPhotoService.createConstructedPhotoTransactional(
-              photo,
+              photo as ConstructedPhotoDto,
               queryRunner,
             );
           constructed_photo_id = constructed_photo.id;

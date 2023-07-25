@@ -96,7 +96,7 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
         ...constructed_page_dto
       } = update_constructed_page_dto;
 
-      if (meta_info) {
+      if (meta_info && Object.keys(meta_info).length) {
         await this.constructedMetaInfoService.updateConstructedMetaInfoTransactional(
           meta_info,
           id,
@@ -127,11 +127,15 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
         );
       }
 
-      await queryRunner.manager.update(
-        ConstructedPage,
-        { id },
-        constructed_page_dto,
-      );
+      if (Object.keys(constructed_page_dto).length) {
+        await queryRunner.manager.update(
+          ConstructedPage,
+          {
+            id,
+          },
+          constructed_page_dto,
+        );
+      }
 
       await queryRunner.commitTransaction();
 

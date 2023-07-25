@@ -76,10 +76,12 @@ export class ConstructedPreviewService extends CrudService<ConstructedPreview> {
       }
     }
 
-    return await queryRunner.manager.update(
-      ConstructedPreview,
-      { constructed_page_id },
-      { ...constructed_preview_dto, constructed_photo_id },
-    );
+    if (Object.keys(constructed_preview_dto).length || constructed_photo_id) {
+      return await queryRunner.manager.update(
+        ConstructedPreview,
+        { constructed_page_id },
+        { ...constructed_preview_dto, constructed_photo_id },
+      );
+    }
   }
 }
