@@ -33,6 +33,9 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
   }: GetConstructedPagesArgs) {
     return this.constructedPageRepository.find({
       where: { is_posted, type },
+      order: {
+        post_date: 'DESC',
+      },
       ...pagination,
     });
   }
