@@ -188,17 +188,17 @@ type ConstructedPreview {
   constructed_photo_id: ID
   date: String
   description: String
+  headline: String
   id: ID!
   photo: ConstructedPhoto
-  title: String
   type_block: String
 }
 
 input ConstructedPreviewDto {
   date: String
   description: String
+  headline: String
   photo: ConstructedPhotoDto
-  title: String
   type_block: String
 }
 
@@ -1120,6 +1120,7 @@ type Mutation {
 
   """update blogs"""
   updateBlog(updateBlog: UpdateConstructorBlogDto!): ConstructorBlog!
+  updateConstructedPage(constructed_page: UpdateConstructedPageDto!): ConstructedPage!
   updateCurrentUser(user: UpdateCurrentUserDto!): User!
   updateFineTuneItem(fine_tune_item: UpdateFineTuneItemDto!): FineTuneItem!
   updateItemTemplate(updateItemTemplateDto: UpdateItemTemplateDto!): ItemTemplate!
@@ -1525,6 +1526,41 @@ input UpdateBlogPreviewDto {
   type_block: String
 }
 
+input UpdateConstructedMetaInfoDto {
+  categoric: String
+  date_when_will_post_blog: String
+  global_script: String
+  meta_tag_description: String
+  meta_tag_title: String
+  schema_script: String
+  url_for_blog: String
+}
+
+input UpdateConstructedPageDto {
+  blocks: [UpdateOrCreateConstructedBlockDto!]
+  delete_blocks_ids: [ID!]
+  id: ID!
+  is_posted: Boolean
+  meta_info: UpdateConstructedMetaInfoDto
+  post_date: Float
+  preview: UpdateConstructedPreviewDto
+  type: ConstructedPageType
+}
+
+input UpdateConstructedPhotoDto {
+  alt: String
+  file: Upload
+  title: String
+}
+
+input UpdateConstructedPreviewDto {
+  date: String
+  description: String
+  headline: String
+  photo: UpdateConstructedPhotoDto
+  type_block: String
+}
+
 input UpdateConstructorBlogDto {
   blocks: [UpdateBlogBlockDto!]
   id: ID!
@@ -1659,6 +1695,24 @@ input UpdateLocksmithScheduleDto {
   id: ID!
   name: Week
   open_at: DateTime
+}
+
+input UpdateOrCreateConstructedBlockDto {
+  body_text: String
+  description: String
+  first_list: String
+  headline: String
+  id: ID
+  last_list: String
+  last_text: String
+  list: String
+  photo: ConstructedPhotoDto
+  position_block: Float
+  styles: String
+  text: String
+  text_left: String
+  text_right: String
+  type_block: String
 }
 
 input UpdatePhotoForBlockDto {

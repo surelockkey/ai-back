@@ -1,4 +1,4 @@
-import { Field, InputType, OmitType } from '@nestjs/graphql';
+import { Field, InputType, OmitType, PartialType } from '@nestjs/graphql';
 import { ConstructedBlock } from '../entity/constructed-block.entity';
 import { ConstructedPhotoDto } from '../../constructed-photo/dto/constructed-photo.dto';
 
@@ -14,6 +14,17 @@ export class ConstructedBlockDto extends OmitType(ConstructedBlockInput, [
   'constructed_photo_id',
   'constructed_page_id',
 ]) {
+  @Field(() => ConstructedPhotoDto, { nullable: true })
+  photo?: ConstructedPhotoDto;
+}
+
+@InputType()
+export class UpdateOrCreateConstructedBlockDto extends PartialType(
+  OmitType(ConstructedBlockInput, [
+    'constructed_photo_id',
+    'constructed_page_id',
+  ]),
+) {
   @Field(() => ConstructedPhotoDto, { nullable: true })
   photo?: ConstructedPhotoDto;
 }

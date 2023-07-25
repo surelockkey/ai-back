@@ -9,7 +9,7 @@ import { ConstructedPhoto } from '../../constructed-photo/entity/constructed-pho
 export class ConstructedPreview extends BaseEntity {
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  title?: string;
+  headline?: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })

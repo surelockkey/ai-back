@@ -1,4 +1,11 @@
-import { Field, InputType, OmitType } from '@nestjs/graphql';
+import {
+  Field,
+  InputType,
+  IntersectionType,
+  OmitType,
+  PartialType,
+  PickType,
+} from '@nestjs/graphql';
 import { ConstructedPhoto } from '../entity/constructed-photo.entity';
 import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 import { FileUpload } from 'graphql-upload';
@@ -17,4 +24,12 @@ export class ConstructedPhotoDto extends OmitType(ConstructedPhotoInput, [
 ]) {
   @Field(() => GraphQLUpload)
   file: Promise<FileUpload>;
+}
+
+@InputType()
+export class UpdateConstructedPhotoDto extends PartialType(
+  OmitType(ConstructedPhotoInput, ['id', 'file_id']),
+) {
+  @Field(() => GraphQLUpload, { nullable: true })
+  file?: Promise<FileUpload>;
 }

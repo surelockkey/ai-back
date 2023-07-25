@@ -3,7 +3,10 @@ import { CrudService } from '@tech-slk/nest-crud';
 import { ConstructedPage } from './entity/constructed-page.entity';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { CreateConstructedPageDto } from './dto/constructed-page.dto';
+import {
+  CreateConstructedPageDto,
+  UpdateConstructedPageDto,
+} from './dto/constructed-page.dto';
 import { GraphQLError } from 'graphql';
 import { ConstructedBlockService } from './constructed-block/constructed-block.service';
 import { ConstructedMetaInfoService } from './constructed-meta-info/constructed-meta-info.service';
@@ -69,6 +72,70 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
       await queryRunner.commitTransaction();
 
       return await this.findOneById(constructed_page.id);
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw new GraphQLError(error.message, { originalError: error });
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  public async updateConstructedPage(
+    update_constructed_page_dto: UpdateConstructedPageDto,
+  ) {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.startTransaction();
+
+    try {
+      const {
+        id,
+        blocks,
+        preview,
+        meta_info,
+        delete_blocks_ids,
+        ...constructed_page_dto
+      } = update_constructed_page_dto;
+
+      if (meta_info) {
+        await this.constructedMetaInfoService.updateConstructedMetaInfoTransactional(
+          meta_info,
+          id,
+          queryRunner,
+        );
+      }
+
+      if (preview) {
+        await this.constructedPreviewService.updateConstructedPreviewTransactional(
+          preview,
+          id,
+          queryRunner,
+        );
+      }
+
+      if (blocks && blocks.length) {
+        await this.constructedBlockService.updateOrCreateManyBlocksTransactional(
+          blocks,
+          id,
+          queryRunner,
+        );
+      }
+
+      if (delete_blocks_ids && delete_blocks_ids.length) {
+        await this.constructedBlockService.deleteManyBlocksTransactional(
+          delete_blocks_ids,
+          queryRunner,
+        );
+      }
+
+      await queryRunner.manager.update(
+        ConstructedPage,
+        { id },
+        constructed_page_dto,
+      );
+
+      await queryRunner.commitTransaction();
+
+      return this.findOneById(id);
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw new GraphQLError(error.message, { originalError: error });
