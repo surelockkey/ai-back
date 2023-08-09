@@ -1,16 +1,21 @@
-import { Injectable } from "@nestjs/common";
-import { ChatCompletionRequestMessage, Configuration, OpenAIApi, OpenAIFile } from "openai";
-import * as fs from "fs";
-import axios from "axios";
-import * as FormData from "form-data";
-import { OpenAiMessageResponse } from "./dto/message-response.dto";
-import { ConfigService } from "@nestjs/config";
-import { SystemSettingsService } from "src/modules/system-settings/system-settings.service";
-import { DataSource } from "typeorm";
-import { InjectDataSource } from "@nestjs/typeorm";
-import * as moment from "moment";
-import { Message } from "../chat/entity/message.entity";
-import { GraphQLError } from "graphql";
+import { Injectable } from '@nestjs/common';
+import {
+  ChatCompletionRequestMessage,
+  Configuration,
+  OpenAIApi,
+  OpenAIFile,
+} from 'openai';
+import * as fs from 'fs';
+import axios from 'axios';
+import * as FormData from 'form-data';
+import { OpenAiMessageResponse } from './dto/message-response.dto';
+import { ConfigService } from '@nestjs/config';
+import { SystemSettingsService } from 'src/modules/system-settings/system-settings.service';
+import { DataSource } from 'typeorm';
+import { InjectDataSource } from '@nestjs/typeorm';
+import * as moment from 'moment';
+import { Message } from '../chat/entity/message.entity';
+import { GraphQLError } from 'graphql';
 
 // import * as ax from 'axios';
 
@@ -22,10 +27,10 @@ export class OpenAiService {
   constructor(
     private readonly configService: ConfigService,
     private readonly systemSettingsService: SystemSettingsService,
-    @InjectDataSource() private readonly dataSource: DataSource
+    @InjectDataSource() private readonly dataSource: DataSource,
   ) {
     this.configuration = new Configuration({
-      apiKey: this.configService.get<string>("app.open_ai_key"),
+      apiKey: this.configService.get<string>('app.open_ai_key'),
     });
     this.openai = new OpenAIApi(this.configuration);
   }
@@ -38,17 +43,20 @@ export class OpenAiService {
     return res.data;
   }
 
-  public async sendMessage(prompt: string, context?: Message[]): Promise<OpenAiMessageResponse> {
+  public async sendMessage(
+    prompt: string,
+    context?: Message[],
+  ): Promise<OpenAiMessageResponse> {
     const prev_messages: ChatCompletionRequestMessage[] = [];
 
     context.forEach((message) => {
       prev_messages.push({
         role: 'user',
-        content: message.prompt
+        content: message.prompt,
       });
       prev_messages.push({
         role: 'assistant',
-        content: message.text
+        content: message.text,
       });
     });
 
@@ -59,7 +67,7 @@ export class OpenAiService {
         {
           role: 'user',
           content: prompt,
-        }
+        },
       ],
       temperature: 0,
     });
@@ -67,7 +75,7 @@ export class OpenAiService {
     return {
       id: res.data.id,
       created: res.data.created,
-      text: res.data.choices[0].message.content.replace("\n\n", ""),
+      text: res.data.choices[0].message.content.replace('\n\n', ''),
       total_tokens: res.data.usage.total_tokens,
       finish_reason: res.data.choices[0].finish_reason,
     };
@@ -76,17 +84,17 @@ export class OpenAiService {
   public async uploadFileToOpenAi(filename: string): Promise<OpenAIFile> {
     const data = new FormData();
 
-    data.append("purpose", "fine-tune");
+    data.append('purpose', 'fine-tune');
     data.append(
-      "file",
-      fs.createReadStream(__dirname + `/../../../pubic/${filename}.jsonl`)
+      'file',
+      fs.createReadStream(__dirname + `/../../../pubic/${filename}.jsonl`),
     );
 
     const res = await axios({
-      method: "post",
-      url: "https://api.openai.com/v1/files",
+      method: 'post',
+      url: 'https://api.openai.com/v1/files',
       headers: {
-        Authorization: "Bearer " + process.env.OPEN_AI_API_KEY,
+        Authorization: 'Bearer ' + process.env.OPEN_AI_API_KEY,
         ...data.getHeaders(),
       },
       data: data,
@@ -120,12 +128,12 @@ export class OpenAiService {
     console.log(fine_tune);
 
     if (
-      fine_tune.status === "succeeded" &&
+      fine_tune.status === 'succeeded' &&
       fine_tune.fine_tuned_model !== system_settings.active_model
     ) {
       await this.systemSettingsService.updateByCriteriaAndReturnOne(
         {},
-        { active_model: fine_tune.fine_tuned_model }
+        { active_model: fine_tune.fine_tuned_model },
       );
     }
 
@@ -137,7 +145,7 @@ export class OpenAiService {
     console.log(res.data.data.map((item) => item));
 
     const events = await this.openai.listFineTuneEvents(
-      res.data.data[res.data.data.length - 1].id
+      res.data.data[res.data.data.length - 1].id,
     );
 
     console.log(events.data);
@@ -146,11 +154,11 @@ export class OpenAiService {
   public async speechToText(audio_url: File): Promise<any> {
     return await this.openai.createTranscription(
       audio_url,
-      "whisper-1",
+      'whisper-1',
       undefined,
-      "json",
+      'json',
       0,
-      "en"
+      'en',
     );
   }
 
@@ -160,50 +168,53 @@ export class OpenAiService {
       let data: any;
 
       while (number_of_generated_queries < 3 && !data) {
-        await this.generateSqlQuery(message)
-        .then((res) => {
+        await this.generateSqlQuery(message).then((res) => {
           data = res;
-        })
-        
+        });
+
         number_of_generated_queries++;
-        console.log(number_of_generated_queries, data)
+        console.log(number_of_generated_queries, data);
       }
 
       if (!data) {
         throw new GraphQLError('Nothing found');
       }
 
-      const final_res = await this.openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [
-          {
-            role: "user",
-            content: `
+      const final_res = await this.openai
+        .createChatCompletion({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'user',
+              content: `
             Act as a assistant of locksmith company.
             Given the following user question and the related search results, respond to the user using only the results as context.
             question: ${message} - Search Results: ${JSON.stringify(data)}
           `,
-          },
-        ],
-      }).catch(e => {
-        console.log(e.response.data)
-        throw e.response.data;
-      });
+            },
+          ],
+        })
+        .catch((e) => {
+          console.log(e.response.data);
+          throw e.response.data;
+        });
 
       return {
         id: final_res.data.id,
         created: final_res.data.created,
-        text: final_res.data.choices[0].message.content.replace("\n\n", ""),
+        text: final_res.data.choices[0].message.content.replace('\n\n', ''),
         total_tokens: final_res.data.usage.total_tokens,
         finish_reason: final_res.data.choices[0].finish_reason,
         database_result: JSON.stringify(data),
       };
     } catch (e) {
-      console.log(111, e)
+      console.log(111, e);
       return {
         id: '',
         created: moment().unix(),
-        text: e.error ? e.error.message : `Please try to change your question, I can't find any information based on this question`,
+        text: e.error
+          ? e.error.message
+          : `Please try to change your question, I can't find any information based on this question`,
         total_tokens: 0,
         finish_reason: 'error',
       };
@@ -212,12 +223,12 @@ export class OpenAiService {
 
   private async generateSqlQuery(message: string) {
     return await this.openai
-    .createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "user",
-          content: `
+      .createChatCompletion({
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'user',
+            content: `
         ### Postgres SQL tables, with their properties:
         Table 'job'
         
@@ -275,14 +286,14 @@ export class OpenAiService {
          call_sid      | character varying
         
         ### Please create a PostgresSQL query without any comments which will get all related for this question: ${message}.`,
-        },
-      ],
-    })
-    .then(async (r) => {
-      return await this.dataSource.query(r.data.choices[0].message.content);
-    })
-    .catch((e) => {
-      console.log(e.response);
-    });
+          },
+        ],
+      })
+      .then(async (r) => {
+        return await this.dataSource.query(r.data.choices[0].message.content);
+      })
+      .catch((e) => {
+        console.log(e.response);
+      });
   }
 }

@@ -49,7 +49,7 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
 
   public async getConstructedPageByUrl(url: string) {
     return this.constructedPageRepository.findOne({
-      where: { meta_info: { url_for_blog: url } },
+      where: { meta_info: { url } },
       order: { blocks: { position_block: 'ASC' } },
     });
   }

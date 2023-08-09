@@ -138,20 +138,26 @@ type ConstructedMetaInfo {
   date_when_will_post_blog: String
   global_script: String
   id: ID!
+  map_link: String
   meta_tag_description: String
   meta_tag_title: String
+  name: String
   schema_script: String
-  url_for_blog: String
+  state: String
+  url: String
 }
 
 input ConstructedMetaInfoDto {
   categoric: String
   date_when_will_post_blog: String
   global_script: String
+  map_link: String
   meta_tag_description: String
   meta_tag_title: String
+  name: String
   schema_script: String
-  url_for_blog: String
+  state: String
+  url: String
 }
 
 type ConstructedPage {
@@ -1532,10 +1538,13 @@ input UpdateConstructedMetaInfoDto {
   categoric: String
   date_when_will_post_blog: String
   global_script: String
+  map_link: String
   meta_tag_description: String
   meta_tag_title: String
+  name: String
   schema_script: String
-  url_for_blog: String
+  state: String
+  url: String
 }
 
 input UpdateConstructedPageDto {
