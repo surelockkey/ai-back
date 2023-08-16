@@ -61,7 +61,7 @@ export class OpenAiService {
     });
 
     const res = await this.openai.createChatCompletion({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-5',
       messages: [
         ...prev_messages,
         {
@@ -182,7 +182,7 @@ export class OpenAiService {
 
       const final_res = await this.openai
         .createChatCompletion({
-          model: 'gpt-3.5-turbo',
+          model: 'gpt-4',
           messages: [
             {
               role: 'user',
@@ -224,7 +224,7 @@ export class OpenAiService {
   private async generateSqlQuery(message: string) {
     return await this.openai
       .createChatCompletion({
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-4',
         messages: [
           {
             role: 'user',
@@ -261,6 +261,7 @@ export class OpenAiService {
          city            | character varying
          state           | character varying
          postal_code     | character varying
+         account     | character varying ( Acceptable values: main, arizona)
 
 
         Table 'call'
@@ -284,6 +285,7 @@ export class OpenAiService {
          ad_group_id   | character varying
          call_id       | character varying
          call_sid      | character varying
+         account     | character varying ( Acceptable values: main, arizona)
         
         ### Please create a PostgresSQL query without any comments which will get all related for this question: ${message}.`,
           },

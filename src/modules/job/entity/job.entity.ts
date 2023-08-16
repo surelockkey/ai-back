@@ -116,4 +116,8 @@ export class Job extends BaseEntity {
   @Field(() => Number, { nullable: true })
   @Column('decimal', { nullable: true })
   avg_duration: number;
+
+  @Field(() => String)
+  @Column({ default: 'main' })
+  account: string;
 }

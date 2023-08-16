@@ -7,6 +7,8 @@ import { RoleGuard } from '../authorization/decorator/role.decorator';
 import { UserRole } from '../user/enum/user-role.enum';
 import { ChatServiceFactory } from './factory/chat.factory.service';
 import { ChatType } from './enum/chat-type.enum';
+import { UseGuards } from '@nestjs/common';
+import { GqlAuthGuard } from '../authorization/guard/auth.guard';
 
 @Resolver()
 export class ChatResolver {
@@ -15,7 +17,7 @@ export class ChatResolver {
     private readonly loggerService: LoggerService,
   ) {}
 
-  @RoleGuard(UserRole.ADMIN)
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => Message)
   sendMessage(
     @Args('prompt') prompt: string,
@@ -25,7 +27,8 @@ export class ChatResolver {
     { user_id }: CurrentUserDto,
   ) {
     return this.loggerService.actionLog({
-      callback: () => this.chatFactoryService.getService(chat_type).sendMessage(prompt),
+      callback: () =>
+        this.chatFactoryService.getService(chat_type).sendMessage(prompt),
       action: `Tried to send message to chat: ${prompt}`,
       user_id,
     });
@@ -37,6 +40,8 @@ export class ChatResolver {
     @Args('chat_type', { type: () => ChatType, defaultValue: ChatType.DEFAULT })
     chat_type: ChatType,
   ) {
-    return this.chatFactoryService.getService(chat_type).findMany({ order: { created: 'DESC' } });
+    return this.chatFactoryService
+      .getService(chat_type)
+      .findMany({ order: { created: 'DESC' } });
   }
 }

@@ -1,8 +1,8 @@
-import { registerEnumType } from "@nestjs/graphql";
+import { registerEnumType } from '@nestjs/graphql';
 
 export enum ChatType {
-    DEFAULT = 'DEFAULT',
-    WITH_API = 'WITH_API'
-} 
+  DEFAULT = 'DEFAULT',
+  WITH_API = 'WITH_API',
+}
 
 registerEnumType(ChatType, { name: 'ChatType' });

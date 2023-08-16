@@ -24,23 +24,23 @@ export class JobService extends CrudService<Job> {
   }
 
   public async jobLoop() {
-    await this.jobRepository
-      .createQueryBuilder('job')
-      .delete()
-      .from(Job)
-      .execute();
+    // await this.jobRepository
+    //   .createQueryBuilder('job')
+    //   .delete()
+    //   .from(Job)
+    //   .execute();
 
-    await this.callRepository
-      .createQueryBuilder('call')
-      .delete()
-      .from(Call)
-      .execute();
+    // await this.callRepository
+    //   .createQueryBuilder('call')
+    //   .delete()
+    //   .from(Call)
+    //   .execute();
 
-    await this.activityLogRepository
-      .createQueryBuilder('activityLog')
-      .delete()
-      .from(ActivityLog)
-      .execute();
+    // await this.activityLogRepository
+    //   .createQueryBuilder('activityLog')
+    //   .delete()
+    //   .from(ActivityLog)
+    //   .execute();
 
     const current_date = moment();
     let year = 18;
@@ -48,7 +48,7 @@ export class JobService extends CrudService<Job> {
 
     while (
       !(
-        Number(current_date.format('YYYY')) <= year &&
+        Number(current_date.format('YY')) <= year &&
         Number(current_date.format('M')) < month
       )
     ) {
@@ -66,7 +66,7 @@ export class JobService extends CrudService<Job> {
   }
 
   public async getJob(year: number, month: number): Promise<PaginatedJobDto> {
-    let current_page = 1;
+    let current_page = 0;
     let total_pages = (await this.getJobsByRange(current_page, year, month))
       .pages;
 
@@ -170,6 +170,7 @@ export class JobService extends CrudService<Job> {
             phoneNumber: activities[activity_counter].phoneNumber,
             timeInt: activities[activity_counter].timeInt,
             time: activities[activity_counter].time,
+            account: 'arizona',
           });
         } else {
           await this.activityLogRepository.save({
@@ -184,6 +185,7 @@ export class JobService extends CrudService<Job> {
             timeInt: activities[activity_counter].timeInt,
             time: activities[activity_counter].time,
             searchTerm: activities[activity_counter].searchTerm,
+            account: 'arizona',
           });
         }
 
@@ -218,6 +220,7 @@ export class JobService extends CrudService<Job> {
         tax_precent: job.data.tax_precent,
         job_id: job.data.job_id,
         avg_duration: job.data.avg_duration,
+        account: 'arizona',
       });
     } catch (e) {
       console.log(e);

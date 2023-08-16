@@ -8,7 +8,10 @@ import { IChatService } from './factory/chat.interface';
 import { ChatType } from './enum/chat-type.enum';
 
 @Injectable()
-export class ApiChatService extends CrudService<Message> implements IChatService {
+export class ApiChatService
+  extends CrudService<Message>
+  implements IChatService
+{
   constructor(
     @InjectRepository(Message)
     private readonly messageRepository: Repository<Message>,
@@ -31,7 +34,7 @@ export class ApiChatService extends CrudService<Message> implements IChatService
 
   public async findMany(options?: FindManyOptions<Message>) {
     return this.messageRepository.find({
-        ...options,
+      ...options,
     });
   }
 }

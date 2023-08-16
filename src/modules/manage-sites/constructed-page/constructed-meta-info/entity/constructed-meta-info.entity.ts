@@ -44,7 +44,7 @@ export class ConstructedMetaInfo extends BaseEntity {
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  map_link: string;
+  map_link?: string;
 
   @Field(() => ID)
   @Column('uuid')

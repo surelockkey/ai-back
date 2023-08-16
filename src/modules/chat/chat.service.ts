@@ -20,8 +20,8 @@ export class ChatService extends CrudService<Message> implements IChatService {
   public async sendMessage(prompt: string) {
     const prev_messages = await this.findMany({
       order: { created: 'DESC' },
-      take: 10
-    })
+      take: 10,
+    });
 
     const { id: openai_id, ...openai_response } =
       await this.openAiService.sendMessage(prompt, prev_messages.reverse());
