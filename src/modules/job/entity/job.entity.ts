@@ -1,12 +1,12 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from '@tech-slk/nest-crud';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
 export class Job {
   @Field(() => String, { nullable: true })
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   uuid: string;
 
   @Field(() => String, { nullable: true })
