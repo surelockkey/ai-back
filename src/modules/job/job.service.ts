@@ -54,13 +54,16 @@ export class JobService {
 
   public async getJob(year: number, month: number): Promise<PaginatedJobDto> {
     let current_page = 0;
-    let total_pages = (
-      await this.getJobsByRange(current_page, year, month)
-        .catch((e) => console.log(e))
-        .then((r) => r)
-    ).pages;
+    const total_pages_data = await this.getJobsByRange(
+      current_page,
+      year,
+      month,
+    )
+      .catch((e) => console.log(e))
+      .then((r) => r);
 
-    console.log('total_pages: ', total_pages);
+    console.log('total_pages: ', total_pages_data);
+    const total_pages = total_pages_data.pages;
 
     while (current_page < total_pages) {
       const req = await this.getJobsByRange(current_page, year, month);
