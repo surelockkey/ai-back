@@ -254,6 +254,9 @@ export class Job {
   @Column({ nullable: true })
   paid_total: string;
 
+  @Column({ default: 'main' })
+  account: string;
+
   // @Field(() => String, { nullable: true })
   // @Column({ nullable: true })
   // uuid: string;

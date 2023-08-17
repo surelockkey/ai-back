@@ -169,20 +169,20 @@ export class JobService {
               account: 'arizona',
             });
           } else {
-            await this.activityLogRepository.save({
-              activity_id: activities[activity_counter].id,
-              account_id: activities[activity_counter].account_id,
-              text: activities[activity_counter].text,
-              uid: activities[activity_counter].uid,
-              uname: activities[activity_counter].uname,
-              job_id: activities[activity_counter].job_id,
-              uuid: activities[activity_counter].uuid,
-              timestamp: activities[activity_counter].timestamp,
-              timeInt: activities[activity_counter].timeInt,
-              time: activities[activity_counter].time,
-              searchTerm: activities[activity_counter].searchTerm,
-              account: 'arizona',
-            });
+            // await this.activityLogRepository.save({
+            //   activity_id: activities[activity_counter].id,
+            //   account_id: activities[activity_counter].account_id,
+            //   text: activities[activity_counter].text,
+            //   uid: activities[activity_counter].uid,
+            //   uname: activities[activity_counter].uname,
+            //   job_id: activities[activity_counter].job_id,
+            //   uuid: activities[activity_counter].uuid,
+            //   timestamp: activities[activity_counter].timestamp,
+            //   timeInt: activities[activity_counter].timeInt,
+            //   time: activities[activity_counter].time,
+            //   searchTerm: activities[activity_counter].searchTerm,
+            //   account: 'arizona',
+            // });
           }
 
           activity_counter++;
