@@ -240,21 +240,21 @@ export class OpenAiService {
           job_source             | character varying
           tax_precent            | character varying ( It's number in character varying )
           is_lead                | character varying ( Acceptable values: '1', '0' )
-          scheduled_start        | timestamp without time zone
+          scheduled_start        | character varying (It's date in format:  YYYY-MM-DD HH:MM:SS)
           created_timestamp      | character varying
-          created                | timestamp without time zone
+          created                | character varying (It's date in format:  YYYY-MM-DD HH:MM:SS)
           job_date_formatted     | character varying
           job_hour               | character varying
           job_min                | character varying
           job_ampm               | character varying ( Acceptable values: 'AM', 'PM' )
-          job_end_date           | timestamp without time zone
+          job_end_date           | character varying (It's date in format:  YYYY-MM-DD HH:MM:SS)
           job_amount_due_date    | character varying
           job_date_end_formatted | character varying
           job_hour_end           | character varying
           job_minute_end         | character varying
           job_ampm_end           | character varying ( Acceptable values: 'AM', 'PM' )
           sub_name               | character varying
-          status_updated         | timestamp without time zone
+          status_updated         | character varying (It's date in format:  YYYY-MM-DD HH:MM:SS)
           use_tech_special_rate  | character varying
           tech_special_rate      | character varying
           taxable_amount         | character varying ( It's number in character varying )
