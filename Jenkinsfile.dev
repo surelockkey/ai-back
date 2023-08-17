@@ -115,8 +115,8 @@ pipeline {
 
 
 
-                        sudo docker-compose build --no-cache --build-arg NPM_TOKEN=${NPM_TOKEN} prod
-                        sudo docker-compose up -d
+                        sudo docker compose build --no-cache --build-arg NPM_TOKEN=${NPM_TOKEN} prod
+                        sudo docker compose up -d
                         sudo docker system prune -f
                     '''
                 }
