@@ -234,7 +234,6 @@ export class OpenAiService {
         
            column_name   |          data_type          
         -----------------+-----------------------------
-         avg_duration    | numeric
          client_id       | integer
          start_date      | timestamp without time zone
          end_date        | timestamp without time zone
@@ -261,7 +260,7 @@ export class OpenAiService {
          city            | character varying
          state           | character varying
          postal_code     | character varying
-         account     | character varying ( Acceptable values: main, arizona)
+         account         | character varying ( Acceptable values: main, arizona)
 
 
         Table 'call'
@@ -285,7 +284,7 @@ export class OpenAiService {
          ad_group_id   | character varying
          call_id       | character varying
          call_sid      | character varying
-         account     | character varying ( Acceptable values: main, arizona)
+         account       | character varying ( Acceptable values: main, arizona)
         
         ### Please create a PostgresSQL query without any comments which will get all related for this question: ${message}.`,
           },

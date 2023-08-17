@@ -9,9 +9,10 @@ import { WorkizCoreApiService } from '../api/workiz-api/workiz-core.service';
 import * as moment from 'moment';
 import { Call } from './entity/call.entity';
 import { ActivityLog } from './entity/activity-log.entity';
+import { workizJobToTableJob } from './utils/job-transformet.util';
 
 @Injectable()
-export class JobService extends CrudService<Job> {
+export class JobService {
   constructor(
     @InjectRepository(Job) private readonly jobRepository: Repository<Job>,
     private readonly workizApiService: WorkizApiService,
@@ -19,12 +20,10 @@ export class JobService extends CrudService<Job> {
     @InjectRepository(Call) private readonly callRepository: Repository<Call>,
     @InjectRepository(ActivityLog)
     private readonly activityLogRepository: Repository<ActivityLog>,
-  ) {
-    super(jobRepository);
-  }
+  ) {}
 
   public async jobLoop() {
-    await this.jobRepository.delete({ account: 'arizona' });
+    // await this.jobRepository.delete({ account: 'arizona' });
 
     await this.callRepository.delete({ account: 'arizona' });
 
@@ -181,36 +180,38 @@ export class JobService extends CrudService<Job> {
           activity_counter++;
         }
 
-        await this.jobRepository.save({
-          uuid: job.data.uuid,
-          start_date: job.data.job_date,
-          end_date: job.data.job_end_date,
-          created_date: job.data.created,
-          total_price: Number(job.data.job_total_price),
-          amount_due: Number(job.data.job_amount_due),
-          client_id: Number(job.data.client_id),
-          status: job.data.status,
-          phone: job.data.primary_phone,
-          second_phone: job.data.secondary_phone,
-          email: job.data.client_email_address,
-          client_name: job.data.first_name + ' ' + job.data.last_name,
-          city: job.data.city,
-          state: job.data.state,
-          postal_code: job.data.zipcode,
-          job_type: job.data.type_name,
-          job_note: job.data.job_description,
-          job_source: job.data.job_source,
-          technician_name: job.data.techs[0] && job.data.techs[0].technition,
-          dispatcher_name: job.data.user_created,
-          address: job.data.address,
-          tip_amount: job.data.tip_amount,
-          job_timezone: job.data.job_timezone,
-          tax_amount: job.data.tax_amount,
-          tax_precent: job.data.tax_precent,
-          job_id: job.data.job_id,
-          avg_duration: job.data.avg_duration,
-          account: 'arizona',
-        });
+        await this.jobRepository.save(workizJobToTableJob(job));
+
+        // await this.jobRepository.save({
+        //   uuid: job.data.uuid,
+        //   start_date: job.data.job_date,
+        //   end_date: job.data.job_end_date,
+        //   created_date: job.data.created,
+        //   total_price: Number(job.data.job_total_price),
+        //   amount_due: Number(job.data.job_amount_due),
+        //   client_id: Number(job.data.client_id),
+        //   status: job.data.status,
+        //   phone: job.data.primary_phone,
+        //   second_phone: job.data.secondary_phone,
+        //   email: job.data.client_email_address,
+        //   client_name: job.data.first_name + ' ' + job.data.last_name,
+        //   city: job.data.city,
+        //   state: job.data.state,
+        //   postal_code: job.data.zipcode,
+        //   job_type: job.data.type_name,
+        //   job_note: job.data.job_description,
+        //   job_source: job.data.job_source,
+        //   technician_name: job.data.techs[0] && job.data.techs[0].technition,
+        //   dispatcher_name: job.data.user_created,
+        //   address: job.data.address,
+        //   tip_amount: job.data.tip_amount,
+        //   job_timezone: job.data.job_timezone,
+        //   tax_amount: job.data.tax_amount,
+        //   tax_precent: job.data.tax_precent,
+        //   job_id: job.data.job_id,
+        //   avg_duration: job.data.avg_duration,
+        //   account: 'arizona',
+        // });
       }
     } catch (e) {
       console.log(e);
