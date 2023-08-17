@@ -218,7 +218,7 @@ export class Job {
   tech_names: string;
 
   @Field(() => [String], { nullable: true })
-  @Column('text', { array: true })
+  @Column('text', { array: true, nullable: true })
   tech_phone_numbers: string[];
 
   @Field(() => String, { nullable: true })

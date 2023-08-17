@@ -231,36 +231,70 @@ export class OpenAiService {
             content: `
         ### Postgres SQL tables, with their properties:
         Table 'job'
-        
-           column_name   |          data_type          
-        -----------------+-----------------------------
-         client_id       | integer
-         start_date      | timestamp without time zone
-         end_date        | timestamp without time zone
-         total_price     | numeric
-         amount_due      | numeric
-         created_date    | timestamp without time zone
-         tip_amount      | numeric
-         tax_amount      | numeric
-         job_type        | character varying
-         job_source      | character varying
-         manager_notes   | character varying
-         job_id          | character varying
-         tax_precent     | character varying
-         job_timezone    | character varying
-         client_name     | character varying
-         job_note        | character varying
-         technician_name | character varying
-         dispatcher_name | character varying
-         status          | character varying ( Acceptable values: Submitted, Canceled, In progress, Pending, done pending approval, new, Done )
-         phone           | character varying
-         second_phone    | character varying
-         email           | character varying
-         address         | character varying
-         city            | character varying
-         state           | character varying
-         postal_code     | character varying
-         account         | character varying ( Acceptable values: main, arizona)
+         Column         |       Type        | Collation | Nullable |              Default
+         ------------------------+-------------------+-----------+----------+-----------------------------------
+          status                 | character varying ( Acceptable values: Submitted, Canceled, In progress, Pending, done pending approval, new, Done )
+          address                | character varying
+          city                   | character varying
+          state                  | character varying
+          job_source             | character varying
+          tax_precent            | character varying ( It's number in character varying )
+          is_lead                | character varying ( Acceptable values: '1', '0' )
+          scheduled_start        | timestamp without time zone
+          created_timestamp      | character varying
+          created                | timestamp without time zone
+          job_date_formatted     | character varying
+          job_hour               | character varying
+          job_min                | character varying
+          job_ampm               | character varying ( Acceptable values: 'AM', 'PM' )
+          job_end_date           | timestamp without time zone
+          job_amount_due_date    | character varying
+          job_date_end_formatted | character varying
+          job_hour_end           | character varying
+          job_minute_end         | character varying
+          job_ampm_end           | character varying ( Acceptable values: 'AM', 'PM' )
+          sub_name               | character varying
+          status_updated         | timestamp without time zone
+          use_tech_special_rate  | character varying
+          tech_special_rate      | character varying
+          taxable_amount         | character varying ( It's number in character varying )
+          tax_on_off             | character varying
+          job_total_price        | character varying ( It's number in character varying )
+          job_amount_due         | character varying ( It's number in character varying )
+          sub_total              | character varying ( It's number in character varying )
+          client_confirmed       | character varying
+          leadLost               | character varying ( Acceptable values: '1', '0' )
+          has_calls              | character varying ( Acceptable values: '1', '0' )
+          primary_phone          | character varying ( It is a phone number )
+          secondary_phone        | character varying ( It is a phone number )
+          email_address          | character varying
+          company_parts          | character varying ( It's number in character varying )
+          parts                  | character varying ( It's number in character varying )
+          client_company_name    | character varying
+          invoice_number         | character varying
+          zipcode                | character varying
+          location_ob            | character varying
+          location_pb            | character varying
+          location_key           | character varying
+          invoice_created        | character varying
+          invoice_sent           | character varying
+          user_created           | character varying
+          client_first_name      | character varying
+          client_last_name       | character varying
+          tech_names             | character varying
+          tech_phone_numbers     | text[]            ( Array of phone numbers)
+          dispatch_bonus_type    | character varying
+          job_sub_total          | character varying ( It's number in character varying )
+          created_utc            | character varying
+          invoice_created_utc    | character varying
+          tags                   | character varying
+          paid_total             | character varying ( It's number in character varying )
+          tip_amount             | character varying ( It's number in character varying )
+          tax_amount             | character varying ( It's number in character varying )
+          client_id              | character varying
+          uuid                   | character varying
+          dispatch_bonus_number  | character varying
+          job_type               | character varying
 
 
         Table 'call'
