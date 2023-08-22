@@ -18,6 +18,10 @@ export class Message extends BaseEntity {
   @Column({ nullable: true })
   database_result?: string;
 
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  database_query?: string;
+
   @Field(() => Int)
   @Column('int')
   created: number;

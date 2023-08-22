@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from '@tech-slk/nest-crud';
 import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -9,13 +9,13 @@ export class Job {
   @PrimaryColumn()
   uuid: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  tip_amount: string;
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  tip_amount: number;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  is_lead: string;
+  @Field(() => Boolean, { nullable: true })
+  @Column({ nullable: true, type: 'boolean' })
+  is_lead: boolean;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -93,49 +93,41 @@ export class Job {
   @Column({ nullable: true })
   tech_special_rate: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  tax_amount: string;
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  tax_amount: number;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  tax_precent: string;
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  tax_precent: number;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  taxable_amount: string;
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  taxable_amount: number;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  tax_on_off: string;
+  @Field(() => Boolean, { nullable: true })
+  @Column({ nullable: true, type: 'boolean' })
+  tax_on_off: boolean;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  job_total_price: string;
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  job_total_price: number;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  job_amount_due: string;
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  job_amount_due: number;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  sub_total: string;
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  sub_total: number;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   client_id: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  client_confirmed: string;
-
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  leadLost: string;
-
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  has_calls: string;
+  @Field(() => Boolean, { nullable: true })
+  @Column({ nullable: true, type: 'boolean' })
+  has_calls: boolean;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -149,13 +141,13 @@ export class Job {
   @Column({ nullable: true })
   email_address: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  company_parts: string;
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  company_parts: number;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  parts: string;
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  parts: number;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -193,13 +185,13 @@ export class Job {
   @Column({ nullable: true })
   location_key: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  invoice_created: string;
+  @Field(() => Boolean, { nullable: true })
+  @Column({ nullable: true, type: 'boolean' })
+  invoice_created: boolean;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  invoice_sent: string;
+  @Field(() => Boolean, { nullable: true })
+  @Column({ nullable: true, type: 'boolean' })
+  invoice_sent: boolean;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -233,9 +225,9 @@ export class Job {
   @Column({ nullable: true })
   job_type: string; // jobTypeInfo.type_name
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  job_sub_total: string;
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  job_sub_total: number;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -250,9 +242,9 @@ export class Job {
   tags: string;
   // job_items: [],
   // payments: [],
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  paid_total: string;
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  paid_total: number;
 
   @Column({ default: 'main' })
   account: string;

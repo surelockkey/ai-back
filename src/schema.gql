@@ -1034,6 +1034,7 @@ type LogsPaginated {
 
 type Message {
   created: Int!
+  database_query: String
   database_result: String
   finish_reason: String!
   id: ID!

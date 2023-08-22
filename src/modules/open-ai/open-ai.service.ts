@@ -166,10 +166,14 @@ export class OpenAiService {
     try {
       let number_of_generated_queries = 0;
       let data: any;
+      let query: any;
 
       while (number_of_generated_queries < 3 && !data) {
         await this.generateSqlQuery(message).then((res) => {
-          data = res;
+          if (res) {
+            data = res.data;
+            query = res.query;
+          }
         });
 
         number_of_generated_queries++;
@@ -206,6 +210,7 @@ export class OpenAiService {
         total_tokens: final_res.data.usage.total_tokens,
         finish_reason: final_res.data.choices[0].finish_reason,
         database_result: JSON.stringify(data),
+        database_query: query,
       };
     } catch (e) {
       console.log(111, e);
@@ -238,63 +243,52 @@ export class OpenAiService {
           city                   | character varying
           state                  | character varying
           job_source             | character varying
-          tax_precent            | character varying ( It's number in character varying )
-          is_lead                | character varying ( Acceptable values: '1', '0' )
-          scheduled_start        | character varying (It's date in format:  YYYY-MM-DD HH24:MM:SS)
+          tax_precent            | double precision
+          is_lead                | boolean
+          scheduled_start        | character varying ( It's date in format:  YYYY-MM-DD HH24:MM:SS )
           created_timestamp      | character varying
-          created                | character varying (It's date in format:  YYYY-MM-DD HH24:MM:SS)
-          job_date_formatted     | character varying
-          job_hour               | character varying
-          job_min                | character varying
-          job_ampm               | character varying ( Acceptable values: 'AM', 'PM' )
-          job_end_date           | character varying (It's date in format:  YYYY-MM-DD HH24:MM:SS)
-          job_amount_due_date    | character varying
-          job_date_end_formatted | character varying
-          job_hour_end           | character varying
-          job_minute_end         | character varying
-          job_ampm_end           | character varying ( Acceptable values: 'AM', 'PM' )
+          created                | character varying ( It's date in format:  YYYY-MM-DD HH24:MM:SS )
+          job_end_date           | character varying ( It's date in format:  YYYY-MM-DD HH24:MM:SS )
+          job_amount_due_date    | character varying ( It's date in format:  YYYY/MM/DD )
           sub_name               | character varying
-          status_updated         | character varying (It's date in format:  YYYY-MM-DD HH24:MM:SS)
+          status_updated         | character varying ( It's date in format:  YYYY-MM-DD HH24:MM:SS )
           use_tech_special_rate  | character varying
           tech_special_rate      | character varying
-          taxable_amount         | character varying ( It's number in character varying )
-          tax_on_off             | character varying
-          job_total_price        | character varying ( It's number in character varying )
-          job_amount_due         | character varying ( It's number in character varying )
-          sub_total              | character varying ( It's number in character varying )
-          client_confirmed       | character varying
-          leadLost               | character varying ( Acceptable values: '1', '0' )
-          has_calls              | character varying ( Acceptable values: '1', '0' )
+          taxable_amount         | double precision
+          tax_on_off             | boolean
+          job_total_price        | double precision
+          job_amount_due         | double precision
+          sub_total              | double precision
+          has_calls              | boolean
           primary_phone          | character varying ( It is a phone number )
           secondary_phone        | character varying ( It is a phone number )
           email_address          | character varying
-          company_parts          | character varying ( It's number in character varying )
-          parts                  | character varying ( It's number in character varying )
+          company_parts          | double precision
+          parts                  | double precision
           client_company_name    | character varying
           invoice_number         | character varying
           zipcode                | character varying
-          location_ob            | character varying
-          location_pb            | character varying
           location_key           | character varying
-          invoice_created        | character varying
-          invoice_sent           | character varying
+          invoice_created        | boolean
+          invoice_sent           | boolean
           user_created           | character varying
           client_first_name      | character varying
           client_last_name       | character varying
           tech_names             | character varying
-          tech_phone_numbers     | text[]            ( Array of phone numbers)
+          tech_phone_numbers     | text[]            ( Array of phone numbers )
           dispatch_bonus_type    | character varying
-          job_sub_total          | character varying ( It's number in character varying )
-          created_utc            | character varying
-          invoice_created_utc    | character varying
+          job_sub_total          | double precision
+          created_utc            | character varying ( It's date in format:  YYYY-MM-DD HH24:MM:SS )
+          invoice_created_utc    | character varying ( It's date in format:  YYYY-MM-DD HH24:MM:SS )
           tags                   | character varying
-          paid_total             | character varying ( It's number in character varying )
-          tip_amount             | character varying ( It's number in character varying )
-          tax_amount             | character varying ( It's number in character varying )
+          paid_total             | double precision
+          tip_amount             | double precision
+          tax_amount             | double precision
           client_id              | character varying
           uuid                   | character varying
           dispatch_bonus_number  | character varying
           job_type               | character varying
+          account                | character varying ( Acceptable values: main, arizona)
 
 
         Table 'call'
@@ -325,7 +319,10 @@ export class OpenAiService {
         ],
       })
       .then(async (r) => {
-        return await this.dataSource.query(r.data.choices[0].message.content);
+        return {
+          data: await this.dataSource.query(r.data.choices[0].message.content),
+          query: r.data.choices[0].message.content,
+        };
       })
       .catch((e) => {
         console.log(e.response);
