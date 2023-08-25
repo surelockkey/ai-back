@@ -162,12 +162,19 @@ input ConstructedMetaInfoDto {
 
 type ConstructedPage {
   blocks: [ConstructedBlock!]
+  constructed_page_company: ConstructedPageCompany
+  constructed_page_company_id: ID
   id: ID!
   is_posted: Boolean
   meta_info: ConstructedMetaInfo
   post_date: Float
   preview: ConstructedPreview
   type: ConstructedPageType!
+}
+
+type ConstructedPageCompany {
+  id: ID!
+  name: String!
 }
 
 enum ConstructedPageType {
@@ -273,6 +280,7 @@ input CreateCarTemplateDto {
 
 input CreateConstructedPageDto {
   blocks: [ConstructedBlockDto!]
+  constructed_page_company_id: ID
   is_posted: Boolean
   meta_info: ConstructedMetaInfoDto
   post_date: Float
@@ -1268,7 +1276,7 @@ type Query {
   getCalls(ctmGetCallsOptionDto: CtmGetCallsOptionDto!): CtmGetCallsDto!
   getConstructedPageById(id: ID!): ConstructedPage!
   getConstructedPageByUrl(url: String!): ConstructedPage!
-  getConstructedPages(is_posted: Boolean, pagination: FindPaginationDto!, type: ConstructedPageType): [ConstructedPage!]!
+  getConstructedPages(constructed_page_company_id: ID, is_posted: Boolean, pagination: FindPaginationDto!, type: ConstructedPageType): [ConstructedPage!]!
   getContainerById(id: String!): FindContainerAndTemplate!
   getCurrentUser: User!
 
@@ -1550,6 +1558,7 @@ input UpdateConstructedMetaInfoDto {
 
 input UpdateConstructedPageDto {
   blocks: [UpdateOrCreateConstructedBlockDto!]
+  constructed_page_company_id: ID
   delete_blocks_ids: [ID!]
   id: ID!
   is_posted: Boolean

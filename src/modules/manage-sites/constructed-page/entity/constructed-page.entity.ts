@@ -1,10 +1,18 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from '@tech-slk/nest-crud';
-import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 import { ConstructedPageType } from '../enum/constructed-page-type.enum';
 import { ConstructedMetaInfo } from '../constructed-meta-info/entity/constructed-meta-info.entity';
 import { ConstructedBlock } from '../constructed-block/entity/constructed-block.entity';
 import { ConstructedPreview } from '../constructed-preview/entity/constructed-preview.entity';
+import { ConstructedPageCompany } from '../constructed-page-company/entity/constructed-page-company.entity';
 
 @ObjectType()
 @Entity()
@@ -24,6 +32,19 @@ export class ConstructedPage extends BaseEntity {
   @Field(() => Boolean, { nullable: true })
   @Column({ type: 'boolean', nullable: true })
   is_posted?: boolean;
+
+  @Field(() => ID, { nullable: true })
+  @Column({ type: 'uuid', nullable: true })
+  constructed_page_company_id: string;
+
+  @Field(() => ConstructedPageCompany, { nullable: true })
+  @ManyToOne(
+    () => ConstructedPageCompany,
+    (constructed_page_company) => constructed_page_company.constructed_pages,
+    { onDelete: 'SET NULL', onUpdate: 'SET NULL', eager: true },
+  )
+  @JoinColumn({ name: 'constructed_page_company_id' })
+  constructed_page_company: ConstructedPageCompany;
 
   @Field(() => ConstructedMetaInfo, { nullable: true })
   @OneToOne(

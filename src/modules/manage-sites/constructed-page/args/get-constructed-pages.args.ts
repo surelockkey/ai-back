@@ -1,4 +1,4 @@
-import { ArgsType, Field } from '@nestjs/graphql';
+import { ArgsType, Field, ID } from '@nestjs/graphql';
 import { FindPaginationDto } from 'src/core/dto/pagination.dto';
 import { ConstructedPageType } from '../enum/constructed-page-type.enum';
 
@@ -12,4 +12,7 @@ export class GetConstructedPagesArgs {
 
   @Field(() => Boolean, { nullable: true })
   is_posted?: boolean;
+
+  @Field(() => ID, { nullable: true })
+  constructed_page_company_id?: string;
 }

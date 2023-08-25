@@ -26,6 +26,7 @@ export class ConstructedPageInput extends OmitType(ConstructedPage, [
   'blocks',
   'meta_info',
   'preview',
+  'constructed_page_company',
 ]) {}
 
 @InputType()
