@@ -14,6 +14,6 @@ export class JobResolver {
 
   @Query(() => String)
   public async getCommission() {
-    return this.getCommission();
+    return this.jobService.commissionsLoop();
   }
 }
