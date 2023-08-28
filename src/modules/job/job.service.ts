@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { Call } from './entity/call.entity';
 import { ActivityLog } from './entity/activity-log.entity';
 import { workizJobToTableJob } from './utils/job-transformet.util';
+import { Commission } from './interface/commision.interface';
 
 @Injectable()
 export class JobService {
@@ -196,7 +197,7 @@ export class JobService {
   }
 
   public async commissionsLoop() {
-    const all_commissions = [];
+    const all_commissions: Commission[] = [];
     const current_date = moment();
     let year = 18;
     let month = 1;
@@ -220,6 +221,10 @@ export class JobService {
       console.log(month, year);
     }
 
+    all_commissions.forEach(async (com) => {
+      await this.jobRepository.update({ uuid: com.uuid }, { ...com });
+    });
+
     console.log(all_commissions);
     console.log(all_commissions.length);
   }
@@ -232,9 +237,7 @@ export class JobService {
       0,
     );
 
-    console.log(total_pages_data);
-
-    const all_commissions = [];
+    const all_commissions: Commission[] = [];
 
     const total_pages = Math.floor(
       total_pages_data.data.iTotalDisplayRecords / 100,
@@ -247,23 +250,21 @@ export class JobService {
         current_page,
       );
 
-      console.log(res);
-
       all_commissions.push(
         ...res.data.aaData.map((item) => {
           return {
             uuid: item[2].substring(12, 18),
-            total: item[12],
-            cash: item[13],
-            credit: item[14],
-            billing: item[15],
-            check: item[16],
+            total: parseFloat(item[12]),
+            cash: parseFloat(item[13]),
+            credit: parseFloat(item[14]),
+            billing: parseFloat(item[15]),
+            check: parseFloat(item[16]),
             tech_share: item[17],
-            parts: item[19],
-            company_parts: item[20],
-            tech_profit: item[21],
-            company_profit: item[23],
-            tax: item[24],
+            parts: parseFloat(item[19]),
+            company_parts: parseFloat(item[20]),
+            tech_profit: parseFloat(item[21]),
+            company_profit: parseFloat(item[23]),
+            tax: parseFloat(item[24]),
           };
         }),
       );

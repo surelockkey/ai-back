@@ -141,13 +141,13 @@ export class Job {
   @Column({ nullable: true })
   email_address: string;
 
-  @Field(() => Float, { nullable: true })
-  @Column({ nullable: true, type: 'float' })
-  company_parts: number;
+  // @Field(() => Float, { nullable: true })
+  // @Column({ nullable: true, type: 'float' })
+  // company_parts: number;
 
-  @Field(() => Float, { nullable: true })
-  @Column({ nullable: true, type: 'float' })
-  parts: number;
+  // @Field(() => Float, { nullable: true })
+  // @Column({ nullable: true, type: 'float' })
+  // parts: number;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -245,6 +245,51 @@ export class Job {
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
   paid_total: number;
+
+  // Job Commisions
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  total: number;
+
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  cash: number;
+
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  credit: number;
+
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  billing: number;
+
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  check: number;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  tech_share: string;
+
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  parts: number;
+
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  company_parts: number;
+
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  tech_profit: number;
+
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  company_profit: number;
+
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
+  tax: number;
 
   @Column({ default: 'main' })
   account: string;
