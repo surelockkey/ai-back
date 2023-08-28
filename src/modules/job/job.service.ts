@@ -232,6 +232,8 @@ export class JobService {
       0,
     );
 
+    console.log(total_pages_data);
+
     const all_commissions = [];
 
     const total_pages = Math.floor(total_pages_data.iTotalDisplayRecords / 100);
