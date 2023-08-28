@@ -32,7 +32,7 @@ export function workizJobToTableJob(workiz_job): Job {
     job_amount_due: parseFloat(workiz_job?.data?.job_amount_due ?? '0'),
     sub_total: parseFloat(workiz_job?.data?.sub_total ?? '0'),
     client_id: workiz_job?.data?.client_id,
-    has_calls: workiz_job?.data?.has_calls ?? '0',
+    has_calls: !!parseInt(workiz_job?.data?.has_calls ?? '0'),
     primary_phone: workiz_job?.data?.primary_phone ?? 'n/a',
     secondary_phone: workiz_job?.data?.secondary_phone ?? 'n/a',
     email_address: workiz_job?.data?.email_address ?? 'n/a',

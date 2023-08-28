@@ -1274,6 +1274,7 @@ type Query {
   """this method get blogs by field description which like inputed"""
   getBlogsFilterByMetaBlogUrl(metaBlogUrl: String!): ConstructorBlog!
   getCalls(ctmGetCallsOptionDto: CtmGetCallsOptionDto!): CtmGetCallsDto!
+  getCommission: String!
   getConstructedPageById(id: ID!): ConstructedPage!
   getConstructedPageByUrl(url: String!): ConstructedPage!
   getConstructedPages(constructed_page_company_id: ID, is_posted: Boolean, pagination: FindPaginationDto!, type: ConstructedPageType): [ConstructedPage!]!

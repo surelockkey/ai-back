@@ -249,50 +249,50 @@ export class Job {
   // Job Commisions
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
-  total: number;
+  total?: number;
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
-  cash: number;
+  cash?: number;
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
-  credit: number;
+  credit?: number;
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
-  billing: number;
+  billing?: number;
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
-  check: number;
+  check?: number;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  tech_share: string;
+  tech_share?: string;
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
-  parts: number;
+  parts?: number;
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
-  company_parts: number;
+  company_parts?: number;
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
-  tech_profit: number;
+  tech_profit?: number;
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
-  company_profit: number;
+  company_profit?: number;
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
-  tax: number;
+  tax?: number;
 
   @Column({ default: 'main' })
-  account: string;
+  account?: string;
 
   // @Field(() => String, { nullable: true })
   // @Column({ nullable: true })
