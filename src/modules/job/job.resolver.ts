@@ -11,4 +11,9 @@ export class JobResolver {
 
     return 'Job started';
   }
+
+  @Query(() => String)
+  public async getCommission() {
+    return this.getCommission();
+  }
 }
