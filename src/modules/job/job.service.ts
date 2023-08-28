@@ -249,9 +249,38 @@ export class JobService {
 
       console.log(res);
 
-      all_commissions.push(...res.data.aaData);
+      all_commissions.push(
+        ...res.data.aaData.map((item) => {
+          return {
+            uuid: item[2].substring(12, 18),
+            total: item[12],
+            cash: item[13],
+            credit: item[14],
+            billing: item[15],
+            check: item[16],
+            tech_share: item[17],
+            parts: item[19],
+            company_parts: item[20],
+            tech_profit: item[21],
+            company_profit: item[23],
+            tax: item[24],
+          };
+        }),
+      );
       current_page++;
     }
+
+    // total: 12
+    // cash: 13
+    // credit: 14
+    // billing: 15
+    // check: 16
+    // tech_share: 17
+    // parts: 19
+    // company_parts: 20
+    // tech_profit: 21
+    // company_profit: 23
+    // tax: 24
 
     return all_commissions;
   }
