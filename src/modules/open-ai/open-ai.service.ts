@@ -263,8 +263,6 @@ export class OpenAiService {
           primary_phone          | character varying ( It is a phone number )
           secondary_phone        | character varying ( It is a phone number )
           email_address          | character varying
-          company_parts          | double precision
-          parts                  | double precision
           client_company_name    | character varying
           invoice_number         | character varying
           zipcode                | character varying
@@ -288,6 +286,17 @@ export class OpenAiService {
           uuid                   | character varying
           dispatch_bonus_number  | character varying
           job_type               | character varying
+          total                  | double precision
+          cash                   | double precision
+          credit                 | double precision
+          billing                | double precision
+          check                  | double precision
+          tech_share             | character varying
+          parts                  | double precision
+          company_parts          | double precision
+          tech_profit            | double precision
+          company_profit         | double precision
+          tax                    | double precision
           account                | character varying ( Acceptable values: main, arizona)
 
 
