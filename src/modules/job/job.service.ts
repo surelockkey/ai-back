@@ -236,7 +236,9 @@ export class JobService {
 
     const all_commissions = [];
 
-    const total_pages = Math.floor(total_pages_data.iTotalDisplayRecords / 100);
+    const total_pages = Math.floor(
+      total_pages_data.data.iTotalDisplayRecords / 100,
+    );
 
     while (current_page <= total_pages) {
       const res = await this.workizCoreApiService.getCommission(
@@ -247,7 +249,7 @@ export class JobService {
 
       console.log(res);
 
-      all_commissions.push(...res.aaData);
+      all_commissions.push(...res.data.aaData);
       current_page++;
     }
 
