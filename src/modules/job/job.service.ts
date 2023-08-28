@@ -243,6 +243,8 @@ export class JobService {
         current_page,
       );
 
+      console.log(res);
+
       all_commissions.push(...res.aaData);
       current_page++;
     }
