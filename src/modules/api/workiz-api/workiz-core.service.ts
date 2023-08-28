@@ -5,6 +5,8 @@ import { SystemSettingsService } from 'src/modules/system-settings/system-settin
 import * as moment from 'moment';
 import { PaginatedJobDto } from './dto/workiz-api.dto';
 import axiosRetry from 'axios-retry';
+import { commission } from './api-properties/commistion';
+import { CommissionData } from './interfaces/commission-data.interface';
 
 export type RestMethods = 'get' | 'post' | 'put' | 'delete';
 
@@ -349,6 +351,41 @@ export class WorkizCoreApiService {
       first_name: client.first_name,
       last_name: client.last_name,
     };
+  }
+
+  public async getCommission(
+    month: number,
+    year: number,
+    page: number,
+  ): Promise<CommissionData> {
+    return await axios.get('https://app.workiz.com/ajax.php', {
+      params: {
+        page: 'datatables_finance_report_new',
+        final_q: `01.${month}.${year}_01.${
+          month + 1 > 12 ? 1 : month + 1
+        }.${year}`,
+        iDisplayStart: `${page * 100}`,
+        iDisplayLength: `${page * 100 + 100}`,
+        ...commission,
+      },
+      headers: {
+        authority: 'app.workiz.com',
+        accept: 'application/json, text/javascript, */*; q=0.01',
+        'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
+        cookie: this.cookie,
+        referer: 'https://app.workiz.com/finance_report/',
+        'sec-ch-ua':
+          '"Not/A)Brand";v="99", "Google Chrome";v="115", "Chromium";v="115"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"macOS"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'user-agent':
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
+        'x-requested-with': 'XMLHttpRequest',
+      },
+    });
   }
 
   // private login() {

@@ -189,77 +189,64 @@ export class JobService {
         }
 
         await this.jobRepository.save(workizJobToTableJob(job));
-
-        // await this.jobRepository.save({
-        //   uuid: job.data.uuid,
-        //   start_date: job.data.job_date,
-        //   end_date: job.data.job_end_date,
-        //   created_date: job.data.created,
-        //   total_price: Number(job.data.job_total_price),
-        //   amount_due: Number(job.data.job_amount_due),
-        //   client_id: Number(job.data.client_id),
-        //   status: job.data.status,
-        //   phone: job.data.primary_phone,
-        //   second_phone: job.data.secondary_phone,
-        //   email: job.data.client_email_address,
-        //   client_name: job.data.first_name + ' ' + job.data.last_name,
-        //   city: job.data.city,
-        //   state: job.data.state,
-        //   postal_code: job.data.zipcode,
-        //   job_type: job.data.type_name,
-        //   job_note: job.data.job_description,
-        //   job_source: job.data.job_source,
-        //   technician_name: job.data.techs[0] && job.data.techs[0].technition,
-        //   dispatcher_name: job.data.user_created,
-        //   address: job.data.address,
-        //   tip_amount: job.data.tip_amount,
-        //   job_timezone: job.data.job_timezone,
-        //   tax_amount: job.data.tax_amount,
-        //   tax_precent: job.data.tax_precent,
-        //   job_id: job.data.job_id,
-        //   avg_duration: job.data.avg_duration,
-        //   account: 'arizona',
-        // });
       }
     } catch (e) {
       console.log(e);
     }
   }
+
+  public async commissionsLoop() {
+    const all_commissions = [];
+    const current_date = moment();
+    let year = 18;
+    let month = 1;
+
+    while (
+      !(
+        Number(current_date.format('YY')) <= year &&
+        Number(current_date.format('M')) < month
+      )
+    ) {
+      const commmissions = await this.getCommission(year, month);
+      all_commissions.push(...commmissions);
+
+      month++;
+
+      if (month > 12) {
+        month = 1;
+        year += 1;
+      }
+
+      console.log(month, year);
+    }
+
+    console.log(all_commissions);
+    console.log(all_commissions.length);
+  }
+
+  public async getCommission(year: number, month: number) {
+    let current_page = 0;
+    const total_pages_data = await this.workizCoreApiService.getCommission(
+      month,
+      year,
+      0,
+    );
+
+    const all_commissions = [];
+
+    const total_pages = Math.floor(total_pages_data.iTotalDisplayRecords / 100);
+
+    while (current_page <= total_pages) {
+      const res = await this.workizCoreApiService.getCommission(
+        month,
+        year,
+        current_page,
+      );
+
+      all_commissions.push(...res.aaData);
+      current_page++;
+    }
+
+    return all_commissions;
+  }
 }
-
-// while (current_page < total_pages) {
-//   const data = await this.workizCoreApiService.req(
-//     {
-//       page: current_page,
-//       pageSize: 50,
-//       sorted: [{ id: "created", desc: true }],
-//       filtered: [],
-//       sSearch: "",
-//       final_q: "1.5.19_1.4.20",
-//       timeQueryChanged: false,
-//       pickerParams: { report_by: 3 },
-//       react: true,
-//       withCsv: false,
-//       pickerOn: true,
-//       filters: {
-//         user: [],
-//         tag: [],
-//         metro: [],
-//         type: [],
-//         status: [],
-//         created_by: [],
-//         source: [],
-//         company: [],
-//       },
-//     },
-//     '/ajaxc/job/jobReport/',
-//     'post'
-//   );
-
-//   total_pages = data.total;
-
-//   jobs.push(...data.aaData);
-//   current_page++;
-
-//   console.log(current_page, total_pages, jobs.length)
-// }
