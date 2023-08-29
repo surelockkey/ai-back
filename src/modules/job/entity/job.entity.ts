@@ -246,6 +246,10 @@ export class Job {
   @Column({ nullable: true, type: 'float' })
   paid_total: number;
 
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  job_serial?: string;
+
   // Job Commisions
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })

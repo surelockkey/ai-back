@@ -64,6 +64,7 @@ export function workizJobToTableJob(workiz_job): Job {
     invoice_created_utc: workiz_job?.data?.invoice_created_utc ?? 'n/a',
     tags: workiz_job?.data?.tags ?? 'n/a',
     paid_total: parseFloat(workiz_job?.data?.paid_total ?? '0'),
+    job_serial: workiz_job?.data?.job_serial,
     account: 'arizona',
   };
 }

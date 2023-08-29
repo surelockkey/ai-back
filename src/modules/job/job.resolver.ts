@@ -1,4 +1,4 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JobService } from './job.service';
 
 @Resolver()
@@ -15,5 +15,15 @@ export class JobResolver {
   @Query(() => String)
   public async getCommission() {
     return this.jobService.commissionsLoop();
+  }
+
+  @Mutation(() => String)
+  startUpdateJobsInfo(
+    @Args('from_year', { type: () => Int, nullable: true, defaultValue: 18 })
+    from_year: number,
+    @Args('from_month', { type: () => Int, nullable: true, defaultValue: 1 })
+    from_month: number,
+  ) {
+    return this.jobService.startUpdateJobsInfo(from_year, from_month);
   }
 }

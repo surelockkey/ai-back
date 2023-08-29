@@ -290,7 +290,7 @@ export class OpenAiService {
           cash                   | double precision
           credit                 | double precision
           billing                | double precision
-          check                  | double precision
+          "check"                  | double precision
           tech_share             | character varying
           parts                  | double precision
           company_parts          | double precision

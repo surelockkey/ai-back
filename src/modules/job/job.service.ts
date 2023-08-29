@@ -23,16 +23,16 @@ export class JobService {
     private readonly activityLogRepository: Repository<ActivityLog>,
   ) {}
 
-  public async jobLoop() {
+  public async jobLoop(from_year = 18, from_month = 1) {
     // await this.jobRepository.delete({ account: 'arizona' });
 
-    await this.callRepository.delete({ account: 'arizona' });
+    // await this.callRepository.delete({ account: 'arizona' });
 
-    await this.activityLogRepository.delete({ account: 'arizona' });
+    // await this.activityLogRepository.delete({ account: 'arizona' });
 
     const current_date = moment();
-    let year = 18;
-    let month = 1;
+    let year = from_year;
+    let month = from_month;
 
     while (
       !(
@@ -196,11 +196,11 @@ export class JobService {
     }
   }
 
-  public async commissionsLoop() {
+  public async commissionsLoop(from_year = 18, from_month = 1) {
     const all_commissions: Commission[] = [];
     const current_date = moment();
-    let year = 18;
-    let month = 1;
+    let year = from_year;
+    let month = from_month;
 
     while (
       !(
@@ -271,18 +271,11 @@ export class JobService {
       current_page++;
     }
 
-    // total: 12
-    // cash: 13
-    // credit: 14
-    // billing: 15
-    // check: 16
-    // tech_share: 17
-    // parts: 19
-    // company_parts: 20
-    // tech_profit: 21
-    // company_profit: 23
-    // tax: 24
-
     return all_commissions;
+  }
+
+  public async startUpdateJobsInfo(from_year = 18, from_month = 1) {
+    await this.jobLoop(from_year, from_month);
+    await this.commissionsLoop(from_year, from_month);
   }
 }
