@@ -27,23 +27,23 @@ export class Job {
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  created: string;
+  created_date: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  job_date_formatted: string;
+  job_date_formatted_start: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  job_hour: string;
+  job_hour_start: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  job_min: string;
+  job_min_start: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  job_ampm: string;
+  job_ampm_start: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -75,7 +75,7 @@ export class Job {
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  sub_name: string;
+  sub_status: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -119,7 +119,7 @@ export class Job {
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
-  sub_total: number;
+  items_total: number;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -183,7 +183,7 @@ export class Job {
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  location_key: string;
+  full_address: string;
 
   @Field(() => Boolean, { nullable: true })
   @Column({ nullable: true, type: 'boolean' })
@@ -207,7 +207,7 @@ export class Job {
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  tech_names: string;
+  tech_name: string;
 
   @Field(() => [String], { nullable: true })
   @Column('text', { array: true, nullable: true })
@@ -228,7 +228,6 @@ export class Job {
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   job_type: string; // jobTypeInfo.type_name
-
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -254,7 +253,7 @@ export class Job {
   // Job Commisions
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
-  total?: number;
+  total_sales?: number;
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
@@ -278,7 +277,7 @@ export class Job {
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
-  parts?: number;
+  tech_parts?: number;
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })

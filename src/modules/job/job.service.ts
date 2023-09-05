@@ -277,13 +277,13 @@ export class JobService {
         ...res.data.aaData.map((item) => {
           return {
             uuid: item[2].substring(12, 18), // add replace all
-            total: parseFloat(item[12].replace(new RegExp(',', 'g'), '')),
+            total_sales: parseFloat(item[12].replace(new RegExp(',', 'g'), '')),
             cash: parseFloat(item[13].replace(new RegExp(',', 'g'), '')),
             credit: parseFloat(item[14].replace(new RegExp(',', 'g'), '')),
             billing: parseFloat(item[15].replace(new RegExp(',', 'g'), '')),
             check: parseFloat(item[16].replace(new RegExp(',', 'g'), '')),
             tech_share: item[17],
-            parts: parseFloat(item[19].replace(new RegExp(',', 'g'), '')),
+            tech_parts: parseFloat(item[19].replace(new RegExp(',', 'g'), '')),
             company_parts: parseFloat(
               item[20].replace(new RegExp(',', 'g'), ''),
             ),

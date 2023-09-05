@@ -14,24 +14,26 @@ export function workizJobToTableJob(
     ),
     scheduled_start: workiz_job?.data?.job_date,
     created_timestamp: workiz_job?.data?.created_timestamp,
-    created: workiz_job?.data?.created,
-    job_date_formatted: workiz_job?.data?.job_date_formatted, // delete for gpt
-    job_hour: workiz_job?.data?.job_hour, // delete for gpt
-    job_min: workiz_job?.data?.job_min, // delete for gpt
-    job_ampm: workiz_job?.data?.job_ampm, // delete for gpt
+    created_date: workiz_job?.data?.created,
+    job_date_formatted_start: workiz_job?.data?.job_date_formatted, // delete for gpt
+    job_hour_start: workiz_job?.data?.job_hour, // delete for gpt
+    job_min_start: workiz_job?.data?.job_min, // delete for gpt
+    job_ampm_start: workiz_job?.data?.job_ampm.toLowerCase(), // delete for gpt
     job_end_date: workiz_job?.data?.job_end_date,
     job_amount_due_date: workiz_job?.data?.job_amount_due_date,
     job_date_end_formatted: workiz_job?.data?.job_date_end_formatted, // delete for gpt
     job_hour_end: workiz_job?.data?.job_hour_end, // delete for gpt
     job_minute_end: workiz_job?.data?.job_minute_end, // delete for gpt
-    job_ampm_end: workiz_job?.data?.job_ampm_end, // delete for gpt
+    job_ampm_end: workiz_job?.data?.job_ampm_end.toLowerCase(), // delete for gpt
     status: workiz_job?.data?.status,
-    sub_name:
-      workiz_job?.data?.sub_name === '' ? 'n/a' : workiz_job?.data?.sub_name,
+    sub_status:
+      workiz_job?.data?.sub_name === ''
+        ? 'n/a'
+        : workiz_job?.data?.sub_name.toLowerCase(),
     job_source:
       workiz_job?.data?.job_source === ''
         ? 'n/a'
-        : workiz_job?.data?.job_source,
+        : workiz_job?.data?.job_source.toLowerCase(),
     status_updated: workiz_job?.data?.status_updated,
     use_tech_special_rate:
       workiz_job?.data?.use_tech_special_rate === ''
@@ -60,7 +62,7 @@ export function workizJobToTableJob(
     job_amount_due: parseFloat(
       workiz_job?.data?.job_amount_due ? '0' : workiz_job?.data?.job_amount_due,
     ),
-    sub_total: parseFloat(
+    items_total: parseFloat(
       workiz_job?.data?.sub_total ? '0' : workiz_job?.data?.sub_total,
     ),
     client_id: workiz_job?.data?.client_id,
@@ -82,11 +84,13 @@ export function workizJobToTableJob(
     company_parts: parseFloat(
       workiz_job?.data?.company_parts ? '0' : workiz_job?.data?.company_parts,
     ),
-    parts: parseFloat(workiz_job?.data?.parts ? '0' : workiz_job?.data?.parts),
+    tech_parts: parseFloat(
+      workiz_job?.data?.parts ? '0' : workiz_job?.data?.parts,
+    ),
     client_company_name:
       workiz_job?.data?.client_company_name === ''
         ? 'n/a'
-        : workiz_job?.data?.client_company_name,
+        : workiz_job?.data?.client_company_name.toLowerCase(),
     invoice_number:
       workiz_job?.data?.invoice_number === ''
         ? 'n/a'
@@ -105,7 +109,7 @@ export function workizJobToTableJob(
       workiz_job?.data?.location_pb === ''
         ? 'n/a'
         : workiz_job?.data?.location_pb, // delete for gpt
-    location_key:
+    full_address:
       workiz_job?.data?.location_key === ''
         ? 'n/a'
         : workiz_job?.data?.location_key,
@@ -120,7 +124,7 @@ export function workizJobToTableJob(
     user_created:
       workiz_job?.data?.user_created === ''
         ? 'n/a'
-        : workiz_job?.data?.user_created,
+        : workiz_job?.data?.user_created.toLowerCase(),
     client_first_name:
       workiz_job?.data?.client_first_name === ''
         ? 'n/a'
@@ -129,7 +133,7 @@ export function workizJobToTableJob(
       workiz_job?.data?.client_last_name === ''
         ? 'n/a'
         : workiz_job?.data?.client_last_name,
-    tech_names:
+    tech_name:
       workiz_job?.data?.tech_names === ''
         ? 'n/a'
         : workiz_job?.data?.tech_names,
@@ -149,7 +153,7 @@ export function workizJobToTableJob(
     job_type:
       workiz_job?.data?.jobTypeInfo?.type_name === ''
         ? 'n/a'
-        : workiz_job?.data?.jobTypeInfo?.type_name,
+        : workiz_job?.data?.jobTypeInfo?.type_name.toLowerCase(),
     created_utc: workiz_job?.data?.created_utc,
     invoice_created_utc:
       workiz_job?.data?.invoice_created_utc === ''
