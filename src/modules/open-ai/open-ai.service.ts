@@ -247,10 +247,10 @@ export class OpenAiService {
           is_lead                | boolean
           scheduled_start        | character varying ( It's date in format:  YYYY-MM-DD HH24:MM:SS )
           created_timestamp      | character varying
-          created                | character varying ( It's date in format:  YYYY-MM-DD HH24:MM:SS )
+          created_date           | character varying ( It's date in format:  YYYY-MM-DD HH24:MM:SS )
           job_end_date           | character varying ( It's date in format:  YYYY-MM-DD HH24:MM:SS )
           job_amount_due_date    | character varying ( It's date in format:  YYYY/MM/DD )
-          sub_name               | character varying
+          sub_status             | character varying
           status_updated         | character varying ( It's date in format:  YYYY-MM-DD HH24:MM:SS )
           use_tech_special_rate  | character varying
           tech_special_rate      | character varying
@@ -258,7 +258,7 @@ export class OpenAiService {
           tax_on_off             | boolean
           job_total_price        | double precision
           job_amount_due         | double precision
-          sub_total              | double precision
+          items_total            | double precision
           has_calls              | boolean
           primary_phone          | character varying ( It is a phone number )
           secondary_phone        | character varying ( It is a phone number )
@@ -266,13 +266,13 @@ export class OpenAiService {
           client_company_name    | character varying
           invoice_number         | character varying
           zipcode                | character varying
-          location_key           | character varying
+          full_address           | character varying
           invoice_created        | boolean
           invoice_sent           | boolean
           user_created           | character varying
           client_first_name      | character varying
           client_last_name       | character varying
-          tech_names             | character varying
+          tech_name              | character varying
           tech_phone_numbers     | text[]            ( Array of phone numbers )
           dispatch_bonus_type    | character varying
           job_sub_total          | double precision
@@ -286,13 +286,13 @@ export class OpenAiService {
           uuid                   | character varying
           dispatch_bonus_number  | character varying
           job_type               | character varying
-          total                  | double precision
+          total_sales            | double precision
           cash                   | double precision
           credit                 | double precision
           billing                | double precision
-          "check"                  | double precision
+          "check"                | double precision
           tech_share             | character varying
-          parts                  | double precision
+          tech_parts             | double precision
           company_parts          | double precision
           tech_profit            | double precision
           company_profit         | double precision
