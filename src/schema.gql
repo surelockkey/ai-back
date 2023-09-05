@@ -18,6 +18,11 @@ input AcceptInviteDto {
   password: String!
 }
 
+enum Account {
+  arizona
+  main
+}
+
 type Address {
   id: ID!
   name: String!
@@ -1132,7 +1137,7 @@ type Mutation {
   sendMessageToOpenAi(message: String!): String!
   speechToText(call_id: String!): Transcription!
   startFineTune: FineTune!
-  startUpdateJobsInfo(from_month: Int = 1, from_year: Int = 18): String!
+  startUpdateJobsInfo(account: Account! = main, from_month: Int = 1, from_year: Int = 18): String!
 
   """update blogs"""
   updateBlog(updateBlog: UpdateConstructorBlogDto!): ConstructorBlog!
@@ -1444,6 +1449,7 @@ type SystemSettings {
   active_model: String!
   id: ID!
   max_tokens: Int!
+  workiz_arizona_cookie: String!
   workiz_cookie: String!
 }
 
@@ -1749,6 +1755,7 @@ input UpdatePhotoForBlockDto {
 
 input UpdateSystemSettingsDto {
   max_tokens: Int!
+  workiz_arizona_cookie: String!
   workiz_cookie: String!
 }
 

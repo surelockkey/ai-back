@@ -23,7 +23,11 @@ export class JobService {
     private readonly activityLogRepository: Repository<ActivityLog>,
   ) {}
 
-  public async jobLoop(from_year = 18, from_month = 1) {
+  public async jobLoop(
+    from_year = 18,
+    from_month = 1,
+    account?: 'main' | 'arizona',
+  ) {
     // await this.jobRepository.delete({ account: 'arizona' });
 
     // await this.callRepository.delete({ account: 'arizona' });
@@ -40,7 +44,7 @@ export class JobService {
         Number(current_date.format('M')) < month
       )
     ) {
-      await this.getJob(year, month);
+      await this.getJob(year, month, account);
 
       month++;
 
@@ -53,12 +57,17 @@ export class JobService {
     }
   }
 
-  public async getJob(year: number, month: number): Promise<PaginatedJobDto> {
+  public async getJob(
+    year: number,
+    month: number,
+    account?: 'main' | 'arizona',
+  ): Promise<PaginatedJobDto> {
     let current_page = 0;
     const total_pages_data = await this.getJobsByRange(
       current_page,
       year,
       month,
+      account,
     )
       .catch((e) => console.log(e))
       .then((r) => r);
@@ -67,12 +76,12 @@ export class JobService {
     const total_pages = total_pages_data.pages;
 
     while (current_page < total_pages) {
-      const req = await this.getJobsByRange(current_page, year, month);
+      const req = await this.getJobsByRange(current_page, year, month, account);
       const jobs = req.aaData;
 
       await Promise.all(
         (jobs || [])?.map(async (job) => {
-          await this.getFullJob(job.uuid);
+          await this.getFullJob(job.uuid, account);
         }),
       );
 
@@ -86,6 +95,7 @@ export class JobService {
     current_page: number,
     year: number,
     month: number,
+    account?: 'main' | 'arizona',
   ) {
     try {
       let month_to = month + 1;
@@ -122,17 +132,20 @@ export class JobService {
             company: [],
           },
         },
+        account,
       );
     } catch (e) {
       console.log(e);
     }
   }
 
-  private async getFullJob(job_id: string) {
+  private async getFullJob(job_id: string, account?: 'main' | 'arizona') {
     try {
       const job = await this.workizCoreApiService.req(
         `/ajaxc/job/get/${job_id}/`,
         'post',
+        undefined,
+        account,
       );
 
       const activities = (
@@ -140,6 +153,7 @@ export class JobService {
           `/ajaxc/job/jobTimelineFull/${job.data.job_id}/`,
           'post',
           {},
+          account,
         )
       ).data;
 
@@ -167,7 +181,7 @@ export class JobService {
               phoneNumber: activities[activity_counter].phoneNumber,
               timeInt: activities[activity_counter].timeInt,
               time: activities[activity_counter].time,
-              account: 'arizona',
+              account,
             });
           } else {
             // await this.activityLogRepository.save({
@@ -189,14 +203,18 @@ export class JobService {
           activity_counter++;
         }
 
-        await this.jobRepository.save(workizJobToTableJob(job));
+        await this.jobRepository.save(workizJobToTableJob(job, account));
       }
     } catch (e) {
       console.log(e);
     }
   }
 
-  public async commissionsLoop(from_year = 18, from_month = 1) {
+  public async commissionsLoop(
+    from_year = 18,
+    from_month = 1,
+    account?: 'main' | 'arizona',
+  ) {
     const all_commissions: Commission[] = [];
     const current_date = moment();
     let year = from_year;
@@ -208,7 +226,7 @@ export class JobService {
         Number(current_date.format('M')) < month
       )
     ) {
-      const commmissions = await this.getCommission(year, month);
+      const commmissions = await this.getCommission(year, month, account);
       all_commissions.push(...commmissions);
 
       month++;
@@ -222,14 +240,18 @@ export class JobService {
     }
 
     all_commissions.forEach(async (com) => {
-      await this.jobRepository.update({ uuid: com.uuid }, { ...com });
+      await this.jobRepository.update({ uuid: com.uuid, account }, { ...com });
     });
 
     console.log(all_commissions);
     console.log(all_commissions.length);
   }
 
-  public async getCommission(year: number, month: number) {
+  public async getCommission(
+    year: number,
+    month: number,
+    account?: 'main' | 'arizona',
+  ) {
     let current_page = 0;
     const total_pages_data = await this.workizCoreApiService.getCommission(
       month,
@@ -248,23 +270,28 @@ export class JobService {
         month,
         year,
         current_page,
+        account,
       );
 
       all_commissions.push(
         ...res.data.aaData.map((item) => {
           return {
-            uuid: item[2].substring(12, 18),
-            total: parseFloat(item[12]),
-            cash: parseFloat(item[13]),
-            credit: parseFloat(item[14]),
-            billing: parseFloat(item[15]),
-            check: parseFloat(item[16]),
+            uuid: item[2].substring(12, 18), // add replace all
+            total: parseFloat(item[12].replace(new RegExp(',', 'g'), '')),
+            cash: parseFloat(item[13].replace(new RegExp(',', 'g'), '')),
+            credit: parseFloat(item[14].replace(new RegExp(',', 'g'), '')),
+            billing: parseFloat(item[15].replace(new RegExp(',', 'g'), '')),
+            check: parseFloat(item[16].replace(new RegExp(',', 'g'), '')),
             tech_share: item[17],
-            parts: parseFloat(item[19]),
-            company_parts: parseFloat(item[20]),
-            tech_profit: parseFloat(item[21]),
-            company_profit: parseFloat(item[23]),
-            tax: parseFloat(item[24]),
+            parts: parseFloat(item[19].replace(new RegExp(',', 'g'), '')),
+            company_parts: parseFloat(
+              item[20].replace(new RegExp(',', 'g'), ''),
+            ),
+            tech_profit: parseFloat(item[21].replace(new RegExp(',', 'g'), '')),
+            company_profit: parseFloat(
+              item[23].replace(new RegExp(',', 'g'), ''),
+            ),
+            tax: parseFloat(item[24].replace(new RegExp(',', 'g'), '')),
           };
         }),
       );
@@ -274,8 +301,12 @@ export class JobService {
     return all_commissions;
   }
 
-  public async startUpdateJobsInfo(from_year = 18, from_month = 1) {
-    await this.jobLoop(from_year, from_month);
-    await this.commissionsLoop(from_year, from_month);
+  public async startUpdateJobsInfo(
+    from_year = 18,
+    from_month = 1,
+    account?: 'main' | 'arizona',
+  ) {
+    await this.jobLoop(from_year, from_month, account);
+    await this.commissionsLoop(from_year, from_month, account);
   }
 }

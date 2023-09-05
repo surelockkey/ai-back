@@ -1,5 +1,6 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JobService } from './job.service';
+import { Account } from './enum/account.enum';
 
 @Resolver()
 export class JobResolver {
@@ -23,7 +24,9 @@ export class JobResolver {
     from_year: number,
     @Args('from_month', { type: () => Int, nullable: true, defaultValue: 1 })
     from_month: number,
+    @Args('account', { type: () => Account, defaultValue: Account.main })
+    account: Account,
   ) {
-    return this.jobService.startUpdateJobsInfo(from_year, from_month);
+    return this.jobService.startUpdateJobsInfo(from_year, from_month, account);
   }
 }

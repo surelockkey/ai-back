@@ -215,7 +215,11 @@ export class Job {
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  dispatch_bonus_type: string; // custom_fields.bonuses_.jobs
+  extra_info: string; // custom_fields.bonuses_.jobs
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  dispatch_bonus_type: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -225,9 +229,6 @@ export class Job {
   @Column({ nullable: true })
   job_type: string; // jobTypeInfo.type_name
 
-  @Field(() => Float, { nullable: true })
-  @Column({ nullable: true, type: 'float' })
-  job_sub_total: number;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })

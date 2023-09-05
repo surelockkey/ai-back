@@ -13,12 +13,26 @@ export type RestMethods = 'get' | 'post' | 'put' | 'delete';
 @Injectable()
 export class WorkizCoreApiService {
   private cookie: string;
+  private arizona_cookie: string;
 
   constructor(private readonly systemSettingsService: SystemSettingsService) {
     this.setWorkizCookie();
   }
 
-  public async req(url: string, method: RestMethods = 'post', params?: object) {
+  private getCookie(account?: 'main' | 'arizona') {
+    if (account === 'arizona') {
+      return this.arizona_cookie;
+    }
+
+    return this.cookie;
+  }
+
+  public async req(
+    url: string,
+    method: RestMethods = 'post',
+    params?: object,
+    account?: 'main' | 'arizona',
+  ) {
     // const data = new FormData();
 
     // Object.keys(params).forEach((param_name) => {
@@ -47,7 +61,7 @@ export class WorkizCoreApiService {
         'sec-fetch-site': 'same-origin',
         'user-agent':
           'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
-        cookie: this.cookie,
+        cookie: this.getCookie(account),
       },
       data: params,
     };
@@ -64,6 +78,7 @@ export class WorkizCoreApiService {
   private async setWorkizCookie(): Promise<void> {
     const settings = await this.systemSettingsService.getSystemSettings();
     this.cookie = settings.workiz_cookie;
+    this.arizona_cookie = settings.workiz_arizona_cookie;
   }
 
   public async getClients() {
@@ -357,6 +372,7 @@ export class WorkizCoreApiService {
     month: number,
     year: number,
     page: number,
+    account?: 'main' | 'arizona',
   ): Promise<CommissionData> {
     return await axios.get('https://app.workiz.com/ajax.php', {
       params: {
@@ -372,7 +388,7 @@ export class WorkizCoreApiService {
         authority: 'app.workiz.com',
         accept: 'application/json, text/javascript, */*; q=0.01',
         'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
-        cookie: this.cookie,
+        cookie: this.getCookie(account),
         referer: 'https://app.workiz.com/finance_report/',
         'sec-ch-ua':
           '"Not/A)Brand";v="99", "Google Chrome";v="115", "Chromium";v="115"',
