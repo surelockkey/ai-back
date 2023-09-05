@@ -275,6 +275,7 @@ export class OpenAiService {
           tech_name              | character varying
           tech_phone_numbers     | text[]            ( Array of phone numbers )
           dispatch_bonus_type    | character varying
+          extra_info             | character varying
           job_sub_total          | double precision
           created_utc            | character varying ( It's date in format:  YYYY-MM-DD HH24:MM:SS )
           invoice_created_utc    | character varying ( It's date in format:  YYYY-MM-DD HH24:MM:SS )
