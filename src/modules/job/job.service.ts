@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { WorkizApiService } from '../api/workiz-api/workiz-api.service';
-import { CrudService } from '@tech-slk/nest-crud';
 import { Job } from './entity/job.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -11,6 +10,7 @@ import { Call } from './entity/call.entity';
 import { ActivityLog } from './entity/activity-log.entity';
 import { workizJobToTableJob } from './utils/job-transformet.util';
 import { Commission } from './interface/commision.interface';
+import { SystemSettingsService } from '../system-settings/system-settings.service';
 
 @Injectable()
 export class JobService {
@@ -21,6 +21,7 @@ export class JobService {
     @InjectRepository(Call) private readonly callRepository: Repository<Call>,
     @InjectRepository(ActivityLog)
     private readonly activityLogRepository: Repository<ActivityLog>,
+    private readonly systemSettingService: SystemSettingsService,
   ) {}
 
   public async jobLoop(
@@ -306,7 +307,15 @@ export class JobService {
     from_month = 1,
     account?: 'main' | 'arizona',
   ) {
+    await this.systemSettingService.updateByCriteriaAndReturnOne(
+      {},
+      { is_parsing: true },
+    );
     await this.jobLoop(from_year, from_month, account);
     await this.commissionsLoop(from_year, from_month, account);
+    await this.systemSettingService.updateByCriteriaAndReturnOne(
+      {},
+      { is_parsing: false },
+    );
   }
 }

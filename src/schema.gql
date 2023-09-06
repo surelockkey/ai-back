@@ -1448,6 +1448,7 @@ enum SortEnum {
 type SystemSettings {
   active_model: String!
   id: ID!
+  is_parsing: Boolean!
   max_tokens: Int!
   workiz_arizona_cookie: String!
   workiz_cookie: String!
@@ -1754,6 +1755,7 @@ input UpdatePhotoForBlockDto {
 }
 
 input UpdateSystemSettingsDto {
+  is_parsing: Boolean!
   max_tokens: Int!
   workiz_arizona_cookie: String!
   workiz_cookie: String!

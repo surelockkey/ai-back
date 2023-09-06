@@ -27,6 +27,7 @@ export class JobResolver {
     @Args('account', { type: () => Account, defaultValue: Account.main })
     account: Account,
   ) {
-    return this.jobService.startUpdateJobsInfo(from_year, from_month, account);
+    this.jobService.startUpdateJobsInfo(from_year, from_month, account);
+    return 'Success';
   }
 }
