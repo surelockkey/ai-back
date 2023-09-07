@@ -1226,6 +1226,11 @@ type PaginatedLocksmith {
   total: Int!
 }
 
+type PaginatedMessages {
+  items: [Message!]!
+  total: Int!
+}
+
 type PhotoBlog {
   awsKey: String
   awsUrl: String
@@ -1307,6 +1312,7 @@ type Query {
   getLocksmithWithUnreviewedReviews: [LocksmithWithCountNewReviewsDto!]!
   getLocksmiths(confirmed: Boolean!, pagination: FindPaginationDto!, search_value: String): PaginatedLocksmith!
   getLogs(pagination: FindPaginationDto!): LogsPaginated!
+  getMessages(chat_type: ChatType! = DEFAULT, pagination: FindPaginationDto!): PaginatedMessages!
   getMyOrders: [Order!]!
   getMySchedule(from: Int!, to: Int!): UserWithSchedule!
   getOrderById(id: ID!): Order!

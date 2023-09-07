@@ -37,4 +37,15 @@ export class ApiChatService
       ...options,
     });
   }
+
+  public async findManyPaginated(options?: FindManyOptions<Message>) {
+    const [items, total] = await this.messageRepository.findAndCount({
+      ...options,
+    });
+
+    return {
+      items,
+      total,
+    };
+  }
 }

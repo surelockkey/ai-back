@@ -9,6 +9,8 @@ import { ChatServiceFactory } from './factory/chat.factory.service';
 import { ChatType } from './enum/chat-type.enum';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from '../authorization/guard/auth.guard';
+import { FindPaginationDto } from 'src/core/dto/pagination.dto';
+import { PaginatedMessages } from './dto/paginated-message.dto';
 
 @Resolver()
 export class ChatResolver {
@@ -43,5 +45,18 @@ export class ChatResolver {
     return this.chatFactoryService
       .getService(chat_type)
       .findMany({ order: { created: 'DESC' } });
+  }
+
+  @RoleGuard(UserRole.ADMIN)
+  @Query(() => PaginatedMessages)
+  getMessages(
+    @Args('chat_type', { type: () => ChatType, defaultValue: ChatType.DEFAULT })
+    chat_type: ChatType,
+    @Args('pagination', { type: () => FindPaginationDto })
+    pagination: FindPaginationDto,
+  ) {
+    return this.chatFactoryService
+      .getService(chat_type)
+      .findManyPaginated({ ...pagination, order: { created: 'DESC' } });
   }
 }
