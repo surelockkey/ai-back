@@ -6,12 +6,8 @@ export function workizJobToTableJob(
 ): Job {
   return {
     uuid: workiz_job?.data?.uuid,
-    tip_amount: parseFloat(
-      workiz_job?.data?.tip_amount ? '0' : workiz_job?.data?.tip_amount,
-    ),
-    is_lead: !!parseInt(
-      workiz_job?.data?.is_lead ? '0' : workiz_job?.data?.is_lead,
-    ),
+    tip_amount: parseFloat(workiz_job?.data?.tip_amount || '0'),
+    is_lead: !!parseInt(workiz_job?.data?.is_lead || '0'),
     scheduled_start: workiz_job?.data?.job_date,
     created_timestamp: workiz_job?.data?.created_timestamp,
     created_date: workiz_job?.data?.created,
@@ -39,36 +35,16 @@ export function workizJobToTableJob(
       workiz_job?.data?.use_tech_special_rate === ''
         ? 'n/a'
         : workiz_job?.data?.use_tech_special_rate,
-    tech_special_rate: workiz_job?.data?.tech_special_rate
-      ? '0'
-      : workiz_job?.data?.tech_special_rate,
-    tax_amount: parseFloat(
-      workiz_job?.data?.tax_amount ? '0' : workiz_job?.data?.tax_amount,
-    ),
-    tax_precent: parseFloat(
-      workiz_job?.data?.tax_precent ? '0' : workiz_job?.data?.tax_precent,
-    ),
-    taxable_amount: parseFloat(
-      workiz_job?.data?.taxable_amount ? '0' : workiz_job?.data?.taxable_amount,
-    ),
-    tax_on_off: !!parseInt(
-      workiz_job?.data?.tax_on_off ? '0' : workiz_job?.data?.tax_on_off,
-    ),
-    job_total_price: parseFloat(
-      workiz_job?.data?.job_total_price
-        ? '0'
-        : workiz_job?.data?.job_total_price,
-    ),
-    job_amount_due: parseFloat(
-      workiz_job?.data?.job_amount_due ? '0' : workiz_job?.data?.job_amount_due,
-    ),
-    items_total: parseFloat(
-      workiz_job?.data?.sub_total ? '0' : workiz_job?.data?.sub_total,
-    ),
+    tech_special_rate: workiz_job?.data?.tech_special_rate || '0',
+    tax_amount: parseFloat(workiz_job?.data?.tax_amount || '0'),
+    tax_precent: parseFloat(workiz_job?.data?.tax_precent || '0'),
+    taxable_amount: parseFloat(workiz_job?.data?.taxable_amount || '0'),
+    tax_on_off: workiz_job?.data?.tax_precent ? true : false,
+    job_total_price: parseFloat(workiz_job?.data?.job_total_price || '0'),
+    job_amount_due: parseFloat(workiz_job?.data?.job_amount_due || '0'),
+    items_total: parseFloat(workiz_job?.data?.sub_total || '0'),
     client_id: workiz_job?.data?.client_id,
-    has_calls: !!parseInt(
-      workiz_job?.data?.has_calls ? '0' : workiz_job?.data?.has_calls,
-    ),
+    has_calls: !!parseInt(workiz_job?.data?.has_calls || '0'),
     primary_phone:
       workiz_job?.data?.primary_phone === ''
         ? 'n/a'
@@ -81,12 +57,8 @@ export function workizJobToTableJob(
       workiz_job?.data?.email_address === ''
         ? 'n/a'
         : workiz_job?.data?.email_address,
-    company_parts: parseFloat(
-      workiz_job?.data?.company_parts ? '0' : workiz_job?.data?.company_parts,
-    ),
-    tech_parts: parseFloat(
-      workiz_job?.data?.parts ? '0' : workiz_job?.data?.parts,
-    ),
+    company_parts: parseFloat(workiz_job?.data?.company_parts || '0'),
+    tech_parts: parseFloat(workiz_job?.data?.parts || '0'),
     client_company_name:
       workiz_job?.data?.client_company_name === ''
         ? 'n/a'
@@ -113,14 +85,8 @@ export function workizJobToTableJob(
       workiz_job?.data?.location_key === ''
         ? 'n/a'
         : workiz_job?.data?.location_key,
-    invoice_created: !!parseInt(
-      workiz_job?.data?.invoice_created
-        ? '0'
-        : workiz_job?.data?.invoice_created,
-    ),
-    invoice_sent: !!parseInt(
-      workiz_job?.data?.invoice_sent ? '0' : workiz_job?.data?.invoice_sent,
-    ),
+    invoice_created: !!parseInt(workiz_job?.data?.invoice_created || '0'),
+    invoice_sent: !!parseInt(workiz_job?.data?.invoice_sent || '0'),
     user_created:
       workiz_job?.data?.user_created === ''
         ? 'n/a'
@@ -137,7 +103,7 @@ export function workizJobToTableJob(
       workiz_job?.data?.tech_names === ''
         ? 'n/a'
         : workiz_job?.data?.tech_names,
-    tech_phone_numbers: workiz_job?.data?.tech_phone_numbers ?? ['n/a'],
+    tech_phone_numbers: workiz_job?.data?.tech_phone_numbers || ['n/a'],
     extra_info:
       workiz_job?.data?.custom_fields?.bonuses_?.jobs === ''
         ? 'n/a'
@@ -159,10 +125,16 @@ export function workizJobToTableJob(
       workiz_job?.data?.invoice_created_utc === ''
         ? 'n/a'
         : workiz_job?.data?.invoice_created_utc,
-    tags: workiz_job?.data?.tags === '' ? 'n/a' : workiz_job?.data?.tags,
-    paid_total: parseFloat(
-      workiz_job?.data?.paid_total ? '0' : workiz_job?.data?.paid_total,
-    ),
+    tags:
+      workiz_job?.data?.tags === ''
+        ? 'n/a'
+        : workiz_job?.data?.tags
+            .split(',')
+            .map((tag_id) => {
+              return workiz_tags[tag_id].name;
+            })
+            .join(', '),
+    paid_total: parseFloat(workiz_job?.data?.paid_total || '0'),
     job_serial: workiz_job?.data?.job_serial,
     account: account,
   };
