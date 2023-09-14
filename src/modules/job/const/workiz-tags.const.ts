@@ -1,4 +1,4 @@
-const workiz_tags = {
+export const workiz_tags = {
   '84888': {
     id: '84888',
     name: 'NO ANSWER',

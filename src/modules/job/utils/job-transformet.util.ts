@@ -1,4 +1,5 @@
 import { Job } from '../entity/job.entity';
+import { workiz_tags } from '../const/workiz-tags.const';
 
 export function workizJobToTableJob(
   workiz_job,
