@@ -154,9 +154,9 @@ export class JobService {
           }
         });
 
-      if (!job.data || !job.data?.job_id) {
-        console.log(job);
-      }
+      // if (!job.data || !job.data?.job_id) {
+      // console.log(job);
+      // }
 
       const activities = (
         await this.workizCoreApiService.req(
@@ -274,6 +274,8 @@ export class JobService {
       year,
       0,
     );
+
+    console.log('total_pages_data: ', total_pages_data, ',', year, ',', month);
 
     const all_commissions: Commission[] = [];
 
