@@ -11,6 +11,7 @@ import { ActivityLog } from './entity/activity-log.entity';
 import { workizJobToTableJob } from './utils/job-transformet.util';
 import { Commission } from './interface/commision.interface';
 import { SystemSettingsService } from '../system-settings/system-settings.service';
+import fs from 'fs';
 
 @Injectable()
 export class JobService {
@@ -267,12 +268,17 @@ export class JobService {
     );
 
     while (current_page <= total_pages) {
-      const res = await this.workizCoreApiService.getCommission(
-        month,
-        year,
-        current_page,
-        account,
-      );
+      const res = await this.workizCoreApiService
+        .getCommission(month, year, current_page, account)
+        .catch((e) => {
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          fs.appendFile('./com.txt', `${e}`, {}, () => {});
+        })
+        .then((r) => {
+          if (r) {
+            return r;
+          }
+        });
 
       all_commissions.push(
         ...res.data.aaData.map((item) => {
