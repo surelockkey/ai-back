@@ -146,7 +146,7 @@ export class JobService {
       const job = await this.workizCoreApiService
         .req(`/ajaxc/job/get/${job_id}/`, 'post', undefined, account)
         .catch((e) => {
-          console.log(e);
+          // console.log(e);
         })
         .then((r) => {
           if (r) {
@@ -250,6 +250,13 @@ export class JobService {
     }
 
     all_commissions.forEach(async (com) => {
+      const exist_com = await this.jobRepository.findOne({
+        where: { uuid: com.uuid },
+      });
+
+      if (!exist_com) {
+        console.log(com);
+      }
       await this.jobRepository.update({ uuid: com.uuid, account }, { ...com });
     });
 
@@ -290,10 +297,10 @@ export class JobService {
 
       all_commissions.push(
         ...res.data.aaData.map((item) => {
-          console.log({
-            before: item[12],
-            after: parseFloat(item[12].replace(new RegExp(',', 'g'), '')),
-          });
+          // console.log({
+          //   before: item[12],
+          //   after: parseFloat(item[12].replace(new RegExp(',', 'g'), '')),
+          // });
           return {
             uuid: item[2].substring(12, 18), // add replace all
             total_sales: parseFloat(item[12].replace(new RegExp(',', 'g'), '')),
