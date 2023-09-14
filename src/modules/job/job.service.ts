@@ -273,6 +273,7 @@ export class JobService {
         .catch((e) => {
           // eslint-disable-next-line @typescript-eslint/no-empty-function
           fs.appendFile('./com.txt', `${e}`, {}, () => {});
+          console.log(e);
         })
         .then((r) => {
           if (r) {
