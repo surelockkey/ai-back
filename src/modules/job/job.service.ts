@@ -143,12 +143,20 @@ export class JobService {
 
   private async getFullJob(job_id: string, account?: 'main' | 'arizona') {
     try {
-      const job = await this.workizCoreApiService.req(
-        `/ajaxc/job/get/${job_id}/`,
-        'post',
-        undefined,
-        account,
-      );
+      const job = await this.workizCoreApiService
+        .req(`/ajaxc/job/get/${job_id}/`, 'post', undefined, account)
+        .catch((e) => {
+          console.log(e);
+        })
+        .then((r) => {
+          if (r) {
+            return r;
+          }
+        });
+
+      if (!job.data || !job.data?.job_id) {
+        console.log(job);
+      }
 
       const activities = (
         await this.workizCoreApiService.req(
