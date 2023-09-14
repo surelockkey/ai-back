@@ -245,7 +245,6 @@ export class JobService {
       await this.jobRepository.update({ uuid: com.uuid, account }, { ...com });
     });
 
-    console.log(all_commissions);
     console.log(all_commissions.length);
   }
 
