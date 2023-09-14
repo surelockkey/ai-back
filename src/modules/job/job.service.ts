@@ -282,6 +282,10 @@ export class JobService {
 
       all_commissions.push(
         ...res.data.aaData.map((item) => {
+          console.log({
+            before: item[12],
+            after: parseFloat(item[12].replace(new RegExp(',', 'g'), '')),
+          });
           return {
             uuid: item[2].substring(12, 18), // add replace all
             total_sales: parseFloat(item[12].replace(new RegExp(',', 'g'), '')),
