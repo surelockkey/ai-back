@@ -249,6 +249,8 @@ export class JobService {
       console.log(month, year);
     }
 
+    console.log(all_commissions);
+
     all_commissions.forEach(async (com) => {
       const exist_com = await this.jobRepository.findOne({
         where: { uuid: com.uuid },
