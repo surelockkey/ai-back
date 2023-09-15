@@ -340,7 +340,8 @@ export class JobService {
       account,
     );
 
-    console.log(commissions);
+    console.log(commissions.length);
+    console.log(commissions.shift().length);
 
     return commissions.shift().map((item) => {
       return {
