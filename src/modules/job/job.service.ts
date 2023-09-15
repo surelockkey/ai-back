@@ -340,6 +340,8 @@ export class JobService {
       account,
     );
 
+    console.log(commissions);
+
     return commissions.shift().map((item) => {
       return {
         uuid: item.job_id.substring(12, 18), // add replace all
