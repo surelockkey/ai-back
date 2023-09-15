@@ -404,6 +404,39 @@ export class WorkizCoreApiService {
     });
   }
 
+  public async getAllCommissions(
+    month: number,
+    year: number,
+    account?: 'main' | 'arizona',
+  ) {
+    const response = await axios.get(
+      `https://app.workiz.com/ajax.php?page=datatables_finance_report_new&&csv_mode=true&csv_type=export&final_q=01.${month}.${year}_01.${
+        month + 1 > 12 ? 1 : month + 1
+      }.${year}&init_status=&company_id=&adgroup_id=&job_type=&report_mode_submit=standart&technition=&technition_id=&metro_id=&report_by=1&sSearch=&stlFilter=undefined&_=1694767995375`,
+      {
+        headers: {
+          authority: 'app.workiz.com',
+          accept: '*/*',
+          'accept-language': 'en-US,en;q=0.9',
+          cookie: this.getCookie(account),
+          dnt: '1',
+          referer: 'https://app.workiz.com/finance_report/',
+          'sec-ch-ua': '"Not)A;Brand";v="24", "Chromium";v="116"',
+          'sec-ch-ua-mobile': '?0',
+          'sec-ch-ua-platform': '"macOS"',
+          'sec-fetch-dest': 'empty',
+          'sec-fetch-mode': 'cors',
+          'sec-fetch-site': 'same-origin',
+          'user-agent':
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+          'x-requested-with': 'XMLHttpRequest',
+        },
+      },
+    );
+
+    return response.data.csv_data[0].data;
+  }
+
   // private login() {
   //     const params = {
   //         login: this.workizConfig.email,

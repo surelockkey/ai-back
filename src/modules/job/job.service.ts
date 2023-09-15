@@ -263,70 +263,105 @@ export class JobService {
     console.log(all_commissions.length);
   }
 
+  // public async getCommission(
+  //   year: number,
+  //   month: number,
+  //   account?: 'main' | 'arizona',
+  // ) {
+  //   let current_page = 0;
+  //   const total_pages_data = await this.workizCoreApiService.getCommission(
+  //     month,
+  //     year,
+  //     0,
+  //   );
+
+  //   console.log('total_pages_data: ', total_pages_data, ',', year, ',', month);
+
+  //   const all_commissions: Commission[] = [];
+
+  //   const total_pages = Math.floor(
+  //     total_pages_data.data.iTotalDisplayRecords / 100,
+  //   );
+
+  //   while (current_page <= total_pages) {
+  //     const res = await this.workizCoreApiService
+  //       .getCommission(month, year, current_page, account)
+  //       .catch((e) => {
+  //         // eslint-disable-next-line @typescript-eslint/no-empty-function
+  //         fs.appendFile('./com.txt', `${e}`, {}, () => {});
+  //         console.log(e);
+  //       })
+  //       .then((r) => {
+  //         if (r) {
+  //           return r;
+  //         }
+  //       });
+
+  //     all_commissions.push(
+  //       ...res.data.aaData.map((item) => {
+  //         // console.log({
+  //         //   before: item[12],
+  //         //   after: parseFloat(item[12].replace(new RegExp(',', 'g'), '')),
+  //         // });
+  //         return {
+  //           uuid: item[2].substring(12, 18), // add replace all
+  //           total_sales: parseFloat(item[12].replace(new RegExp(',', 'g'), '')),
+  //           cash: parseFloat(item[13].replace(new RegExp(',', 'g'), '')),
+  //           credit: parseFloat(item[14].replace(new RegExp(',', 'g'), '')),
+  //           billing: parseFloat(item[15].replace(new RegExp(',', 'g'), '')),
+  //           check: parseFloat(item[16].replace(new RegExp(',', 'g'), '')),
+  //           tech_share: item[17],
+  //           tech_parts: parseFloat(item[19].replace(new RegExp(',', 'g'), '')),
+  //           company_parts: parseFloat(
+  //             item[20].replace(new RegExp(',', 'g'), ''),
+  //           ),
+  //           tech_profit: parseFloat(item[21].replace(new RegExp(',', 'g'), '')),
+  //           company_profit: parseFloat(
+  //             item[23].replace(new RegExp(',', 'g'), ''),
+  //           ),
+  //           tax: parseFloat(item[24].replace(new RegExp(',', 'g'), '')),
+  //         };
+  //       }),
+  //     );
+  //     current_page++;
+  //   }
+
+  //   return all_commissions;
+  // }
+
   public async getCommission(
     year: number,
     month: number,
     account?: 'main' | 'arizona',
   ) {
-    let current_page = 0;
-    const total_pages_data = await this.workizCoreApiService.getCommission(
+    const commissions = await this.workizCoreApiService.getAllCommissions(
       month,
       year,
-      0,
+      account,
     );
 
-    console.log('total_pages_data: ', total_pages_data, ',', year, ',', month);
-
-    const all_commissions: Commission[] = [];
-
-    const total_pages = Math.floor(
-      total_pages_data.data.iTotalDisplayRecords / 100,
-    );
-
-    while (current_page <= total_pages) {
-      const res = await this.workizCoreApiService
-        .getCommission(month, year, current_page, account)
-        .catch((e) => {
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          fs.appendFile('./com.txt', `${e}`, {}, () => {});
-          console.log(e);
-        })
-        .then((r) => {
-          if (r) {
-            return r;
-          }
-        });
-
-      all_commissions.push(
-        ...res.data.aaData.map((item) => {
-          // console.log({
-          //   before: item[12],
-          //   after: parseFloat(item[12].replace(new RegExp(',', 'g'), '')),
-          // });
-          return {
-            uuid: item[2].substring(12, 18), // add replace all
-            total_sales: parseFloat(item[12].replace(new RegExp(',', 'g'), '')),
-            cash: parseFloat(item[13].replace(new RegExp(',', 'g'), '')),
-            credit: parseFloat(item[14].replace(new RegExp(',', 'g'), '')),
-            billing: parseFloat(item[15].replace(new RegExp(',', 'g'), '')),
-            check: parseFloat(item[16].replace(new RegExp(',', 'g'), '')),
-            tech_share: item[17],
-            tech_parts: parseFloat(item[19].replace(new RegExp(',', 'g'), '')),
-            company_parts: parseFloat(
-              item[20].replace(new RegExp(',', 'g'), ''),
-            ),
-            tech_profit: parseFloat(item[21].replace(new RegExp(',', 'g'), '')),
-            company_profit: parseFloat(
-              item[23].replace(new RegExp(',', 'g'), ''),
-            ),
-            tax: parseFloat(item[24].replace(new RegExp(',', 'g'), '')),
-          };
-        }),
-      );
-      current_page++;
-    }
-
-    return all_commissions;
+    return commissions.shift().map((item) => {
+      return {
+        uuid: item.job_id.substring(12, 18), // add replace all
+        total_sales: parseFloat(item.total.replace(new RegExp(',', 'g'), '')),
+        cash: parseFloat(item.cash.replace(new RegExp(',', 'g'), '')),
+        credit: parseFloat(item.credit.replace(new RegExp(',', 'g'), '')),
+        billing: parseFloat(item.billing.replace(new RegExp(',', 'g'), '')),
+        check: parseFloat(item.check.replace(new RegExp(',', 'g'), '')),
+        tech_share: item.tech_share,
+        tech_parts: parseFloat(item.parts.replace(new RegExp(',', 'g'), '')),
+        company_parts: parseFloat(
+          item.company_parts.replace(new RegExp(',', 'g'), ''),
+        ),
+        tech_profit: parseFloat(
+          item.tech_profit.replace(new RegExp(',', 'g'), ''),
+        ),
+        company_profit: parseFloat(
+          item.company_profit.replace(new RegExp(',', 'g'), ''),
+        ),
+        tax: parseFloat(item.tax.replace(new RegExp(',', 'g'), '')),
+      };
+    });
   }
 
   public async startUpdateJobsInfo(
