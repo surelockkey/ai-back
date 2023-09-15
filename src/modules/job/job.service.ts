@@ -341,9 +341,12 @@ export class JobService {
     );
 
     console.log(commissions.length);
-    console.log(commissions.shift().length);
 
-    return commissions.shift().map((item) => {
+    commissions.shift();
+
+    console.log(commissions.length);
+
+    return commissions.map((item) => {
       return {
         uuid: item.job_id.substring(12, 18), // add replace all
         total_sales: parseFloat(item.total.replace(new RegExp(',', 'g'), '')),
