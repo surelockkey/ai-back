@@ -152,6 +152,8 @@ export class JobService {
         .catch(async (e) => {
           // console.log(e);
           if (count < 5) {
+            console.log('REFFFFFEEEEETCHHHHHHH JOB', count);
+
             return await this.getFullJob(job_id, account, count++);
           }
         })
