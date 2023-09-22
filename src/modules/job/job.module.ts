@@ -8,6 +8,7 @@ import { Job } from './entity/job.entity';
 import { Call } from './entity/call.entity';
 import { ActivityLog } from './entity/activity-log.entity';
 import { SystemSettingsModule } from '../system-settings/system-settings.module';
+import { CountieModule } from './countie/countie.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { SystemSettingsModule } from '../system-settings/system-settings.module'
     CtmApiModule,
     WorkizApiModule,
     SystemSettingsModule,
+    CountieModule,
   ],
   providers: [JobService, JobResolver],
 })

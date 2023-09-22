@@ -4,7 +4,7 @@ import { workiz_tags } from '../const/workiz-tags.const';
 export function workizJobToTableJob(
   workiz_job,
   account: 'main' | 'arizona' = 'main',
-): Job {
+): Omit<Job, 'county'> {
   return {
     uuid: workiz_job?.data?.uuid,
     tip_amount: parseFloat(workiz_job?.data?.tip_amount || '0'),

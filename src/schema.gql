@@ -235,6 +235,13 @@ type ConstructorBlogFilterableWithCountDto {
   blogCount: Float
 }
 
+type Countie {
+  city: String!
+  county: String!
+  id: ID!
+  state: String!
+}
+
 input CreateBlogBlockDto {
   body_text: String
   description: String
@@ -1133,6 +1140,7 @@ type Mutation {
   requestLocksmith(locksmith: RequestLocksmithDto!): Locksmith!
   requestLocksmithReview(review: RequestLocksmithReviewDto!): LocksmithReview!
   reviewManyLocksmithReviews(reviews: [ReviewLocksmithReviewDto!]!): [LocksmithReview!]!
+  saveCountie: Countie!
   sendMessage(chat_type: ChatType! = DEFAULT, prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
   speechToText(call_id: String!): Transcription!
