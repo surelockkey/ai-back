@@ -224,13 +224,13 @@ export class JobService {
         //   activity_counter++;
         // }
 
-        const countie = await this.countieService.findOne({
+        const countie = await this.countieService.findOneWithoutError({
           city: job?.data?.city,
           state: job?.data?.state,
         });
         await this.jobRepository.save({
           ...workizJobToTableJob(job, account),
-          countie: countie.county,
+          county: countie.county,
         });
       }
     } catch (e) {

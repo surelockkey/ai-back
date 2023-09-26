@@ -132,7 +132,7 @@ export function workizJobToTableJob(
         : workiz_job?.data?.tags
             .split(',')
             .map((tag_id) => {
-              return workiz_tags[tag_id].name;
+              return workiz_tags[tag_id]?.name || ' ';
             })
             .join(', '),
     paid_total: parseFloat(workiz_job?.data?.paid_total || '0'),
