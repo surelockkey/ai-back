@@ -230,7 +230,7 @@ export class JobService {
         });
         await this.jobRepository.save({
           ...workizJobToTableJob(job, account),
-          county: countie.county,
+          county: countie ? countie.county : 'n/a',
         });
       }
     } catch (e) {
@@ -257,26 +257,17 @@ export class JobService {
       const commmissions = await this.getCommission(year, month, account);
       all_commissions.push(...commmissions);
 
+      console.log(`M: ${month} Y: ${year} com: ${commmissions.length}`);
+
       month++;
 
       if (month > 12) {
         month = 1;
         year += 1;
       }
-
-      console.log(month, year);
     }
 
-    console.log(all_commissions);
-
     all_commissions.forEach(async (com) => {
-      const exist_com = await this.jobRepository.findOne({
-        where: { uuid: com.uuid },
-      });
-
-      if (!exist_com) {
-        console.log(com);
-      }
       await this.jobRepository.update({ uuid: com.uuid, account }, { ...com });
     });
 
@@ -360,11 +351,7 @@ export class JobService {
       account,
     );
 
-    console.log(commissions.length);
-
     commissions.shift();
-
-    console.log(commissions.length);
 
     return commissions.map((item) => {
       return {
