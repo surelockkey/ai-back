@@ -416,7 +416,9 @@ export class WorkizCoreApiService {
     const response = await axios.get(
       `https://app.workiz.com/ajax.php?page=datatables_finance_report_new&&csv_mode=true&csv_type=export&final_q=01.${month}.${year}_01.${
         month + 1 > 12 ? 1 : month + 1
-      }.${year}&init_status=&company_id=&adgroup_id=&job_type=&report_mode_submit=standart&technition=&technition_id=&metro_id=&report_by=1&sSearch=&stlFilter=undefined&_=1694767995375`,
+      }.${
+        month + 1 > 12 ? year + 1 : year
+      }&init_status=&company_id=&adgroup_id=&job_type=&report_mode_submit=standart&technition=&technition_id=&metro_id=&report_by=1&sSearch=&stlFilter=undefined&_=1694767995375`,
       {
         headers: {
           authority: 'app.workiz.com',
