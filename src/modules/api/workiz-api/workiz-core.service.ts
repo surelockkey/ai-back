@@ -409,6 +409,10 @@ export class WorkizCoreApiService {
     year: number,
     account?: 'main' | 'arizona',
   ) {
+    console.log(
+      `01.${month}.${year}_01.${month + 1 > 12 ? 1 : month + 1}.${year}`,
+    );
+
     const response = await axios.get(
       `https://app.workiz.com/ajax.php?page=datatables_finance_report_new&&csv_mode=true&csv_type=export&final_q=01.${month}.${year}_01.${
         month + 1 > 12 ? 1 : month + 1
