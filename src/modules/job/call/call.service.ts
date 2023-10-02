@@ -6,15 +6,14 @@ import { Repository } from 'typeorm';
 import { WorkizApiService } from 'src/modules/api/workiz-api/workiz-api.service';
 import * as moment from 'moment';
 import { WorkizCoreApiService } from 'src/modules/api/workiz-api/workiz-core.service';
+import { workizCallToTableCall } from './utils/call-transformer.util';
 
 @Injectable()
-export class CallService extends CrudService<Call> {
+export class CallService {
   constructor(
     @InjectRepository(Call) private readonly callRepository: Repository<Call>,
     private readonly workizCoreApiService: WorkizCoreApiService,
-  ) {
-    super(callRepository);
-  }
+  ) {}
 
   private getMonthTo(month: number, day_to: number) {
     if (month === 12 && day_to === 1) {
@@ -34,7 +33,6 @@ export class CallService extends CrudService<Call> {
     account?: 'main' | 'arizona',
   ) {
     try {
-      const all_calls = [];
       const current_date = moment();
 
       let year = from_year;
@@ -47,9 +45,10 @@ export class CallService extends CrudService<Call> {
         )
       ) {
         const days_arr = [
-          { day_from: 1, day_to: 10 },
-          { day_from: 10, day_to: 20 },
-          { day_from: 20, day_to: 1 },
+          { day_from: 1, day_to: 7 },
+          { day_from: 7, day_to: 15 },
+          { day_from: 15, day_to: 23 },
+          { day_from: 23, day_to: 1 },
         ];
 
         console.log(`Y: ${year} M: ${month}`);
@@ -84,7 +83,9 @@ export class CallService extends CrudService<Call> {
               account,
             );
 
-            all_calls.push(calls_data.aaData);
+            await this.callRepository.save(
+              calls_data.aaData.map((call) => workizCallToTableCall(call)),
+            );
 
             current_page++;
           }

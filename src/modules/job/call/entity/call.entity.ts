@@ -1,20 +1,51 @@
-import { ObjectType } from '@nestjs/graphql';
-import { BaseEntity } from '@tech-slk/nest-crud';
-import { Entity } from 'typeorm';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @ObjectType()
 @Entity()
-export class Call extends BaseEntity {
-  call_sid: string;
-  direction: string;
-  client_id: string;
-  created: string;
-  flow_name: string;
+export class Call {
+  @Field(() => String)
+  @PrimaryColumn()
   uuid: string;
+
+  @Field(() => String)
+  @Column({ nullable: true })
+  call_sid: string;
+
+  @Field(() => String)
+  @Column({ nullable: true })
+  direction: string;
+
+  @Field(() => String)
+  @Column({ nullable: true })
+  client_id: string;
+
+  @Field(() => String)
+  @Column({ nullable: true })
+  created: string;
+
+  @Field(() => String)
+  @Column({ nullable: true })
+  flow_name: string;
+
+  @Field(() => String)
+  @Column({ nullable: true })
   job_serial: string;
+
+  @Field(() => String)
+  @Column({ nullable: true })
   call_duration: string;
-  clientNumber: string;
-  userNumber: string;
+
+  @Field(() => String)
+  @Column({ nullable: true })
+  client_number: string;
+
+  @Field(() => String)
+  @Column({ nullable: true })
+  user_number: string;
+
+  @Field(() => String)
+  @Column({ nullable: true })
   created_sql: string;
 }
 
