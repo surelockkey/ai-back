@@ -290,6 +290,10 @@ input CreateCarTemplateDto {
   workiz_id: String!
 }
 
+input CreateConstructedPageCompanyDto {
+  name: String!
+}
+
 input CreateConstructedPageDto {
   blocks: [ConstructedBlockDto!]
   constructed_page_company_id: ID
@@ -1085,6 +1089,7 @@ type Mutation {
   createBlogPhoto(picture: Upload!): PhotoBlog!
   createCar(carDto: CreateCarDto!): Car!
   createConstructedPage(constructed_page: CreateConstructedPageDto!): ConstructedPage!
+  createConstructedPageCompany(company_dto: CreateConstructedPageCompanyDto!): ConstructedPageCompany!
   createFineTuneItem(prompt: String!, text: String!): FineTuneItem!
   createInventoryRequest(inventory_request_dto: CreateInventoryRequestDto!): InventoryRequest!
   createKey(key_dto: CreateKeyDto!): Key!
@@ -1113,6 +1118,7 @@ type Mutation {
   """deleted photo by id"""
   deleteBlogPhotoById(id: String!): PhotoBlog!
   deleteConstructedPageById(id: ID!): ID!
+  deleteConstructedPageCompany(id: ID!): ID!
   deleteFineTuneItem(id: ID!): ID!
   deleteKey(id: ID!): ID!
   deleteKeyCar(id: ID!): ID!
@@ -1132,6 +1138,7 @@ type Mutation {
   deleteUserInfo(id: ID!): ID!
   deleteUserNote(id: ID!): ID!
   deleteUserSchedule(id: ID!): ID!
+  getCallsByRange(account: Account! = main, from_month: Int = 1, from_year: Int = 18): SendDto!
   inviteUserToApp(inviteUserDto: InviteUserDto!): InvitedUser!
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!
@@ -1150,6 +1157,7 @@ type Mutation {
   """update blogs"""
   updateBlog(updateBlog: UpdateConstructorBlogDto!): ConstructorBlog!
   updateConstructedPage(constructed_page: UpdateConstructedPageDto!): ConstructedPage!
+  updateConstructedPageCompany(company_dto: UpdateConstructedPageCompanyDto!): ConstructedPageCompany!
   updateCurrentUser(user: UpdateCurrentUserDto!): User!
   updateFineTuneItem(fine_tune_item: UpdateFineTuneItemDto!): FineTuneItem!
   updateItemTemplate(updateItemTemplateDto: UpdateItemTemplateDto!): ItemTemplate!
@@ -1296,6 +1304,7 @@ type Query {
   getCommission: String!
   getConstructedPageById(id: ID!): ConstructedPage!
   getConstructedPageByUrl(url: String!): ConstructedPage!
+  getConstructedPageCompanies: [ConstructedPageCompany!]!
   getConstructedPages(constructed_page_company_id: ID, is_posted: Boolean, pagination: FindPaginationDto!, type: ConstructedPageType): [ConstructedPage!]!
   getContainerById(id: String!): FindContainerAndTemplate!
   getCurrentUser: User!
@@ -1577,6 +1586,11 @@ input UpdateConstructedMetaInfoDto {
   schema_script: String
   state: String
   url: String
+}
+
+input UpdateConstructedPageCompanyDto {
+  id: ID!
+  name: String
 }
 
 input UpdateConstructedPageDto {

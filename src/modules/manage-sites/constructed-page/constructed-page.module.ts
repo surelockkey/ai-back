@@ -7,6 +7,7 @@ import { ConstructedBlockModule } from './constructed-block/constructed-block.mo
 import { ConstructedMetaInfoModule } from './constructed-meta-info/constructed-meta-info.module';
 import { ConstructedPhotoModule } from './constructed-photo/constructed-photo.module';
 import { ConstructedPreviewModule } from './constructed-preview/constructed-preview.module';
+import { ConstructedPageCompanyModule } from './constructed-page-company/constructed-page-company.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ConstructedPreviewModule } from './constructed-preview/constructed-prev
     ConstructedMetaInfoModule,
     ConstructedPhotoModule,
     ConstructedPreviewModule,
+    ConstructedPageCompanyModule,
   ],
   providers: [ConstructedPageResolver, ConstructedPageService],
 })
