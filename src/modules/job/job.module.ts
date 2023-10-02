@@ -9,6 +9,7 @@ import { Call } from './entity/call.entity';
 import { ActivityLog } from './entity/activity-log.entity';
 import { SystemSettingsModule } from '../system-settings/system-settings.module';
 import { CountieModule } from './countie/countie.module';
+import { CallModule } from './call/call.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { CountieModule } from './countie/countie.module';
     WorkizApiModule,
     SystemSettingsModule,
     CountieModule,
+    CallModule,
   ],
   providers: [JobService, JobResolver],
 })
