@@ -6,7 +6,7 @@ import { Repository } from 'typeorm';
 import { PaginatedJobDto } from '../api/workiz-api/dto/workiz-api.dto';
 import { WorkizCoreApiService } from '../api/workiz-api/workiz-core.service';
 import * as moment from 'moment';
-import { Call } from './entity/call.entity';
+// import { Call } from './entity/call.entity';
 import { ActivityLog } from './entity/activity-log.entity';
 import { workizJobToTableJob } from './utils/job-transformet.util';
 import { Commission } from './interface/commision.interface';
@@ -20,7 +20,7 @@ export class JobService {
     @InjectRepository(Job) private readonly jobRepository: Repository<Job>,
     private readonly workizApiService: WorkizApiService,
     private readonly workizCoreApiService: WorkizCoreApiService,
-    @InjectRepository(Call) private readonly callRepository: Repository<Call>,
+    // @InjectRepository(Call) private readonly callRepository: Repository<Call>,
     @InjectRepository(ActivityLog)
     private readonly activityLogRepository: Repository<ActivityLog>,
     private readonly systemSettingService: SystemSettingsService,

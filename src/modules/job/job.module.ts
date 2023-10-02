@@ -5,7 +5,6 @@ import { JobService } from './job.service';
 import { JobResolver } from './job.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Job } from './entity/job.entity';
-import { Call } from './entity/call.entity';
 import { ActivityLog } from './entity/activity-log.entity';
 import { SystemSettingsModule } from '../system-settings/system-settings.module';
 import { CountieModule } from './countie/countie.module';
@@ -13,7 +12,7 @@ import { CallModule } from './call/call.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Job, Call, ActivityLog]),
+    TypeOrmModule.forFeature([Job, ActivityLog]),
     CtmApiModule,
     WorkizApiModule,
     SystemSettingsModule,

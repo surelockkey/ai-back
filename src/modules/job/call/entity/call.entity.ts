@@ -6,7 +6,11 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 export class Call {
   @Field(() => String)
   @PrimaryColumn()
-  uuid: string;
+  id: string;
+
+  @Field(() => String)
+  @Column({ nullable: true })
+  job_id: string;
 
   @Field(() => String)
   @Column({ nullable: true })
