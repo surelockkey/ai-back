@@ -51,6 +51,9 @@ export class Call {
   @Field(() => String)
   @Column({ nullable: true })
   created_sql: string;
+
+  @Column({ default: 'main' })
+  account?: string;
 }
 
 // "call_sid": "CAef0046ca60a9bf657a39983c7e1efcf8",

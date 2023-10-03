@@ -1,7 +1,10 @@
 import { DeepPartial } from 'typeorm';
 import { Call } from '../entity/call.entity';
 
-export function workizCallToTableCall(call: any): DeepPartial<Call> {
+export function workizCallToTableCall(
+  call: any,
+  account?: 'main' | 'arizona',
+): DeepPartial<Call> {
   return {
     id: call.id,
     call_sid: call.call_sid,
@@ -15,5 +18,6 @@ export function workizCallToTableCall(call: any): DeepPartial<Call> {
     client_number: call.clientNumber,
     user_number: call.userNumber,
     created_sql: call.created_sql,
+    account,
   };
 }

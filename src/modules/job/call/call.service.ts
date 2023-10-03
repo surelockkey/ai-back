@@ -45,9 +45,9 @@ export class CallService {
         )
       ) {
         const days_arr = [
-          { day_from: 1, day_to: 7 },
-          { day_from: 7, day_to: 15 },
-          { day_from: 15, day_to: 23 },
+          { day_from: 2, day_to: 6 },
+          { day_from: 7, day_to: 14 },
+          { day_from: 15, day_to: 22 },
           { day_from: 23, day_to: 1 },
         ];
 
@@ -84,7 +84,9 @@ export class CallService {
             );
 
             await this.callRepository.save(
-              calls_data.aaData.map((call) => workizCallToTableCall(call)),
+              calls_data.aaData.map((call) =>
+                workizCallToTableCall(call, account),
+              ),
             );
 
             current_page++;
