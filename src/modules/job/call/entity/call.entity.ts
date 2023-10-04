@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
 
 @ObjectType()
 @Entity()
@@ -8,6 +8,7 @@ export class Call {
   @PrimaryColumn()
   id: string;
 
+  @Index()
   @Field(() => String)
   @Column({ nullable: true })
   job_id: string;
