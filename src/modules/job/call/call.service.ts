@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CrudService } from '@tech-slk/nest-crud';
 import { Call } from './entity/call.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 import { WorkizApiService } from 'src/modules/api/workiz-api/workiz-api.service';
 import * as moment from 'moment';
 import { WorkizCoreApiService } from 'src/modules/api/workiz-api/workiz-core.service';
@@ -104,5 +104,20 @@ export class CallService {
         }
       }
     } catch {}
+  }
+
+  public async firstJobCall(job_id: string) {
+    const [call] = await this.callRepository.find({
+      where: {
+        job_id,
+        flow_name: Not(IsNull()),
+      },
+      order: {
+        created_sql: 'ASC',
+      },
+      take: 1,
+    });
+
+    return call;
   }
 }

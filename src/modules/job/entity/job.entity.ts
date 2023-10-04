@@ -299,6 +299,10 @@ export class Job {
   @Column({ nullable: true, type: 'float' })
   tax?: number;
 
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  call_flow?: string;
+
   @Column({ default: 'main' })
   account?: string;
 

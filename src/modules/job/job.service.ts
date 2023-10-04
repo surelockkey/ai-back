@@ -13,6 +13,7 @@ import { Commission } from './interface/commision.interface';
 import { SystemSettingsService } from '../system-settings/system-settings.service';
 import fs from 'fs';
 import { CountieService } from './countie/countie.service';
+import { CallService } from './call/call.service';
 
 @Injectable()
 export class JobService {
@@ -25,6 +26,7 @@ export class JobService {
     private readonly activityLogRepository: Repository<ActivityLog>,
     private readonly systemSettingService: SystemSettingsService,
     private readonly countieService: CountieService,
+    private readonly callService: CallService,
   ) {}
 
   public async jobLoop(
@@ -392,5 +394,23 @@ export class JobService {
       {},
       { is_parsing: false },
     );
+  }
+
+  public async setJobsCallFlow() {
+    const jobs = await this.jobRepository.find();
+    let count = 1;
+
+    for (const job of jobs) {
+      const call = await this.callService.firstJobCall(job.uuid);
+
+      await this.jobRepository.update(
+        { uuid: job.uuid },
+        { call_flow: call.flow_name },
+      );
+
+      console.log(`${count}/${jobs.length}`);
+
+      count++;
+    }
   }
 }

@@ -30,4 +30,9 @@ export class JobResolver {
     this.jobService.startUpdateJobsInfo(from_year, from_month, account);
     return 'Success';
   }
+
+  @Mutation(() => String)
+  setJobsCallFlow() {
+    return this.jobService.setJobsCallFlow();
+  }
 }
