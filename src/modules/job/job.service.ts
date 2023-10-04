@@ -403,10 +403,12 @@ export class JobService {
     for (const job of jobs) {
       const call = await this.callService.firstJobCall(job.uuid);
 
-      await this.jobRepository.update(
-        { uuid: job.uuid },
-        { call_flow: call.flow_name },
-      );
+      if (call) {
+        await this.jobRepository.update(
+          { uuid: job.uuid },
+          { call_flow: call.flow_name },
+        );
+      }
 
       console.log(`${count}/${jobs.length}`);
 
