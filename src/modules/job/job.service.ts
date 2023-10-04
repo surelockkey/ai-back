@@ -401,23 +401,22 @@ export class JobService {
     let count = 1;
 
     for (const job of jobs) {
-      if (!job.call_flow) {
-        const call = await this.callService.firstJobCall(job.uuid);
+      // if (!job.call_flow) {
+      const call = await this.callService.firstJobCall(job.uuid);
 
-        if (call && call.flow_name) {
-          await this.jobRepository.update(
-            { uuid: job.uuid },
-            { call_flow: call.flow_name },
-          );
-          console.log(`${count}/${jobs.length}`);
-        } else {
-          console.log(`${count}/${jobs.length} NOT FOUND`);
-        }
-
-        count++;
+      if (call && call.flow_name) {
+        await this.jobRepository.update(
+          { uuid: job.uuid },
+          { call_flow: call.flow_name },
+        );
+        console.log(`${count}/${jobs.length}`);
       } else {
-        console.log(`${count}/${jobs.length} EXIST`);
+        console.log(`${count}/${jobs.length} NOT FOUND`);
       }
+      // } else {
+      //   console.log(`${count}/${jobs.length} EXIST`);
+      // }
+      count++;
     }
   }
 }
