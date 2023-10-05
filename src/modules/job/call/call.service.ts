@@ -111,6 +111,7 @@ export class CallService {
       where: {
         job_id,
         flow_name: Not(IsNull()),
+        direction: 'inbound',
       },
       order: {
         created_sql: 'ASC',
