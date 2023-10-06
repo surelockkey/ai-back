@@ -155,11 +155,6 @@ export class JobService {
         .req(`/ajaxc/job/get/${job_id}/`, 'post', undefined, account)
         .catch(async (e) => {
           // console.log(e);
-          if (count < 5) {
-            console.log('REFFFFFEEEEETCHHHHHHH JOB', count);
-
-            return await this.getFullJob(job_id, account, count++);
-          }
         })
         .then((r) => {
           if (r) {
