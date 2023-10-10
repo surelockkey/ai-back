@@ -1,5 +1,6 @@
 import { Job } from '../entity/job.entity';
 import { workiz_tags } from '../const/workiz-tags.const';
+import { metro_areas } from '../const/metro-areas.const';
 
 export function workizJobToTableJob(
   workiz_job,
@@ -137,6 +138,7 @@ export function workizJobToTableJob(
             .join(', '),
     paid_total: parseFloat(workiz_job?.data?.paid_total || '0'),
     job_serial: workiz_job?.data?.job_serial,
+    metro_area: metro_areas[workiz_job?.data?.metro_id],
     account: account,
   };
 }

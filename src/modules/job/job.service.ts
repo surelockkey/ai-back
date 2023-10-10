@@ -83,16 +83,12 @@ export class JobService {
 
     while (current_page < total_pages) {
       const req = await this.getJobsByRange(current_page, year, month, account);
-      const jobs = req.aaData;
 
-      // await Promise.all(
-      //   (jobs || [])?.map(async (job) => {
-      //     await this.getFullJob(job.uuid, account);
-      //   }),
-      // );
-
-      for (const job of jobs) {
-        await this.getFullJob(job.uuid, account);
+      if (req && req.aaData) {
+        const jobs = req.aaData;
+        for (const job of jobs) {
+          await this.getFullJob(job.uuid, account);
+        }
       }
 
       current_page++;

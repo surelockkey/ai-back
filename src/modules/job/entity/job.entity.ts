@@ -303,6 +303,10 @@ export class Job {
   @Column({ nullable: true })
   call_flow?: string;
 
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  metro_area?: string;
+
   @Column({ default: 'main' })
   account?: string;
 
