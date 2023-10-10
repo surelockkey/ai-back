@@ -208,12 +208,17 @@ export class JobService {
       }
     }
 
+    const start_com_set: Set<Commission> = new Set();
     let com_sum = 0;
     let com_sum_2 = 0;
 
     start_com.forEach((com) => {
-      com_sum += com.total_sales;
+      start_com_set.add(com);
     });
+
+    for (const com of start_com_set) {
+      com_sum += com.total_sales;
+    }
 
     all_commissions.forEach(async (com) => {
       com_sum_2 += com.total_sales;
@@ -222,7 +227,7 @@ export class JobService {
     console.log(`com sum: ${com_sum}`);
     console.log(`com sum 2 : ${com_sum_2}`);
 
-    console.log(start_com.length);
+    console.log(start_com_set.size);
     console.log(all_commissions.length);
   }
 
