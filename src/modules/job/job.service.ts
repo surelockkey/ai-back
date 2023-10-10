@@ -199,7 +199,7 @@ export class JobService {
     }
 
     all_commissions.forEach(async (com) => {
-      await this.jobRepository.save({ uuid: com.uuid, ...com });
+      await this.jobRepository.save({ uuid: com.uuid, account, ...com });
     });
 
     console.log(all_commissions.length);
