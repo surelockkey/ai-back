@@ -179,7 +179,7 @@ export class JobService {
     let year = from_year;
     let month = from_month;
 
-    let com_sum = 0;
+    const start_com: Commission[] = [];
 
     while (
       !(
@@ -195,11 +195,7 @@ export class JobService {
       all_commissions.push(...commmissions);
 
       if (month !== 10) {
-        console.log('com counting', month);
-
-        commmissions.forEach((com) => {
-          com_sum += com.total_sales;
-        });
+        start_com.push(...commmissions);
       }
 
       console.log(`M: ${month} Y: ${year} com: ${commmissions.length}`);
@@ -212,11 +208,21 @@ export class JobService {
       }
     }
 
+    let com_sum = 0;
+    let com_sum_2 = 0;
+
+    start_com.forEach((com) => {
+      com_sum += com.total_sales;
+    });
+
     all_commissions.forEach(async (com) => {
+      com_sum_2 += com.total_sales;
       await this.jobRepository.save({ uuid: com.uuid, account, ...com });
     });
     console.log(`com sum: ${com_sum}`);
+    console.log(`com sum 2 : ${com_sum_2}`);
 
+    console.log(start_com.length);
     console.log(all_commissions.length);
   }
 
