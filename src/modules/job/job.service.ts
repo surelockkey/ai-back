@@ -195,6 +195,8 @@ export class JobService {
       all_commissions.push(...commmissions);
 
       if (month !== 10) {
+        console.log('com counting', month);
+
         commmissions.forEach((com) => {
           com_sum += com.total_sales;
         });
