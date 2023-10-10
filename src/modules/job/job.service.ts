@@ -198,9 +198,13 @@ export class JobService {
       }
     }
 
+    let com_sum = 0;
+
     all_commissions.forEach(async (com) => {
+      com_sum += com.total_sales;
       await this.jobRepository.save({ uuid: com.uuid, account, ...com });
     });
+    console.log(`com sum: ${com_sum}`);
 
     console.log(all_commissions.length);
   }

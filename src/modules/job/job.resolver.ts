@@ -15,7 +15,7 @@ export class JobResolver {
 
   @Query(() => String)
   public async getCommission() {
-    return this.jobService.commissionsLoop(18, 1, 'main');
+    return this.jobService.commissionsLoop(23, 1, 'main');
   }
 
   @Mutation(() => String)
