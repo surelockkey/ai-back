@@ -35,4 +35,10 @@ export class JobResolver {
   setJobsCallFlow() {
     return this.jobService.setJobsCallFlow();
   }
+
+  @Mutation(() => String)
+  getUnsavedJobs() {
+    this.jobService.getUnsavedJobs();
+    return 'Success';
+  }
 }

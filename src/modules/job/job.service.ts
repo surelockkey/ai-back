@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { WorkizApiService } from '../api/workiz-api/workiz-api.service';
 import { Job } from './entity/job.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 import { PaginatedJobDto } from '../api/workiz-api/dto/workiz-api.dto';
 import { WorkizCoreApiService } from '../api/workiz-api/workiz-core.service';
 import * as moment from 'moment';
@@ -372,6 +372,16 @@ export class JobService {
         console.log(`${count}/${jobs.length} NOT FOUND`);
       }
       count++;
+    }
+  }
+
+  public async getUnsavedJobs() {
+    const unsaved_jobs = await this.jobRepository.find({
+      where: { created_date: IsNull(), total_sales: Not(IsNull()) },
+    });
+
+    for (const job of unsaved_jobs) {
+      await this.getFullJob(job.uuid, job.account as 'main' | 'arizona');
     }
   }
 }
