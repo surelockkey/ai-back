@@ -114,10 +114,10 @@ export class CallService {
         const date = moment(call.created_sql);
 
         const from_date = date.add(3, 'days');
-        const to_date = date.add(-3, 'days');
+        const to_date = date.subtract(3, 'days');
 
         console.log(
-          `from_date: ${from_date.format('X')} to_date: ${to_date.format('X')}`,
+          `from_date: ${from_date.toISOString()} to_date: ${to_date.toISOString()}`,
         );
       }
     });
