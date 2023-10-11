@@ -1080,6 +1080,7 @@ type Mutation {
 
   """change blog posted"""
   changeBlogPostStatus(changeBlogPostStatusDto: ChangeBlogPostStatusDto!): ConstructorBlog!
+  changeCallsJobIds: String!
   changePassword(passwords: ChangePasswordDto!): SendDto!
 
   """create blog"""
@@ -1139,6 +1140,7 @@ type Mutation {
   deleteUserNote(id: ID!): ID!
   deleteUserSchedule(id: ID!): ID!
   getCallsByRange(account: Account! = main, from_month: Int = 1, from_year: Int = 18): SendDto!
+  getUnsavedJobs: String!
   inviteUserToApp(inviteUserDto: InviteUserDto!): InvitedUser!
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!

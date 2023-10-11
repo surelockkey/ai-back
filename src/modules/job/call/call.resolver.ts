@@ -18,4 +18,9 @@ export class CallResolver {
   ) {
     return this.callService.getCallsByRange(from_month, from_year, account);
   }
+
+  @Mutation(() => String)
+  changeCallsJobIds() {
+    return this.callService.changeCallsJobIds();
+  }
 }

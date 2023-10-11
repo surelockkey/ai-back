@@ -11,7 +11,7 @@ export class Call {
   @Index()
   @Field(() => String)
   @Column({ nullable: true })
-  job_id: string;
+  job_id?: string;
 
   @Field(() => String)
   @Column({ nullable: true })

@@ -106,6 +106,23 @@ export class CallService {
     } catch {}
   }
 
+  public async changeCallsJobIds() {
+    const calls = await this.callRepository.find({ take: 200 });
+
+    calls.forEach((call) => {
+      if (!call.job_id) {
+        const date = moment(call.created_sql);
+
+        const from_date = date.add(3, 'days');
+        const to_date = date.add(-3, 'days');
+
+        console.log(
+          `from_date: ${from_date.format('X')} to_date: ${to_date.format('X')}`,
+        );
+      }
+    });
+  }
+
   public async firstJobCall(job_id: string) {
     const [call] = await this.callRepository.find({
       where: {
