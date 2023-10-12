@@ -155,12 +155,20 @@ export class CallService {
         //   ),
         // });
 
+        console.log({
+          1: date.add(3, 'days').format('YYYY-MM-DD HH:MM:SS'),
+          2: date.subtract(6, 'days').format('YYYY-MM-DD HH:MM:SS'),
+
+          3: date.add(3, 'days').toISOString(),
+          4: date.subtract(6, 'days').toISOString(),
+        });
+
         const all_cal = await this.callRepository.find({
           where: {
             // client_number: call.client_number,
             created_sql: Between(
-              date.add(3, 'days').format('YYYY-MM-DD HH:MM:SS'),
-              date.subtract(6, 'days').format('YYYY-MM-DD HH:MM:SS'),
+              date.add(3, 'days').toISOString(),
+              date.subtract(6, 'days').toISOString(),
             ),
           },
         });
