@@ -128,7 +128,7 @@ export class CallService {
   }
 
   public async changeCallsJobIds() {
-    const calls = await this.callRepository.find();
+    const calls = await this.callRepository.find({ take: 5000 });
 
     calls.forEach(async (call) => {
       if (!call.job_id) {
@@ -146,6 +146,14 @@ export class CallService {
         //   date.subtract(6, 'days').format('X'),
         //   .toISOString()
         // );
+
+        console.log({
+          client_number: call.client_number,
+          created_sql: Between(
+            date.add(3, 'days').toISOString(),
+            date.subtract(6, 'days').toISOString(),
+          ),
+        });
 
         const all_cal = await this.callRepository.find({
           where: {
