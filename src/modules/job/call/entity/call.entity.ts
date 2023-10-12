@@ -52,7 +52,7 @@ export class Call {
 
   @Index()
   @Field(() => String)
-  @Column({ nullable: true })
+  @Column({ type: 'timestamptz', nullable: true })
   created_sql: string;
 
   @Column({ default: 'main' })
