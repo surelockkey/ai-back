@@ -147,13 +147,13 @@ export class CallService {
         //   .toISOString()
         // );
 
-        console.log({
-          client_number: call.client_number,
-          created_sql: Between(
-            date.add(3, 'days').toISOString(),
-            date.subtract(6, 'days').toISOString(),
-          ),
-        });
+        // console.log({
+        //   client_number: call.client_number,
+        //   created_sql: Between(
+        //     date.add(3, 'days').toISOString(),
+        //     date.subtract(6, 'days').toISOString(),
+        //   ),
+        // });
 
         const all_cal = await this.callRepository.find({
           where: {
