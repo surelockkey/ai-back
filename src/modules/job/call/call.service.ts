@@ -107,7 +107,7 @@ export class CallService {
   }
 
   public async changeCallsJobIds() {
-    const calls = await this.callRepository.find({ take: 200 });
+    const calls = await this.callRepository.find({ take: 2000 });
 
     calls.forEach(async (call) => {
       if (!call.job_id) {
@@ -130,7 +130,9 @@ export class CallService {
           },
         });
 
-        console.log(all_cal.length);
+        if (all_cal.length > 0) {
+          console.log(all_cal.length);
+        }
       }
     });
   }
