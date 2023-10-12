@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CrudService } from '@tech-slk/nest-crud';
 import { Call } from './entity/call.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IsNull, Not, Repository } from 'typeorm';
+import { Between, IsNull, Not, Repository } from 'typeorm';
 import { WorkizApiService } from 'src/modules/api/workiz-api/workiz-api.service';
 import * as moment from 'moment';
 import { WorkizCoreApiService } from 'src/modules/api/workiz-api/workiz-core.service';
@@ -109,20 +109,28 @@ export class CallService {
   public async changeCallsJobIds() {
     const calls = await this.callRepository.find({ take: 200 });
 
-    calls.forEach((call) => {
+    calls.forEach(async (call) => {
       if (!call.job_id) {
         const date = moment(call.created_sql);
+        // console.log(
+        //   `date: ${date.format('MMMM Do YYYY, h:mm:ss a')}from_date: ${date
+        //     .add(3, 'days')
+        //     .format('MMMM Do YYYY, h:mm:ss a')} to_date: ${date
+        //     .subtract(6, 'days')
+        //     .format('MMMM Do YYYY, h:mm:ss a')}`,
+        // );
 
-        const from_date = date.add(3, 'days');
-        const to_date = date.subtract(3, 'days');
+        const all_cal = await this.callRepository.find({
+          where: {
+            client_number: call.client_number,
+            created_sql: Between(
+              date.add(3, 'days').format('X'),
+              date.subtract(6, 'days').format('X'),
+            ),
+          },
+        });
 
-        console.log(
-          `date: ${date.format('MMMM Do YYYY, h:mm:ss a')}from_date: ${date
-            .add(3, 'days')
-            .format('MMMM Do YYYY, h:mm:ss a')} to_date: ${date
-            .subtract(6, 'days')
-            .format('MMMM Do YYYY, h:mm:ss a')}`,
-        );
+        console.log(all_cal.length);
       }
     });
   }
