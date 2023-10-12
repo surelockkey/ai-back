@@ -41,6 +41,7 @@ export class Call {
   @Column({ nullable: true })
   call_duration: string;
 
+  @Index()
   @Field(() => String)
   @Column({ nullable: true })
   client_number: string;
@@ -49,6 +50,7 @@ export class Call {
   @Column({ nullable: true })
   user_number: string;
 
+  @Index()
   @Field(() => String)
   @Column({ nullable: true })
   created_sql: string;

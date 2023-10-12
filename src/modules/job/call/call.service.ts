@@ -120,19 +120,24 @@ export class CallService {
         //     .format('MMMM Do YYYY, h:mm:ss a')}`,
         // );
 
-        const all_cal = await this.callRepository.find({
-          where: {
-            client_number: call.client_number,
-            created_sql: Between(
-              date.add(3, 'days').format('X'),
-              date.subtract(6, 'days').format('X'),
-            ),
-          },
-        });
+        console.log(
+          date.add(3, 'days').format('X'),
+          date.subtract(6, 'days').format('X'),
+        );
 
-        if (all_cal.length > 0) {
-          console.log(all_cal.length);
-        }
+        // const all_cal = await this.callRepository.find({
+        //   where: {
+        //     client_number: call.client_number,
+        //     created_sql: Between(
+        //       date.add(3, 'days').format('X'),
+        //       date.subtract(6, 'days').format('X'),
+        //     ),
+        //   },
+        // });
+
+        // if (all_cal.length > 0) {
+        //   console.log(all_cal.length);
+        // }
       }
     });
   }
