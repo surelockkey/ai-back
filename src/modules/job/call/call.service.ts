@@ -8,7 +8,7 @@ import * as moment from 'moment';
 import { WorkizCoreApiService } from 'src/modules/api/workiz-api/workiz-core.service';
 import { workizCallToTableCall } from './utils/call-transformer.util';
 
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 @Injectable()
 export class CallService {
