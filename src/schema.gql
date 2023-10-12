@@ -1080,6 +1080,7 @@ type Mutation {
 
   """change blog posted"""
   changeBlogPostStatus(changeBlogPostStatusDto: ChangeBlogPostStatusDto!): ConstructorBlog!
+  changeCallsDateToIso: String!
   changeCallsJobIds: String!
   changePassword(passwords: ChangePasswordDto!): SendDto!
 

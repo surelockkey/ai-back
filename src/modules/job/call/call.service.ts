@@ -8,6 +8,8 @@ import * as moment from 'moment';
 import { WorkizCoreApiService } from 'src/modules/api/workiz-api/workiz-core.service';
 import { workizCallToTableCall } from './utils/call-transformer.util';
 
+import _ from 'lodash';
+
 @Injectable()
 export class CallService {
   constructor(
@@ -109,13 +111,20 @@ export class CallService {
   public async changeCallsDateToIso() {
     const calls = await this.callRepository.find();
 
-    calls.forEach(async (call) => {
-      const date = moment(call.created_sql);
-      await this.callRepository.update(
-        { id: call.id },
-        { created_sql: date.toISOString() },
+    const chunked_calls = _.chunk(calls, 100);
+
+    for (const chunk_calls of chunked_calls) {
+      await Promise.all(
+        chunk_calls.map(async (call) => {
+          const date = moment(call.created_sql);
+
+          await this.callRepository.update(
+            { id: call.id },
+            { created_sql: date.toISOString() },
+          );
+        }),
       );
-    });
+    }
   }
 
   public async changeCallsJobIds() {
