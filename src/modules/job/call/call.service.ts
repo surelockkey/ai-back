@@ -133,6 +133,9 @@ export class CallService {
     calls.forEach(async (call) => {
       if (!call.job_id) {
         const date = moment(call.created_sql);
+
+        console.log(call.created_sql);
+
         // console.log(
         //   `date: ${date.format('MMMM Do YYYY, h:mm:ss a')}from_date: ${date
         //     .add(3, 'days')
