@@ -120,7 +120,7 @@ export class CallService {
           `date: ${date.format('MMMM Do YYYY, h:mm:ss a')}from_date: ${date
             .add(3, 'days')
             .format('MMMM Do YYYY, h:mm:ss a')} to_date: ${date
-            .subtract(3, 'days')
+            .subtract(6, 'days')
             .format('MMMM Do YYYY, h:mm:ss a')}`,
         );
       }
