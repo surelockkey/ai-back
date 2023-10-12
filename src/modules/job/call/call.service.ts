@@ -117,7 +117,9 @@ export class CallService {
         const to_date = date.subtract(3, 'days');
 
         console.log(
-          `from_date: ${from_date.format()} to_date: ${to_date.format()}`,
+          `from_date: ${from_date.format(
+            'MMMM Do YYYY, h:mm:ss a',
+          )} to_date: ${to_date.format('MMMM Do YYYY, h:mm:ss a')}`,
         );
       }
     });
