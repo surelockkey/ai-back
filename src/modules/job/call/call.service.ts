@@ -106,8 +106,20 @@ export class CallService {
     } catch {}
   }
 
+  public async changeCallsDateToIso() {
+    const calls = await this.callRepository.find();
+
+    calls.forEach(async (call) => {
+      const date = moment(call.created_sql);
+      await this.callRepository.update(
+        { id: call.id },
+        { created_sql: date.toISOString() },
+      );
+    });
+  }
+
   public async changeCallsJobIds() {
-    const calls = await this.callRepository.find({ take: 2000 });
+    const calls = await this.callRepository.find();
 
     calls.forEach(async (call) => {
       if (!call.job_id) {

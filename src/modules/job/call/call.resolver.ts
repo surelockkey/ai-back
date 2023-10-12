@@ -20,6 +20,11 @@ export class CallResolver {
   }
 
   @Mutation(() => String)
+  changeCallsDateToIso() {
+    return this.callService.changeCallsDateToIso();
+  }
+
+  @Mutation(() => String)
   changeCallsJobIds() {
     return this.callService.changeCallsJobIds();
   }
