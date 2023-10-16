@@ -130,7 +130,6 @@ export class CallService {
   public async changeCallsJobIds() {
     const calls = await this.callRepository.find({
       take: 10000,
-      where: { job_id: IsNull() },
     });
 
     console.log(calls.length);
