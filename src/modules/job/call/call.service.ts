@@ -166,12 +166,14 @@ export class CallService {
       //     4: date.utc().subtract(6, 'days').toISOString(),
       //   });
 
+      //   const all_call = await this.callRepository.createQueryBuilder().andWhere('created_sql >= :after', {after: })
+
       const all_cal = await this.callRepository.find({
         where: {
           // client_number: call.client_number,
           created_sql: Between(
-            date.utc().add(3, 'days').format('YYYY-MM-DD HH:MM:SS'),
-            date.utc().subtract(6, 'days').format('YYYY-MM-DD HH:MM:SS'),
+            date.utc().subtract(3, 'days').format('YYYY-MM-DD HH:MM:SS'),
+            date.utc().add(6, 'days').format('YYYY-MM-DD HH:MM:SS'),
           ),
         },
       });
