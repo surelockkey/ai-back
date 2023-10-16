@@ -170,8 +170,8 @@ export class CallService {
         where: {
           // client_number: call.client_number,
           created_sql: Between(
-            date.add(3, 'days').toISOString(),
-            date.subtract(6, 'days').toISOString(),
+            date.utc().add(3, 'days').format('YYYY-MM-DD HH:MM:SS'),
+            date.utc().subtract(6, 'days').format('YYYY-MM-DD HH:MM:SS'),
           ),
         },
       });
