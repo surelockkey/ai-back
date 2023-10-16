@@ -130,6 +130,7 @@ export class CallService {
   public async changeCallsJobIds() {
     const calls = await this.callRepository.find({
       take: 10000,
+      di,
     });
 
     console.log(calls.length);
@@ -145,6 +146,7 @@ export class CallService {
               date.utc().subtract(3, 'days').format('YYYY-MM-DD HH:MM:SS'),
               date.utc().add(6, 'days').format('YYYY-MM-DD HH:MM:SS'),
             ),
+            id: Not(call.id),
           },
         });
 
