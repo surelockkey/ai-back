@@ -138,7 +138,7 @@ export class CallService {
       if (!call.job_id && call.client_number) {
         const date = moment(call.created_sql);
 
-        const all_cal = await this.callRepository.find({
+        const related_calls = await this.callRepository.find({
           where: {
             client_number: call.client_number,
             created_sql: Between(
@@ -150,8 +150,16 @@ export class CallService {
           },
         });
 
-        if (all_cal.length > 0) {
-          console.log(all_cal.length, call.client_number);
+        const job_ids = new Set();
+
+        related_calls.forEach((related_call) => {
+          if (related_call.job_id) {
+            job_ids.add(related_call.job_id);
+          }
+        });
+
+        if (related_calls.length > 0) {
+          console.log(related_calls.length, job_ids.size, call.client_number);
         }
       }
     });
