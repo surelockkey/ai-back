@@ -159,7 +159,12 @@ export class CallService {
         });
 
         if (related_calls.length > 0) {
-          console.log(related_calls.length, job_ids.size, call.client_number);
+          console.log(
+            related_calls.length,
+            job_ids.size,
+            call.client_number,
+            job_ids,
+          );
         }
       }
     });
