@@ -131,55 +131,55 @@ export class CallService {
     const calls = await this.callRepository.find({ take: 5000 });
 
     calls.forEach(async (call) => {
-      if (!call.job_id) {
-        const date = moment(call.created_sql);
+      //   if (!call.job_id) {
+      const date = moment(call.created_sql);
 
-        console.log(call.created_sql);
+      //   console.log(call.created_sql);
 
-        // console.log(
-        //   `date: ${date.format('MMMM Do YYYY, h:mm:ss a')}from_date: ${date
-        //     .add(3, 'days')
-        //     .format('MMMM Do YYYY, h:mm:ss a')} to_date: ${date
-        //     .subtract(6, 'days')
-        //     .format('MMMM Do YYYY, h:mm:ss a')}`,
-        // );
+      // console.log(
+      //   `date: ${date.format('MMMM Do YYYY, h:mm:ss a')}from_date: ${date
+      //     .add(3, 'days')
+      //     .format('MMMM Do YYYY, h:mm:ss a')} to_date: ${date
+      //     .subtract(6, 'days')
+      //     .format('MMMM Do YYYY, h:mm:ss a')}`,
+      // );
 
-        // console.log(
-        //   date.add(3, 'days').format('X'),
-        //   date.subtract(6, 'days').format('X'),
-        //   .toISOString()
-        // );
+      // console.log(
+      //   date.add(3, 'days').format('X'),
+      //   date.subtract(6, 'days').format('X'),
+      //   .toISOString()
+      // );
 
-        // console.log({
-        //   client_number: call.client_number,
-        //   created_sql: Between(
-        //     date.add(3, 'days').toISOString(),
-        //     date.subtract(6, 'days').toISOString(),
-        //   ),
-        // });
+      // console.log({
+      //   client_number: call.client_number,
+      //   created_sql: Between(
+      //     date.add(3, 'days').toISOString(),
+      //     date.subtract(6, 'days').toISOString(),
+      //   ),
+      // });
 
-        console.log({
-          // 1: date.add(3, 'days').format('YYYY-MM-DD HH:MM:SS'),
-          // 2: date.subtract(6, 'days').format('YYYY-MM-DD HH:MM:SS'),
+      //   console.log({
+      //     // 1: date.add(3, 'days').format('YYYY-MM-DD HH:MM:SS'),
+      //     // 2: date.subtract(6, 'days').format('YYYY-MM-DD HH:MM:SS'),
 
-          3: date.utc().add(3, 'days').toISOString(),
-          4: date.utc().subtract(6, 'days').toISOString(),
-        });
+      //     3: date.utc().add(3, 'days').toISOString(),
+      //     4: date.utc().subtract(6, 'days').toISOString(),
+      //   });
 
-        const all_cal = await this.callRepository.find({
-          where: {
-            // client_number: call.client_number,
-            created_sql: Between(
-              date.add(3, 'days').toISOString(),
-              date.subtract(6, 'days').toISOString(),
-            ),
-          },
-        });
+      const all_cal = await this.callRepository.find({
+        where: {
+          // client_number: call.client_number,
+          created_sql: Between(
+            date.add(3, 'days').toISOString(),
+            date.subtract(6, 'days').toISOString(),
+          ),
+        },
+      });
 
-        if (all_cal.length > 0) {
-          console.log(all_cal.length);
-        }
+      if (all_cal.length > 0) {
+        console.log(all_cal.length);
       }
+      //   }
     });
   }
 
