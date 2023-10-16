@@ -128,49 +128,17 @@ export class CallService {
   }
 
   public async changeCallsJobIds() {
-    const calls = await this.callRepository.find({ take: 5000 });
+    const calls = await this.callRepository.find({
+      take: 5000,
+      where: { job_id: Not(IsNull()) },
+    });
 
     calls.forEach(async (call) => {
-      //   if (!call.job_id) {
       const date = moment(call.created_sql);
-
-      //   console.log(call.created_sql);
-
-      // console.log(
-      //   `date: ${date.format('MMMM Do YYYY, h:mm:ss a')}from_date: ${date
-      //     .add(3, 'days')
-      //     .format('MMMM Do YYYY, h:mm:ss a')} to_date: ${date
-      //     .subtract(6, 'days')
-      //     .format('MMMM Do YYYY, h:mm:ss a')}`,
-      // );
-
-      // console.log(
-      //   date.add(3, 'days').format('X'),
-      //   date.subtract(6, 'days').format('X'),
-      //   .toISOString()
-      // );
-
-      // console.log({
-      //   client_number: call.client_number,
-      //   created_sql: Between(
-      //     date.add(3, 'days').toISOString(),
-      //     date.subtract(6, 'days').toISOString(),
-      //   ),
-      // });
-
-      //   console.log({
-      //     // 1: date.add(3, 'days').format('YYYY-MM-DD HH:MM:SS'),
-      //     // 2: date.subtract(6, 'days').format('YYYY-MM-DD HH:MM:SS'),
-
-      //     3: date.utc().add(3, 'days').toISOString(),
-      //     4: date.utc().subtract(6, 'days').toISOString(),
-      //   });
-
-      //   const all_call = await this.callRepository.createQueryBuilder().andWhere('created_sql >= :after', {after: })
 
       const all_cal = await this.callRepository.find({
         where: {
-          // client_number: call.client_number,
+          client_number: call.client_number,
           created_sql: Between(
             date.utc().subtract(3, 'days').format('YYYY-MM-DD HH:MM:SS'),
             date.utc().add(6, 'days').format('YYYY-MM-DD HH:MM:SS'),
@@ -179,9 +147,8 @@ export class CallService {
       });
 
       if (all_cal.length > 0) {
-        console.log(all_cal.length);
+        console.log(all_cal.length, call.client_number);
       }
-      //   }
     });
   }
 
