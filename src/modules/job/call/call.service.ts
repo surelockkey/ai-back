@@ -158,7 +158,7 @@ export class CallService {
           }
         });
 
-        if (related_calls.length > 0) {
+        if (related_calls.length > 0 && job_ids.size > 1) {
           console.log(
             related_calls.length,
             job_ids.size,
