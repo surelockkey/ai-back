@@ -129,25 +129,29 @@ export class CallService {
 
   public async changeCallsJobIds() {
     const calls = await this.callRepository.find({
-      take: 5000,
+      take: 10000,
       where: { job_id: IsNull() },
     });
 
+    console.log(calls.length);
+
     calls.forEach(async (call) => {
-      const date = moment(call.created_sql);
+      if (!call.job_id) {
+        const date = moment(call.created_sql);
 
-      const all_cal = await this.callRepository.find({
-        where: {
-          client_number: call.client_number,
-          created_sql: Between(
-            date.utc().subtract(3, 'days').format('YYYY-MM-DD HH:MM:SS'),
-            date.utc().add(6, 'days').format('YYYY-MM-DD HH:MM:SS'),
-          ),
-        },
-      });
+        const all_cal = await this.callRepository.find({
+          where: {
+            client_number: call.client_number,
+            created_sql: Between(
+              date.utc().subtract(3, 'days').format('YYYY-MM-DD HH:MM:SS'),
+              date.utc().add(6, 'days').format('YYYY-MM-DD HH:MM:SS'),
+            ),
+          },
+        });
 
-      if (all_cal.length > 0) {
-        console.log(all_cal.length, call.client_number);
+        if (all_cal.length > 0) {
+          console.log(all_cal.length, call.client_number);
+        }
       }
     });
   }
