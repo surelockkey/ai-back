@@ -135,7 +135,7 @@ export class CallService {
     console.log(calls.length);
 
     calls.forEach(async (call) => {
-      if (!call.job_id) {
+      if (!call.job_id && call.client_number) {
         const date = moment(call.created_sql);
 
         const all_cal = await this.callRepository.find({
@@ -146,6 +146,7 @@ export class CallService {
               date.utc().add(6, 'days').format('YYYY-MM-DD HH:MM:SS'),
             ),
             id: Not(call.id),
+            job_id: Not(IsNull()),
           },
         });
 
