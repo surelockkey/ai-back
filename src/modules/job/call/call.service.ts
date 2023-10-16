@@ -130,7 +130,7 @@ export class CallService {
   public async changeCallsJobIds() {
     const calls = await this.callRepository.find({
       take: 5000,
-      where: { job_id: Not(IsNull()) },
+      where: { job_id: IsNull() },
     });
 
     calls.forEach(async (call) => {
