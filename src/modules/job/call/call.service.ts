@@ -161,16 +161,22 @@ export class CallService {
 
         if (related_calls.length > 0 && job_ids.size > 0 && job_ids.size < 2) {
           count++;
+          console.log(
+            related_calls.length,
+            job_ids.size,
+            call.client_number,
+            job_ids,
+          );
         }
 
         if (related_calls.length > 0 && job_ids.size > 1) {
           count_2++;
-          //   console.log(
-          //     related_calls.length,
-          //     job_ids.size,
-          //     call.client_number,
-          //     job_ids,
-          //   );
+          console.log(
+            related_calls.length,
+            job_ids.size,
+            call.client_number,
+            job_ids,
+          );
         }
       }
     });
