@@ -156,14 +156,27 @@ export class CallService {
           }
         });
 
-        if (related_calls.length > 0 && job_ids.size > 1) {
-          console.log(
-            related_calls.length,
-            job_ids.size,
-            call.client_number,
-            job_ids,
-          );
+        let count = 0;
+        let count_2 = 0;
+
+        if (related_calls.length > 0 && job_ids.size > 0 && job_ids.size < 2) {
+          count++;
         }
+
+        if (related_calls.length > 0 && job_ids.size > 1) {
+          count_2++;
+          //   console.log(
+          //     related_calls.length,
+          //     job_ids.size,
+          //     call.client_number,
+          //     job_ids,
+          //   );
+        }
+
+        console.log({
+          count,
+          count_2,
+        });
       }
     });
   }
