@@ -132,6 +132,9 @@ export class CallService {
 
     console.log(calls.length);
 
+    let count = 0;
+    let count_2 = 0;
+
     calls.forEach(async (call) => {
       if (!call.job_id && call.client_number) {
         const date = moment(call.created_sql);
@@ -156,9 +159,6 @@ export class CallService {
           }
         });
 
-        let count = 0;
-        let count_2 = 0;
-
         if (related_calls.length > 0 && job_ids.size > 0 && job_ids.size < 2) {
           count++;
         }
@@ -172,12 +172,12 @@ export class CallService {
           //     job_ids,
           //   );
         }
-
-        console.log({
-          count,
-          count_2,
-        });
       }
+    });
+
+    console.log({
+      count,
+      count_2,
     });
   }
 
