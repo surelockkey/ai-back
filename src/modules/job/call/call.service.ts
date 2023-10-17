@@ -9,6 +9,7 @@ import { WorkizCoreApiService } from 'src/modules/api/workiz-api/workiz-core.ser
 import { workizCallToTableCall } from './utils/call-transformer.util';
 
 import * as _ from 'lodash';
+import { getNearestDate } from './utils/near-date.util';
 
 @Injectable()
 export class CallService {
@@ -166,22 +167,15 @@ export class CallService {
             job_ids.size < 2
           ) {
             count++;
-            console.log(
-              related_calls.length,
-              job_ids.size,
-              call.client_number,
-              job_ids,
-            );
           }
 
           if (related_calls.length > 0 && job_ids.size > 1) {
             count_2++;
-            console.log(
-              related_calls.length,
-              job_ids.size,
-              call.client_number,
-              job_ids,
+            const nearest_date = getNearestDate(
+              related_calls.map((call) => call.created_sql),
+              call.created_sql,
             );
+            console.log(nearest_date);
           }
         }
       }),
