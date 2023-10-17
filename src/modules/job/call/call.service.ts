@@ -135,51 +135,57 @@ export class CallService {
     let count = 0;
     let count_2 = 0;
 
-    calls.forEach(async (call) => {
-      if (!call.job_id && call.client_number) {
-        const date = moment(call.created_sql);
+    await Promise.all(
+      calls.map(async (call) => {
+        if (!call.job_id && call.client_number) {
+          const date = moment(call.created_sql);
 
-        const related_calls = await this.callRepository.find({
-          where: {
-            client_number: call.client_number,
-            created_sql: Between(
-              date.utc().subtract(6, 'hours').format('YYYY-MM-DD HH:MM:SS'),
-              date.utc().add(12, 'hours').format('YYYY-MM-DD HH:MM:SS'),
-            ),
-            id: Not(call.id),
-            job_id: Not(''),
-          },
-        });
+          const related_calls = await this.callRepository.find({
+            where: {
+              client_number: call.client_number,
+              created_sql: Between(
+                date.utc().subtract(6, 'hours').format('YYYY-MM-DD HH:MM:SS'),
+                date.utc().add(12, 'hours').format('YYYY-MM-DD HH:MM:SS'),
+              ),
+              id: Not(call.id),
+              job_id: Not(''),
+            },
+          });
 
-        const job_ids = new Set();
+          const job_ids = new Set();
 
-        related_calls.forEach((related_call) => {
-          if (related_call.job_id) {
-            job_ids.add(related_call.job_id);
+          related_calls.forEach((related_call) => {
+            if (related_call.job_id) {
+              job_ids.add(related_call.job_id);
+            }
+          });
+
+          if (
+            related_calls.length > 0 &&
+            job_ids.size > 0 &&
+            job_ids.size < 2
+          ) {
+            count++;
+            console.log(
+              related_calls.length,
+              job_ids.size,
+              call.client_number,
+              job_ids,
+            );
           }
-        });
 
-        if (related_calls.length > 0 && job_ids.size > 0 && job_ids.size < 2) {
-          count++;
-          console.log(
-            related_calls.length,
-            job_ids.size,
-            call.client_number,
-            job_ids,
-          );
+          if (related_calls.length > 0 && job_ids.size > 1) {
+            count_2++;
+            console.log(
+              related_calls.length,
+              job_ids.size,
+              call.client_number,
+              job_ids,
+            );
+          }
         }
-
-        if (related_calls.length > 0 && job_ids.size > 1) {
-          count_2++;
-          console.log(
-            related_calls.length,
-            job_ids.size,
-            call.client_number,
-            job_ids,
-          );
-        }
-      }
-    });
+      }),
+    );
 
     console.log({
       count,
