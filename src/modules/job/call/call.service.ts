@@ -142,8 +142,8 @@ export class CallService {
           where: {
             client_number: call.client_number,
             created_sql: Between(
-              date.utc().subtract(3, 'days').format('YYYY-MM-DD HH:MM:SS'),
-              date.utc().add(6, 'days').format('YYYY-MM-DD HH:MM:SS'),
+              date.utc().subtract(6, 'hours').format('YYYY-MM-DD HH:MM:SS'),
+              date.utc().add(12, 'hours').format('YYYY-MM-DD HH:MM:SS'),
             ),
             id: Not(call.id),
             job_id: Not(''),
