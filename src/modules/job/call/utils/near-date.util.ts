@@ -8,17 +8,27 @@ export function getNearestDate(
 
   let nearestDate;
 
+  let minDifference;
+
   datesToBeChecked.forEach((date) => {
-    const diff = moment(date).diff(moment(dateToCheckFor), 'milliseconds');
-    if (diff > 0) {
-      if (nearestDate) {
-        if (moment(date).diff(moment(nearestDate), 'milliseconds') < 0) {
-          nearestDate = date;
-        }
-      } else {
+    const diff = +moment(date).diff(moment(dateToCheckFor), 'milliseconds');
+    if (minDifference) {
+      if (diff < minDifference) {
+        minDifference = diff;
         nearestDate = date;
       }
+    } else {
+      minDifference = diff;
+      nearestDate = date;
     }
+
+    // if (nearestDate) {
+    //   if (moment(date).diff(moment(nearestDate), 'milliseconds') < 0) {
+    //     nearestDate = date;
+    //   }
+    // } else {
+    //   nearestDate = date;
+    // }
   });
 
   return nearestDate;
