@@ -11,7 +11,9 @@ export function getNearestDate(
   let minDifference;
 
   datesToBeChecked.forEach((date) => {
-    const diff = +moment(date).diff(moment(dateToCheckFor), 'milliseconds');
+    const diff = Math.abs(
+      moment(date).diff(moment(dateToCheckFor), 'milliseconds'),
+    );
     if (minDifference) {
       if (diff < minDifference) {
         minDifference = diff;
