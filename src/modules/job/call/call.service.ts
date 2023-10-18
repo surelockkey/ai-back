@@ -175,7 +175,7 @@ export class CallService {
               related_calls.map((call) => call.created_sql),
               call.created_sql,
             );
-            console.log(nearest_date);
+            // console.log(nearest_date);
           }
         }
       }),

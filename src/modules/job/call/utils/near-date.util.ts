@@ -4,7 +4,7 @@ export function getNearestDate(
   datesToBeChecked: moment.MomentInput[],
   dateToCheckFor: moment.MomentInput,
 ) {
-  console.log(dateToCheckFor, datesToBeChecked);
+  //   console.log(dateToCheckFor, datesToBeChecked);
 
   let nearestDate;
 
@@ -30,6 +30,10 @@ export function getNearestDate(
     //   nearestDate = date;
     // }
   });
+
+  console.log('====================================');
+  console.log({ nearestDate, dateToCheckFor, datesToBeChecked, minDifference });
+  console.log('====================================');
 
   return nearestDate;
 }
