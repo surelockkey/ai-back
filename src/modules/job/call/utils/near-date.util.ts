@@ -18,4 +18,6 @@ export function getNearestDate(
       }
     }
   });
+
+  return nearestDate;
 }
