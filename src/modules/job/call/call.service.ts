@@ -172,7 +172,7 @@ export class CallService {
           if (related_calls.length > 0 && job_ids.size > 1) {
             count_2++;
             const nearest_date = getNearestDate(
-              related_calls.map((call) => call.created_sql),
+              related_calls,
               call.created_sql,
             );
             // console.log(nearest_date);
