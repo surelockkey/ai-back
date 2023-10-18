@@ -1,7 +1,8 @@
 import * as moment from 'moment';
+import { Call } from '../entity/call.entity';
 
 export function getNearestDate(
-  datesToBeChecked: moment.MomentInput[],
+  datesToBeChecked: Call[],
   dateToCheckFor: moment.MomentInput,
 ) {
   //   console.log(dateToCheckFor, datesToBeChecked);
@@ -12,7 +13,7 @@ export function getNearestDate(
 
   datesToBeChecked.forEach((date) => {
     const diff = Math.abs(
-      moment(date).diff(moment(dateToCheckFor), 'milliseconds'),
+      moment(date.created_sql).diff(moment(dateToCheckFor), 'milliseconds'),
     );
     if (minDifference) {
       if (diff < minDifference) {
