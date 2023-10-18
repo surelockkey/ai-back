@@ -9,10 +9,10 @@ export function getNearestDate(
   let nearestDate;
 
   datesToBeChecked.forEach((date) => {
-    const diff = moment(date).diff(moment(dateToCheckFor), 'days');
+    const diff = moment(date).diff(moment(dateToCheckFor), 'milliseconds');
     if (diff > 0) {
       if (nearestDate) {
-        if (moment(date).diff(moment(nearestDate), 'days') < 0) {
+        if (moment(date).diff(moment(nearestDate), 'milliseconds') < 0) {
           nearestDate = date;
         }
       } else {
