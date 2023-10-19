@@ -166,6 +166,10 @@ export class CallService {
             job_ids.size > 0 &&
             job_ids.size < 2
           ) {
+            await this.callRepository.update(
+              { id: call.id },
+              { job_id: related_calls[0].job_id, job_id_verified: false },
+            );
             count++;
           }
 
@@ -175,7 +179,11 @@ export class CallService {
               related_calls,
               call.created_sql,
             );
-            // console.log(nearest_date);
+
+            await this.callRepository.update(
+              { id: call.id },
+              { job_id: nearest_date[0].job_id, job_id_verified: false },
+            );
           }
         }
       }),

@@ -13,6 +13,10 @@ export class Call {
   @Column({ nullable: true })
   job_id?: string;
 
+  @Field(() => Boolean)
+  @Column({ nullable: true, type: 'boolean' })
+  job_id_verified?: boolean;
+
   @Field(() => String)
   @Column({ nullable: true })
   call_sid: string;
