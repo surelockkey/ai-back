@@ -90,9 +90,20 @@ export class JobService {
         //   await this.getFullJob(job.uuid, account);
         // }
 
-        await Promise.all(
-          jobs.map(async (job) => await this.getFullJob(job.uuid, account)),
-        );
+        const chunked_jobs = _.chunk(jobs, 100);
+        let i = 0;
+
+        for (const jobs_chunk of chunked_jobs) {
+          await Promise.all(
+            jobs_chunk.map(
+              async (job) => await this.getFullJob(job.uuid, account),
+            ),
+          );
+
+          console.log(i);
+
+          i++;
+        }
       }
 
       current_page++;
