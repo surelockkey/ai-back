@@ -91,7 +91,7 @@ export class JobService {
         // }
 
         await Promise.all(
-          jobs.map((job) => await this.getFullJob(job.uuid, account)),
+          jobs.map(async (job) => await this.getFullJob(job.uuid, account)),
         );
       }
 
