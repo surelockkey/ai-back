@@ -87,7 +87,7 @@ export class JobService {
       const req = await this.getJobsByRange(current_page, year, month, account);
 
       if (req && req.aaData) {
-        const jobs = req.aaData;
+        const jobs: any[] = req.aaData;
         // for (const job of jobs) {
         //   await this.getFullJob(job.uuid, account);
         // }
