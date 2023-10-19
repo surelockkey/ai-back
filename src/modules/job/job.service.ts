@@ -15,6 +15,8 @@ import fs from 'fs';
 import { CountieService } from './countie/countie.service';
 import { CallService } from './call/call.service';
 
+import * as _ from 'lodash';
+
 @Injectable()
 export class JobService {
   constructor(
