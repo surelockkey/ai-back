@@ -86,9 +86,13 @@ export class JobService {
 
       if (req && req.aaData) {
         const jobs = req.aaData;
-        for (const job of jobs) {
-          await this.getFullJob(job.uuid, account);
-        }
+        // for (const job of jobs) {
+        //   await this.getFullJob(job.uuid, account);
+        // }
+
+        await Promise.all(
+          jobs.map((job) => await this.getFullJob(job.uuid, account)),
+        );
       }
 
       current_page++;
