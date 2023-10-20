@@ -215,10 +215,6 @@ export class Job {
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  extra_info: string; // custom_fields.bonuses_.jobs
-
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
   dispatch_bonus_type: string;
 
   @Field(() => String, { nullable: true })

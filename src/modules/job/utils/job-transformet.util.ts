@@ -2,6 +2,61 @@ import { Job } from '../entity/job.entity';
 import { workiz_tags } from '../const/workiz-tags.const';
 import { metro_areas } from '../const/metro-areas.const';
 
+function getJobDispatchBonusType(
+  workiz_job,
+  account: 'main' | 'arizona' = 'main',
+) {
+  if (account === 'arizona') {
+    return workiz_job?.data?.custom?.f2 === '' || !workiz_job?.data?.custom?.f2
+      ? 'n/a'
+      : workiz_job?.data?.custom?.f2;
+  } else if (account === 'main') {
+    return workiz_job?.data?.custom_fields?.extra_info?.jobs_dispatch === '' ||
+      !workiz_job?.data?.custom_fields?.extra_info?.jobs_dispatch
+      ? 'n/a'
+      : workiz_job?.data?.custom_fields?.extra_info?.jobs_dispatch;
+  }
+}
+
+function getJobDispatchBonusNumber(
+  workiz_job,
+  account: 'main' | 'arizona' = 'main',
+) {
+  if (account === 'arizona') {
+    return workiz_job?.data?.custom?.f3 === ''
+      ? 'n/a'
+      : workiz_job?.data?.custom?.f3;
+  } else if (account === 'main') {
+    const dispatchers_id_ua =
+      workiz_job?.data?.custom_fields?.extra_info?.dispatchers_id_ua;
+    const dispatchers_id_ge =
+      workiz_job?.data?.custom_fields?.extra_info?.dispatchers_id_ge;
+
+    if (
+      (!dispatchers_id_ge || dispatchers_id_ge === `N\/A`) &&
+      (!dispatchers_id_ua || dispatchers_id_ua === `N\/A`)
+    ) {
+      return 'error';
+    } else {
+      if (
+        dispatchers_id_ua &&
+        dispatchers_id_ua !== `N\/A` &&
+        (!dispatchers_id_ge || dispatchers_id_ge === `N\/A`)
+      ) {
+        return dispatchers_id_ua;
+      }
+
+      if (
+        dispatchers_id_ge &&
+        dispatchers_id_ge !== `N\/A` &&
+        (!dispatchers_id_ua || dispatchers_id_ua === `N\/A`)
+      ) {
+        return dispatchers_id_ge;
+      }
+    }
+  }
+}
+
 export function workizJobToTableJob(
   workiz_job,
   account: 'main' | 'arizona' = 'main',
@@ -106,18 +161,8 @@ export function workizJobToTableJob(
         ? 'n/a'
         : workiz_job?.data?.tech_names,
     tech_phone_numbers: workiz_job?.data?.tech_phone_numbers || ['n/a'],
-    extra_info:
-      workiz_job?.data?.custom_fields?.bonuses_?.jobs === ''
-        ? 'n/a'
-        : workiz_job?.data?.custom_fields?.bonuses_?.jobs,
-    dispatch_bonus_type:
-      workiz_job?.data?.custom?.f2 === ''
-        ? 'n/a'
-        : workiz_job?.data?.custom?.f2,
-    dispatch_bonus_number:
-      workiz_job?.data?.custom?.f3 === ''
-        ? 'n/a'
-        : workiz_job?.data?.custom?.f3,
+    dispatch_bonus_type: getJobDispatchBonusType(workiz_job, account),
+    dispatch_bonus_number: getJobDispatchBonusNumber(workiz_job, account),
     job_type:
       workiz_job?.data?.jobTypeInfo?.type_name === ''
         ? 'n/a'
@@ -143,5 +188,7 @@ export function workizJobToTableJob(
   };
 }
 
-//  "custom": {
-// "f2": "Saved Job (1)", => dispatch_bonus_type
+// main
+// dispatch_bonus_type --> JobsDispatch
+// dispatch_bonus_number ---> id ua ?? id ge : Error
+// extra_info --> delete
