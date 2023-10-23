@@ -28,9 +28,9 @@ function getJobDispatchBonusNumber(
       : workiz_job?.data?.custom?.f3;
   } else if (account === 'main') {
     const dispatchers_id_ua =
-      workiz_job?.data?.custom_fields?.extra_info?.dispatchers_id_ua;
+      workiz_job?.data?.custom_fields?.extra_info?.dispatchers_id_ua.trim();
     const dispatchers_id_ge =
-      workiz_job?.data?.custom_fields?.extra_info?.dispatchers_id_ge;
+      workiz_job?.data?.custom_fields?.custom?.f44.trim();
 
     if (
       (!dispatchers_id_ge || dispatchers_id_ge === `N\/A`) &&
