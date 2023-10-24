@@ -18,44 +18,54 @@ function getJobDispatchBonusType(
   }
 }
 
-function getJobDispatchBonusNumber(
-  workiz_job,
-  account: 'main' | 'arizona' = 'main',
-) {
+function getJobDispatchIdGe(workiz_job, account: 'main' | 'arizona' = 'main') {
   if (account === 'arizona') {
     return workiz_job?.data?.custom?.f3 === ''
       ? 'n/a'
       : workiz_job?.data?.custom?.f3;
   } else if (account === 'main') {
-    const dispatchers_id_ua =
-      workiz_job?.data?.custom_fields?.extra_info?.dispatchers_id_ua.trim();
-    const dispatchers_id_ge =
-      workiz_job?.data?.custom_fields?.custom?.f44.trim();
-
-    if (
-      (!dispatchers_id_ge || dispatchers_id_ge === `N\/A`) &&
-      (!dispatchers_id_ua || dispatchers_id_ua === `N\/A`)
-    ) {
-      return 'error';
-    } else {
-      if (
-        dispatchers_id_ua &&
-        dispatchers_id_ua !== `N\/A` &&
-        (!dispatchers_id_ge || dispatchers_id_ge === `N\/A`)
-      ) {
-        return dispatchers_id_ua;
-      }
-
-      if (
-        dispatchers_id_ge &&
-        dispatchers_id_ge !== `N\/A` &&
-        (!dispatchers_id_ua || dispatchers_id_ua === `N\/A`)
-      ) {
-        return dispatchers_id_ge;
-      }
-    }
+    return workiz_job?.data?.custom_fields?.custom?.f44.trim() || 'n/a';
   }
 }
+
+// function getJobDispatchBonusNumber(
+//   workiz_job,
+//   account: 'main' | 'arizona' = 'main',
+// ) {
+//   if (account === 'arizona') {
+//     return workiz_job?.data?.custom?.f3 === ''
+//       ? 'n/a'
+//       : workiz_job?.data?.custom?.f3;
+//   } else if (account === 'main') {
+//     const dispatchers_id_ua =
+//       workiz_job?.data?.custom_fields?.extra_info?.dispatchers_id_ua.trim();
+//     const dispatchers_id_ge =
+//       workiz_job?.data?.custom_fields?.custom?.f44.trim();
+
+//     if (
+//       (!dispatchers_id_ge || dispatchers_id_ge === `N\/A`) &&
+//       (!dispatchers_id_ua || dispatchers_id_ua === `N\/A`)
+//     ) {
+//       return 'error';
+//     } else {
+//       if (
+//         dispatchers_id_ua &&
+//         dispatchers_id_ua !== `N\/A` &&
+//         (!dispatchers_id_ge || dispatchers_id_ge === `N\/A`)
+//       ) {
+//         return dispatchers_id_ua;
+//       }
+
+//       if (
+//         dispatchers_id_ge &&
+//         dispatchers_id_ge !== `N\/A` &&
+//         (!dispatchers_id_ua || dispatchers_id_ua === `N\/A`)
+//       ) {
+//         return dispatchers_id_ge;
+//       }
+//     }
+//   }
+// }
 
 export function workizJobToTableJob(
   workiz_job,
@@ -162,7 +172,10 @@ export function workizJobToTableJob(
         : workiz_job?.data?.tech_names,
     tech_phone_numbers: workiz_job?.data?.tech_phone_numbers || ['n/a'],
     dispatch_bonus_type: getJobDispatchBonusType(workiz_job, account),
-    dispatch_bonus_number: getJobDispatchBonusNumber(workiz_job, account),
+    // dispatch_bonus_number: getJobDispatchBonusNumber(workiz_job, account),
+    dispatchers_id_ua:
+      workiz_job?.data?.custom_fields?.extra_info?.dispatchers_id_ua || 'n/a',
+    dispatchers_id_ge: getJobDispatchIdGe(workiz_job, account),
     job_type:
       workiz_job?.data?.jobTypeInfo?.type_name === ''
         ? 'n/a'

@@ -217,9 +217,18 @@ export class Job {
   @Column({ nullable: true })
   dispatch_bonus_type: string;
 
+  // @Field(() => String, { nullable: true })
+  // @Column({ nullable: true })
+  // dispatch_bonus_number: string; // custom_fields.bonuses_.team_members_
+
+
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  dispatch_bonus_number: string; // custom_fields.bonuses_.team_members_
+  dispatchers_id_ua: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  dispatchers_id_ge: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
