@@ -81,35 +81,42 @@ export class JobService {
       .then((r) => r);
 
     console.log('total_pages: ', total_pages_data);
-    const total_pages = total_pages_data.pages;
 
-    while (current_page < total_pages) {
-      const req = await this.getJobsByRange(current_page, year, month, account);
-
-      if (req && req.aaData) {
-        const jobs: any[] = req.aaData;
-        // for (const job of jobs) {
-        //   await this.getFullJob(job.uuid, account);
-        // }
-
-        // const chunked_jobs = _.chunk(jobs, 100);
-
-        await Promise.all(
-          jobs.map(async (job) => await this.getFullJob(job.uuid, account)),
+    if (total_pages_data) {
+      const total_pages = total_pages_data?.pages;
+      while (current_page < total_pages) {
+        const req = await this.getJobsByRange(
+          current_page,
+          year,
+          month,
+          account,
         );
 
-        // for (const jobs_chunk of chunked_jobs) {
-        //   await Promise.all(
-        //     jobs_chunk.map(
-        //       async (job) => await this.getFullJob(job.uuid, account),
-        //     ),
-        //   );
-        // }
+        if (req && req.aaData) {
+          const jobs: any[] = req.aaData;
+          // for (const job of jobs) {
+          //   await this.getFullJob(job.uuid, account);
+          // }
+
+          // const chunked_jobs = _.chunk(jobs, 100);
+
+          await Promise.all(
+            jobs.map(async (job) => await this.getFullJob(job.uuid, account)),
+          );
+
+          // for (const jobs_chunk of chunked_jobs) {
+          //   await Promise.all(
+          //     jobs_chunk.map(
+          //       async (job) => await this.getFullJob(job.uuid, account),
+          //     ),
+          //   );
+          // }
+        }
+
+        console.log(current_page);
+
+        current_page++;
       }
-
-      console.log(current_page);
-
-      current_page++;
     }
 
     return { items: [], has_more: true };
