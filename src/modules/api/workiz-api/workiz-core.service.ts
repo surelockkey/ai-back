@@ -68,7 +68,7 @@ export class WorkizCoreApiService {
 
     axiosRetry(axios, {
       retries: 3,
-      retryDelay: (...arg) => axiosRetry.exponentialDelay(...arg, 1000),
+      retryDelay: (retryCount) => retryCount * 1000,
     });
 
     return await axios(conf)

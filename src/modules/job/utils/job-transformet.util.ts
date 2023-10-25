@@ -200,8 +200,3 @@ export function workizJobToTableJob(
     account: account,
   };
 }
-
-// main
-// dispatch_bonus_type --> JobsDispatch
-// dispatch_bonus_number ---> id ua ?? id ge : Error
-// extra_info --> delete

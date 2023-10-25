@@ -92,21 +92,22 @@ export class JobService {
         //   await this.getFullJob(job.uuid, account);
         // }
 
-        const chunked_jobs = _.chunk(jobs, 100);
-        let i = 0;
+        // const chunked_jobs = _.chunk(jobs, 100);
 
-        for (const jobs_chunk of chunked_jobs) {
-          await Promise.all(
-            jobs_chunk.map(
-              async (job) => await this.getFullJob(job.uuid, account),
-            ),
-          );
+        await Promise.all(
+          jobs.map(async (job) => await this.getFullJob(job.uuid, account)),
+        );
 
-          console.log(i);
-
-          i++;
-        }
+        // for (const jobs_chunk of chunked_jobs) {
+        //   await Promise.all(
+        //     jobs_chunk.map(
+        //       async (job) => await this.getFullJob(job.uuid, account),
+        //     ),
+        //   );
+        // }
       }
+
+      console.log(current_page);
 
       current_page++;
     }
@@ -247,72 +248,6 @@ export class JobService {
     console.log(start_com_set.size);
     console.log(all_commissions.length);
   }
-
-  // public async getCommission(
-  //   year: number,
-  //   month: number,
-  //   account?: 'main' | 'arizona',
-  // ) {
-  //   let current_page = 0;
-  //   const total_pages_data = await this.workizCoreApiService.getCommission(
-  //     month,
-  //     year,
-  //     0,
-  //   );
-
-  //   console.log('total_pages_data: ', total_pages_data, ',', year, ',', month);
-
-  //   const all_commissions: Commission[] = [];
-
-  //   const total_pages = Math.floor(
-  //     total_pages_data.data.iTotalDisplayRecords / 100,
-  //   );
-
-  //   while (current_page <= total_pages) {
-  //     const res = await this.workizCoreApiService
-  //       .getCommission(month, year, current_page, account)
-  //       .catch((e) => {
-  //         // eslint-disable-next-line @typescript-eslint/no-empty-function
-  //         fs.appendFile('./com.txt', `${e}`, {}, () => {});
-  //         console.log(e);
-  //       })
-  //       .then((r) => {
-  //         if (r) {
-  //           return r;
-  //         }
-  //       });
-
-  //     all_commissions.push(
-  //       ...res.data.aaData.map((item) => {
-  //         // console.log({
-  //         //   before: item[12],
-  //         //   after: parseFloat(item[12].replace(new RegExp(',', 'g'), '')),
-  //         // });
-  //         return {
-  //           uuid: item[2].substring(12, 18), // add replace all
-  //           total_sales: parseFloat(item[12].replace(new RegExp(',', 'g'), '')),
-  //           cash: parseFloat(item[13].replace(new RegExp(',', 'g'), '')),
-  //           credit: parseFloat(item[14].replace(new RegExp(',', 'g'), '')),
-  //           billing: parseFloat(item[15].replace(new RegExp(',', 'g'), '')),
-  //           check: parseFloat(item[16].replace(new RegExp(',', 'g'), '')),
-  //           tech_share: item[17],
-  //           tech_parts: parseFloat(item[19].replace(new RegExp(',', 'g'), '')),
-  //           company_parts: parseFloat(
-  //             item[20].replace(new RegExp(',', 'g'), ''),
-  //           ),
-  //           tech_profit: parseFloat(item[21].replace(new RegExp(',', 'g'), '')),
-  //           company_profit: parseFloat(
-  //             item[23].replace(new RegExp(',', 'g'), ''),
-  //           ),
-  //           tax: parseFloat(item[24].replace(new RegExp(',', 'g'), '')),
-  //         };
-  //       }),
-  //     );
-  //     current_page++;
-  //   }
-
-  //   return all_commissions;
-  // }
 
   public async getCommission(
     year: number,
