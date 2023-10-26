@@ -16,4 +16,4 @@ RUN npm run build
 ENV GENERATE_SOURCEMAP=false
 ENV NODE_OPTIONS=--max-old-space-size=4096
 
-CMD "npm" "start"
+CMD "npm" "start" "--expose-gc"
