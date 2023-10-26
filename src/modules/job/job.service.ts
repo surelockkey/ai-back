@@ -65,7 +65,7 @@ export class JobService {
     account?: 'main' | 'arizona',
   ): Promise<PaginatedJobDto> {
     let current_page = 0;
-    const total_pages_data = await this.getJobsByRange(
+    let total_pages_data = await this.getJobsByRange(
       current_page,
       year,
       month,
@@ -98,14 +98,14 @@ export class JobService {
       }
     }
 
-    global.gc();
+    total_pages_data = null;
 
     return { items: [], has_more: true };
   }
 
   private async getFullJob(job_id: string, account?: 'main' | 'arizona') {
     try {
-      const job = await this.workizCoreApiService.req(
+      let job = await this.workizCoreApiService.req(
         `/ajaxc/job/get/${job_id}/`,
         'post',
         undefined,
@@ -113,7 +113,7 @@ export class JobService {
       );
 
       if (job.data) {
-        const countie = await this.countieService.findOneWithoutError({
+        let countie = await this.countieService.findOneWithoutError({
           city: job?.data?.city,
           state: job?.data?.state,
         });
@@ -121,7 +121,10 @@ export class JobService {
           ...workizJobToTableJob(job, account),
           county: countie ? countie.county : 'n/a',
         });
+        countie = null;
       }
+
+      job = null;
     } catch (e) {
       console.log(e);
     }
