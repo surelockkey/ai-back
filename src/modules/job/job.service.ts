@@ -36,12 +36,6 @@ export class JobService {
     from_month = 1,
     account?: 'main' | 'arizona',
   ) {
-    // await this.jobRepository.delete({ account: 'arizona' });
-
-    // await this.callRepository.delete({ account: 'arizona' });
-
-    // await this.activityLogRepository.delete({ account: 'arizona' });
-
     const current_date = moment();
     let year = from_year;
     let month = from_month;
@@ -81,6 +75,7 @@ export class JobService {
       .then((r) => r);
 
     console.log('total_pages: ', total_pages_data);
+    console.log(process.memoryUsage().heapUsed);
 
     if (total_pages_data) {
       const total_pages = total_pages_data?.pages;
@@ -89,36 +84,47 @@ export class JobService {
 
         if (req && req.aaData) {
           let jobs: any[] = req.aaData;
-          // for (const job of jobs) {
-          //   await this.getFullJob(job.uuid, account);
-          // }
-
-          // const chunked_jobs = _.chunk(jobs, 100);
 
           await Promise.all(
             jobs.map(async (job) => await this.getFullJob(job.uuid, account)),
           );
 
           jobs = null;
-
-          // for (const jobs_chunk of chunked_jobs) {
-          //   await Promise.all(
-          //     jobs_chunk.map(
-          //       async (job) => await this.getFullJob(job.uuid, account),
-          //     ),
-          //   );
-          // }
         }
         req = null;
 
         console.log(current_page);
         current_page++;
       }
-
-      console.log(process.memoryUsage().heapUsed);
     }
 
+    global.gc();
+
     return { items: [], has_more: true };
+  }
+
+  private async getFullJob(job_id: string, account?: 'main' | 'arizona') {
+    try {
+      const job = await this.workizCoreApiService.req(
+        `/ajaxc/job/get/${job_id}/`,
+        'post',
+        undefined,
+        account,
+      );
+
+      if (job.data) {
+        const countie = await this.countieService.findOneWithoutError({
+          city: job?.data?.city,
+          state: job?.data?.state,
+        });
+        await this.jobRepository.save({
+          ...workizJobToTableJob(job, account),
+          county: countie ? countie.county : 'n/a',
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   private async getJobsByRange(
@@ -164,30 +170,6 @@ export class JobService {
         },
         account,
       );
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  private async getFullJob(job_id: string, account?: 'main' | 'arizona') {
-    try {
-      const job = await this.workizCoreApiService.req(
-        `/ajaxc/job/get/${job_id}/`,
-        'post',
-        undefined,
-        account,
-      );
-
-      if (job.data) {
-        const countie = await this.countieService.findOneWithoutError({
-          city: job?.data?.city,
-          state: job?.data?.state,
-        });
-        await this.jobRepository.save({
-          ...workizJobToTableJob(job, account),
-          county: countie ? countie.county : 'n/a',
-        });
-      }
     } catch (e) {
       console.log(e);
     }
