@@ -66,10 +66,10 @@ export class WorkizCoreApiService {
       data: params,
     };
 
-    axiosRetry(axios, {
-      retries: 3,
-      retryDelay: (retryCount) => retryCount * 1000,
-    });
+    // axiosRetry(axios, {
+    //   retries: 3,
+    //   retryDelay: (retryCount) => retryCount * 1000,
+    // });
 
     return await axios(conf)
       .then((r) => {

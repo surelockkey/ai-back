@@ -86,7 +86,7 @@ export class JobService {
           let jobs: any[] = req.aaData;
 
           await Promise.all(
-            jobs.map(async (job) => await this.getFullJob(job.uuid, account)),
+            jobs.map((job) => this.getFullJob(job.uuid, account)),
           );
 
           jobs = null;
@@ -125,6 +125,8 @@ export class JobService {
       }
 
       job = null;
+
+      return;
     } catch (e) {
       console.log(e);
     }
