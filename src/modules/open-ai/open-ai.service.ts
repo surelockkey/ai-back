@@ -264,10 +264,8 @@ export class OpenAiService {
           secondary_phone        | character varying ( It is a phone number )
           email_address          | character varying
           client_company_name    | character varying
-          invoice_number         | character varying
           zipcode                | character varying
           full_address           | character varying
-          invoice_created        | boolean
           invoice_sent           | boolean
           user_created           | character varying
           client_first_name      | character varying

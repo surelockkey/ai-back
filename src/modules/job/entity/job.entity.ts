@@ -153,9 +153,9 @@ export class Job {
   @Column({ nullable: true })
   client_company_name: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  invoice_number: string;
+  // @Field(() => String, { nullable: true })
+  // @Column({ nullable: true })
+  // invoice_number: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -185,9 +185,9 @@ export class Job {
   @Column({ nullable: true })
   full_address: string;
 
-  @Field(() => Boolean, { nullable: true })
-  @Column({ nullable: true, type: 'boolean' })
-  invoice_created: boolean;
+  // @Field(() => Boolean, { nullable: true })
+  // @Column({ nullable: true, type: 'boolean' })
+  // invoice_created: boolean;
 
   @Field(() => Boolean, { nullable: true })
   @Column({ nullable: true, type: 'boolean' })
@@ -220,7 +220,6 @@ export class Job {
   // @Field(() => String, { nullable: true })
   // @Column({ nullable: true })
   // dispatch_bonus_number: string; // custom_fields.bonuses_.team_members_
-
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })

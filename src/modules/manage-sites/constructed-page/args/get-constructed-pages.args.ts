@@ -4,8 +4,8 @@ import { ConstructedPageType } from '../enum/constructed-page-type.enum';
 
 @ArgsType()
 export class GetConstructedPagesArgs {
-  @Field(() => FindPaginationDto)
-  pagination: FindPaginationDto;
+  @Field(() => FindPaginationDto, { nullable: true })
+  pagination?: FindPaginationDto;
 
   @Field(() => ConstructedPageType, { nullable: true })
   type?: ConstructedPageType;

@@ -130,10 +130,6 @@ export function workizJobToTableJob(
       workiz_job?.data?.client_company_name === ''
         ? 'n/a'
         : workiz_job?.data?.client_company_name.toLowerCase(),
-    invoice_number:
-      workiz_job?.data?.invoice_number === ''
-        ? 'n/a'
-        : workiz_job?.data?.invoice_number,
     city: workiz_job?.data?.city === '' ? 'n/a' : workiz_job?.data?.city,
     state: workiz_job?.data?.state === '' ? 'n/a' : workiz_job?.data?.state,
     zipcode:
@@ -152,7 +148,6 @@ export function workizJobToTableJob(
       workiz_job?.data?.location_key === ''
         ? 'n/a'
         : workiz_job?.data?.location_key,
-    invoice_created: !!parseInt(workiz_job?.data?.invoice_created || '0'),
     invoice_sent: !!parseInt(workiz_job?.data?.invoice_sent || '0'),
     user_created:
       workiz_job?.data?.user_created === ''
@@ -196,7 +191,10 @@ export function workizJobToTableJob(
             .join(', '),
     paid_total: parseFloat(workiz_job?.data?.paid_total || '0'),
     job_serial: workiz_job?.data?.job_serial,
-    metro_area: metro_areas[workiz_job?.data?.metro_id],
+    metro_area:
+      account === 'main'
+        ? metro_areas[workiz_job?.data?.metro_id]
+        : 'SURE LOCK ARIZONA',
     account: account,
   };
 }
