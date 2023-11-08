@@ -229,7 +229,7 @@ export class OpenAiService {
   private async generateSqlQuery(message: string) {
     return await this.openai
       .createChatCompletion({
-        model: 'gpt-4',
+        model: 'gpt-4-1106-preview',
         messages: [
           {
             role: 'user',
