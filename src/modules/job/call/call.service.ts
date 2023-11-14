@@ -30,6 +30,16 @@ export class CallService {
     return month;
   }
 
+  public async parseCalls(
+    from_month: number,
+    from_year: number,
+    account?: 'main' | 'arizona',
+  ) {
+    await this.getCallsByRange(from_month, from_year, account);
+    await this.changeCallsDateToIso();
+    await this.changeCallsJobIds();
+  }
+
   public async getCallsByRange(
     from_month: number,
     from_year: number,

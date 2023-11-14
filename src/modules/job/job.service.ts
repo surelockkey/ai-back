@@ -294,6 +294,8 @@ export class JobService {
       {},
       { is_parsing: false },
     );
+
+    await this.callService.parseCalls(from_month, from_year, account);
   }
 
   public async setJobsCallFlow() {
