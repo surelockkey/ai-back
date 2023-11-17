@@ -148,7 +148,7 @@ export class CallService {
 
     await Promise.all(
       calls.map(async (call) => {
-        if (!call.job_id && call.client_number) {
+        if (!call?.job_id && call.client_number) {
           const date = moment(call.created_sql);
 
           const related_calls = await this.callRepository.find({
@@ -166,7 +166,7 @@ export class CallService {
           const job_ids = new Set();
 
           related_calls.forEach((related_call) => {
-            if (related_call.job_id) {
+            if (related_call?.job_id) {
               job_ids.add(related_call.job_id);
             }
           });
@@ -178,7 +178,7 @@ export class CallService {
           ) {
             await this.callRepository.update(
               { id: call.id },
-              { job_id: related_calls[0].job_id, job_id_verified: false },
+              { job_id: related_calls[0]?.job_id, job_id_verified: false },
             );
             count++;
           }
@@ -192,7 +192,7 @@ export class CallService {
 
             await this.callRepository.update(
               { id: call.id },
-              { job_id: nearest_date[0].job_id, job_id_verified: false },
+              { job_id: nearest_date[0]?.job_id, job_id_verified: false },
             );
           }
         }
