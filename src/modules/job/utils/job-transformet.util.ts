@@ -166,6 +166,7 @@ export function workizJobToTableJob(
         ? 'n/a'
         : workiz_job?.data?.tech_names,
     tech_phone_numbers: workiz_job?.data?.tech_phone_numbers || ['n/a'],
+    tech_notes: workiz_job?.data?.set_price || 'n/a',
     dispatch_bonus_type: getJobDispatchBonusType(workiz_job, account),
     // dispatch_bonus_number: getJobDispatchBonusNumber(workiz_job, account),
     dispatchers_id_ua:

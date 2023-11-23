@@ -445,7 +445,9 @@ export class WorkizCoreApiService {
       },
     );
 
-    return response?.data?.csv_data[0]?.data;
+    if (response?.data?.csv_data && response?.data?.csv_data.length > 0) {
+      return response?.data?.csv_data[0]?.data;
+    }
   }
 
   public async getCalls(

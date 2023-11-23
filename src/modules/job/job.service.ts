@@ -253,30 +253,34 @@ export class JobService {
       account,
     );
 
-    commissions.shift();
+    if (commissions) {
+      commissions.shift();
 
-    return commissions.map((item) => {
-      return {
-        uuid: item.job_id.substring(12, 18), // add replace all
-        total_sales: parseFloat(item.total.replace(new RegExp(',', 'g'), '')),
-        cash: parseFloat(item.cash.replace(new RegExp(',', 'g'), '')),
-        credit: parseFloat(item.credit.replace(new RegExp(',', 'g'), '')),
-        billing: parseFloat(item.billing.replace(new RegExp(',', 'g'), '')),
-        check: parseFloat(item.check.replace(new RegExp(',', 'g'), '')),
-        tech_share: item.tech_share,
-        tech_parts: parseFloat(item.parts.replace(new RegExp(',', 'g'), '')),
-        company_parts: parseFloat(
-          item.company_parts.replace(new RegExp(',', 'g'), ''),
-        ),
-        tech_profit: parseFloat(
-          item.tech_profit.replace(new RegExp(',', 'g'), ''),
-        ),
-        company_profit: parseFloat(
-          item.company_profit.replace(new RegExp(',', 'g'), ''),
-        ),
-        tax: parseFloat(item.tax.replace(new RegExp(',', 'g'), '')),
-      };
-    });
+      return commissions.map((item) => {
+        return {
+          uuid: item.job_id.substring(12, 18), // add replace all
+          total_sales: parseFloat(item.total.replace(new RegExp(',', 'g'), '')),
+          cash: parseFloat(item.cash.replace(new RegExp(',', 'g'), '')),
+          credit: parseFloat(item.credit.replace(new RegExp(',', 'g'), '')),
+          billing: parseFloat(item.billing.replace(new RegExp(',', 'g'), '')),
+          check: parseFloat(item.check.replace(new RegExp(',', 'g'), '')),
+          tech_share: item.tech_share,
+          tech_parts: parseFloat(item.parts.replace(new RegExp(',', 'g'), '')),
+          company_parts: parseFloat(
+            item.company_parts.replace(new RegExp(',', 'g'), ''),
+          ),
+          tech_profit: parseFloat(
+            item.tech_profit.replace(new RegExp(',', 'g'), ''),
+          ),
+          company_profit: parseFloat(
+            item.company_profit.replace(new RegExp(',', 'g'), ''),
+          ),
+          tax: parseFloat(item.tax.replace(new RegExp(',', 'g'), '')),
+        };
+      });
+    } else {
+      return [];
+    }
   }
 
   public async startUpdateJobsInfo(
