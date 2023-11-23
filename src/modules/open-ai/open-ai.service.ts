@@ -295,6 +295,7 @@ export class OpenAiService {
           tech_profit            | double precision
           company_profit         | double precision
           tax                    | double precision
+          tech_notes              | character varying
           account                | character varying ( Acceptable values: main, arizona)
 
 
@@ -326,9 +327,14 @@ export class OpenAiService {
         ],
       })
       .then(async (r) => {
+        const query_text = r.data.choices[0].message.content;
+        const query = query_text
+          .replace('```sql', '')
+          .replace(new RegExp('```', 'g'), '');
+
         return {
-          data: await this.dataSource.query(r.data.choices[0].message.content),
-          query: r.data.choices[0].message.content,
+          data: await this.dataSource.query(query),
+          query,
         };
       })
       .catch((e) => {
