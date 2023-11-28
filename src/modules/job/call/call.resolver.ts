@@ -28,4 +28,16 @@ export class CallResolver {
   changeCallsJobIds() {
     return this.callService.changeCallsJobIds();
   }
+
+  @Mutation(() => SendDto)
+  parseCalls(
+    @Args('from_year', { type: () => Int, nullable: true, defaultValue: 18 })
+    from_year: number,
+    @Args('from_month', { type: () => Int, nullable: true, defaultValue: 1 })
+    from_month: number,
+    @Args('account', { type: () => Account, defaultValue: Account.main })
+    account: Account,
+  ) {
+    return this.callService.parseCalls(from_month, from_year, account);
+  }
 }

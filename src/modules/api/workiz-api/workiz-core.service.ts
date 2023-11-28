@@ -455,56 +455,65 @@ export class WorkizCoreApiService {
     page: number,
     account?: 'main' | 'arizona',
   ) {
-    const response = await axios.post(
-      'https://app.workiz.com/ajaxc/calls/getReport/',
-      {
-        page: page,
-        pageSize: 100,
-        sorted: [
-          {
-            id: 'created',
-            desc: true,
+    try {
+      const response = await axios.post(
+        'https://app.workiz.com/ajaxc/calls/getReport/',
+        {
+          page: page,
+          pageSize: 100,
+          sorted: [
+            {
+              id: 'created',
+              desc: true,
+            },
+          ],
+          filtered: [],
+          sSearch: '',
+          final_q: date_range,
+          timeQueryChanged: true,
+          pickerParams: {},
+          react: true,
+          withCsv: false,
+          pickerOn: true,
+          filters: {
+            noMasking: false,
           },
-        ],
-        filtered: [],
-        sSearch: '',
-        final_q: date_range,
-        timeQueryChanged: true,
-        pickerParams: {},
-        react: true,
-        withCsv: false,
-        pickerOn: true,
-        filters: {
-          noMasking: false,
+          groupBy: 'hour',
+          forceUpdate: false,
         },
-        groupBy: 'hour',
-        forceUpdate: false,
-      },
-      {
-        headers: {
-          authority: 'app.workiz.com',
-          accept: 'application/json',
-          'accept-language': 'en-US,en;q=0.9',
-          cache: 'no-cache',
-          'content-type': 'application/json',
-          cookie: this.getCookie(account),
-          dnt: '1',
-          origin: 'https://app.workiz.com',
-          react: 'true',
-          referer: 'https://app.workiz.com/root/callsReport',
-          'sec-ch-ua': '"Not)A;Brand";v="24", "Chromium";v="116"',
-          'sec-ch-ua-mobile': '?0',
-          'sec-ch-ua-platform': '"macOS"',
-          'sec-fetch-dest': 'empty',
-          'sec-fetch-mode': 'cors',
-          'sec-fetch-site': 'same-origin',
-          'user-agent':
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+        {
+          headers: {
+            authority: 'app.workiz.com',
+            accept: 'application/json',
+            'accept-language': 'en-US,en;q=0.9',
+            cache: 'no-cache',
+            'content-type': 'application/json',
+            cookie: this.getCookie(account),
+            dnt: '1',
+            origin: 'https://app.workiz.com',
+            react: 'true',
+            referer: 'https://app.workiz.com/root/callsReport',
+            'sec-ch-ua': '"Not)A;Brand";v="24", "Chromium";v="116"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"macOS"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-origin',
+            'user-agent':
+              'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+          },
         },
-      },
-    );
+      );
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      console.log(
+        'Error in getting calls in range ',
+        date_range,
+        ' page ',
+        page,
+      );
+    }
   }
 
   // private login() {
