@@ -16,6 +16,7 @@ import { CountieService } from './countie/countie.service';
 import { CallService } from './call/call.service';
 
 import * as _ from 'lodash';
+import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class JobService {
@@ -300,6 +301,7 @@ export class JobService {
     );
 
     await this.callService.parseCalls(from_month, from_year, account);
+    await this.setJobsCallFlow();
   }
 
   public async setJobsCallFlow() {
@@ -334,5 +336,17 @@ export class JobService {
     for (const job of unsaved_jobs) {
       await this.getFullJob(job.uuid, job.account as 'main' | 'arizona');
     }
+  }
+
+  @Cron('0 0 9 * * *', {
+    timeZone: 'Europe/Kiev',
+  })
+  async reParseJobEveryDay() {
+    const date = new Date();
+    const month = date.getMonth() + 1;
+    const year = parseInt(date.getFullYear().toString().slice(-2));
+
+    await this.startUpdateJobsInfo(year, month, 'main');
+    await this.startUpdateJobsInfo(year, month, 'arizona');
   }
 }
