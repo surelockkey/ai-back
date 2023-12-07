@@ -445,10 +445,6 @@ export class WorkizCoreApiService {
       },
     );
 
-    console.log('====================================');
-    console.log(response);
-    console.log('====================================');
-
     if (response?.data?.csv_data && response?.data?.csv_data.length > 0) {
       return response?.data?.csv_data[0]?.data;
     }
