@@ -41,11 +41,12 @@ export class JobService {
     let year = from_year;
     let month = from_month;
 
+    const currentYear = moment().format('YY'); // Get the current year in 2-digit format
+    const currentMonth = moment().format('M');
+
     while (
-      !(
-        Number(current_date.format('YY')) <= year &&
-        Number(current_date.format('M')) < month
-      )
+      Number(currentYear) > year ||
+      (Number(currentYear) === year && Number(currentMonth) > month)
     ) {
       await this.getJob(year, month, account);
 
