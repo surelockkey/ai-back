@@ -56,7 +56,12 @@ export class JobService {
         year += 1;
       }
 
-      console.log(month, year);
+      console.log(
+        month,
+        year,
+        Number(current_date.format('YY')),
+        Number(current_date.format('M')),
+      );
     }
   }
 
