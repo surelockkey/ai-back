@@ -193,17 +193,16 @@ export class JobService {
     account?: 'main' | 'arizona',
   ) {
     const all_commissions: Commission[] = [];
-    const current_date = moment();
+    const currentYear = moment().format('YY'); // Get the current year in 2-digit format
+    const currentMonth = moment().format('M');
     let year = from_year;
     let month = from_month;
 
     const start_com: Commission[] = [];
 
     while (
-      !(
-        Number(current_date.format('YY')) <= year &&
-        Number(current_date.format('M')) < month
-      )
+      Number(currentYear) > year ||
+      (Number(currentYear) === year && Number(currentMonth) > month)
     ) {
       const commmissions: Commission[] = await this.getCommission(
         year,
