@@ -193,12 +193,12 @@ export class JobService {
     account?: 'main' | 'arizona',
   ) {
     const all_commissions: Commission[] = [];
-    const currentYear = moment().format('YY'); // Get the current year in 2-digit format
-    const currentMonth = moment().format('M');
+
     let year = from_year;
     let month = from_month;
 
-    const start_com: Commission[] = [];
+    const currentYear = moment().format('YY'); // Get the current year in 2-digit format
+    const currentMonth = moment().format('M');
 
     while (
       Number(currentYear) > year ||
@@ -211,10 +211,6 @@ export class JobService {
       );
       all_commissions.push(...commmissions);
 
-      if (month !== 10) {
-        start_com.push(...commmissions);
-      }
-
       console.log(`M: ${month} Y: ${year} com: ${commmissions.length}`);
 
       month++;
@@ -225,26 +221,10 @@ export class JobService {
       }
     }
 
-    const start_com_set: Set<Commission> = new Set();
-    let com_sum = 0;
-    let com_sum_2 = 0;
-
-    start_com.forEach((com) => {
-      start_com_set.add(com);
-    });
-
-    for (const com of start_com_set) {
-      com_sum += com.total_sales;
-    }
-
     all_commissions.forEach(async (com) => {
-      com_sum_2 += com.total_sales;
       await this.jobRepository.save({ uuid: com.uuid, account, ...com });
     });
-    console.log(`com sum: ${com_sum}`);
-    console.log(`com sum 2 : ${com_sum_2}`);
 
-    console.log(start_com_set.size);
     console.log(all_commissions.length);
   }
 
