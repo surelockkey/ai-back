@@ -201,8 +201,10 @@ export class JobService {
     const currentMonth = moment().format('M');
 
     while (
-      Number(currentYear) > year ||
-      (Number(currentYear) === year && Number(currentMonth) > month)
+      (Number(currentYear) > year ||
+        (Number(currentYear) === year && Number(currentMonth) > month)) &&
+      (year < Number(currentYear) ||
+        (year === Number(currentYear) && month <= Number(currentMonth)))
     ) {
       const commmissions: Commission[] = await this.getCommission(
         year,
