@@ -24,7 +24,6 @@ export class JobService {
     @InjectRepository(Job) private readonly jobRepository: Repository<Job>,
     private readonly workizApiService: WorkizApiService,
     private readonly workizCoreApiService: WorkizCoreApiService,
-    // @InjectRepository(Call) private readonly callRepository: Repository<Call>,
     @InjectRepository(ActivityLog)
     private readonly activityLogRepository: Repository<ActivityLog>,
     private readonly systemSettingService: SystemSettingsService,
@@ -46,7 +45,7 @@ export class JobService {
 
     while (
       Number(currentYear) > year ||
-      (Number(currentYear) === year && Number(currentMonth) > month)
+      (Number(currentYear) === year && Number(currentMonth) >= month)
     ) {
       await this.getJob(year, month, account);
 

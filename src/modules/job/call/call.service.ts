@@ -48,8 +48,6 @@ export class CallService {
     try {
       console.log(account);
 
-      const current_date = moment();
-
       let year = from_year;
       let month = from_month;
 
