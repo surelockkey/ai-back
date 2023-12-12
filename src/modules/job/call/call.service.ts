@@ -57,7 +57,7 @@ export class CallService {
       while (
         !(
           Number(currentYear) > year ||
-          (Number(currentYear) === year && Number(currentMonth) > month)
+          (Number(currentYear) === year && Number(currentMonth) >= month)
         )
       ) {
         const days_arr = [

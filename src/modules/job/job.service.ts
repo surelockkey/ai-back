@@ -144,14 +144,15 @@ export class JobService {
     month: number,
     account?: 'main' | 'arizona',
   ) {
-    try {
-      let month_to = month + 1;
-      let year_to = year;
+    let month_to = month + 1;
+    let year_to = year;
 
-      if (month === 12) {
-        month_to = 1;
-        year_to = year + 1;
-      }
+    if (month === 12) {
+      month_to = 1;
+      year_to = year + 1;
+    }
+    try {
+      console.log(`1.${month}.${year}_1.${month_to}.${year_to}`);
 
       return await this.workizCoreApiService.req(
         '/ajaxc/job/jobReport/',
@@ -182,7 +183,7 @@ export class JobService {
         account,
       );
     } catch (e) {
-      console.log(e);
+      console.log('error', `1.${month}.${year}_1.${month_to}.${year_to}`);
     }
   }
 
@@ -201,7 +202,7 @@ export class JobService {
 
     while (
       (Number(currentYear) > year ||
-        (Number(currentYear) === year && Number(currentMonth) > month)) &&
+        (Number(currentYear) === year && Number(currentMonth) >= month)) &&
       (year < Number(currentYear) ||
         (year === Number(currentYear) && month <= Number(currentMonth)))
     ) {
