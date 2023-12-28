@@ -106,6 +106,7 @@ export class ConstructedPageParserService {
     return queryRunner.manager.save(ConstructedPreview, {
       ...other_preview_info,
       headline: title,
+      constructed_photo_id: photo_id,
       constructed_page_id,
     });
   }
