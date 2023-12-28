@@ -29,7 +29,7 @@ export class ConstructedPreview extends BaseEntity {
 
   @Field(() => ID, { nullable: true })
   @Column({ type: 'uuid', nullable: true })
-  constructed_photo_id: string;
+  constructed_photo_id?: string;
 
   @OneToOne(
     () => ConstructedPage,

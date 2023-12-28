@@ -8,11 +8,14 @@ import {
 import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
 import { UserRole } from 'src/modules/user/enum/user-role.enum';
 import { GetConstructedPagesArgs } from './args/get-constructed-pages.args';
+import { SendDto } from '@tech-slk/nest-crud';
+import { ConstructedPageParserService } from './constructed-page-parser.service';
 
 @Resolver()
 export class ConstructedPageResolver {
   constructor(
     private readonly constructedPageService: ConstructedPageService,
+    private readonly constructedPageParserService: ConstructedPageParserService,
   ) {}
 
   // @RoleGuard(UserRole.ADMIN, UserRole.SEO)
@@ -55,5 +58,10 @@ export class ConstructedPageResolver {
     constructed_page: UpdateConstructedPageDto,
   ) {
     return this.constructedPageService.updateConstructedPage(constructed_page);
+  }
+
+  @Mutation(() => SendDto)
+  parseBlogs() {
+    return this.constructedPageParserService.parseBlogs();
   }
 }

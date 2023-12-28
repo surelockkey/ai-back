@@ -8,6 +8,8 @@ import { ConstructedMetaInfoModule } from './constructed-meta-info/constructed-m
 import { ConstructedPhotoModule } from './constructed-photo/constructed-photo.module';
 import { ConstructedPreviewModule } from './constructed-preview/constructed-preview.module';
 import { ConstructedPageCompanyModule } from './constructed-page-company/constructed-page-company.module';
+import { ConstructedPageParserService } from './constructed-page-parser.service';
+import { ConstructorBlogModule } from '../blog/constructor-blog/constructor-blog.module';
 
 @Module({
   imports: [
@@ -17,7 +19,12 @@ import { ConstructedPageCompanyModule } from './constructed-page-company/constru
     ConstructedPhotoModule,
     ConstructedPreviewModule,
     ConstructedPageCompanyModule,
+    ConstructorBlogModule,
   ],
-  providers: [ConstructedPageResolver, ConstructedPageService],
+  providers: [
+    ConstructedPageResolver,
+    ConstructedPageService,
+    ConstructedPageParserService,
+  ],
 })
 export class ConstructedPageModule {}

@@ -1145,6 +1145,7 @@ type Mutation {
   inviteUserToApp(inviteUserDto: InviteUserDto!): InvitedUser!
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!
+  parseBlogs: SendDto!
   parseCalls(account: Account! = main, from_month: Int = 1, from_year: Int = 18): SendDto!
   prepareFileForFineTune(filename: String!): String!
   registrationCustomer(registration_dto: RegistrationCustomerDto!): User!

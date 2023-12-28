@@ -40,7 +40,7 @@ export class ConstructedMetaInfo extends BaseEntity {
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  state: string;
+  state?: string;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })

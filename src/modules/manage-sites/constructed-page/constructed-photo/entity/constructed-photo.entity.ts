@@ -20,6 +20,8 @@ export class ConstructedPhoto extends BaseEntity {
   @Column('uuid')
   file_id: string;
 
+  // Relations
+
   @Field(() => File)
   @OneToOne(() => File, (file) => file.constructed_photo, { eager: true })
   @JoinColumn({ name: 'file_id' })

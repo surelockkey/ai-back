@@ -35,7 +35,7 @@ export class ConstructedPage extends BaseEntity {
 
   @Field(() => ID, { nullable: true })
   @Column({ type: 'uuid', nullable: true })
-  constructed_page_company_id: string;
+  constructed_page_company_id?: string;
 
   @Field(() => ConstructedPageCompany, { nullable: true })
   @ManyToOne(
