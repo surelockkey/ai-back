@@ -34,7 +34,7 @@ export class ConstructedPageParserLocationService {
           ConstructedPage,
           {
             type: ConstructedPageType.LOCATION,
-            constructed_page_company_id: '359be4f8-ee18-415f-b295-b89781b14065',
+            // constructed_page_company_id: '359be4f8-ee18-415f-b295-b89781b14065',
           },
         );
 

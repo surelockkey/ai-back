@@ -140,7 +140,6 @@ export class ConstructedPageParserService {
     queryRunner: QueryRunner,
   ): Promise<ConstructedPhoto> {
     const { alt, title, link } = photo;
-    console.log(link);
 
     if (link) {
       const imageResponse = await axios({
