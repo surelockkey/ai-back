@@ -60,7 +60,7 @@ export class ConstructedPageParserLocationService {
         await queryRunner.manager.save(ConstructedPreview, {
           constructed_page_id: constructed_page.id,
           constructed_photo_id: photo_id,
-          title: location.Name,
+          headline: location.Name,
           type_block: 'main_block',
         });
 
