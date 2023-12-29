@@ -10,6 +10,8 @@ import { ConstructedPreviewModule } from './constructed-preview/constructed-prev
 import { ConstructedPageCompanyModule } from './constructed-page-company/constructed-page-company.module';
 import { ConstructedPageParserService } from './constructed-page-parser.service';
 import { ConstructorBlogModule } from '../blog/constructor-blog/constructor-blog.module';
+import { ConstructedPageParserLocationService } from './constructed-page-parser-location.service';
+import { LocationModule } from '../location/location.module';
 
 @Module({
   imports: [
@@ -20,11 +22,13 @@ import { ConstructorBlogModule } from '../blog/constructor-blog/constructor-blog
     ConstructedPreviewModule,
     ConstructedPageCompanyModule,
     ConstructorBlogModule,
+    LocationModule,
   ],
   providers: [
     ConstructedPageResolver,
     ConstructedPageService,
     ConstructedPageParserService,
+    ConstructedPageParserLocationService,
   ],
 })
 export class ConstructedPageModule {}

@@ -8,5 +8,6 @@ import { UtilsModule } from '../utils/utils.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Location]), UtilsModule],
   providers: [LocationGraphService, LocationGraphResolver],
+  exports: [LocationGraphService],
 })
 export class LocationModule {}

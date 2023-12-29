@@ -10,12 +10,14 @@ import { UserRole } from 'src/modules/user/enum/user-role.enum';
 import { GetConstructedPagesArgs } from './args/get-constructed-pages.args';
 import { SendDto } from '@tech-slk/nest-crud';
 import { ConstructedPageParserService } from './constructed-page-parser.service';
+import { ConstructedPageParserLocationService } from './constructed-page-parser-location.service';
 
 @Resolver()
 export class ConstructedPageResolver {
   constructor(
     private readonly constructedPageService: ConstructedPageService,
     private readonly constructedPageParserService: ConstructedPageParserService,
+    private readonly constructedPageParserLocationService: ConstructedPageParserLocationService,
   ) {}
 
   // @RoleGuard(UserRole.ADMIN, UserRole.SEO)
@@ -63,5 +65,10 @@ export class ConstructedPageResolver {
   @Mutation(() => SendDto)
   parseBlogs() {
     return this.constructedPageParserService.parseBlogs();
+  }
+
+  @Mutation(() => SendDto)
+  parseLocation() {
+    return this.constructedPageParserLocationService.parseAllLocation();
   }
 }
