@@ -57,17 +57,17 @@ export class CallService {
       console.log(currentYear, currentMonth);
 
       console.log(
-        !(
-          Number(currentYear) > year ||
-          (Number(currentYear) === year && Number(currentMonth) >= month)
-        ),
+        (Number(currentYear) > year ||
+          (Number(currentYear) === year && Number(currentMonth) >= month)) &&
+          (year < Number(currentYear) ||
+            (year === Number(currentYear) && month <= Number(currentMonth))),
       );
 
       while (
-        !(
-          Number(currentYear) > year ||
-          (Number(currentYear) === year && Number(currentMonth) >= month)
-        )
+        (Number(currentYear) > year ||
+          (Number(currentYear) === year && Number(currentMonth) >= month)) &&
+        (year < Number(currentYear) ||
+          (year === Number(currentYear) && month <= Number(currentMonth)))
       ) {
         console.log('loop while');
 
