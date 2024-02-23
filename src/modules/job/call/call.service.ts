@@ -54,12 +54,16 @@ export class CallService {
       const currentYear = moment().format('YY'); // Get the current year in 2-digit format
       const currentMonth = moment().format('M');
 
+      console.log(currentYear, currentMonth);
+
       while (
         !(
           Number(currentYear) > year ||
           (Number(currentYear) === year && Number(currentMonth) >= month)
         )
       ) {
+        console.log('loop while');
+
         const days_arr = [
           { day_from: 2, day_to: 6 },
           { day_from: 7, day_to: 14 },
