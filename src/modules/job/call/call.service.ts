@@ -56,6 +56,13 @@ export class CallService {
 
       console.log(currentYear, currentMonth);
 
+      console.log(
+        !(
+          Number(currentYear) > year ||
+          (Number(currentYear) === year && Number(currentMonth) >= month)
+        ),
+      );
+
       while (
         !(
           Number(currentYear) > year ||
