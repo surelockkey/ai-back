@@ -41,9 +41,6 @@ export class AuthorizationService extends NestAuthService<
 
   public async loginEmailPass(login_dto: LoginCredential) {
     const user = await this.userService.findOne({ email: login_dto.email });
-    if (!user.password) {
-      throw new GraphQLError('Incorrect email or password');
-    }
     return await this.login(login_dto, {
       email: login_dto.email,
       role: user.role,
