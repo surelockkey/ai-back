@@ -48,6 +48,7 @@ export class ConstructedPageParserService {
         const new_blog = await queryRunner.manager.save(ConstructedPage, {
           ...other_blog,
           type: ConstructedPageType.BLOG,
+          constructed_page_company_id: '359be4f8-ee18-415f-b295-b89781b14065',
         });
 
         const {
