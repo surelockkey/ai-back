@@ -4,6 +4,7 @@ import * as graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   console.log({
@@ -28,6 +29,10 @@ async function bootstrap() {
   });
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
+
+  const config = new DocumentBuilder().setTitle('SLK CRM').build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(configService.get('app.port'));
 }

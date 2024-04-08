@@ -91,4 +91,34 @@ export class ContactService {
         return undefined;
     }
   }
+
+  public async sendSlkGlobalInfo(file: Promise<FileUpload>, text: string) {
+    const { createReadStream, mimetype, filename } = await file;
+
+    console.log(filename, mimetype);
+
+    await new Promise((resolve) => {
+      createReadStream()
+        .pipe(fs.createWriteStream(__dirname + `/${filename}`))
+        .on('finish', () => resolve(true));
+    });
+
+    await this.mailService.sendMail({
+      to: 'office@slk-s.com', // office@slk-s.com
+      subject: 'New Website Request',
+      text: text,
+      attachments: [
+        {
+          filename: filename,
+          path: __dirname + `/../../contact/${filename}`,
+          contentType: mimetype,
+        },
+      ],
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    fs.unlink(__dirname + `/${filename}`, () => {});
+
+    return { status: 201 };
+  }
 }
