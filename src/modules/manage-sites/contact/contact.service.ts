@@ -110,7 +110,7 @@ export class ContactService {
       attachments: [
         {
           filename: filename,
-          path: __dirname + `/../../contact/${filename}`,
+          path: __dirname + `/${filename}`,
           contentType: mimetype,
         },
       ],
