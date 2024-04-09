@@ -4,8 +4,8 @@ import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 
 @ArgsType()
 export class SlkGlobalInfoDto {
-  @Field(() => GraphQLUpload)
-  file: Promise<FileUpload>;
+  @Field(() => GraphQLUpload, { nullable: true })
+  file?: Promise<FileUpload>;
 
   @Field(() => String)
   text: string;

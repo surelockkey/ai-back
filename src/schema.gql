@@ -1156,7 +1156,7 @@ type Mutation {
   saveCountie: Countie!
   sendMessage(chat_type: ChatType! = DEFAULT, prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
-  sendSlkGlobalInfo(file: Upload!, text: String!): String!
+  sendSlkGlobalInfo(file: Upload, text: String!): String!
   setJobsCallFlow: String!
   speechToText(call_id: String!): Transcription!
   startFineTune: FineTune!

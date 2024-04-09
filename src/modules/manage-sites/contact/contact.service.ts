@@ -92,32 +92,36 @@ export class ContactService {
     }
   }
 
-  public async sendSlkGlobalInfo(file: Promise<FileUpload>, text: string) {
-    const { createReadStream, mimetype, filename } = await file;
+  public async sendSlkGlobalInfo(text: string, file?: Promise<FileUpload>) {
+    if (file) {
+      const { createReadStream, mimetype, filename } = await file;
 
-    console.log(filename, mimetype);
-
-    await new Promise((resolve) => {
-      createReadStream()
-        .pipe(fs.createWriteStream(__dirname + `/${filename}`))
-        .on('finish', () => resolve(true));
-    });
-
-    await this.mailService.sendMail({
-      to: 'office@slk-s.com', // office@slk-s.com
-      subject: 'New Website Request',
-      text: text,
-      attachments: [
-        {
-          filename: filename,
-          path: __dirname + `/${filename}`,
-          contentType: mimetype,
-        },
-      ],
-    });
-
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    fs.unlink(__dirname + `/${filename}`, () => {});
+      await new Promise((resolve) => {
+        createReadStream()
+          .pipe(fs.createWriteStream(__dirname + `/${filename}`))
+          .on('finish', () => resolve(true));
+      });
+      await this.mailService.sendMail({
+        to: 'office@slk-s.com', // office@slk-s.com
+        subject: 'New Website Request',
+        text: text,
+        attachments: [
+          {
+            filename: filename,
+            path: __dirname + `/${filename}`,
+            contentType: mimetype,
+          },
+        ],
+      });
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      fs.unlink(__dirname + `/${filename}`, () => {});
+    } else {
+      await this.mailService.sendMail({
+        to: 'office@slk-s.com', // office@slk-s.com
+        subject: 'New Website Request',
+        text: text,
+      });
+    }
 
     return { status: 201 };
   }

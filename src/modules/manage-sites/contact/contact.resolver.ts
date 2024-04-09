@@ -24,7 +24,7 @@ export class ContactResolver {
   async sendSlkGlobalInfo(
     @Args() { file, text }: SlkGlobalInfoDto,
   ): Promise<string> {
-    await this.contactService.sendSlkGlobalInfo(file, text);
+    await this.contactService.sendSlkGlobalInfo(text, file);
     return 'Info sended';
   }
 }
