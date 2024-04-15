@@ -18,6 +18,7 @@ import { BlogPreview } from '../blog/constructor-blog/entity/blog-preview.entity
 import { BlogBlock } from '../blog/constructor-blog/entity/blog-block.entity';
 import { ConstructedBlock } from './constructed-block/entity/constructed-block.entity';
 import axios from 'axios';
+import { ConstructorBlog } from '../blog/constructor-blog/entity/constructor-blog.entity';
 
 @Injectable()
 export class ConstructedPageParserService {
@@ -29,7 +30,10 @@ export class ConstructedPageParserService {
 
   public async parseBlogs() {
     const old_blogs = await this.constructorBlogService.getAllBlogs();
+    return this.transformBlogs(old_blogs);
+  }
 
+  public async transformBlogs(old_blogs: ConstructorBlog[]) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.startTransaction();
 

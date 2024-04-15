@@ -740,6 +740,11 @@ type ItemTemplate {
   uhs_sku: String!
 }
 
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
 type JobDto {
   Address: String!
   City: String!
@@ -1161,6 +1166,8 @@ type Mutation {
   speechToText(call_id: String!): Transcription!
   startFineTune: FineTune!
   startUpdateJobsInfo(account: Account! = main, from_month: Int = 1, from_year: Int = 18): String!
+  transformAllLocation(locations: JSON!): SendDto!
+  transformBlogs(blogs: JSON!): SendDto!
 
   """update blogs"""
   updateBlog(updateBlog: UpdateConstructorBlogDto!): ConstructorBlog!

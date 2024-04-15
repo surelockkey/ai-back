@@ -12,6 +12,7 @@ import * as sharp from 'sharp';
 import { FileService } from 'src/modules/file/file.service';
 import { ConstructedPreview } from './constructed-preview/entity/constructed-preview.entity';
 import { ConstructedBlock } from './constructed-block/entity/constructed-block.entity';
+import { Location } from '../location/entity/location.entity';
 
 @Injectable()
 export class ConstructedPageParserLocationService {
@@ -24,6 +25,10 @@ export class ConstructedPageParserLocationService {
   public async parseAllLocation() {
     const all_locations = await this.locationService.getAllLocation();
 
+    return this.transformAllLocation(all_locations);
+  }
+
+  public async transformAllLocation(all_locations: Location[]) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.startTransaction();
     let i = 0;

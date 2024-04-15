@@ -11,6 +11,9 @@ import { GetConstructedPagesArgs } from './args/get-constructed-pages.args';
 import { SendDto } from '@tech-slk/nest-crud';
 import { ConstructedPageParserService } from './constructed-page-parser.service';
 import { ConstructedPageParserLocationService } from './constructed-page-parser-location.service';
+import { GraphQLJSON } from 'graphql-type-json';
+import { Location } from '../location/entity/location.entity';
+import { ConstructorBlog } from '../blog/constructor-blog/entity/constructor-blog.entity';
 
 @Resolver()
 export class ConstructedPageResolver {
@@ -70,5 +73,21 @@ export class ConstructedPageResolver {
   @Mutation(() => SendDto)
   parseLocation() {
     return this.constructedPageParserLocationService.parseAllLocation();
+  }
+
+  @Mutation(() => SendDto)
+  transformAllLocation(
+    @Args('locations', { type: () => GraphQLJSON }) locations: Location[],
+  ) {
+    return this.constructedPageParserLocationService.transformAllLocation(
+      locations,
+    );
+  }
+
+  @Mutation(() => SendDto)
+  transformBlogs(
+    @Args('blogs', { type: () => GraphQLJSON }) blogs: ConstructorBlog[],
+  ) {
+    return this.transformBlogs(blogs);
   }
 }
