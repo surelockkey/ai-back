@@ -66,28 +66,42 @@ export class ConstructedPageResolver {
   }
 
   @Mutation(() => SendDto)
-  parseBlogs() {
-    return this.constructedPageParserService.parseBlogs();
+  parseBlogs(
+    @Args('constructed_page_company_id') constructed_page_company_id: string,
+  ) {
+    return this.constructedPageParserService.parseBlogs(
+      constructed_page_company_id,
+    );
   }
 
   @Mutation(() => SendDto)
-  parseLocation() {
-    return this.constructedPageParserLocationService.parseAllLocation();
+  parseLocation(
+    @Args('constructed_page_company_id') constructed_page_company_id: string,
+  ) {
+    return this.constructedPageParserLocationService.parseAllLocation(
+      constructed_page_company_id,
+    );
   }
 
   @Mutation(() => SendDto)
   transformAllLocation(
     @Args('locations', { type: () => GraphQLJSON }) locations: Location[],
+    @Args('constructed_page_company_id') constructed_page_company_id: string,
   ) {
     return this.constructedPageParserLocationService.transformAllLocation(
       locations,
+      constructed_page_company_id,
     );
   }
 
   @Mutation(() => SendDto)
   transformBlogs(
     @Args('blogs', { type: () => GraphQLJSON }) blogs: ConstructorBlog[],
+    @Args('constructed_page_company_id') constructed_page_company_id: string,
   ) {
-    return this.transformBlogs(blogs);
+    return this.constructedPageParserService.transformBlogs(
+      blogs,
+      constructed_page_company_id,
+    );
   }
 }

@@ -28,12 +28,15 @@ export class ConstructedPageParserService {
     private readonly fileService: FileService,
   ) {}
 
-  public async parseBlogs() {
+  public async parseBlogs(constructed_page_company_id: string) {
     const old_blogs = await this.constructorBlogService.getAllBlogs();
-    return this.transformBlogs(old_blogs);
+    return this.transformBlogs(old_blogs, constructed_page_company_id);
   }
 
-  public async transformBlogs(old_blogs: ConstructorBlog[]) {
+  public async transformBlogs(
+    old_blogs: ConstructorBlog[],
+    constructed_page_company_id: string,
+  ) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.startTransaction();
 
@@ -52,7 +55,7 @@ export class ConstructedPageParserService {
         const new_blog = await queryRunner.manager.save(ConstructedPage, {
           ...other_blog,
           type: ConstructedPageType.BLOG,
-          constructed_page_company_id: '359be4f8-ee18-415f-b295-b89781b14065',
+          constructed_page_company_id,
         });
 
         const {
