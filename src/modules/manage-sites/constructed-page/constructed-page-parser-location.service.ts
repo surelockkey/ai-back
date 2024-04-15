@@ -55,7 +55,7 @@ export class ConstructedPageParserLocationService {
           constructed_page_id: constructed_page.id,
           meta_tag_description: location.Description,
           meta_tag_title: location.Title,
-          url_for_blog: url,
+          url,
           name: location.Name,
           state: location.State,
           map_link: location.Map_link,
