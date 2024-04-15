@@ -42,9 +42,10 @@ export class ConstructedPageParserLocationService {
           constructed_page_id: constructed_page.id,
           meta_tag_description: location.Description,
           meta_tag_title: location.Title,
-          url: location.Url,
+          url_for_blog: location.Url,
           name: location.Name,
           state: location.State,
+          map_link: location.Map_link,
         });
 
         let photo_id;
@@ -60,9 +61,9 @@ export class ConstructedPageParserLocationService {
         await queryRunner.manager.save(ConstructedPreview, {
           constructed_page_id: constructed_page.id,
           constructed_photo_id: photo_id,
-          headline: location.H1,
+          headline: `Locksmith services in ${location.Name}, ${location.State}`,
+          description: location.Our_services.Text_before,
           type_block: 'main_block',
-          description: location.Subtitle,
         });
 
         await queryRunner.manager.save(ConstructedBlock, [
@@ -70,8 +71,8 @@ export class ConstructedPageParserLocationService {
             constructed_page_id: constructed_page.id,
             type_block: 'main_block',
             position_block: 1,
-            headline: location.H1,
-            description: location.Subtitle,
+            headline: `Locksmith services in ${location.Name}, ${location.State}`,
+            description: location.Our_services.Text_before,
             constructed_photo_id: photo_id,
           },
           {

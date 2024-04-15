@@ -7,9 +7,7 @@ import {
   NestInterceptor,
   Post,
   Req,
-  UploadedFile,
   UseGuards,
-  UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
 import { Request } from 'express';
@@ -20,7 +18,6 @@ import { ValidationCreateContactPipe } from './pipe/contact.pipe';
 import { Contact } from './entity/contact.entity';
 import {
   ApiBody,
-  ApiConsumes,
   ApiExtraModels,
   ApiResponse,
   getSchemaPath,
@@ -62,27 +59,4 @@ export class ContactController {
       (req.headers['x-real-ip'] || req.ip).toString(),
     );
   }
-
-  // @ApiConsumes('multipart/form-data')
-  // @ApiBody({
-  //   schema: {
-  //     type: 'object',
-  //     properties: {
-  //       // text: { type: 'string' },
-  //       file: {
-  //         type: 'string',
-  //         format: 'binary',
-  //       },
-  //     },
-  //   },
-  // })
-  // @Post('send_global')
-  // // @UseInterceptors(FileExtender)
-  // @UseInterceptors(FileInterceptor('file'))
-  // sendGlobal(@UploadedFile('file') file) {
-  //   console.log({
-  //     file,
-  //     // data,
-  //   });
-  // }
 }
