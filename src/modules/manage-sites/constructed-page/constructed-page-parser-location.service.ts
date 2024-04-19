@@ -49,7 +49,7 @@ export class ConstructedPageParserLocationService {
           },
         );
 
-        const url = `location-${location?.Name?.toLowerCase()
+        const url = `locksmith-${location?.Name?.toLowerCase()
           .trim()
           .split(' ')
           .join('-')}`;
