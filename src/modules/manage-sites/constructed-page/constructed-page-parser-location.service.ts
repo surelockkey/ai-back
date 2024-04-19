@@ -49,7 +49,10 @@ export class ConstructedPageParserLocationService {
           },
         );
 
-        const url = `location-${location?.Name?.trim().split(' ').join('-')}`;
+        const url = `location-${location?.Name?.toLowerCase()
+          .trim()
+          .split(' ')
+          .join('-')}`;
 
         await queryRunner.manager.save(ConstructedMetaInfo, {
           constructed_page_id: constructed_page.id,
