@@ -129,8 +129,13 @@ export class ConstructedPageParserLocationService {
           },
           {
             constructed_page_id: constructed_page.id,
-            type_block: 'about_city',
+            type_block: 'testimonials',
             position_block: 6,
+          },
+          {
+            constructed_page_id: constructed_page.id,
+            type_block: 'about_city',
+            position_block: 7,
             headline: location.About_city.H2,
             description: location.About_city.Text,
           },
