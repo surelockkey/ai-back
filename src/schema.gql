@@ -1150,9 +1150,9 @@ type Mutation {
   inviteUserToApp(inviteUserDto: InviteUserDto!): InvitedUser!
   login(login_dto: LoginCredential!): TokenResponse!
   logout(refresh_token: String!): SendDto!
-  parseBlogs: SendDto!
+  parseBlogs(constructed_page_company_id: String!): SendDto!
   parseCalls(account: Account! = main, from_month: Int = 1, from_year: Int = 18): SendDto!
-  parseLocation: SendDto!
+  parseLocation(constructed_page_company_id: String!): SendDto!
   prepareFileForFineTune(filename: String!): String!
   registrationCustomer(registration_dto: RegistrationCustomerDto!): User!
   requestLocksmith(locksmith: RequestLocksmithDto!): Locksmith!
@@ -1166,8 +1166,8 @@ type Mutation {
   speechToText(call_id: String!): Transcription!
   startFineTune: FineTune!
   startUpdateJobsInfo(account: Account! = main, from_month: Int = 1, from_year: Int = 18): String!
-  transformAllLocation(locations: JSON!): SendDto!
-  transformBlogs(blogs: JSON!): SendDto!
+  transformAllLocation(constructed_page_company_id: String!, locations: JSON!): SendDto!
+  transformBlogs(blogs: JSON!, constructed_page_company_id: String!): SendDto!
 
   """update blogs"""
   updateBlog(updateBlog: UpdateConstructorBlogDto!): ConstructorBlog!

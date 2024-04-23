@@ -36,6 +36,9 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
       where: { is_posted, type, constructed_page_company_id },
       order: {
         post_date: 'DESC',
+        blocks: {
+          position_block: 'ASC',
+        },
       },
       ...pagination,
     });
