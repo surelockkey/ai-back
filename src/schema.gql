@@ -113,6 +113,7 @@ type ConstructedBlock {
   list: String
   photo: ConstructedPhoto
   position_block: Float
+  state: String
   styles: String
   text: String
   text_left: String
@@ -130,6 +131,7 @@ input ConstructedBlockDto {
   list: String
   photo: ConstructedPhotoDto
   position_block: Float
+  state: String
   styles: String
   text: String
   text_left: String
@@ -1781,6 +1783,7 @@ input UpdateOrCreateConstructedBlockDto {
   list: String
   photo: UpdateConstructedPhotoDto
   position_block: Float
+  state: String
   styles: String
   text: String
   text_left: String

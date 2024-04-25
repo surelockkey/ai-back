@@ -131,6 +131,7 @@ export class ConstructedPageParserLocationService {
             constructed_page_id: constructed_page.id,
             type_block: 'testimonials',
             position_block: 6,
+            state: location.State,
           },
           {
             constructed_page_id: constructed_page.id,
