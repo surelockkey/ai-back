@@ -76,8 +76,8 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
       })
       .orderBy('constructed_page.post_date', 'DESC')
       .addOrderBy('constructed_block.position_block', 'ASC')
-      .offset(pagination.skip)
-      .limit(pagination.take)
+      .skip(pagination.skip)
+      .take(pagination.take)
       .getMany();
 
     // return items;
