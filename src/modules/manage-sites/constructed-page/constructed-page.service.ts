@@ -32,22 +32,55 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
     is_posted,
     constructed_page_company_id,
   }: GetConstructedPagesArgs) {
-    const [items, count] = await this.constructedPageRepository.findAndCount({
-      where: {
+    // const [items, count] = await this.constructedPageRepository.findAndCount({
+    //   where: {
+    //     is_posted,
+    //     type,
+    //     constructed_page_company_id,
+    //   },
+    //   order: {
+    //     post_date: 'DESC',
+    //     blocks: {
+    //       position_block: 'ASC',
+    //     },
+    //   },
+    //   ...pagination,
+    // });
+
+    return await this.constructedPageRepository
+      .createQueryBuilder('constructed_page')
+      .leftJoinAndSelect(
+        'constructed_page.constructed_page_company',
+        'constructed_page_company',
+      )
+      .leftJoinAndSelect('constructed_page.meta_info', 'meta_info')
+      .leftJoinAndSelect('constructed_page.blocks', 'constructed_block')
+      .leftJoinAndSelect('constructed_block.photo', 'constructed_block_photo')
+      .leftJoinAndSelect(
+        'constructed_block_photo.file',
+        'constructed_block_photo_file',
+      )
+      .leftJoinAndSelect('constructed_page.preview', 'constructed_page_preview')
+      .leftJoinAndSelect(
+        'constructed_page_preview.photo',
+        'constructed_page_preview_photo',
+      )
+      .leftJoinAndSelect(
+        'constructed_page_preview_photo.file',
+        'constructed_page_preview_photo_file',
+      )
+      .where({
         is_posted,
         type,
         constructed_page_company_id,
-      },
-      order: {
-        post_date: 'DESC',
-        blocks: {
-          position_block: 'ASC',
-        },
-      },
-      ...pagination,
-    });
+      })
+      .orderBy('constructed_page.post_date', 'DESC')
+      .addOrderBy('constructed_block.position_block', 'ASC')
+      .skip(pagination.skip)
+      .take(pagination.take)
+      .getMany();
 
-    return items;
+    // return items;
   }
 
   public async getConstructedPageById(id: string) {
