@@ -32,8 +32,12 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
     is_posted,
     constructed_page_company_id,
   }: GetConstructedPagesArgs) {
-    return this.constructedPageRepository.find({
-      where: { is_posted, type, constructed_page_company_id },
+    const [items, count] = await this.constructedPageRepository.findAndCount({
+      where: {
+        is_posted,
+        type,
+        constructed_page_company_id,
+      },
       order: {
         post_date: 'DESC',
         blocks: {
@@ -42,6 +46,8 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
       },
       ...pagination,
     });
+
+    return items;
   }
 
   public async getConstructedPageById(id: string) {
