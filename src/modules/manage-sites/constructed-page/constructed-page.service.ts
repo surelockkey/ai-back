@@ -69,11 +69,12 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
         'constructed_page_preview_photo.file',
         'constructed_page_preview_photo_file',
       )
-      .where({
-        is_posted: is_posted ?? undefined,
-        type,
-        constructed_page_company_id,
-      })
+      .where('constructed_page.is_posted = :is_posted', { is_posted })
+      .andWhere('constructed_page.type = :type', { type })
+      .andWhere(
+        'constructed_page.constructed_page_company_id = :constructed_page_company_id',
+        { constructed_page_company_id },
+      )
       .orderBy('constructed_page.post_date', 'DESC')
       .addOrderBy('constructed_block.position_block', 'ASC')
       .skip(pagination.skip)
