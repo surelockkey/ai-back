@@ -80,6 +80,8 @@ export class JobService {
       .catch((e) => console.log(e))
       .then((r) => r);
 
+    console.log(total_pages_data);
+
     console.log('total_pages: ', total_pages_data.total);
     console.log(process.memoryUsage().heapUsed);
 
