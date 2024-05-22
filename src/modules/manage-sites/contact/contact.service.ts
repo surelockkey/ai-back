@@ -92,7 +92,12 @@ export class ContactService {
     }
   }
 
-  public async sendSlkGlobalInfo(text: string, file?: Promise<FileUpload>) {
+  public async sendSlkGlobalInfo(
+    text: string,
+    file?: Promise<FileUpload>,
+    email_to = 'office@slk-s.com',
+    title = 'New Website Request',
+  ) {
     if (file) {
       const { createReadStream, mimetype, filename } = await file;
 
@@ -117,8 +122,8 @@ export class ContactService {
       fs.unlink(__dirname + `/${filename}`, () => {});
     } else {
       await this.mailService.sendMail({
-        to: 'office@slk-s.com', // office@slk-s.com
-        subject: 'New Website Request',
+        to: email_to, // office@slk-s.com
+        subject: title,
         text: text,
       });
     }
