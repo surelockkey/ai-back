@@ -13,4 +13,6 @@ export const metro_areas = {
   '25590': 'SURE LOCK NEW YORK',
   '25591': 'SURE LOCK RHODE ISLAND ',
   '61861': 'SURE LOCK SHERMAN TX',
+  '137523': 'TX/AUSTI',
+  '123685': 'SURE LOCK ALABAMA AL',
 };

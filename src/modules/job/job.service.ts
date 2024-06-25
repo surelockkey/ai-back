@@ -327,7 +327,7 @@ export class JobService {
     }
   }
 
-  @Cron('0 0 9 * * *', {
+  @Cron('0 0 * * * *', {
     timeZone: 'Europe/Kiev',
   })
   async reParseJobEveryDay() {
