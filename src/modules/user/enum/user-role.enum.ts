@@ -8,6 +8,9 @@ export enum UserRole {
   SEO = 'SEO',
   LOGISTIC = 'LOGISTIC',
   CUSTOMER = 'CUSTOMER',
+  MANAGER = 'MANAGER',
+  HR = 'HR',
+  MARKETING = 'MARKETING',
 }
 
 registerEnumType(UserRole, { name: 'UserRole' });
