@@ -29,7 +29,7 @@ export class ConstructedPageResolver {
     return this.constructedPageService.getConstructedPages(args);
   }
 
-  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)
   @Query(() => ConstructedPage)
   getConstructedPageById(@Args('id', { type: () => ID }) id: string) {
     return this.constructedPageService.getConstructedPageById(id);
@@ -41,7 +41,7 @@ export class ConstructedPageResolver {
     return this.constructedPageService.getConstructedPageByUrl(url);
   }
 
-  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)
   @Mutation(() => ConstructedPage)
   createConstructedPage(
     @Args('constructed_page', { type: () => CreateConstructedPageDto })
@@ -50,13 +50,13 @@ export class ConstructedPageResolver {
     return this.constructedPageService.createConstructedPage(constructed_page);
   }
 
-  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)
   @Mutation(() => ID)
   deleteConstructedPageById(@Args('id', { type: () => ID }) id: string) {
     return this.constructedPageService.deleteByIdReturnId(id);
   }
 
-  @RoleGuard(UserRole.ADMIN, UserRole.SEO)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)
   @Mutation(() => ConstructedPage)
   updateConstructedPage(
     @Args('constructed_page', { type: () => UpdateConstructedPageDto })
