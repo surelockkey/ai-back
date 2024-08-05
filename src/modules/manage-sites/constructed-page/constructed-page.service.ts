@@ -12,7 +12,7 @@ import { ConstructedBlockService } from './constructed-block/constructed-block.s
 import { ConstructedMetaInfoService } from './constructed-meta-info/constructed-meta-info.service';
 import { ConstructedPreviewService } from './constructed-preview/constructed-preview.service';
 import { GetConstructedPagesArgs } from './args/get-constructed-pages.args';
-import moment from 'moment';
+import * as moment from 'moment';
 
 @Injectable()
 export class ConstructedPageService extends CrudService<ConstructedPage> {
