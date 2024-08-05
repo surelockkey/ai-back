@@ -12,6 +12,7 @@ import { ConstructedBlockService } from './constructed-block/constructed-block.s
 import { ConstructedMetaInfoService } from './constructed-meta-info/constructed-meta-info.service';
 import { ConstructedPreviewService } from './constructed-preview/constructed-preview.service';
 import { GetConstructedPagesArgs } from './args/get-constructed-pages.args';
+import moment from 'moment';
 
 @Injectable()
 export class ConstructedPageService extends CrudService<ConstructedPage> {
@@ -109,7 +110,9 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
 
       const constructed_page = await queryRunner.manager.save(
         ConstructedPage,
-        page_dto,
+        page_dto.is_posted
+          ? { ...page_dto, post_date: moment().unix() }
+          : page_dto,
       );
 
       await this.constructedBlockService.saveManyBlocksTransactional(
@@ -194,7 +197,9 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
           {
             id,
           },
-          constructed_page_dto,
+          constructed_page_dto.is_posted
+            ? { ...constructed_page_dto, post_date: moment().unix() }
+            : constructed_page_dto,
         );
       }
 
