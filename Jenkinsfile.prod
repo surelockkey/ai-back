@@ -39,6 +39,7 @@ def prod_secrets = [
         [envVar: 'AWS_REGION',  vaultKey: 'AWS_REGION'],
         [envVar: 'AWS_BUCKET_LOCKSMITH',  vaultKey: 'AWS_BUCKET_LOCKSMITH'],
         [envVar: 'TOKEN_WORKIZ', vaultKey: 'TOKEN_WORKIZ'],
+        [envVar: 'ENVIROMENT', vaultKey: 'ENVIROMENT'],
     ]],
 ]
 
@@ -112,6 +113,7 @@ pipeline {
                         echo "AWS_BUCKET=${AWS_BUCKET}" >> .env
                         echo "AWS_REGION=${AWS_REGION}" >> .env
                         echo "AWS_BUCKET_LOCKSMITH=${AWS_BUCKET_LOCKSMITH}" >> .env
+                        echo "ENVIROMENT=${ENVIROMENT}" >> .env
 
                         sudo docker-compose build --no-cache --build-arg NPM_TOKEN=${NPM_TOKEN} prod
                         sudo docker-compose up -d

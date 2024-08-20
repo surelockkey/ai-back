@@ -331,11 +331,13 @@ export class JobService {
     timeZone: 'Europe/Kiev',
   })
   async reParseJobEveryDay() {
-    const date = new Date();
-    const month = date.getMonth() + 1;
-    const year = parseInt(date.getFullYear().toString().slice(-2));
+    if (process.env.ENVIROMENT !== 'prod') {
+      const date = new Date();
+      const month = date.getMonth() + 1;
+      const year = parseInt(date.getFullYear().toString().slice(-2));
 
-    await this.startUpdateJobsInfo(year, month, 'main');
-    await this.startUpdateJobsInfo(year, month, 'arizona');
+      await this.startUpdateJobsInfo(year, month, 'main');
+      await this.startUpdateJobsInfo(year, month, 'arizona');
+    }
   }
 }
