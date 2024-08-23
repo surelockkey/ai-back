@@ -21,6 +21,7 @@ import { CarInventoryModule } from './modules/car-inventory/car-inventory.module
 import { UserModule } from './modules/user/user.module';
 import { ManageSitesModule } from './modules/manage-sites/manage-sites.module';
 import { CustomerAppModule } from './modules/customer-app/customer-app.module';
+import { ReferralModule } from './modules/referral/referral.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { CustomerAppModule } from './modules/customer-app/customer-app.module';
     UserModule,
     ManageSitesModule,
     CustomerAppModule,
+    ReferralModule,
   ],
 })
 export class AppModule {}

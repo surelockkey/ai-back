@@ -478,6 +478,14 @@ input CreatePhotoForBlockDto {
   title: String
 }
 
+input CreateReferralDto {
+  address: String
+  first_name: String!
+  last_name: String
+  phone: String!
+  service_type: String
+}
+
 input CreateTemplateDto {
   name: String!
 }
@@ -1114,6 +1122,7 @@ type Mutation {
   createOrUpdateUserNote(user_note: CreateOrUpdateUserNoteDto!): UserNote!
   createOrUpdateUserScheduleRequest(schedule_request: [CreateOrUpdateUserScheduleRequestDto!]!): [UserScheduleRequest!]!
   createOrder(order_dto: CreateOrderDto!): Order!
+  createReferral(referral: CreateReferralDto!): Referral!
   createSystemSettings(max_tokens: Int!): SystemSettings!
   createTimeTemplate(time_template: CreateTimeTemplateDto!): TimeTemplate!
   createUserInfo(user_info: CreateUserInfoDto!): UserInfo!
@@ -1303,6 +1312,7 @@ type Query {
   getAllLocationPhoto: [LocationPhoto!]!
   getAllMessages(chat_type: ChatType! = DEFAULT): [Message!]!
   getAllOrders: [Order!]!
+  getAllReferrals: [Referral!]!
   getAllTechsWorkiz: [TechnicianWorkiz!]!
   getAllTemplates: [Template!]!
   getAllTimeTemplates: [TimeTemplate!]!
@@ -1363,6 +1373,15 @@ type Query {
   listModels: String!
   searchCars(make: String, model: String): [Car!]!
   testApi(method: String!, url: String!): String!
+}
+
+type Referral {
+  address: String
+  first_name: String!
+  id: ID!
+  last_name: String
+  phone: String!
+  service_type: String
 }
 
 input RegistrationCustomerDto {
