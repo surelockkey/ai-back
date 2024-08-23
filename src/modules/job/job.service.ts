@@ -56,12 +56,7 @@ export class JobService {
         year += 1;
       }
 
-      console.log(
-        month,
-        year,
-        Number(current_date.format('YY')),
-        Number(current_date.format('M')),
-      );
+      console.log('Jobs M: ', month, 'Y: ', year);
     }
   }
 
@@ -79,8 +74,6 @@ export class JobService {
     )
       .catch((e) => console.log(e))
       .then((r) => r);
-
-    console.log(total_pages_data);
 
     console.log('total_pages: ', total_pages_data.total);
     console.log(process.memoryUsage().heapUsed);
@@ -113,12 +106,11 @@ export class JobService {
 
   private async getFullJob(job_id: string, account?: 'main' | 'arizona') {
     try {
-      let job = await this.workizCoreApiService.req(
-        `/ajaxc/job/get/${job_id}/`,
-        'post',
-        undefined,
-        account,
-      );
+      let job = await this.workizCoreApiService
+        .req(`/ajaxc/job/get/${job_id}/`, 'post', undefined, account)
+        .catch((e) => {
+          console.log(job_id, 'error', e);
+        });
 
       if (job.data) {
         let countie = await this.countieService.findOneWithoutError({
@@ -241,11 +233,11 @@ export class JobService {
     month: number,
     account?: 'main' | 'arizona',
   ) {
-    const commissions = await this.workizCoreApiService.getAllCommissions(
-      month,
-      year,
-      account,
-    );
+    const commissions = await this.workizCoreApiService
+      .getAllCommissions(month, year, account)
+      .catch((e) => {
+        console.log('commission err', e);
+      });
 
     if (commissions) {
       commissions.shift();
@@ -286,20 +278,23 @@ export class JobService {
       {},
       { is_parsing: true },
     );
+    console.log('PARSING JOBS');
     await this.jobLoop(from_year, from_month, account);
+    console.log('PARSING COMMISSION');
     await this.commissionsLoop(from_year, from_month, account);
     await this.systemSettingService.updateByCriteriaAndReturnOne(
       {},
       { is_parsing: false },
     );
-
+    console.log('PARSING CALLS');
     await this.callService.parseCalls(from_month, from_year, account);
+    console.log('SETTING CALL FLOWS');
     await this.setJobsCallFlow();
   }
 
   public async setJobsCallFlow() {
     const jobs = await this.jobRepository.find();
-    let count = 1;
+    // let count = 1;
 
     for (const job of jobs) {
       const call = await this.callService.firstJobCall(job.uuid);
@@ -309,15 +304,15 @@ export class JobService {
           { uuid: job.uuid },
           { call_flow: call.flow_name },
         );
-        console.log(`${count}/${jobs.length}`);
+        // console.log(`${count}/${jobs.length}`);
       } else {
         await this.jobRepository.update(
           { uuid: job.uuid },
           { call_flow: null },
         );
-        console.log(`${count}/${jobs.length} NOT FOUND`);
+        // console.log(`${count}/${jobs.length} NOT FOUND`);
       }
-      count++;
+      // count++;
     }
   }
 
