@@ -447,7 +447,7 @@ export class WorkizCoreApiService {
 
     if (response?.data?.csv_data && response?.data?.csv_data.length > 0) {
       console.log(response?.data?.csv_data[1]);
-      
+
       return response?.data?.csv_data[0]?.data;
     }
   }
