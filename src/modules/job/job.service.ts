@@ -87,7 +87,10 @@ export class JobService {
           let jobs: any[] = req.aaData;
 
           await Promise.all(
-            jobs.map((job) => this.getFullJob(job.uuid, account)),
+            jobs.map(async (job) => {
+              await this.jobRepository.save({ uuid: job.uuid });
+              await this.getFullJob(job.uuid, account);
+            }),
           );
 
           jobs = null;
@@ -282,6 +285,9 @@ export class JobService {
     await this.jobLoop(from_year, from_month, account);
     console.log('PARSING COMMISSION');
     await this.commissionsLoop(from_year, from_month, account);
+    for (let i = 0; i < 5; i++) {
+      await this.getUnsavedJobs();
+    }
     await this.systemSettingService.updateByCriteriaAndReturnOne(
       {},
       { is_parsing: false },
