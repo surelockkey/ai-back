@@ -239,8 +239,6 @@ export class JobService {
         console.log('commission err', e);
       });
 
-    console.log(commissions);
-
     if (commissions) {
       commissions.shift();
 
