@@ -423,7 +423,7 @@ export class WorkizCoreApiService {
         month + 1 > 12 ? 1 : month + 1
       }.${
         month + 1 > 12 ? year + 1 : year
-      }&init_status=&company_id=&adgroup_id=&job_type=&report_mode_submit=standart&technition=&technition_id=&metro_id=&report_by=1&sSearch=&stlFilter=undefined&_=1694767995375`,
+      }&init_status=&company_id=&adgroup_id=&job_type=&report_mode_submit=standart&technition=&technition_id=&metro_id=&report_by=3&sSearch=&stlFilter=undefined&_=1724417599299`,
       {
         headers: {
           authority: 'app.workiz.com',
