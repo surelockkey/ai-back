@@ -136,7 +136,7 @@ export class JobService {
 
       return;
     } catch (e) {
-      console.log(e);
+      console.log('getFullJob', e);
     }
   }
 
@@ -185,7 +185,11 @@ export class JobService {
         account,
       );
     } catch (e) {
-      console.log('error', `1.${month}.${year}_1.${month_to}.${year_to}`);
+      console.log(
+        'getJobsByRange error',
+        `1.${month}.${year}_1.${month_to}.${year_to}`,
+        e,
+      );
     }
   }
 
