@@ -91,11 +91,11 @@ export class CallService {
 
           console.log(`R: ${date_range}`);
           //   parsing by all pages in range
-          const first_page = await this.workizCoreApiService.getCalls(
-            date_range,
-            0,
-            account,
-          );
+          const first_page = await this.workizCoreApiService
+            .getCalls(date_range, 0, account)
+            .catch((e) => {
+              console.log('call get pages err', e);
+            });
 
           const total_pages = first_page.pages;
 
@@ -104,11 +104,11 @@ export class CallService {
           let current_page = 0;
 
           while (current_page < total_pages) {
-            const calls_data = await this.workizCoreApiService.getCalls(
-              date_range,
-              current_page,
-              account,
-            );
+            const calls_data = await this.workizCoreApiService
+              .getCalls(date_range, current_page, account)
+              .catch((e) => {
+                console.log('call get err', e);
+              });
 
             await this.callRepository.save(
               calls_data.aaData.map((call) =>

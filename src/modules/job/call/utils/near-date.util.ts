@@ -34,9 +34,9 @@ export function getNearestDate(
     // }
   });
 
-  console.log('====================================');
-  console.log({ nearestDate, dateToCheckFor, datesToBeChecked, minDifference });
-  console.log('====================================');
+  // console.log('====================================');
+  // console.log({ nearestDate, dateToCheckFor, datesToBeChecked, minDifference });
+  // console.log('====================================');
 
   return nearestDate;
 }
