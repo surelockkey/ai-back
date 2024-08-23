@@ -71,11 +71,20 @@ export class CallService {
       ) {
         console.log('loop while');
 
+        // const days_arr = [
+        //   { day_from: 2, day_to: 6 },
+        //   { day_from: 7, day_to: 14 },
+        //   { day_from: 15, day_to: 22 },
+        //   { day_from: 23, day_to: 1 },
+        // ];
+
         const days_arr = [
-          { day_from: 2, day_to: 4 },
-          { day_from: 5, day_to: 10 },
-          { day_from: 15, day_to: 22 },
-          { day_from: 23, day_to: 1 },
+          { day_from: 2, day_to: 5 },
+          { day_from: 6, day_to: 10 },
+          { day_from: 11, day_to: 15 },
+          { day_from: 16, day_to: 20 },
+          { day_from: 21, day_to: 25 },
+          { day_from: 26, day_to: 1 },
         ];
 
         console.log(`Y: ${year} M: ${month}`);
@@ -94,7 +103,7 @@ export class CallService {
           const first_page = await this.workizCoreApiService
             .getCalls(date_range, 0, account)
             .catch((e) => {
-              console.log('call get pages err', e);
+              console.log('call get first page err', e);
             });
 
           const total_pages = first_page.pages;
