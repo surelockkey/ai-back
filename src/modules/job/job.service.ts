@@ -290,6 +290,7 @@ export class JobService {
     await this.callService.parseCalls(from_month, from_year, account);
     console.log('SETTING CALL FLOWS');
     await this.setJobsCallFlow();
+    console.log('FINISH');
   }
 
   public async setJobsCallFlow() {
