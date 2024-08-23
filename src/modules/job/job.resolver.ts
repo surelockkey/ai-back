@@ -14,8 +14,15 @@ export class JobResolver {
   }
 
   @Query(() => String)
-  public async getCommission() {
-    return this.jobService.commissionsLoop(17, 1, 'main');
+  public async getCommission(
+    @Args('from_year', { type: () => Int, nullable: true, defaultValue: 18 })
+    from_year: number,
+    @Args('from_month', { type: () => Int, nullable: true, defaultValue: 1 })
+    from_month: number,
+    @Args('account', { type: () => Account, defaultValue: Account.main })
+    account: Account,
+  ) {
+    return this.jobService.commissionsLoop(from_year, from_month, account);
   }
 
   @Mutation(() => String)
