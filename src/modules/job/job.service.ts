@@ -88,7 +88,7 @@ export class JobService {
 
           await Promise.all(
             jobs.map(async (job) => {
-              await this.jobRepository.save({ uuid: job.uuid });
+              await this.jobRepository.save({ uuid: job.uuid, account });
               await this.getFullJob(job.uuid, account);
             }),
           );
@@ -116,6 +116,8 @@ export class JobService {
         });
 
       if (job.data) {
+        console.log(job_id, 'not job data');
+
         let countie = await this.countieService.findOneWithoutError({
           city: job?.data?.city,
           state: job?.data?.state,
@@ -328,9 +330,13 @@ export class JobService {
       where: { created_date: IsNull(), total_sales: Not(IsNull()) },
     });
 
+    console.log('Getting unsaved jobs ', unsaved_jobs.length);
+
     for (const job of unsaved_jobs) {
       await this.getFullJob(job.uuid, job.account as 'main' | 'arizona');
     }
+
+    console.log('Finish get unsaved jobs');
   }
 
   @Cron('0 0 9 * * *', {
