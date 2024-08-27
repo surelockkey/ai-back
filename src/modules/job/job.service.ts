@@ -327,7 +327,7 @@ export class JobService {
 
   public async getUnsavedJobs() {
     const unsaved_jobs = await this.jobRepository.find({
-      where: { created_date: IsNull(), total_sales: Not(IsNull()) },
+      where: { created_date: IsNull() },
     });
 
     console.log('Getting unsaved jobs ', unsaved_jobs.length);
