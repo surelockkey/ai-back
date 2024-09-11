@@ -248,6 +248,11 @@ export class Job {
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   tech_notes: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  dispatch_notes: string;
+
   // job_items: [],
   // payments: [],
   @Field(() => Float, { nullable: true })
