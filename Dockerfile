@@ -11,9 +11,9 @@ RUN npm install
 
 COPY . .
 
-RUN NODE_OPTIONS=--max-old-space-size=2048 npm run build
+RUN npm run build
 
 ENV GENERATE_SOURCEMAP=false
 ENV NODE_OPTIONS=--max-old-space-size=2048
 
-CMD "NODE_OPTIONS=--max-old-space-size=2048" "npm" "start"
+CMD "npm" "start"
