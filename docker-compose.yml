@@ -3,6 +3,7 @@ version: '3.3'
 services:
   prod:
     container_name: ai_api
+    cgroup_parent: "docker_limit.slice"
     build:
       dockerfile: Dockerfile
       target: production
