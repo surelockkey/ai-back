@@ -3,7 +3,7 @@ version: '3.3'
 services:
   prod:
     container_name: ai_api
-    cgroup_parent: "docker_limit.slice"
+    cgroup_parent: "system.slice"
     build:
       dockerfile: Dockerfile
       target: production
@@ -25,7 +25,7 @@ services:
 
   postgres:
     image: postgres:14.1
-    cgroup_parent: "docker_limit.slice"
+    cgroup_parent: "system.slice"
     ports:
       - 5432:5432
     environment:
@@ -36,7 +36,7 @@ services:
       - data:/var/lib/postgresql/data
   pgadmin:
     image: dpage/pgadmin4
-    cgroup_parent: "docker_limit.slice"
+    cgroup_parent: "system.slice"
     depends_on:
       - postgres
     ports:
