@@ -24,7 +24,6 @@ services:
 
   postgres:
     image: postgres:14.1
-    cgroup_parent: "/system.slice"
     ports:
       - 5432:5432
     environment:
