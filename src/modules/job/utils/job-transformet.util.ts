@@ -71,6 +71,11 @@ export function workizJobToTableJob(
   workiz_job,
   account: 'main' | 'arizona' = 'main',
 ): Omit<Job, 'county'> {
+  console.log({
+    dispatch_notes:
+      workiz_job?.custom_fields?.dispatchers?.manager_note || 'n/a',
+  });
+
   return {
     uuid: workiz_job?.data?.uuid,
     tip_amount: parseFloat(workiz_job?.data?.tip_amount || '0'),
