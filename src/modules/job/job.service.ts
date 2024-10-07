@@ -116,13 +116,11 @@ export class JobService {
         });
 
       if (job.data) {
-        console.log(job_id, 'not job data');
-
         let countie = await this.countieService.findOneWithoutError({
           city: job?.data?.city,
           state: job?.data?.state,
         });
-        console.log(job?.custom_fields);
+        console.log(job?.custom_fields, 'custom fields');
 
         await this.jobRepository.save({
           ...workizJobToTableJob(job, account),
