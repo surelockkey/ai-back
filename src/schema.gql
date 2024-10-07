@@ -149,9 +149,11 @@ type ConstructedMetaInfo {
   meta_tag_description: String
   meta_tag_title: String
   name: String
+  redirect_url: String
   schema_script: String
   state: String
   url: String
+  video_link: String
 }
 
 input ConstructedMetaInfoDto {
@@ -162,9 +164,11 @@ input ConstructedMetaInfoDto {
   meta_tag_description: String
   meta_tag_title: String
   name: String
+  redirect_url: String
   schema_script: String
   state: String
   url: String
+  video_link: String
 }
 
 type ConstructedPage {
@@ -1620,9 +1624,11 @@ input UpdateConstructedMetaInfoDto {
   meta_tag_description: String
   meta_tag_title: String
   name: String
+  redirect_url: String
   schema_script: String
   state: String
   url: String
+  video_link: String
 }
 
 input UpdateConstructedPageCompanyDto {
