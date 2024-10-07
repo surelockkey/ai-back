@@ -122,6 +122,8 @@ export class JobService {
           city: job?.data?.city,
           state: job?.data?.state,
         });
+        console.log(job?.custom_fields);
+
         await this.jobRepository.save({
           ...workizJobToTableJob(job, account),
           county: countie ? countie.county : 'n/a',
