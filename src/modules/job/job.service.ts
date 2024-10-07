@@ -120,7 +120,7 @@ export class JobService {
           city: job?.data?.city,
           state: job?.data?.state,
         });
-        console.log(job?.custom, 'custom fields');
+        console.log(job?.data?.custom_fields, 'custom fields');
 
         await this.jobRepository.save({
           ...workizJobToTableJob(job, account),
