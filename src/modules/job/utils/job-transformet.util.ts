@@ -71,11 +71,6 @@ export function workizJobToTableJob(
   workiz_job,
   account: 'main' | 'arizona' = 'main',
 ): Omit<Job, 'county'> {
-  console.log({
-    dispatch_notes:
-      workiz_job?.custom_fields?.dispatchers?.manager_note || 'n/a',
-  });
-
   return {
     uuid: workiz_job?.data?.uuid,
     tip_amount: parseFloat(workiz_job?.data?.tip_amount || '0'),
@@ -172,8 +167,7 @@ export function workizJobToTableJob(
         : workiz_job?.data?.tech_names,
     tech_phone_numbers: workiz_job?.data?.tech_phone_numbers || ['n/a'],
     tech_notes: workiz_job?.data?.set_price || 'n/a',
-    dispatch_notes:
-      workiz_job?.custom_fields?.dispatchers?.manager_note || 'n/a',
+    dispatch_notes: workiz_job?.custom?.f17 || 'n/a',
     dispatch_bonus_type: getJobDispatchBonusType(workiz_job, account),
     // dispatch_bonus_number: getJobDispatchBonusNumber(workiz_job, account),
     dispatchers_id_ua:
