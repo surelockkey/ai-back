@@ -3,6 +3,7 @@ import { registerEnumType } from '@nestjs/graphql';
 export enum ConstructedPageType {
   BLOG = 'BLOG',
   LOCATION = 'LOCATION',
+  VACANCY = 'VACANCY',
 }
 
 registerEnumType(ConstructedPageType, { name: 'ConstructedPageType' });

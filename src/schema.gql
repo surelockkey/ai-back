@@ -191,6 +191,7 @@ type ConstructedPageCompany {
 enum ConstructedPageType {
   BLOG
   LOCATION
+  VACANCY
 }
 
 type ConstructedPhoto {
