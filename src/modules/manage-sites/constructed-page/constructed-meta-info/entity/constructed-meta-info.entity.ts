@@ -54,6 +54,14 @@ export class ConstructedMetaInfo extends BaseEntity {
   @Column({ nullable: true })
   video_link?: string;
 
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  country?: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  salary?: string;
+
   @Field(() => ID)
   @Column('uuid')
   constructed_page_id?: string;
