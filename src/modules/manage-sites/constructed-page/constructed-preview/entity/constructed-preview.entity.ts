@@ -23,6 +23,10 @@ export class ConstructedPreview extends BaseEntity {
   @Column({ nullable: true })
   type_block?: string;
 
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  experience?: string;
+
   @Field(() => ID)
   @Column('uuid')
   constructed_page_id: string;
