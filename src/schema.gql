@@ -142,7 +142,9 @@ input ConstructedBlockDto {
 type ConstructedMetaInfo {
   categoric: String
   constructed_page_id: ID!
+  country: String
   date_when_will_post_blog: String
+  experience: String
   global_script: String
   id: ID!
   map_link: String
@@ -150,6 +152,7 @@ type ConstructedMetaInfo {
   meta_tag_title: String
   name: String
   redirect_url: String
+  salary: String
   schema_script: String
   state: String
   url: String
@@ -158,13 +161,16 @@ type ConstructedMetaInfo {
 
 input ConstructedMetaInfoDto {
   categoric: String
+  country: String
   date_when_will_post_blog: String
+  experience: String
   global_script: String
   map_link: String
   meta_tag_description: String
   meta_tag_title: String
   name: String
   redirect_url: String
+  salary: String
   schema_script: String
   state: String
   url: String
@@ -1619,13 +1625,16 @@ input UpdateBlogPreviewDto {
 
 input UpdateConstructedMetaInfoDto {
   categoric: String
+  country: String
   date_when_will_post_blog: String
+  experience: String
   global_script: String
   map_link: String
   meta_tag_description: String
   meta_tag_title: String
   name: String
   redirect_url: String
+  salary: String
   schema_script: String
   state: String
   url: String
