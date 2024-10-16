@@ -514,6 +514,7 @@ export class WorkizCoreApiService {
         date_range,
         ' page ',
         page,
+        error,
       );
     }
   }
