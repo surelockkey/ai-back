@@ -71,13 +71,6 @@ export class CallService {
       ) {
         console.log('loop while');
 
-        // const days_arr = [
-        //   { day_from: 2, day_to: 6 },
-        //   { day_from: 7, day_to: 14 },
-        //   { day_from: 15, day_to: 22 },
-        //   { day_from: 23, day_to: 1 },
-        // ];
-
         const days_arr = [
           { day_from: 2, day_to: 5 },
           { day_from: 6, day_to: 10 },

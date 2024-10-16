@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
 
 @ObjectType()
@@ -53,6 +53,14 @@ export class Call {
   @Field(() => String)
   @Column({ nullable: true })
   user_number: string;
+
+  @Field(() => String)
+  @Column({ nullable: true })
+  recording_url: string;
+
+  @Field(() => Int)
+  @Column({ nullable: true, type: 'int' })
+  call_duration_int: number;
 
   @Index()
   @Field(() => String)

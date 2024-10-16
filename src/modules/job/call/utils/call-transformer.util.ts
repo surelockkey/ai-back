@@ -18,6 +18,8 @@ export function workizCallToTableCall(
     client_number: call.clientNumber,
     user_number: call.userNumber,
     created_sql: call.created_sql,
+    recording_url: call.recording_url,
+    call_duration_int: call.call_duration_int,
     account,
   };
 }
