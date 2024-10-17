@@ -7,7 +7,6 @@ import { WorkizApiService } from 'src/modules/api/workiz-api/workiz-api.service'
 import * as moment from 'moment';
 import { WorkizCoreApiService } from 'src/modules/api/workiz-api/workiz-core.service';
 import { workizCallToTableCall } from './utils/call-transformer.util';
-import { parse } from 'date-fns';
 
 import * as _ from 'lodash';
 import { getNearestDate } from './utils/near-date.util';
