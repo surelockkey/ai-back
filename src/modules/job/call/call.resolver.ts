@@ -1,4 +1,4 @@
-import { Args, Int, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CallService } from './call.service';
 import { SendDto } from '@tech-slk/nest-crud';
 import { Account } from '../enum/account.enum';
@@ -22,6 +22,11 @@ export class CallResolver {
   @Mutation(() => String)
   changeCallsDateToIso() {
     return this.callService.changeCallsDateToIso();
+  }
+
+  @Query(() => Int)
+  getCallsDurations(@Args('from') from: string) {
+    return this.callService.countCallDurationInt(from);
   }
 
   @Mutation(() => String)

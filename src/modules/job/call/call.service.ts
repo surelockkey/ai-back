@@ -2,11 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { CrudService } from '@tech-slk/nest-crud';
 import { Call } from './entity/call.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Between, IsNull, Not, Repository } from 'typeorm';
+import { Between, IsNull, MoreThanOrEqual, Not, Repository } from 'typeorm';
 import { WorkizApiService } from 'src/modules/api/workiz-api/workiz-api.service';
 import * as moment from 'moment';
 import { WorkizCoreApiService } from 'src/modules/api/workiz-api/workiz-core.service';
 import { workizCallToTableCall } from './utils/call-transformer.util';
+import { parse } from 'date-fns';
 
 import * as _ from 'lodash';
 import { getNearestDate } from './utils/near-date.util';
@@ -17,6 +18,31 @@ export class CallService {
     @InjectRepository(Call) private readonly callRepository: Repository<Call>,
     private readonly workizCoreApiService: WorkizCoreApiService,
   ) {}
+
+  public async transcriptCalls(from: string) {
+    const [day, month, year] = from.split('.');
+    const formatted_from = `${year}-${month}-${day}`;
+
+    const calls = await this.callRepository.find({
+      where: {
+        created_sql: MoreThanOrEqual(`${formatted_from} 00:00:00`),
+        recording_url: Not(IsNull()),
+      },
+    });
+  }
+
+  async countCallDurationInt(fromDate: string): Promise<number> {
+    const parsedDate = moment(fromDate, 'DD.MM.YYYY').format(
+      'YYYY-MM-DD HH:mm:ssZ',
+    );
+    const result = await this.callRepository
+      .createQueryBuilder('call')
+      .select('SUM(call.call_duration_int)', 'totalDuration')
+      .where('call.created_sql >= :fromDate', { fromDate: parsedDate })
+      .getRawOne();
+
+    return result?.totalDuration ?? 0;
+  }
 
   private getMonthTo(month: number, day_to: number) {
     if (month === 12 && day_to === 1) {
