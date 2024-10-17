@@ -10,15 +10,46 @@ import { workizCallToTableCall } from './utils/call-transformer.util';
 
 import * as _ from 'lodash';
 import { getNearestDate } from './utils/near-date.util';
+import { OpenAiService } from 'src/modules/open-ai/open-ai.service';
+
+import { get } from 'https';
+import { createReadStream, createWriteStream, unlinkSync } from 'fs';
+
+async function downloadFile(url: string, targetFile: string) {
+  return await new Promise((resolve, reject) => {
+    get(url, (response) => {
+      const code = response.statusCode ?? 0;
+
+      if (code >= 400) {
+        return reject(new Error(response.statusMessage));
+      }
+
+      // handle redirects
+      if (code > 300 && code < 400 && !!response.headers.location) {
+        return resolve(downloadFile(response.headers.location, targetFile));
+      }
+
+      // save the file to disk
+      const fileWriter = createWriteStream(targetFile).on('finish', () => {
+        resolve({});
+      });
+
+      response.pipe(fileWriter);
+    }).on('error', (error) => {
+      reject(error);
+    });
+  });
+}
 
 @Injectable()
 export class CallService {
   constructor(
     @InjectRepository(Call) private readonly callRepository: Repository<Call>,
     private readonly workizCoreApiService: WorkizCoreApiService,
+    private readonly openAiService: OpenAiService,
   ) {}
 
-  public async transcriptCalls(from: string) {
+  public async transcriptCalls(from: string, limit?: number) {
     const [day, month, year] = from.split('.');
     const formatted_from = `${year}-${month}-${day}`;
 
@@ -28,7 +59,34 @@ export class CallService {
         recording_url: Not(IsNull()),
         call_duration_int: MoreThanOrEqual(30),
       },
+      take: limit,
     });
+
+    console.log('calls length', calls.length);
+
+    let i = 1;
+    for (const call of calls) {
+      if (!call.transcription) {
+        const file_name = call.id + '.wav';
+
+        await downloadFile(call.recording_url, file_name);
+
+        const transcription = await this.openAiService.speechToText(
+          createReadStream(file_name) as any,
+        );
+
+        unlinkSync(file_name);
+
+        await this.callRepository.update(
+          { id: call.id },
+          { transcription: transcription.data.text },
+        );
+
+        console.log(i);
+
+        i++;
+      }
+    }
   }
 
   async countCallDurationInt(fromDate: string): Promise<number> {

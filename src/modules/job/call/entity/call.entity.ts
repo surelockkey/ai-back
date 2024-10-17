@@ -62,6 +62,10 @@ export class Call {
   @Column({ nullable: true, type: 'int' })
   call_duration_int: number;
 
+  @Field(() => String)
+  @Column({ nullable: true })
+  transcription: string;
+
   @Index()
   @Field(() => String)
   @Column({ type: 'timestamptz', nullable: true })

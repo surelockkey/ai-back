@@ -29,6 +29,14 @@ export class CallResolver {
     return this.callService.countCallDurationInt(from);
   }
 
+  @Query(() => Int)
+  transcriptCalls(
+    @Args('from') from: string,
+    @Args('limit', { type: () => Int, nullable: true }) limit: number,
+  ) {
+    return this.callService.transcriptCalls(from, limit);
+  }
+
   @Mutation(() => String)
   changeCallsJobIds() {
     return this.callService.changeCallsJobIds();

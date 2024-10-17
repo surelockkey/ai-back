@@ -144,7 +144,6 @@ type ConstructedMetaInfo {
   constructed_page_id: ID!
   country: String
   date_when_will_post_blog: String
-  experience: String
   global_script: String
   id: ID!
   map_link: String
@@ -163,7 +162,6 @@ input ConstructedMetaInfoDto {
   categoric: String
   country: String
   date_when_will_post_blog: String
-  experience: String
   global_script: String
   map_link: String
   meta_tag_description: String
@@ -219,6 +217,7 @@ type ConstructedPreview {
   constructed_photo_id: ID
   date: String
   description: String
+  experience: String
   headline: String
   id: ID!
   photo: ConstructedPhoto
@@ -228,6 +227,7 @@ type ConstructedPreview {
 input ConstructedPreviewDto {
   date: String
   description: String
+  experience: String
   headline: String
   photo: ConstructedPhotoDto
   type_block: String
@@ -1340,6 +1340,7 @@ type Query {
   """this method get blogs by field description which like inputed"""
   getBlogsFilterByMetaBlogUrl(metaBlogUrl: String!): ConstructorBlog!
   getCalls(ctmGetCallsOptionDto: CtmGetCallsOptionDto!): CtmGetCallsDto!
+  getCallsDurations(from: String!): Int!
   getCommission(account: Account! = main, from_month: Int = 1, from_year: Int = 18): String!
   getConstructedPageById(id: ID!): ConstructedPage!
   getConstructedPageByUrl(url: String!): ConstructedPage!
@@ -1384,6 +1385,7 @@ type Query {
   listModels: String!
   searchCars(make: String, model: String): [Car!]!
   testApi(method: String!, url: String!): String!
+  transcriptCalls(from: String!, limit: Int): Int!
 }
 
 type Referral {
@@ -1627,7 +1629,6 @@ input UpdateConstructedMetaInfoDto {
   categoric: String
   country: String
   date_when_will_post_blog: String
-  experience: String
   global_script: String
   map_link: String
   meta_tag_description: String
@@ -1667,6 +1668,7 @@ input UpdateConstructedPhotoDto {
 input UpdateConstructedPreviewDto {
   date: String
   description: String
+  experience: String
   headline: String
   photo: UpdateConstructedPhotoDto
   type_block: String
