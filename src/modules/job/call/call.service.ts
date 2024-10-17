@@ -26,6 +26,7 @@ export class CallService {
       where: {
         created_sql: MoreThanOrEqual(`${formatted_from} 00:00:00`),
         recording_url: Not(IsNull()),
+        call_duration_int: MoreThanOrEqual(30),
       },
     });
   }
@@ -38,6 +39,9 @@ export class CallService {
       .createQueryBuilder('call')
       .select('SUM(call.call_duration_int)', 'totalDuration')
       .where('call.created_sql >= :fromDate', { fromDate: parsedDate })
+      .andWhere({
+        call_duration_int: MoreThanOrEqual(30),
+      })
       .getRawOne();
 
     return result?.totalDuration ?? 0;
