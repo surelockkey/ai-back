@@ -66,7 +66,7 @@ export class CallService {
 
     let i = 1;
     for (const call of calls) {
-      if (!call.transcription) {
+      if (!call.transcription && call.recording_url.trim()) {
         const file_name = call.id + '.wav';
 
         console.log(call.recording_url);
