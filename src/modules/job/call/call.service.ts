@@ -69,6 +69,8 @@ export class CallService {
       if (!call.transcription) {
         const file_name = call.id + '.wav';
 
+        console.log(call.recording_url);
+
         await downloadFile(call.recording_url, file_name);
 
         const transcription = await this.openAiService.speechToText(
