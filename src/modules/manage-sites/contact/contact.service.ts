@@ -107,8 +107,8 @@ export class ContactService {
           .on('finish', () => resolve(true));
       });
       await this.mailService.sendMail({
-        to: 'office@slk-s.com', // office@slk-s.com
-        subject: 'New Website Request',
+        to: email_to, // office@slk-s.com
+        subject: title,
         text: text,
         attachments: [
           {

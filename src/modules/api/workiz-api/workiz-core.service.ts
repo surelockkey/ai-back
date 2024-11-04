@@ -518,22 +518,4 @@ export class WorkizCoreApiService {
       );
     }
   }
-
-  // private login() {
-  //     const params = {
-  //         login: this.workizConfig.email,
-  //         pass: this.workizConfig.password,
-  //         action: 'submit',
-  //         connectqb: '0',
-  //     }
-
-  //     this.req(params, '/login/', 'post')
-  //         .then((r) => {
-  //            console.log(r.response.headers['set-cookie'])
-  //         })
-  //         .catch((e) => {
-  //             console.log('errr ', e)
-  //             // console.log(e.response.headers['set-cookie'], e.response.headers);
-  //         })
-  // }
 }
