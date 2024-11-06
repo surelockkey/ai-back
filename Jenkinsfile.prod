@@ -115,6 +115,7 @@ pipeline {
                         echo "AWS_BUCKET_LOCKSMITH=${AWS_BUCKET_LOCKSMITH}" >> .env
                         echo "ENVIROMENT=${ENVIROMENT}" >> .env
 
+                        sudo docker-compose stop
                         sudo docker-compose build --no-cache --build-arg NPM_TOKEN=${NPM_TOKEN} prod
                         sudo docker-compose up -d
                         sudo docker system prune -f
