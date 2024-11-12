@@ -83,11 +83,9 @@ export class CallService {
           { id: call.id },
           { transcription: transcription.data.text },
         );
-
-        console.log(i);
-
-        i++;
       }
+      console.log(i);
+      i++;
     }
   }
 
