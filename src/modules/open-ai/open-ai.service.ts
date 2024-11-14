@@ -157,7 +157,7 @@ export class OpenAiService {
       'whisper-1',
       undefined,
       'json',
-      0.3,
+      0.5,
       'en',
     );
   }
