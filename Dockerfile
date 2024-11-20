@@ -7,11 +7,11 @@ COPY package*.json .
 ARG NPM_TOKEN  
 RUN echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
 
-RUN npm install
+RUN NODE_OPTIONS=--max_old_space_size=2048 npm install
 
 COPY . .
 
-RUN npm run build
+RUN NODE_OPTIONS=--max_old_space_size=2048 npm run build
 
 ENV GENERATE_SOURCEMAP=false
 ENV NODE_OPTIONS=--max-old-space-size=2048
