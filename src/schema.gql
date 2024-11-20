@@ -150,6 +150,7 @@ type ConstructedMetaInfo {
   meta_tag_description: String
   meta_tag_title: String
   name: String
+  phone: String
   redirect_url: String
   salary: String
   schema_script: String
@@ -167,6 +168,7 @@ input ConstructedMetaInfoDto {
   meta_tag_description: String
   meta_tag_title: String
   name: String
+  phone: String
   redirect_url: String
   salary: String
   schema_script: String
@@ -1634,6 +1636,7 @@ input UpdateConstructedMetaInfoDto {
   meta_tag_description: String
   meta_tag_title: String
   name: String
+  phone: String
   redirect_url: String
   salary: String
   schema_script: String
