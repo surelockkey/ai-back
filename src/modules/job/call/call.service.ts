@@ -71,23 +71,31 @@ export class CallService {
 
         console.log(call.recording_url);
 
-        await downloadFile(call.recording_url, file_name);
+        try {
+          await downloadFile(call.recording_url, file_name);
 
-        const transcription = await this.openAiService.speechToText(
-          createReadStream(file_name) as any,
-        );
+          const transcription = await this.openAiService.speechToText(
+            createReadStream(file_name) as any,
+          );
 
-        unlinkSync(file_name);
+          unlinkSync(file_name);
 
-        await this.callRepository.update(
-          { id: call.id },
-          { transcription: transcription.data.text },
-        );
-
-        console.log(i);
-
-        i++;
+          await this.callRepository.update(
+            { id: call.id },
+            { transcription: transcription.data.text },
+          );
+        } catch (e) {
+          console.dir({
+            error: 'ERROR CATCHED',
+            original_err: e,
+            call_id: call,
+            recording_url: call.recording_url,
+            call,
+          });
+        }
       }
+      console.log(i);
+      i++;
     }
   }
 
