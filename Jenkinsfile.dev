@@ -115,6 +115,11 @@ pipeline {
                         echo "AWS_REGION=${AWS_REGION}" >> .env
                         echo "AWS_BUCKET_LOCKSMITH=${AWS_BUCKET_LOCKSMITH}" >> .env
                         echo "ENVIROMENT=${ENVIROMENT}" >> .env
+                        echo "GOOGLE_ADS_CLIENT_ID=${GOOGLE_ADS_CLIENT_ID}" >> .env
+                        echo "GOOGLE_ADS_CLIENT_SECRET=${GOOGLE_ADS_CLIENT_SECRET}" >> .env
+                        echo "GOOGLE_ADS_CUSTOMER_ID=${GOOGLE_ADS_CUSTOMER_ID}" >> .env
+                        echo "GOOGLE_ADS_DEVELOPER_TOKEN=${GOOGLE_ADS_DEVELOPER_TOKEN}" >> .env
+                        echo "GOOGLE_ADS_REFRESH_TOKEN=${GOOGLE_ADS_REFRESH_TOKEN}" >> .env
 
 
                         sudo docker compose build --no-cache --build-arg NPM_TOKEN=${NPM_TOKEN} prod

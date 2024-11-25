@@ -1,65 +1,87 @@
 import { Injectable } from '@nestjs/common';
-import { GoogleAdsApi } from 'google-ads-api';
-import { enums } from 'google-ads-api';
+import { GoogleAdsApi, Customer, enums } from 'google-ads-api';
+import { AdsCampaignDto } from './dto/ads-campaing';
+const ads_cred = {
+  client_id: process.env.GOOGLE_ADS_CLIENT_ID,
+  client_secret: process.env.GOOGLE_ADS_CLIENT_SECRET,
+  developer_token: process.env.GOOGLE_ADS_DEVELOPER_TOKEN,
 
+  customer_id: process.env.GOOGLE_ADS_CUSTOMER_ID,
+  refresh_token: process.env.GOOGLE_ADS_REFRESH_TOKEN,
+}
 @Injectable()
 export class GoogleAdsApiService {
-  private readonly googleAdsClient: GoogleAdsApi;
-
-  constructor() {
-    this.googleAdsClient = new GoogleAdsApi({
-      client_id:
-        '1070488779420-4gll6h342doo5amo4jqc4t9hge6r6jbg.apps.googleusercontent.com',
-      client_secret: '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',
-      developer_token: 'jiS5ku6b6BGlYPIQLrIgSg',
-    });
+  private readonly credentials = {
+    client_id: ads_cred.client_id,
+    client_secret: ads_cred.client_secret,
+    developer_token: ads_cred.developer_token,
   }
 
-  public async getListCustomers(refresh_token: string) {
+  private readonly googleAdsClient: GoogleAdsApi;
+  private readonly customer: Customer;
+
+  constructor() {
+    this.googleAdsClient = new GoogleAdsApi(this.credentials);
+    this.customer = this.googleAdsClient.Customer({
+      customer_id: ads_cred.customer_id,
+      refresh_token: ads_cred.refresh_token,
+    })
+  }
+
+  public async getListCustomers() {
     const res = await this.googleAdsClient.listAccessibleCustomers(
-      refresh_token,
+      ads_cred.refresh_token,
     );
+
+    console.log(res);
 
     return res;
   }
 
-  public async getCampaigns(
-    login_customer_id: string,
-    customer_id: string,
-    refresh_token: string,
-  ) {
-    const customer = this.googleAdsClient.Customer({
-      login_customer_id,
-      customer_id,
-      refresh_token,
-    });
+  public async getCampaigns(): Promise<AdsCampaignDto[]> {
 
-    const campaigns = await customer
-      .report({
-        entity: 'campaign',
-        attributes: [
-          'campaign.id',
-          'campaign.name',
-          'campaign.bidding_strategy_type',
-          'campaign_budget.amount_micros',
-        ],
-        metrics: [
-          'metrics.cost_micros',
-          'metrics.clicks',
-          'metrics.impressions',
-          'metrics.all_conversions',
-        ],
-        constraints: {
-          'campaign.status': enums.CampaignStatus.ENABLED,
-        },
-        limit: 20,
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    try {
+      const query = `
+      SELECT
+        campaign.id,
+        campaign.name,
+        campaign.bidding_strategy_type,
+        campaign_budget.amount_micros,
+        campaign.labels,
+        metrics.cost_micros,
+        metrics.clicks,
+        metrics.impressions,
+        metrics.all_conversions,
+        metrics.conversions
+      FROM
+        ad_group
+      WHERE
+        campaign.status = 'ENABLED'
+      LIMIT 20
+    `;
 
-    console.log({ campaigns });
+      const response: AdsCampaignDto[] = await this.customer.query(query)
+        .then((r) => {
+          return r.map((response) => ({
+            campaign_id: response.campaign.id,
+            campaign_name: response.campaign.name,
+            campaign_bidding_strategy_type: response.campaign.bidding_strategy_type as enums.BiddingStrategyType,
+            campaign_budget_amount_micros: response.campaign_budget.amount_micros,
+            campaign_labels: response.campaign.labels,
+            metrics_cost_micros: response.metrics.cost_micros,
+            metrics_clicks: response.metrics.clicks,
+            metrics_impressions: response.metrics.impressions,
+            metrics_all_conversions: response.metrics.all_conversions,
+            metrics_conversions: response.metrics.conversions
+          }));
+        });
 
-    return campaigns;
+      return response;
+
+
+    } catch (error) {
+      console.error("Google Ads API Error:", error);
+      throw new Error(`Google Ads API Error: ${JSON.stringify(error, null, 2)}`);
+    }
   }
 }
