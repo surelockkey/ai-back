@@ -57,25 +57,20 @@ export class GoogleAdsApiService {
       LIMIT 20
     `;
 
-      const response: AdsCampaignDto[] = await this.customer.query(query)
-        .then((r) => {
-          console.log(r);
+      const response = await this.customer.query(query)
 
-          return r.map((response) => ({
-            campaign_id: response.campaign.id,
-            campaign_name: response.campaign.name,
-            campaign_bidding_strategy_type: response.campaign.bidding_strategy_type as enums.BiddingStrategyType,
-            campaign_budget_amount_micros: response.campaign_budget.amount_micros,
-            campaign_labels: response.campaign.labels,
-            metrics_cost_micros: response.metrics.cost_micros,
-            metrics_clicks: response.metrics.clicks,
-            metrics_impressions: response.metrics.impressions,
-            metrics_all_conversions: response.metrics.all_conversions,
-            metrics_conversions: response.metrics.conversions
-          }));
-        });
-
-      return response;
+      return response.map((response) => ({
+        campaign_id: response.campaign.id,
+        campaign_name: response.campaign.name,
+        campaign_bidding_strategy_type: response.campaign.bidding_strategy_type as enums.BiddingStrategyType,
+        campaign_budget_amount_micros: response.campaign_budget.amount_micros,
+        campaign_labels: response.campaign.labels,
+        metrics_cost_micros: response.metrics.cost_micros,
+        metrics_clicks: response.metrics.clicks,
+        metrics_impressions: response.metrics.impressions,
+        metrics_all_conversions: response.metrics.all_conversions,
+        metrics_conversions: response.metrics.conversions
+      }));;
 
 
     } catch (error) {

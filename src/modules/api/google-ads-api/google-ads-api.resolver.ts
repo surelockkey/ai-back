@@ -9,7 +9,7 @@ export class GoogleAdsApiResolver {
   ) { }
 
   // @UseGuards(GqlAuthGuard)
-  @Query(() => AdsCampaignDto)
+  @Query(() => [AdsCampaignDto])
   async getAdsApi(): Promise<AdsCampaignDto[]> {
     return await this.googleAdsApiService.getCampaigns();
   }
