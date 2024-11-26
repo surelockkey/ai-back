@@ -54,22 +54,22 @@ export class GoogleAdsApiService {
         campaign
       WHERE
         campaign.status = 'ENABLED'
-      LIMIT 20
-    `;
+        `;
+      // LIMIT 20
 
       const response = await this.customer.query(query)
 
-      return response.map((response) => ({
-        campaign_id: response.campaign.id,
-        campaign_name: response.campaign.name,
-        campaign_bidding_strategy_type: response.campaign.bidding_strategy_type as enums.BiddingStrategyType,
-        campaign_budget_amount_micros: response.campaign_budget.amount_micros,
-        campaign_labels: response.campaign.labels,
-        metrics_cost_micros: response.metrics.cost_micros,
-        metrics_clicks: response.metrics.clicks,
-        metrics_impressions: response.metrics.impressions,
-        metrics_all_conversions: response.metrics.all_conversions,
-        metrics_conversions: response.metrics.conversions
+      return response.map(({ campaign, metrics, campaign_budget }) => ({
+        campaign_id: campaign.id,
+        campaign_name: campaign.name,
+        campaign_bidding_strategy_type: campaign.bidding_strategy_type as enums.BiddingStrategyType,
+        campaign_budget_amount_micros: campaign_budget.amount_micros,
+        campaign_labels: campaign.labels,
+        metrics_cost_micros: metrics.cost_micros,
+        metrics_clicks: metrics.clicks,
+        metrics_impressions: metrics.impressions,
+        metrics_all_conversions: metrics.all_conversions,
+        metrics_conversions: metrics.conversions
       }));;
 
 
