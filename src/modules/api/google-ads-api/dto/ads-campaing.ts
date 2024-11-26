@@ -16,7 +16,7 @@ export class AdsCampaignDto {
   @Field(() => Float, { nullable: true })
   campaign_budget_amount_micros: number;
 
-  @Field(() => [String, { nullable: true }]) // Adjusted to represent an array of strings for labels
+  @Field(() => [String], { nullable: true }) // Adjusted to represent an array of strings for labels
   campaign_labels: string[];
 
   @Field(() => Float, { nullable: true })
