@@ -3,34 +3,34 @@ import { enums } from "google-ads-api"; // Import your enums from the correct mo
 
 @ObjectType()
 export class AdsCampaignDto {
-  @Field(() => Float)
+  @Field(() => Float, { nullable: true })
   campaign_id: number;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   campaign_name: string;
 
   // Allow the type to include additional valid strings like "UNSPECIFIED" and "UNKNOWN"
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   campaign_bidding_strategy_type: enums.BiddingStrategyType | "UNSPECIFIED" | "UNKNOWN";
 
-  @Field(() => Float)
+  @Field(() => Float, { nullable: true })
   campaign_budget_amount_micros: number;
 
-  @Field(() => [String]) // Adjusted to represent an array of strings for labels
+  @Field(() => [String, { nullable: true }]) // Adjusted to represent an array of strings for labels
   campaign_labels: string[];
 
-  @Field(() => Float)
+  @Field(() => Float, { nullable: true })
   metrics_cost_micros: number;
 
-  @Field(() => Float)
+  @Field(() => Float, { nullable: true })
   metrics_clicks: number;
 
-  @Field(() => Float)
+  @Field(() => Float, { nullable: true })
   metrics_impressions: number;
 
-  @Field(() => Float)
+  @Field(() => Float, { nullable: true })
   metrics_all_conversions: number;
 
-  @Field(() => Float)
+  @Field(() => Float, { nullable: true })
   metrics_conversions: number;
 }
