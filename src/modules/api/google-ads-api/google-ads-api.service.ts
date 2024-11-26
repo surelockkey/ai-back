@@ -59,6 +59,8 @@ export class GoogleAdsApiService {
 
       const response: AdsCampaignDto[] = await this.customer.query(query)
         .then((r) => {
+          console.log(r);
+
           return r.map((response) => ({
             campaign_id: response.campaign.id,
             campaign_name: response.campaign.name,
