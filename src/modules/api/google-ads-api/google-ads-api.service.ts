@@ -51,7 +51,7 @@ export class GoogleAdsApiService {
         metrics.all_conversions,
         metrics.conversions
       FROM
-        ad_group
+        campaign
       WHERE
         campaign.status = 'ENABLED'
       LIMIT 20
