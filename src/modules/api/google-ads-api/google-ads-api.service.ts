@@ -1,20 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleAdsApi, Customer, enums } from 'google-ads-api';
 import { AdsCampaignDto } from './dto/ads-campaing';
-const ads_cred = {
-  client_id: process.env.GOOGLE_ADS_CLIENT_ID,
-  client_secret: process.env.GOOGLE_ADS_CLIENT_SECRET,
-  developer_token: process.env.GOOGLE_ADS_DEVELOPER_TOKEN,
-
-  customer_id: process.env.GOOGLE_ADS_CUSTOMER_ID,
-  refresh_token: process.env.GOOGLE_ADS_REFRESH_TOKEN,
-}
 @Injectable()
 export class GoogleAdsApiService {
   private readonly credentials = {
-    client_id: ads_cred.client_id,
-    client_secret: ads_cred.client_secret,
-    developer_token: ads_cred.developer_token,
+    client_id: process.env.GOOGLE_ADS_CLIENT_ID,
+    client_secret: process.env.GOOGLE_ADS_CLIENT_SECRET,
+    developer_token: process.env.GOOGLE_ADS_DEVELOPER_TOKEN,
+  }
+
+  private readonly customer_credentials = {
+    customer_id: process.env.GOOGLE_ADS_CUSTOMER_ID,
+    refresh_token: process.env.GOOGLE_ADS_REFRESH_TOKEN,
   }
 
   private readonly googleAdsClient: GoogleAdsApi;
@@ -22,15 +19,15 @@ export class GoogleAdsApiService {
 
   constructor() {
     this.googleAdsClient = new GoogleAdsApi(this.credentials);
-    this.customer = this.googleAdsClient.Customer({
-      customer_id: ads_cred.customer_id,
-      refresh_token: ads_cred.refresh_token,
-    })
+    this.customer = this.googleAdsClient.Customer(this.customer_credentials)
+
+    console.log(this.credentials);
+
   }
 
   public async getListCustomers() {
     const res = await this.googleAdsClient.listAccessibleCustomers(
-      ads_cred.refresh_token,
+      this.customer_credentials.refresh_token,
     );
 
     console.log(res);
