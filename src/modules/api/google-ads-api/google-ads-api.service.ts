@@ -47,7 +47,7 @@ export class GoogleAdsApiService {
           ad_group.primary_status,
           ad_group.cpc_bid_micros,
           ad_group.labels,
-          ad_group.tracking_url_template
+          ad_group.tracking_url_template,
           campaign.id,
           campaign.name,
           metrics.clicks,
