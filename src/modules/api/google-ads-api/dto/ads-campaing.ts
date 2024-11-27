@@ -9,14 +9,13 @@ export class AdsCampaignDto {
   @Field(() => String, { nullable: true })
   campaign_name: string;
 
-  // Allow the type to include additional valid strings like "UNSPECIFIED" and "UNKNOWN"
   @Field(() => String, { nullable: true })
   campaign_bidding_strategy_type: enums.BiddingStrategyType | "UNSPECIFIED" | "UNKNOWN";
 
   @Field(() => Float, { nullable: true })
   campaign_budget_amount_micros: number;
 
-  @Field(() => [String], { nullable: true }) // Adjusted to represent an array of strings for labels
+  @Field(() => [String], { nullable: true })
   campaign_labels: string[];
 
   @Field(() => Float, { nullable: true })

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleAdsApi, Customer, enums } from 'google-ads-api';
 import { AdsCampaignDto } from './dto/ads-campaing';
+import { AdGroupDto } from './dto/ads-group';
 @Injectable()
 export class GoogleAdsApiService {
   private readonly credentials = {
@@ -35,6 +36,55 @@ export class GoogleAdsApiService {
     return res;
   }
 
+  public async getGroups(): Promise<AdGroupDto[]> {
+
+    try {
+      const query = `
+        SELECT
+          ad_group.id,
+          ad_group.name,
+          ad_group.status,
+          ad_group.cpc_bid_micros,
+          ad_group.labels,
+          campaign.id,
+          campaign.name,
+          metrics.clicks,
+          metrics.impressions,
+          metrics.ctr,
+          metrics.cost_micros,
+          metrics.conversions,
+          segments.device
+        FROM
+          ad_group
+        WHERE
+          campaign.status = 'ENABLED'
+        `;
+
+
+      const response = await this.customer.query(query)
+
+      return response.map(({ ad_group, campaign, metrics, segments }) => ({
+        ad_group_id: ad_group.id,
+        ad_group_name: ad_group.name,
+        ad_group_status: ad_group.status as enums.AdGroupStatus,
+        ad_group_cpc_bid_micros: ad_group.cpc_bid_micros,
+        ad_group_labels: ad_group.labels,
+        campaign_id: campaign.id,
+        campaign_name: campaign.name,
+        metrics_clicks: metrics.clicks,
+        metrics_impressions: metrics.impressions,
+        metrics_ctr: metrics.ctr,
+        metrics_cost_micros: metrics.cost_micros,
+        metrics_conversions: metrics.conversions,
+        segments_device: segments.device as enums.Device,
+      }));
+
+
+    } catch (error) {
+      console.error("Google Ads API Error:", error);
+      throw new Error(`Google Ads API Error: ${JSON.stringify(error, null, 2)}`);
+    }
+  }
   public async getCampaigns(): Promise<AdsCampaignDto[]> {
 
     try {
