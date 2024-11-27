@@ -93,6 +93,7 @@ export class GoogleAdsApiService {
       SELECT
         campaign.id,
         campaign.name,
+        campaign.status,
         campaign.bidding_strategy_type,
         campaign_budget.amount_micros,
         campaign.labels,
@@ -113,6 +114,7 @@ export class GoogleAdsApiService {
       return response.map(({ campaign, metrics, campaign_budget }) => ({
         campaign_id: campaign.id,
         campaign_name: campaign.name,
+        campaign_status: campaign.status as enums.CampaignStatus,
         campaign_bidding_strategy_type: campaign.bidding_strategy_type as enums.BiddingStrategyType,
         campaign_budget_amount_micros: campaign_budget.amount_micros,
         campaign_labels: campaign.labels,
@@ -121,7 +123,7 @@ export class GoogleAdsApiService {
         metrics_impressions: metrics.impressions,
         metrics_all_conversions: metrics.all_conversions,
         metrics_conversions: metrics.conversions
-      }));;
+      }));
 
 
     } catch (error) {
