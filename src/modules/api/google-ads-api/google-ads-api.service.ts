@@ -57,7 +57,7 @@ export class GoogleAdsApiService {
         FROM
           ad_group
         WHERE
-          campaign.status = 'ENABLED'
+          ad_group.status = 'ENABLED'
         `;
 
 
@@ -104,7 +104,7 @@ export class GoogleAdsApiService {
         campaign
       WHERE
         campaign.status = 'ENABLED'
-        `;
+      `;
       // LIMIT 20
 
       const response = await this.customer.query(query)
