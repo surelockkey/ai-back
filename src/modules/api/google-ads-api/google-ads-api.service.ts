@@ -57,8 +57,8 @@ export class GoogleAdsApiService {
         FROM
           ad_group
         WHERE
-          ad_group.status = 'PAUSED'
-          AND ad_group.status = 'UNKNOWN'
+          ad_group.status != 'PAUSED'
+          AND ad_group.status != 'REMOVED'
         `;
 
 
