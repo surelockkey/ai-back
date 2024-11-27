@@ -108,8 +108,6 @@ export class GoogleAdsApiService {
         metrics.conversions
       FROM
         campaign
-      WHERE
-        (campaign.primary_status = 'ELIGIBLE'  OR campaign.primary_status IS NULL)
       `;
       // LIMIT 20
 
