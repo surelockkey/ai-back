@@ -13,6 +13,9 @@ export class AdsCampaignDto {
   campaign_status: string | enums.CampaignStatus;
 
   @Field(() => String, { nullable: true })
+  campaign_primary_status: string | enums.AdGroupPrimaryStatus;
+
+  @Field(() => String, { nullable: true })
   campaign_bidding_strategy_type: string | enums.BiddingStrategyType | "UNSPECIFIED" | "UNKNOWN";
 
   @Field(() => Float, { nullable: true })
