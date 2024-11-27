@@ -10,10 +10,10 @@ export class AdsCampaignDto {
   campaign_name: string;
 
   @Field(() => String, { nullable: true })
-  campaign_status: enums.CampaignStatus;
+  campaign_status: string | enums.CampaignStatus;
 
   @Field(() => String, { nullable: true })
-  campaign_bidding_strategy_type: enums.BiddingStrategyType | "UNSPECIFIED" | "UNKNOWN";
+  campaign_bidding_strategy_type: string | enums.BiddingStrategyType | "UNSPECIFIED" | "UNKNOWN";
 
   @Field(() => Float, { nullable: true })
   campaign_budget_amount_micros: number;

@@ -10,7 +10,7 @@ export class AdGroupDto {
   ad_group_name: string;
 
   @Field(() => String, { nullable: true })
-  ad_group_status: enums.AdGroupStatus;
+  ad_group_status: string | enums.AdGroupStatus;
 
   @Field(() => Float, { nullable: true })
   ad_group_cpc_bid_micros: number;
@@ -40,5 +40,5 @@ export class AdGroupDto {
   metrics_conversions: number;
 
   @Field(() => String, { nullable: true })
-  segments_device: enums.Device;
+  segments_device: string | enums.Device;
 }

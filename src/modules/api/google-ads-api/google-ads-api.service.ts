@@ -67,7 +67,7 @@ export class GoogleAdsApiService {
       return response.map(({ ad_group, campaign, metrics, segments }) => ({
         ad_group_id: ad_group.id,
         ad_group_name: ad_group.name,
-        ad_group_status: ad_group.status as enums.AdGroupStatus,
+        ad_group_status: enums.AdGroupStatus[ad_group.status],
         ad_group_cpc_bid_micros: ad_group.cpc_bid_micros,
         ad_group_labels: ad_group.labels,
         campaign_id: campaign.id,
@@ -77,7 +77,7 @@ export class GoogleAdsApiService {
         metrics_ctr: metrics.ctr,
         metrics_cost_micros: metrics.cost_micros,
         metrics_conversions: metrics.conversions,
-        segments_device: segments.device as enums.Device,
+        segments_device: enums.Device[segments.device],
       }));
 
 
@@ -114,8 +114,8 @@ export class GoogleAdsApiService {
       return response.map(({ campaign, metrics, campaign_budget }) => ({
         campaign_id: campaign.id,
         campaign_name: campaign.name,
-        campaign_status: campaign.status as enums.CampaignStatus,
-        campaign_bidding_strategy_type: campaign.bidding_strategy_type as enums.BiddingStrategyType,
+        campaign_status: enums.CampaignStatus[campaign.status],
+        campaign_bidding_strategy_type: enums.BiddingStrategyType[campaign.bidding_strategy_type],
         campaign_budget_amount_micros: campaign_budget.amount_micros,
         campaign_labels: campaign.labels,
         metrics_cost_micros: metrics.cost_micros,
