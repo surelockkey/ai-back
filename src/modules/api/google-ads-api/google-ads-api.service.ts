@@ -58,6 +58,7 @@ export class GoogleAdsApiService {
           ad_group
         WHERE
           ad_group.status = 'PAUSED'
+          AND ad_group.status = 'UNKNOWN'
         `;
 
 
