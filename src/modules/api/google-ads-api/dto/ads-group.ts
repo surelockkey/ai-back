@@ -15,6 +15,9 @@ export class AdGroupDto {
   @Field(() => String, { nullable: true })
   ad_group_primary_status: string | enums.AdGroupPrimaryStatus;
 
+  @Field(() => String, { nullable: true })
+  ad_group_tracking_url_template: string | enums.AdGroupPrimaryStatus;
+
   @Field(() => Float, { nullable: true })
   ad_group_cpc_bid_micros: number;
 
