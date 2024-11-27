@@ -108,10 +108,9 @@ export class GoogleAdsApiService {
         metrics.conversions
       FROM
         campaign
-      WHERE
-        campaign.primary_status = 'ELIGIBLE'
-      `;
-      // LIMIT 20
+        `;
+      // WHERE
+      //   campaign.primary_status = 'ELIGIBLE'
 
       const response = await this.customer.query(query)
 
