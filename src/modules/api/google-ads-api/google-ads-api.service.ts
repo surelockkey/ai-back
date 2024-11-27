@@ -56,8 +56,12 @@ export class GoogleAdsApiService {
           segments.device
         FROM
           ad_group
-        WHERE
-          ad_group.status = 'ENABLED'
+        WHERE 
+            ad_group.status != 'PAUSED' 
+          AND
+            ad_group.status != 'UNKNOWN' 
+          AND 
+            ad_group.status != 'PAUSED'
         `;
 
 
