@@ -58,8 +58,7 @@ export class GoogleAdsApiService {
         FROM
           ad_group
         WHERE
-          ad_group.status != 'PAUSED'
-          AND ad_group.status != 'REMOVED'
+          ad_group.primary_status = 'ELIGIBLE'
         `;
 
 
@@ -108,7 +107,7 @@ export class GoogleAdsApiService {
       FROM
         campaign
       WHERE
-        campaign.status = 'ENABLED'
+        campaign.primary_status = 'ELIGIBLE'
       `;
       // LIMIT 20
 
