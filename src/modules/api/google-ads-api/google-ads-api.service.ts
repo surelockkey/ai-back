@@ -109,9 +109,8 @@ export class GoogleAdsApiService {
       FROM campaign 
       WHERE 
         campaign.primary_status = 'ELIGIBLE' 
-        AND campaign.primary_status = 'LIMITED' 
       `;
-      // LIMIT 20
+      // AND campaign.primary_status = 'LIMITED'
 
       const response = await this.customer.query(query)
 
