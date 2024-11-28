@@ -136,7 +136,7 @@ export class GoogleAdsApiService {
         FROM
           ad_group
         WHERE 
-          ad_group.primary_status IN ('ELIGIBLE', 'LIMITED')
+          campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
         `;
 
       const response = await customer.query(query)
@@ -164,7 +164,6 @@ export class GoogleAdsApiService {
 
 
     } catch (error) {
-      console.error("LOG Google Ads API Error:", JSON.stringify(error, null, 2));
       throw new Error(`Google Ads API Error: ${JSON.stringify(error, null, 2)}`);
     }
   }
