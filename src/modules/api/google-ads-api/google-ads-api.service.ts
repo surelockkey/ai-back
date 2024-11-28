@@ -60,7 +60,7 @@ export class GoogleAdsApiService {
         FROM
           ad_group
         WHERE 
-          campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
+          ad_group.primary_status IN ('ELIGIBLE', 'LIMITED')
         `;
 
       const response = await customer.query(query)
