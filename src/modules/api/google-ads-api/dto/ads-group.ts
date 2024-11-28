@@ -30,6 +30,9 @@ export class AdGroupDto {
   @Field(() => String, { nullable: true })
   campaign_name: string;
 
+  @Field(() => String, { nullable: true })
+  campaign_primary_status: string | enums.CampaignPrimaryStatus;
+
   @Field(() => Float, { nullable: true })
   metrics_clicks: number;
 

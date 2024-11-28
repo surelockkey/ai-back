@@ -75,6 +75,7 @@ export class GoogleAdsApiService {
         ad_group_tracking_url_template: ad_group.tracking_url_template,
         campaign_id: campaign.id,
         campaign_name: campaign.name,
+        campaign_primary_status: enums.CampaignPrimaryStatus[campaign.primary_status],
         metrics_clicks: metrics.clicks,
         metrics_impressions: metrics.impressions,
         metrics_ctr: metrics.ctr,
