@@ -93,35 +93,28 @@ export class GoogleAdsApiService {
 
     try {
       const query = `
-      SELECT
-        campaign.id,
-        campaign.name,
-        campaign.status,
-        campaign.primary_status,
-        campaign.bidding_strategy_type,
-        campaign_budget.amount_micros,
-        campaign.labels,
-        metrics.cost_micros,
-        metrics.clicks,
-        metrics.impressions,
-        metrics.all_conversions,
-        metrics.conversions
-      FROM
-        campaign
-      WHERE
-        campaign.primary_status = 'ELIGIBLE'
-      AND
-        campaign.primary_status = 'LIMITED'
+      SELECT 
+        campaign.id, 
+        campaign.name, 
+        campaign.status, 
+        campaign.primary_status, 
+        campaign.bidding_strategy_type, 
+        campaign_budget.amount_micros, 
+        campaign.labels, 
+        metrics.cost_micros, 
+        metrics.clicks, 
+        metrics.impressions, 
+        metrics.all_conversions, 
+        metrics.conversions 
+      FROM campaign 
+      WHERE 
+        campaign.primary_status = 'ELIGIBLE' 
+        AND campaign.primary_status = 'LIMITED' 
       `;
       // LIMIT 20
 
       const response = await this.customer.query(query)
 
-      // .filter(({ campaign }) => {
-      //   console.log(campaign.primary_status);
-
-      //   return enums.AdGroupPrimaryStatus[campaign.primary_status] === 'ELIGIBLE' || campaign.primary_status === null
-      // })
       return response
         .map(({ campaign, metrics, campaign_budget }) => {
           console.log(campaign.primary_status, enums.CampaignPrimaryStatus[campaign.primary_status]);
