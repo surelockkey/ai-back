@@ -58,10 +58,9 @@ export class GoogleAdsApiService {
           segments.device
         FROM
           ad_group
-        WHERE
-          ad_group.primary_status = 'ELIGIBLE'
+        WHERE 
+          campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
         `;
-
 
       const response = await this.customer.query(query)
 
@@ -93,31 +92,28 @@ export class GoogleAdsApiService {
 
     try {
       const query = `
-SELECT 
-  campaign.id, 
-  campaign.name, 
-  campaign.status, 
-  campaign.primary_status, 
-  campaign.bidding_strategy_type, 
-  campaign_budget.amount_micros, 
-  campaign.labels, 
-  metrics.cost_micros, 
-  metrics.clicks, 
-  metrics.impressions, 
-  metrics.all_conversions, 
-  metrics.conversions 
-FROM campaign 
-WHERE 
-  campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
-
+        SELECT 
+          campaign.id, 
+          campaign.name, 
+          campaign.status, 
+          campaign.primary_status, 
+          campaign.bidding_strategy_type, 
+          campaign_budget.amount_micros, 
+          campaign.labels, 
+          metrics.cost_micros, 
+          metrics.clicks, 
+          metrics.impressions, 
+          metrics.all_conversions, 
+          metrics.conversions 
+        FROM campaign 
+        WHERE 
+          campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
       `;
 
       const response = await this.customer.query(query)
 
       return response
         .map(({ campaign, metrics, campaign_budget }) => {
-          console.log(campaign.primary_status, enums.CampaignPrimaryStatus[campaign.primary_status]);
-
           return ({
             campaign_id: campaign.id,
             campaign_name: campaign.name,
