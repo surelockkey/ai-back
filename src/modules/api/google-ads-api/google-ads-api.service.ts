@@ -33,7 +33,7 @@ export class GoogleAdsApiService {
     return this.googleAdsClient.Customer({ ...this.customer_credentials, customer_id })
   }
 
-  public async getCampaigns(customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID): Promise<AdsCampaignDto[]> {
+  public getCampaigns = async (customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID): Promise<AdsCampaignDto[]> => {
     const customer = this.createCustomer(customer_id)
 
     try {
@@ -109,7 +109,7 @@ export class GoogleAdsApiService {
     return this.getDataByAllSettledStrategy(this.getCampaigns)
   }
 
-  public async getGroups(customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID): Promise<AdGroupDto[]> {
+  public getGroups = async (customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID): Promise<AdGroupDto[]> => {
     const customer = this.createCustomer(customer_id)
 
     try {
