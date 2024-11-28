@@ -37,7 +37,7 @@ export class AdGroupDto {
   campaign_primary_status: string | enums.CampaignPrimaryStatus;
 
   @Field(() => String, { nullable: true })
-  campaign_campaign_status: string | enums.CampaignStatus;
+  campaign_status: string | enums.CampaignStatus;
 
   @Field(() => Float, { nullable: true })
   metrics_clicks: number;
