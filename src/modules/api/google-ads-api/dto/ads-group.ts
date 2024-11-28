@@ -24,6 +24,11 @@ export class AdGroupDto {
   @Field(() => [String], { nullable: true })
   ad_group_labels: string[];
 
+
+  @Field(() => [String], { nullable: true })
+  ad_group_primary_status_reasons: string[] | enums.AdGroupPrimaryStatusReason[];
+
+
   @Field(() => Float, { nullable: true })
   campaign_id: number;
 
