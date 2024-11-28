@@ -113,12 +113,12 @@ export class GoogleAdsApiService {
 
       const response = await this.customer.query(query)
 
-      return response
-        .filter(({ campaign }) => {
-          console.log(campaign.primary_status);
+      // .filter(({ campaign }) => {
+      //   console.log(campaign.primary_status);
 
-          return enums.AdGroupPrimaryStatus[campaign.primary_status] === 'ELIGIBLE' || campaign.primary_status === null
-        })
+      //   return enums.AdGroupPrimaryStatus[campaign.primary_status] === 'ELIGIBLE' || campaign.primary_status === null
+      // })
+      return response
         .map(({ campaign, metrics, campaign_budget }) => ({
           campaign_id: campaign.id,
           campaign_name: campaign.name,
