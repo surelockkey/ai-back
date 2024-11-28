@@ -84,16 +84,21 @@ export class GoogleAdsApiService {
   }
 
   public async getAllCampaigns(): Promise<AdsCampaignDto[]> {
+    // 60
     const customer_ids = await this.getListCustomers()
 
     let collect_data = [];
 
+    try {
 
-    for await (const cid of customer_ids) {
-      const campaign = await this.getCampaigns(cid)
-      collect_data = collect_data.concat(campaign)
+      for await (const cid of customer_ids) {
+        const campaign = await this.getCampaigns(cid)
+        collect_data = collect_data.concat(campaign)
+      }
+
+    } catch (error) {
+      console.log(error);
     }
-
     return collect_data;
   }
 
