@@ -83,7 +83,7 @@ export class GoogleAdsApiService {
     }
   }
 
-  private async getDataByAllSettledStrategy<T>(method: (cid: string) => Promise<T>) {
+  private getDataByAllSettledStrategy = async <T>(method: (cid: string) => Promise<T>) => {
     const customer_ids = await this.getListCustomers()
 
     let collect_data = [];
