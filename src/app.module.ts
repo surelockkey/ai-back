@@ -53,5 +53,6 @@ import { ReferralModule } from './modules/referral/referral.module';
     CustomerAppModule,
     ReferralModule,
   ],
+  providers: [],
 })
-export class AppModule {}
+export class AppModule { }

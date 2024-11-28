@@ -62,10 +62,6 @@ export class ConstructedMetaInfo extends BaseEntity {
   @Column({ nullable: true })
   salary?: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  phone?: string;
-
   @Field(() => ID)
   @Column('uuid')
   constructed_page_id?: string;

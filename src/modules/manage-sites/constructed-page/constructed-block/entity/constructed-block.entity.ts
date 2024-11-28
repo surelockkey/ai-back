@@ -63,6 +63,10 @@ export class ConstructedBlock extends BaseEntity {
   @Column({ nullable: true })
   state?: string;
 
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  phone?: string;
+
   @Field(() => ID)
   @Column('uuid')
   constructed_page_id: string;

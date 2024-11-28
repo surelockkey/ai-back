@@ -28,6 +28,19 @@ type Address {
   name: String!
 }
 
+type AdsCampaignDto {
+  campaign_bidding_strategy_type: String!
+  campaign_budget_amount_micros: Float!
+  campaign_id: Float!
+  campaign_labels: [String!]!
+  campaign_name: String!
+  metrics_all_conversions: Float!
+  metrics_clicks: Float!
+  metrics_conversions: Float!
+  metrics_cost_micros: Float!
+  metrics_impressions: Float!
+}
+
 type BlogBlock {
   body_text: String
   description: String
@@ -1307,6 +1320,8 @@ type Query {
   findTranscription(call_id: String!): Transcription!
   generateDifferenceReport(only_less: Boolean! = true, workiz_id: String!): [ItemCompareResult!]!
   generateDifferenceReportForAll: [ItemCompareResult!]!
+  getAdsApi: AdsCampaignDto!
+  getAdsCustomer: String!
 
   """get all photo """
   getAllBlogPhoto: [PhotoBlog!]!
