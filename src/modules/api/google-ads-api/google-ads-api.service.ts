@@ -33,65 +33,8 @@ export class GoogleAdsApiService {
     return this.googleAdsClient.Customer({ ...this.customer_credentials, customer_id })
   }
 
-  public async getGroups(): Promise<AdGroupDto[]> {
-    const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID)
-
-    try {
-      const query = `
-        SELECT
-          ad_group.id,
-          ad_group.name,
-          ad_group.status,
-          ad_group.primary_status,
-          ad_group.cpc_bid_micros,
-          ad_group.labels,
-          ad_group.tracking_url_template,
-          ad_group.primary_status_reasons,
-          campaign.id,
-          campaign.name,
-          campaign.primary_status,
-          metrics.clicks,
-          metrics.impressions,
-          metrics.ctr,
-          metrics.cost_micros,
-          metrics.conversions,
-          segments.device
-        FROM
-          ad_group
-        WHERE 
-          ad_group.primary_status IN ('ELIGIBLE', 'LIMITED')
-        `;
-
-      const response = await customer.query(query)
-
-      return response.map(({ ad_group, campaign, metrics, segments }) => ({
-        ad_group_id: ad_group.id,
-        ad_group_name: ad_group.name,
-        ad_group_status: enums.AdGroupStatus[ad_group.status],
-        ad_group_primary_status: enums.AdGroupPrimaryStatus[ad_group.primary_status],
-        ad_group_cpc_bid_micros: ad_group.cpc_bid_micros,
-        ad_group_labels: ad_group.labels,
-        ad_group_tracking_url_template: ad_group.tracking_url_template,
-        ad_group_primary_status_reasons: ad_group.primary_status_reasons,
-        campaign_id: campaign.id,
-        campaign_name: campaign.name,
-        campaign_primary_status: enums.CampaignPrimaryStatus[campaign.primary_status],
-        metrics_clicks: metrics.clicks,
-        metrics_impressions: metrics.impressions,
-        metrics_ctr: metrics.ctr,
-        metrics_cost_micros: metrics.cost_micros,
-        metrics_conversions: metrics.conversions,
-        segments_device: enums.Device[segments.device],
-      }));
-
-
-    } catch (error) {
-      console.error("Google Ads API Error:", error);
-      throw new Error(`Google Ads API Error: ${JSON.stringify(error, null, 2)}`);
-    }
-  }
-  public async getCampaigns(): Promise<AdsCampaignDto[]> {
-    const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID)
+  public async getCampaigns(customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID): Promise<AdsCampaignDto[]> {
+    const customer = this.createCustomer(customer_id)
 
     try {
       const query = `
@@ -139,4 +82,93 @@ export class GoogleAdsApiService {
       throw new Error(`Google Ads API Error: ${JSON.stringify(error, null, 2)}`);
     }
   }
+
+  public async getAllCampaigns(): Promise<AdsCampaignDto[]> {
+    const customer_ids = await this.getListCustomers()
+
+    let collect_data = [];
+
+
+    for await (const cid of customer_ids) {
+      const campaign = await this.getCampaigns(cid)
+      collect_data = collect_data.concat(campaign)
+    }
+
+    return collect_data;
+  }
+
+  public async getGroups(customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID): Promise<AdGroupDto[]> {
+    const customer = this.createCustomer(customer_id)
+
+    try {
+      const query = `
+        SELECT
+          ad_group.id,
+          ad_group.name,
+          ad_group.status,
+          ad_group.primary_status,
+          ad_group.cpc_bid_micros,
+          ad_group.labels,
+          ad_group.tracking_url_template,
+          ad_group.primary_status_reasons,
+          campaign.id,
+          campaign.name,
+          campaign.status, 
+          campaign.primary_status,
+          metrics.clicks,
+          metrics.impressions,
+          metrics.ctr,
+          metrics.cost_micros,
+          metrics.conversions,
+          segments.device
+        FROM
+          ad_group
+        WHERE 
+          ad_group.primary_status IN ('ELIGIBLE', 'LIMITED')
+        `;
+
+      const response = await customer.query(query)
+
+      return response.map(({ ad_group, campaign, metrics, segments }) => ({
+        ad_group_id: ad_group.id,
+        ad_group_name: ad_group.name,
+        ad_group_status: enums.AdGroupStatus[ad_group.status],
+        ad_group_primary_status: enums.AdGroupPrimaryStatus[ad_group.primary_status],
+        ad_group_cpc_bid_micros: ad_group.cpc_bid_micros,
+        ad_group_labels: ad_group.labels,
+        ad_group_tracking_url_template: ad_group.tracking_url_template,
+        ad_group_primary_status_reasons: ad_group.primary_status_reasons,
+        campaign_id: campaign.id,
+        campaign_name: campaign.name,
+        campaign_primary_status: enums.CampaignPrimaryStatus[campaign.primary_status],
+        campaign_campaign_status: enums.CampaignStatus[campaign.status],
+        metrics_clicks: metrics.clicks,
+        metrics_impressions: metrics.impressions,
+        metrics_ctr: metrics.ctr,
+        metrics_cost_micros: metrics.cost_micros,
+        metrics_conversions: metrics.conversions,
+        segments_device: enums.Device[segments.device],
+      }));
+
+
+    } catch (error) {
+      console.error("Google Ads API Error:", error);
+      throw new Error(`Google Ads API Error: ${JSON.stringify(error, null, 2)}`);
+    }
+  }
+
+  public async getAllGroups(): Promise<AdsCampaignDto[]> {
+    const customer_ids = await this.getListCustomers()
+
+    let collect_data = [];
+
+
+    for await (const cid of customer_ids) {
+      const campaign = await this.getGroups(cid)
+      collect_data = collect_data.concat(campaign)
+    }
+
+    return collect_data;
+  }
+
 }
