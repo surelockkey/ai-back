@@ -120,13 +120,13 @@ export class GoogleAdsApiService {
       // })
       return response
         .map(({ campaign, metrics, campaign_budget }) => {
-          console.log(campaign.primary_status, enums.AdGroupPrimaryStatus[campaign.primary_status]);
+          console.log(campaign.primary_status, enums.CampaignPrimaryStatus[campaign.primary_status]);
 
           return ({
             campaign_id: campaign.id,
             campaign_name: campaign.name,
             campaign_status: enums.CampaignStatus[campaign.status],
-            campaign_primary_status: enums.AdGroupPrimaryStatus[campaign.primary_status],
+            campaign_primary_status: enums.CampaignPrimaryStatus[campaign.primary_status],
             campaign_bidding_strategy_type: enums.BiddingStrategyType[campaign.bidding_strategy_type],
             campaign_budget_amount_micros: campaign_budget.amount_micros,
             campaign_labels: campaign.labels,
