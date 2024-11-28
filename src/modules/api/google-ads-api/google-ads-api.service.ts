@@ -108,7 +108,7 @@ export class GoogleAdsApiService {
         metrics.conversions 
       FROM campaign 
       WHERE 
-        campaign.primary_status = 'ELIGIBLE' 
+        campaign.primary_status = 'LIMITED' 
       `;
       // AND campaign.primary_status = 'LIMITED'
 
