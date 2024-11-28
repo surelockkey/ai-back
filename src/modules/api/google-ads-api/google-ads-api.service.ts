@@ -89,16 +89,20 @@ export class GoogleAdsApiService {
 
     let collect_data = [];
 
-    for await (const cid of customer_ids) {
-      try {
+    const promises = customer_ids.map((cid) =>
+      this.getCampaigns(cid).then((r) => r)
+    );
 
-        const campaign = await this.getCampaigns(cid)
-        collect_data = collect_data.concat(campaign)
+    const results = await Promise.allSettled(promises);
 
-      } catch (error) {
-        console.log(error);
+    results.forEach((result) => {
+      if (result.status === 'fulfilled') {
+        collect_data = collect_data.concat(result.value);
+      } else {
+        console.error(`Помилка для одного з запитів: ${result.reason}`);
       }
-    }
+    });
+
     return collect_data;
   }
 
