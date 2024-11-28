@@ -50,6 +50,7 @@ export class GoogleAdsApiService {
           ad_group.tracking_url_template,
           campaign.id,
           campaign.name,
+          campaign.primary_status,
           metrics.clicks,
           metrics.impressions,
           metrics.ctr,
@@ -59,7 +60,7 @@ export class GoogleAdsApiService {
         FROM
           ad_group
         WHERE 
-          campaign.id IN ('1730659639', '1699227311', '1847807500', '1934606089', '2054796709', '6449397055', '6560980741', '6560980747', '15784974882')
+          campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
         `;
 
       const response = await customer.query(query)
