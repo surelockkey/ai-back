@@ -20,8 +20,8 @@ export class GoogleAdsApiResolver {
     return await this.googleAdsApiService.getGroups();
   }
 
-  @Query(() => String)
-  async getAdsCustomer(): Promise<any> {
+  @Query(() => [String])
+  async getAdsCustomer(): Promise<string[]> {
     return await this.googleAdsApiService.getListCustomers();
   }
 }
