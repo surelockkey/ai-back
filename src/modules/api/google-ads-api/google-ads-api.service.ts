@@ -108,6 +108,10 @@ export class GoogleAdsApiService {
         metrics.conversions
       FROM
         campaign
+      WHERE
+        ad_group.primary_status = 'ELIGIBLE'
+        AND
+        ad_group.primary_status = 'LIMITED'
       `;
       // LIMIT 20
 
