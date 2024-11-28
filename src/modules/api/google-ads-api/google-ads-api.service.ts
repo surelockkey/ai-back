@@ -141,7 +141,7 @@ export class GoogleAdsApiService {
         campaign_id: campaign.id,
         campaign_name: campaign.name,
         campaign_primary_status: enums.CampaignPrimaryStatus[campaign.primary_status],
-        campaign_campaign_status: enums.CampaignStatus[campaign.status],
+        campaign_status: enums.CampaignStatus[campaign.status],
         metrics_clicks: metrics.clicks,
         metrics_impressions: metrics.impressions,
         metrics_ctr: metrics.ctr,
