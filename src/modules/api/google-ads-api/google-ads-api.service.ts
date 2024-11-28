@@ -109,9 +109,9 @@ export class GoogleAdsApiService {
       FROM
         campaign
       WHERE
-        ad_group.primary_status = 'ELIGIBLE'
-        AND
-        ad_group.primary_status = 'LIMITED'
+        campaign.primary_status = 'ELIGIBLE'
+      AND
+        campaign.primary_status = 'LIMITED'
       `;
       // LIMIT 20
 
