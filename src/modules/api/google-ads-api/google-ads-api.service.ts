@@ -16,14 +16,9 @@ export class GoogleAdsApiService {
   }
 
   private readonly googleAdsClient: GoogleAdsApi;
-  private readonly customer: Customer;
 
   constructor() {
     this.googleAdsClient = new GoogleAdsApi(this.credentials);
-    this.customer = this.googleAdsClient.Customer(this.customer_credentials)
-
-    console.log(this.credentials);
-
   }
 
   public async getListCustomers() {
@@ -36,7 +31,12 @@ export class GoogleAdsApiService {
     return res;
   }
 
+  private createCustomer = (customer_id: string) => {
+    return this.googleAdsClient.Customer({ ...this.customer_credentials, customer_id })
+  }
+
   public async getGroups(): Promise<AdGroupDto[]> {
+    const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID)
 
     try {
       const query = `
@@ -59,10 +59,10 @@ export class GoogleAdsApiService {
         FROM
           ad_group
         WHERE 
-          ad_group.primary_status IN ('ELIGIBLE', 'LIMITED')
+          campaign.id IN ('1730659639', '1699227311', '1847807500', '1934606089', '2054796709', '6449397055', '6560980741', '6560980747', '15784974882')
         `;
 
-      const response = await this.customer.query(query)
+      const response = await customer.query(query)
 
       return response.map(({ ad_group, campaign, metrics, segments }) => ({
         ad_group_id: ad_group.id,
@@ -89,6 +89,7 @@ export class GoogleAdsApiService {
     }
   }
   public async getCampaigns(): Promise<AdsCampaignDto[]> {
+    const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID)
 
     try {
       const query = `
@@ -110,7 +111,7 @@ export class GoogleAdsApiService {
           campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
       `;
 
-      const response = await this.customer.query(query)
+      const response = await customer.query(query)
 
       return response
         .map(({ campaign, metrics, campaign_budget }) => {
