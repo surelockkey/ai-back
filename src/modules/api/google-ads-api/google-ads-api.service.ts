@@ -164,7 +164,7 @@ export class GoogleAdsApiService {
 
 
     } catch (error) {
-      console.error("Google Ads API Error:", error);
+      console.error("Google Ads API Error:", JSON.stringify(error, null, 2));
       throw new Error(`Google Ads API Error: ${JSON.stringify(error, null, 2)}`);
     }
   }
