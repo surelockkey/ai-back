@@ -26,7 +26,7 @@ export class GoogleAdsApiService {
       this.customer_credentials.refresh_token,
     );
 
-    return res.resource_names.map(cid => cid.split('customers/')[0]);
+    return res.resource_names.map(cid => cid.split('customers/')[1]);
   }
 
   private createCustomer = (customer_id: string) => {
