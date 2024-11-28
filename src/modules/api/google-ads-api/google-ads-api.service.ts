@@ -83,14 +83,13 @@ export class GoogleAdsApiService {
     }
   }
 
-  public async getAllCampaigns(): Promise<AdsCampaignDto[]> {
-    // 60
+  private async getDataByAllSettledStrategy<T>(method: (cid: string) => Promise<T>) {
     const customer_ids = await this.getListCustomers()
 
     let collect_data = [];
 
     const promises = customer_ids.map((cid) =>
-      this.getCampaigns(cid).then((r) => r)
+      method(cid).then((r) => r)
     );
 
     const results = await Promise.allSettled(promises);
@@ -99,11 +98,15 @@ export class GoogleAdsApiService {
       if (result.status === 'fulfilled') {
         collect_data = collect_data.concat(result.value);
       } else {
-        console.error(`Помилка для одного з запитів: ${result.reason}`);
+        console.error(`ERROR: ${result.reason}`);
       }
     });
 
     return collect_data;
+  }
+
+  public async getAllCampaigns(): Promise<AdsCampaignDto[]> {
+    return this.getDataByAllSettledStrategy(this.getCampaigns)
   }
 
   public async getGroups(customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID): Promise<AdGroupDto[]> {
@@ -166,18 +169,8 @@ export class GoogleAdsApiService {
     }
   }
 
-  public async getAllGroups(): Promise<AdsCampaignDto[]> {
-    const customer_ids = await this.getListCustomers()
-
-    let collect_data = [];
-
-
-    for await (const cid of customer_ids) {
-      const campaign = await this.getGroups(cid)
-      collect_data = collect_data.concat(campaign)
-    }
-
-    return collect_data;
+  public async getAllGroups(): Promise<AdGroupDto[]> {
+    return this.getDataByAllSettledStrategy(this.getGroups);
   }
 
 }
