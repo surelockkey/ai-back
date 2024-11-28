@@ -119,20 +119,24 @@ export class GoogleAdsApiService {
       //   return enums.AdGroupPrimaryStatus[campaign.primary_status] === 'ELIGIBLE' || campaign.primary_status === null
       // })
       return response
-        .map(({ campaign, metrics, campaign_budget }) => ({
-          campaign_id: campaign.id,
-          campaign_name: campaign.name,
-          campaign_status: enums.CampaignStatus[campaign.status],
-          campaign_primary_status: enums.AdGroupPrimaryStatus[campaign.primary_status],
-          campaign_bidding_strategy_type: enums.BiddingStrategyType[campaign.bidding_strategy_type],
-          campaign_budget_amount_micros: campaign_budget.amount_micros,
-          campaign_labels: campaign.labels,
-          metrics_cost_micros: metrics.cost_micros,
-          metrics_clicks: metrics.clicks,
-          metrics_impressions: metrics.impressions,
-          metrics_all_conversions: metrics.all_conversions,
-          metrics_conversions: metrics.conversions
-        }));
+        .map(({ campaign, metrics, campaign_budget }) => {
+          console.log(campaign.primary_status);
+
+          return ({
+            campaign_id: campaign.id,
+            campaign_name: campaign.name,
+            campaign_status: enums.CampaignStatus[campaign.status],
+            campaign_primary_status: enums.AdGroupPrimaryStatus[campaign.primary_status],
+            campaign_bidding_strategy_type: enums.BiddingStrategyType[campaign.bidding_strategy_type],
+            campaign_budget_amount_micros: campaign_budget.amount_micros,
+            campaign_labels: campaign.labels,
+            metrics_cost_micros: metrics.cost_micros,
+            metrics_clicks: metrics.clicks,
+            metrics_impressions: metrics.impressions,
+            metrics_all_conversions: metrics.all_conversions,
+            metrics_conversions: metrics.conversions
+          })
+        });
 
 
     } catch (error) {
