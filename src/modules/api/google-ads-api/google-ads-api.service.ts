@@ -93,24 +93,24 @@ export class GoogleAdsApiService {
 
     try {
       const query = `
-      SELECT 
-        campaign.id, 
-        campaign.name, 
-        campaign.status, 
-        campaign.primary_status, 
-        campaign.bidding_strategy_type, 
-        campaign_budget.amount_micros, 
-        campaign.labels, 
-        metrics.cost_micros, 
-        metrics.clicks, 
-        metrics.impressions, 
-        metrics.all_conversions, 
-        metrics.conversions 
-      FROM campaign 
-      WHERE 
-        campaign.primary_status = 'LIMITED' 
+SELECT 
+  campaign.id, 
+  campaign.name, 
+  campaign.status, 
+  campaign.primary_status, 
+  campaign.bidding_strategy_type, 
+  campaign_budget.amount_micros, 
+  campaign.labels, 
+  metrics.cost_micros, 
+  metrics.clicks, 
+  metrics.impressions, 
+  metrics.all_conversions, 
+  metrics.conversions 
+FROM campaign 
+WHERE 
+  campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
+
       `;
-      // AND campaign.primary_status = 'LIMITED'
 
       const response = await this.customer.query(query)
 
