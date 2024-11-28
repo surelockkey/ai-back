@@ -43,7 +43,7 @@
     "class-validator": "~0.14.0",
     "cloudconvert": "~2.3.4",
     "csv-parser": "~3.0.0",
-    "google-ads-api": "~13.0.0-global-service-cache-alpha-0",
+    "google-ads-api": "^17.1.0-rest-beta",
     "graphql": "~16.6.0",
     "graphql-type-json": "~0.3.2",
     "graphql-upload": "~14.0.0",
