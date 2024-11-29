@@ -136,7 +136,7 @@ export class GoogleAdsApiService {
         FROM
           ad_group
         WHERE 
-          ad_group.primary_status IN ('ELIGIBLE', 'LIMITED')
+          ad_group.status = 'ENABLED'
         `;
 
       const response = await customer.query(query)
