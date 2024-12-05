@@ -394,8 +394,8 @@ export class GoogleAdsApiService {
         final_url_suffix: ad.final_url_suffix,
         resource_name: ad.resource_name,
         display_url: ad.display_url,
-        description: ad.app_ad.descriptions,
-        headline: ad.app_ad.headlines,
+        // description: ad.app_ad.descriptions,
+        // headline: ad.app_ad.headlines,
 
         // App ad details
         app_ad_descriptions: ad.app_ad.descriptions?.map((asset) => asset.text),
