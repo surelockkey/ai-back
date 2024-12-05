@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { GoogleAdsApi, Customer, enums } from 'google-ads-api';
 import { AdsCampaignDto } from './dto/ads-campaing';
 import { AdGroupDto } from './dto/ads-group';
+import { AdDto } from './dto/ads-ad';
 @Injectable()
 export class GoogleAdsApiService {
   private readonly credentials = {
@@ -170,6 +171,50 @@ export class GoogleAdsApiService {
 
   public async getAllGroups(): Promise<AdGroupDto[]> {
     return this.getDataByAllSettledStrategy(this.getGroups);
+  }
+
+  public getAD = async (customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID): Promise<AdDto[]> => {
+    const customer = this.createCustomer(customer_id)
+
+    try {
+      const query = `
+        SELECT
+          ad_group.id,
+          ad_group.name,
+          ad_group.status,
+          ad.id,
+          ad.type,
+          ad.final_urls,
+          metrics.clicks,
+          metrics.impressions,
+          metrics.ctr,
+          metrics.cost_micros,
+          metrics.conversions
+        FROM ad
+        WHERE
+          ad_group.status IN ('ENABLED', 'PAUSED')
+        LIMIT 50
+      `;
+
+      const response = await customer.query(query);
+
+      return response.map(({ ad_group, ad, metrics }) => ({
+        ad_group_id: ad_group.id,
+        ad_group_name: ad_group.name,
+        ad_group_status: enums.AdGroupStatus[ad_group.status],
+        ad_id: ad.id,
+        ad_type: enums.AdType[ad.type],
+        ad_final_urls: ad.final_urls,
+        metrics_clicks: metrics.clicks,
+        metrics_impressions: metrics.impressions,
+        metrics_ctr: metrics.ctr,
+        metrics_cost_micros: metrics.cost_micros,
+        metrics_conversions: metrics.conversions,
+      }));
+
+    } catch (error) {
+      throw new Error(`Google Ads API Error: ${JSON.stringify(error, null, 2)}`);
+    }
   }
 
 }
