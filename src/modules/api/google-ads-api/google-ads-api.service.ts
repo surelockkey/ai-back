@@ -386,7 +386,7 @@ export class GoogleAdsApiService {
       call_ad_business_name: ad?.call_ad?.business_name,
       call_ad_call_tracked: ad?.call_ad?.call_tracked,
       call_ad_conversion_action: ad?.call_ad?.conversion_action,
-      call_ad_conversion_reporting_state: enums.CallConversionReportingState[ad.call_ad.conversion_reporting_state],
+      call_ad_conversion_reporting_state: enums.CallConversionReportingState[ad?.call_ad?.conversion_reporting_state],
       call_ad_country_code: ad?.call_ad?.country_code,
       call_ad_description1: ad?.call_ad?.description1,
       call_ad_description2: ad?.call_ad?.description2,
