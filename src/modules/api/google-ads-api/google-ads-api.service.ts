@@ -193,7 +193,7 @@ export class GoogleAdsApiService {
           metrics.conversions
         FROM ad
         WHERE
-          ad_group.primary_status IN ('ENABLED', 'PAUSED')
+          ad_group.status IN ('ENABLED', 'PAUSED')
         LIMIT 50
       `;
 
