@@ -429,7 +429,7 @@ export class GoogleAdsApiService {
       expanded_text_ad_headline_part3: ad?.expanded_text_ad?.headline_part3,
       expanded_text_ad_path1: ad?.expanded_text_ad?.path1,
       expanded_text_ad_path2: ad?.expanded_text_ad?.path2,
-      final_app_urls: ad?.final_app_urls.map(item => item.url),
+      final_app_urls: ad?.final_app_urls?.map(item => item.url),
       final_mobile_urls: ad?.final_mobile_urls,
       final_url_suffix: ad?.final_url_suffix,
       final_urls: ad?.final_urls,
