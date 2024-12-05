@@ -346,9 +346,14 @@ export class GoogleAdsApiService {
           ad.video_responsive_ad.long_headlines,
           ad.video_responsive_ad.videos
         FROM ad
+
+        LIMIT 50
       `;
 
       const response = await customer.query(query);
+
+      console.log(response);
+
 
       return response.map(({ ad }) => ({
         ad_id: ad.id,
