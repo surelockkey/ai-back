@@ -182,11 +182,6 @@ export class GoogleAdsApiService {
           ad.id,
           ad.type,
           ad.final_urls,
-          metrics.clicks,
-          metrics.impressions,
-          metrics.ctr,
-          metrics.cost_micros,
-          metrics.conversions
         FROM ad
 
         LIMIT 50
