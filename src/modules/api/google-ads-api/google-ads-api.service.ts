@@ -181,7 +181,7 @@ export class GoogleAdsApiService {
         SELECT
           ad.id,
           ad.type,
-          ad.final_urls,
+          ad.final_urls
         FROM ad
 
         LIMIT 50
