@@ -137,7 +137,7 @@ export class GoogleAdsApiService {
         FROM
           ad_group
         WHERE 
-          ad_group.status = 'ENABLED'
+          ad_group.primary_status IN ('ELIGIBLE', 'LIMITED')
         `;
 
       const response = await customer.query(query)
@@ -182,6 +182,7 @@ export class GoogleAdsApiService {
           ad_group.id,
           ad_group.name,
           ad_group.status,
+          ad_group.primary_status,
           ad.id,
           ad.type,
           ad.final_urls,
@@ -192,7 +193,7 @@ export class GoogleAdsApiService {
           metrics.conversions
         FROM ad
         WHERE
-          ad_group.status IN ('ENABLED', 'PAUSED')
+          ad_group.primary_status IN ('ENABLED', 'PAUSED')
         LIMIT 50
       `;
 

@@ -2,6 +2,7 @@ import { Resolver, Query } from '@nestjs/graphql';
 import { GoogleAdsApiService } from './google-ads-api.service';
 import { AdsCampaignDto } from './dto/ads-campaing';
 import { AdGroupDto } from './dto/ads-group';
+import { AdDto } from './dto/ads-ad';
 
 @Resolver()
 export class GoogleAdsApiResolver {
@@ -33,5 +34,10 @@ export class GoogleAdsApiResolver {
   @Query(() => [String])
   async getAdsCustomer(): Promise<string[]> {
     return await this.googleAdsApiService.getListCustomers();
+  }
+
+  @Query(() => [AdDto])
+  async getADs(): Promise<AdDto[]> {
+    return await this.googleAdsApiService.getAD();
   }
 }
