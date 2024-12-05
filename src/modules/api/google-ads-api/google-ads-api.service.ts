@@ -179,10 +179,6 @@ export class GoogleAdsApiService {
     try {
       const query = `
         SELECT
-          ad_group.id,
-          ad_group.name,
-          ad_group.status,
-          ad_group.primary_status,
           ad.id,
           ad.type,
           ad.final_urls,
@@ -192,17 +188,16 @@ export class GoogleAdsApiService {
           metrics.cost_micros,
           metrics.conversions
         FROM ad
-        WHERE
-          ad_group.status IN ('ENABLED', 'PAUSED')
+
         LIMIT 50
       `;
 
       const response = await customer.query(query);
 
       return response.map(({ ad_group, ad, metrics }) => ({
-        ad_group_id: ad_group.id,
-        ad_group_name: ad_group.name,
-        ad_group_status: enums.AdGroupStatus[ad_group.status],
+        // ad_group_id: ad_group.id,
+        // ad_group_name: ad_group.name,
+        // ad_group_status: enums.AdGroupStatus[ad_group.status],
         ad_id: ad.id,
         ad_type: enums.AdType[ad.type],
         ad_final_urls: ad.final_urls,

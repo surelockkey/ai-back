@@ -3,14 +3,14 @@ import { enums } from 'google-ads-api';
 
 @ObjectType()
 export class AdDto {
-  @Field(() => Float, { nullable: true })
-  ad_group_id: number;
+  // @Field(() => Float, { nullable: true })
+  // ad_group_id: number;
 
-  @Field(() => String, { nullable: true })
-  ad_group_name: string;
+  // @Field(() => String, { nullable: true })
+  // ad_group_name: string;
 
-  @Field(() => String, { nullable: true })
-  ad_group_status: string | enums.AdGroupStatus;
+  // @Field(() => String, { nullable: true })
+  // ad_group_status: string | enums.AdGroupStatus;
 
   @Field(() => Float, { nullable: true })
   ad_id: number;
