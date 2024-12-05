@@ -369,12 +369,12 @@ export class GoogleAdsApiService {
       // headline: ad.app_ad.headlines,
 
       // App ad details
-      app_ad_descriptions: ad.app_ad.descriptions?.map((asset) => asset.text),
-      app_ad_headlines: ad.app_ad.headlines?.map((asset) => asset.text),
-      app_ad_html5_media_bundles: ad.app_ad.html5_media_bundles?.map(bundle => bundle.asset),
-      app_ad_images: ad.app_ad.images?.map(image => image.asset),
-      app_ad_mandatory_ad_text: ad.app_ad.mandatory_ad_text.text,
-      app_ad_youtube_videos: ad.app_ad.youtube_videos?.map(video => video.asset),
+      app_ad_descriptions: ad?.app_ad?.descriptions?.map((asset) => asset.text),
+      app_ad_headlines: ad?.app_ad?.headlines?.map((asset) => asset.text),
+      app_ad_html5_media_bundles: ad?.app_ad?.html5_media_bundles?.map(bundle => bundle.asset),
+      app_ad_images: ad?.app_ad?.images?.map(image => image.asset),
+      app_ad_mandatory_ad_text: ad?.app_ad?.mandatory_ad_text.text,
+      app_ad_youtube_videos: ad?.app_ad?.youtube_videos?.map(video => video.asset),
 
       // App Engagement Ad details
       app_engagement_ad_descriptions: ad.app_engagement_ad.descriptions?.map(description => description.text),
