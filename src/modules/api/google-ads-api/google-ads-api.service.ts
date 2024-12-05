@@ -195,17 +195,9 @@ export class GoogleAdsApiService {
       const response = await customer.query(query);
 
       return response.map(({ ad_group, ad, metrics }) => ({
-        // ad_group_id: ad_group.id,
-        // ad_group_name: ad_group.name,
-        // ad_group_status: enums.AdGroupStatus[ad_group.status],
         ad_id: ad.id,
         ad_type: enums.AdType[ad.type],
         ad_final_urls: ad.final_urls,
-        metrics_clicks: metrics.clicks,
-        metrics_impressions: metrics.impressions,
-        metrics_ctr: metrics.ctr,
-        metrics_cost_micros: metrics.cost_micros,
-        metrics_conversions: metrics.conversions,
       }));
 
     } catch (error) {

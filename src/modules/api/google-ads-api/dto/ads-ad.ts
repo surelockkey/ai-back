@@ -21,18 +21,4 @@ export class AdDto {
   @Field(() => [String], { nullable: true })
   ad_final_urls?: string[];
 
-  @Field(() => Float, { nullable: true })
-  metrics_clicks?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_impressions?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_ctr?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_cost_micros?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_conversions?: number;
 }
