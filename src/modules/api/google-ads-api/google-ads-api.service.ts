@@ -345,7 +345,6 @@ export class GoogleAdsApiService {
           ad.video_responsive_ad.headlines,
           ad.video_responsive_ad.long_headlines,
           ad.video_responsive_ad.videos,
-          ad.video_responsive_ad.videos.asset
         FROM ad
       `;
 
