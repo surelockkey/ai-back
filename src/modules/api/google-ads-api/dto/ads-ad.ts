@@ -246,10 +246,10 @@ export class AdDto {
 
   // Display Upload Ad
   @Field(() => String, { nullable: true })
-  display_upload_ad_display_upload_product_type?: string;
+  display_upload_ad_display_upload_product_type?: string | enums.DisplayUploadProductType;
 
-  @Field(() => [String], { nullable: true })
-  display_upload_ad_media_bundle?: string[];
+  @Field(() => String, { nullable: true })
+  display_upload_ad_media_bundle?: string | enums.MediaType;
 
   @Field(() => [String], { nullable: true })
   display_upload_ad_media_bundle_asset?: string[];
@@ -311,7 +311,7 @@ export class AdDto {
   image_ad_image_url?: string;
 
   @Field(() => String, { nullable: true })
-  image_ad_mime_type?: string;
+  image_ad_mime_type?: string | enums.MimeType;
 
   @Field(() => String, { nullable: true })
   image_ad_name?: string;
@@ -352,7 +352,7 @@ export class AdDto {
   legacy_responsive_display_ad_description?: string;
 
   @Field(() => String, { nullable: true })
-  legacy_responsive_display_ad_format_setting?: string;
+  legacy_responsive_display_ad_format_setting?: string | enums.DisplayAdFormatSetting;
 
   @Field(() => String, { nullable: true })
   legacy_responsive_display_ad_logo_image?: string;
@@ -526,7 +526,7 @@ export class AdDto {
 
   // System Managed Resource Source
   @Field(() => String, { nullable: true })
-  system_managed_resource_source?: string;
+  system_managed_resource_source?: string | enums.SystemManagedResourceSource;
 
   // Tracking URL Template
   @Field(() => String, { nullable: true })
