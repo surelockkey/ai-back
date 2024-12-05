@@ -536,6 +536,9 @@ export class AdDto {
   @Field(() => String, { nullable: true })
   travel_ad?: string;
 
+  @Field(() => String, { nullable: true })
+  device_preference?: string | enums.Device;
+
   // Ad Type
   @Field(() => String, { nullable: true })
   type?: string | enums.AdType;
