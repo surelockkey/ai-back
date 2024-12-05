@@ -443,7 +443,7 @@ export class GoogleAdsApiService {
       image_ad_preview_image_url: ad?.image_ad?.preview_image_url,
       image_ad_preview_pixel_height: ad?.image_ad?.preview_pixel_height,
       image_ad_preview_pixel_width: ad?.image_ad?.preview_pixel_width,
-      legacy_app_install_ad: ad?.legacy_app_install_ad.app_id,
+      legacy_app_install_ad: ad?.legacy_app_install_ad?.app_id,
       legacy_responsive_display_ad_accent_color: ad?.legacy_responsive_display_ad?.accent_color,
       legacy_responsive_display_ad_allow_flexible_color: ad?.legacy_responsive_display_ad?.allow_flexible_color,
       legacy_responsive_display_ad_business_name: ad?.legacy_responsive_display_ad?.business_name,
