@@ -181,10 +181,9 @@ export class GoogleAdsApiService {
         SELECT
           ad.id,
           ad.type,
+          ad.name,
           ad.final_urls
         FROM ad
-
-        LIMIT 50
       `;
 
       const response = await customer.query(query);
@@ -192,6 +191,7 @@ export class GoogleAdsApiService {
       return response.map(({ ad_group, ad, metrics }) => ({
         ad_id: ad.id,
         ad_type: enums.AdType[ad.type],
+        ad_name: ad.name,
         ad_final_urls: ad.final_urls,
       }));
 

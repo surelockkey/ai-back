@@ -18,6 +18,9 @@ export class AdDto {
   @Field(() => String, { nullable: true })
   ad_type: string | enums.AdType;
 
+  @Field(() => String, { nullable: true })
+  ad_name: string;
+
   @Field(() => [String], { nullable: true })
   ad_final_urls?: string[];
 
