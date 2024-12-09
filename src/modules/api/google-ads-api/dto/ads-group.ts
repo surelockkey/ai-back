@@ -417,8 +417,8 @@ export class AdGroupDto {
   // @Field(() => String, { nullable: true })
   // segments_search_engine_results_page_type?: string | enums.SearchEngineResultsPageType;
 
-  // @Field(() => String, { nullable: true })
-  // segments_slot?: string | enums.Slot;
+  @Field(() => String, { nullable: true })
+  segments_slot?: string | enums.Slot;
 
   // @Field(() => String, { nullable: true })
   // segments_week?: string;
