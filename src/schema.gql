@@ -23,22 +23,44 @@ enum Account {
   main
 }
 
+type AdGroupDto {
+  ad_group_cpc_bid_micros: Float
+  ad_group_id: Float
+  ad_group_labels: [String!]
+  ad_group_name: String
+  ad_group_primary_status: String
+  ad_group_primary_status_reasons: [String!]
+  ad_group_status: String
+  ad_group_tracking_url_template: String
+  campaign_id: Float
+  campaign_name: String
+  campaign_primary_status: String
+  metrics_clicks: Float
+  metrics_conversions: Float
+  metrics_cost_micros: Float
+  metrics_ctr: Float
+  metrics_impressions: Float
+  segments_device: String
+}
+
 type Address {
   id: ID!
   name: String!
 }
 
 type AdsCampaignDto {
-  campaign_bidding_strategy_type: String!
-  campaign_budget_amount_micros: Float!
-  campaign_id: Float!
-  campaign_labels: [String!]!
-  campaign_name: String!
-  metrics_all_conversions: Float!
-  metrics_clicks: Float!
-  metrics_conversions: Float!
-  metrics_cost_micros: Float!
-  metrics_impressions: Float!
+  campaign_bidding_strategy_type: String
+  campaign_budget_amount_micros: Float
+  campaign_id: Float
+  campaign_labels: [String!]
+  campaign_name: String
+  campaign_primary_status: String
+  campaign_status: String
+  metrics_all_conversions: Float
+  metrics_clicks: Float
+  metrics_conversions: Float
+  metrics_cost_micros: Float
+  metrics_impressions: Float
 }
 
 type BlogBlock {
@@ -124,6 +146,7 @@ type ConstructedBlock {
   last_list: String
   last_text: String
   list: String
+  phone: String
   photo: ConstructedPhoto
   position_block: Float
   state: String
@@ -142,6 +165,7 @@ input ConstructedBlockDto {
   last_list: String
   last_text: String
   list: String
+  phone: String
   photo: ConstructedPhotoDto
   position_block: Float
   state: String
@@ -163,7 +187,6 @@ type ConstructedMetaInfo {
   meta_tag_description: String
   meta_tag_title: String
   name: String
-  phone: String
   redirect_url: String
   salary: String
   schema_script: String
@@ -181,7 +204,6 @@ input ConstructedMetaInfoDto {
   meta_tag_description: String
   meta_tag_title: String
   name: String
-  phone: String
   redirect_url: String
   salary: String
   schema_script: String
@@ -1320,8 +1342,9 @@ type Query {
   findTranscription(call_id: String!): Transcription!
   generateDifferenceReport(only_less: Boolean! = true, workiz_id: String!): [ItemCompareResult!]!
   generateDifferenceReportForAll: [ItemCompareResult!]!
-  getAdsApi: AdsCampaignDto!
-  getAdsCustomer: String!
+  getAdsCampaigns: [AdsCampaignDto!]!
+  getAdsCustomer: [String!]!
+  getAdsGroups: [AdGroupDto!]!
 
   """get all photo """
   getAllBlogPhoto: [PhotoBlog!]!
@@ -1651,7 +1674,6 @@ input UpdateConstructedMetaInfoDto {
   meta_tag_description: String
   meta_tag_title: String
   name: String
-  phone: String
   redirect_url: String
   salary: String
   schema_script: String
@@ -1837,6 +1859,7 @@ input UpdateOrCreateConstructedBlockDto {
   last_list: String
   last_text: String
   list: String
+  phone: String
   photo: UpdateConstructedPhotoDto
   position_block: Float
   state: String

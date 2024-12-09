@@ -8,12 +8,12 @@ export class GoogleAdsApiService {
     client_id: process.env.GOOGLE_ADS_CLIENT_ID,
     client_secret: process.env.GOOGLE_ADS_CLIENT_SECRET,
     developer_token: process.env.GOOGLE_ADS_DEVELOPER_TOKEN,
-  }
+  };
 
   private readonly customer_credentials = {
     customer_id: process.env.GOOGLE_ADS_CUSTOMER_ID,
     refresh_token: process.env.GOOGLE_ADS_REFRESH_TOKEN,
-  }
+  };
 
   private readonly googleAdsClient: GoogleAdsApi;
 
@@ -26,15 +26,18 @@ export class GoogleAdsApiService {
       this.customer_credentials.refresh_token,
     );
 
-    return res.resource_names.map(cid => cid.split('customers/')[1]);
+    return res.resource_names.map((cid) => cid.split('customers/')[1]);
   }
 
   private createCustomer = (customer_id: string) => {
-    return this.googleAdsClient.Customer({ ...this.customer_credentials, customer_id })
-  }
+    return this.googleAdsClient.Customer({
+      ...this.customer_credentials,
+      customer_id,
+    });
+  };
 
   public async getGroups(): Promise<AdGroupDto[]> {
-    const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID)
+    const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
 
     try {
       const query = `
@@ -62,20 +65,22 @@ export class GoogleAdsApiService {
           ad_group.primary_status IN ('ELIGIBLE', 'LIMITED')
         `;
 
-      const response = await customer.query(query)
+      const response = await customer.query(query);
 
       return response.map(({ ad_group, campaign, metrics, segments }) => ({
         ad_group_id: ad_group.id,
         ad_group_name: ad_group.name,
         ad_group_status: enums.AdGroupStatus[ad_group.status],
-        ad_group_primary_status: enums.AdGroupPrimaryStatus[ad_group.primary_status],
+        ad_group_primary_status:
+          enums.AdGroupPrimaryStatus[ad_group.primary_status],
         ad_group_cpc_bid_micros: ad_group.cpc_bid_micros,
         ad_group_labels: ad_group.labels,
         ad_group_tracking_url_template: ad_group.tracking_url_template,
         ad_group_primary_status_reasons: ad_group.primary_status_reasons,
         campaign_id: campaign.id,
         campaign_name: campaign.name,
-        campaign_primary_status: enums.CampaignPrimaryStatus[campaign.primary_status],
+        campaign_primary_status:
+          enums.CampaignPrimaryStatus[campaign.primary_status],
         metrics_clicks: metrics.clicks,
         metrics_impressions: metrics.impressions,
         metrics_ctr: metrics.ctr,
@@ -83,15 +88,15 @@ export class GoogleAdsApiService {
         metrics_conversions: metrics.conversions,
         segments_device: enums.Device[segments.device],
       }));
-
-
     } catch (error) {
-      console.error("Google Ads API Error:", error);
-      throw new Error(`Google Ads API Error: ${JSON.stringify(error, null, 2)}`);
+      console.error('Google Ads API Error:', error);
+      throw new Error(
+        `Google Ads API Error: ${JSON.stringify(error, null, 2)}`,
+      );
     }
   }
   public async getCampaigns(): Promise<AdsCampaignDto[]> {
-    const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID)
+    const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
 
     try {
       const query = `
@@ -113,30 +118,31 @@ export class GoogleAdsApiService {
           campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
       `;
 
-      const response = await customer.query(query)
+      const response = await customer.query(query);
 
-      return response
-        .map(({ campaign, metrics, campaign_budget }) => {
-          return ({
-            campaign_id: campaign.id,
-            campaign_name: campaign.name,
-            campaign_status: enums.CampaignStatus[campaign.status],
-            campaign_primary_status: enums.CampaignPrimaryStatus[campaign.primary_status],
-            campaign_bidding_strategy_type: enums.BiddingStrategyType[campaign.bidding_strategy_type],
-            campaign_budget_amount_micros: campaign_budget.amount_micros,
-            campaign_labels: campaign.labels,
-            metrics_cost_micros: metrics.cost_micros,
-            metrics_clicks: metrics.clicks,
-            metrics_impressions: metrics.impressions,
-            metrics_all_conversions: metrics.all_conversions,
-            metrics_conversions: metrics.conversions
-          })
-        });
-
-
+      return response.map(({ campaign, metrics, campaign_budget }) => {
+        return {
+          campaign_id: campaign.id,
+          campaign_name: campaign.name,
+          campaign_status: enums.CampaignStatus[campaign.status],
+          campaign_primary_status:
+            enums.CampaignPrimaryStatus[campaign.primary_status],
+          campaign_bidding_strategy_type:
+            enums.BiddingStrategyType[campaign.bidding_strategy_type],
+          campaign_budget_amount_micros: campaign_budget.amount_micros,
+          campaign_labels: campaign.labels,
+          metrics_cost_micros: metrics.cost_micros,
+          metrics_clicks: metrics.clicks,
+          metrics_impressions: metrics.impressions,
+          metrics_all_conversions: metrics.all_conversions,
+          metrics_conversions: metrics.conversions,
+        };
+      });
     } catch (error) {
-      console.error("Google Ads API Error:", error);
-      throw new Error(`Google Ads API Error: ${JSON.stringify(error, null, 2)}`);
+      console.error('Google Ads API Error:', error);
+      throw new Error(
+        `Google Ads API Error: ${JSON.stringify(error, null, 2)}`,
+      );
     }
   }
 }
