@@ -165,17 +165,17 @@ export class AdGroupDto {
   @Field(() => Float, { nullable: true })
   segments_activity_account_id?: number;
 
-  // @Field(() => String, { nullable: true })
-  // segments_activity_city?: string;
+  @Field(() => String, { nullable: true })
+  segments_activity_city?: string;
 
-  // @Field(() => String, { nullable: true })
-  // segments_activity_country?: string;
+  @Field(() => String, { nullable: true })
+  segments_activity_country?: string;
 
-  // @Field(() => Float, { nullable: true })
-  // segments_activity_rating?: number;
+  @Field(() => Float, { nullable: true })
+  segments_activity_rating?: number;
 
-  // @Field(() => String, { nullable: true })
-  // segments_activity_state?: string;
+  @Field(() => String, { nullable: true })
+  segments_activity_state?: string;
 
   // @Field(() => String, { nullable: true })
   // segments_ad_destination_type?: string | enums.AdDestinationType;
