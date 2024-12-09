@@ -192,7 +192,6 @@ export class GoogleAdsApiService {
           metrics.revenue_micros,
           metrics.units_sold,
           metrics.value_per_conversion,
-          metrics.video_quartile_p100_rate,
           metrics.view_through_conversions
         FROM
           ad_group
@@ -439,7 +438,7 @@ export class GoogleAdsApiService {
         metrics_value_per_conversion: metrics.value_per_conversion,
         // metrics_value_per_conversions_by_conversion_date: metrics.value_per_conversions_by_conversion_date,
         // metrics_value_per_current_model_attributed_conversion: metrics.value_per_current_model_attributed_conversion,
-        metrics_video_quartile_p100_rate: metrics.video_quartile_p100_rate,
+        // metrics_video_quartile_p100_rate: metrics.video_quartile_p100_rate,
         // metrics_video_quartile_p25_rate: metrics.video_quartile_p25_rate,
         // metrics_video_quartile_p50_rate: metrics.video_quartile_p50_rate,
         // metrics_video_quartile_p75_rate: metrics.video_quartile_p75_rate,
