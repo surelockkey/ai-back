@@ -117,7 +117,7 @@ export class GoogleAdsApiService {
       const query = `
         SELECT
           ad_group.ad_rotation_mode
-          ad_group.audience_setting.use_audience_grouped
+          ad_group.audience_setting
           ad_group.base_ad_group
           ad_group.campaign
           ad_group.cpc_bid_micros
