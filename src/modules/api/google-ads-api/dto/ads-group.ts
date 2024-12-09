@@ -159,8 +159,8 @@ export class AdGroupDto {
   @Field(() => String, { nullable: true })
   type?: string | enums.AdGroupType;
 
-  // @Field(() => String, { nullable: true })
-  // url_custom_parameters?: string;
+  @Field(() => [String], { nullable: true })
+  url_custom_parameters?: string[];
 
   // @Field(() => Float, { nullable: true })
   // segments_activity_account_id?: number;
@@ -419,9 +419,6 @@ export class AdGroupDto {
 
   @Field(() => String, { nullable: true })
   segments_slot?: string | enums.Slot;
-
-  // @Field(() => String, { nullable: true })
-  // segments_week?: string;
 
   @Field(() => Float, { nullable: true })
   metrics_active_view_ctr?: number;
