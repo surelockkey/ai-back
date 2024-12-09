@@ -60,7 +60,7 @@ import { enums } from "google-ads-api";
 
 @ObjectType()
 export class AdGroupDto {
-  @Field(() => Int)
+  @Field(() => Float)
   ad_group_id: number;
 
   @Field(() => String, { nullable: true })
