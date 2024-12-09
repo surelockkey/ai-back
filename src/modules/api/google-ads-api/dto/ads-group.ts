@@ -162,8 +162,8 @@ export class AdGroupDto {
   @Field(() => [String], { nullable: true })
   url_custom_parameters?: string[];
 
-  // @Field(() => Float, { nullable: true })
-  // segments_activity_account_id?: number;
+  @Field(() => Float, { nullable: true })
+  segments_activity_account_id?: number;
 
   // @Field(() => String, { nullable: true })
   // segments_activity_city?: string;
