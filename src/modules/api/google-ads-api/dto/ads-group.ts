@@ -159,338 +159,275 @@ export class AdGroupDto {
   @Field(() => String, { nullable: true })
   type?: string | enums.AdGroupType;
 
-  @Field(() => String, { nullable: true })
-  url_custom_parameters?: string;
+  // @Field(() => String, { nullable: true })
+  // url_custom_parameters?: string;
 
-  @Field(() => Float, { nullable: true })
-  segments_activity_account_id?: number;
+  // @Field(() => Float, { nullable: true })
+  // segments_activity_account_id?: number;
 
-  @Field(() => String, { nullable: true })
-  segments_activity_city?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_activity_city?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_activity_country?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_activity_country?: string;
 
-  @Field(() => Float, { nullable: true })
-  segments_activity_rating?: number;
+  // @Field(() => Float, { nullable: true })
+  // segments_activity_rating?: number;
 
-  @Field(() => String, { nullable: true })
-  segments_activity_state?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_activity_state?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_ad_destination_type?: string | enums.AdDestinationType;
+  // @Field(() => String, { nullable: true })
+  // segments_ad_destination_type?: string | enums.AdDestinationType;
 
-  @Field(() => String, { nullable: true })
-  segments_ad_format_type?: string | enums.AdFormatType;
+  // @Field(() => String, { nullable: true })
+  // segments_ad_format_type?: string | enums.AdFormatType;
 
-  @Field(() => String, { nullable: true })
-  segments_ad_network_type?: string | enums.AdNetworkType;
+  // @Field(() => String, { nullable: true })
+  // segments_ad_network_type?: string | enums.AdNetworkType;
 
-  @Field(() => String, { nullable: true })
-  segments_asset_interaction_target_asset?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_asset_interaction_target_asset?: string;
 
-  @Field(() => Boolean, { nullable: true })
-  segments_asset_interaction_target_interaction_on_this_asset?: boolean;
+  // @Field(() => Boolean, { nullable: true })
+  // segments_asset_interaction_target_interaction_on_this_asset?: boolean;
 
-  @Field(() => String, { nullable: true })
-  segments_auction_insight_domain?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_auction_insight_domain?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_click_type?: string | enums.ClickType;
+  // @Field(() => String, { nullable: true })
+  // segments_click_type?: string | enums.ClickType;
 
-  @Field(() => String, { nullable: true })
-  segments_conversion_action?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_conversion_action?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_conversion_action_category?: string | enums.ConversionActionCategory;
+  // @Field(() => String, { nullable: true })
+  // segments_conversion_action_category?: string | enums.ConversionActionCategory;
 
-  @Field(() => String, { nullable: true })
-  segments_conversion_action_name?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_conversion_action_name?: string;
 
-  @Field(() => Boolean, { nullable: true })
-  segments_conversion_adjustment?: boolean;
+  // @Field(() => Boolean, { nullable: true })
+  // segments_conversion_adjustment?: boolean;
 
-  @Field(() => String, { nullable: true })
-  segments_conversion_attribution_event_type?: string | enums.ConversionAttributionEventType;
+  // @Field(() => String, { nullable: true })
+  // segments_conversion_attribution_event_type?: string | enums.ConversionAttributionEventType;
 
-  @Field(() => String, { nullable: true })
-  segments_conversion_lag_bucket?: string | enums.ConversionLagBucket;
+  // @Field(() => String, { nullable: true })
+  // segments_conversion_lag_bucket?: string | enums.ConversionLagBucket;
 
-  @Field(() => String, { nullable: true })
-  segments_conversion_or_adjustment_lag_bucket?: string | enums.ConversionOrAdjustmentLagBucket;
+  // @Field(() => String, { nullable: true })
+  // segments_conversion_or_adjustment_lag_bucket?: string | enums.ConversionOrAdjustmentLagBucket;
 
-  @Field(() => String, { nullable: true })
-  segments_date?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_date?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_day_of_week?: string | enums.DayOfWeek;
+  // @Field(() => String, { nullable: true })
+  // segments_day_of_week?: string | enums.DayOfWeek;
 
-  @Field(() => String, { nullable: true })
-  segments_device?: string | enums.Device;
+  // @Field(() => String, { nullable: true })
+  // segments_device?: string | enums.Device;
 
-  @Field(() => String, { nullable: true })
-  segments_external_activity_id?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_external_activity_id?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_external_conversion_source?: string | enums.ExternalConversionSource;
+  // @Field(() => String, { nullable: true })
+  // segments_external_conversion_source?: string | enums.ExternalConversionSource;
 
-  @Field(() => String, { nullable: true })
-  segments_geo_target_airport?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_geo_target_airport?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_geo_target_canton?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_geo_target_canton?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_geo_target_city?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_geo_target_city?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_geo_target_country?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_geo_target_country?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_geo_target_county?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_geo_target_county?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_geo_target_district?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_geo_target_district?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_geo_target_metro?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_geo_target_metro?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_geo_target_most_specific_location?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_geo_target_most_specific_location?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_geo_target_postal_code?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_geo_target_postal_code?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_geo_target_province?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_geo_target_province?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_geo_target_region?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_geo_target_region?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_geo_target_state?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_geo_target_state?: string;
 
-  @Field(() => Int, { nullable: true })
-  segments_hotel_booking_window_days?: number;
+  // @Field(() => Int, { nullable: true })
+  // segments_hotel_booking_window_days?: number;
 
-  @Field(() => Float, { nullable: true })
-  segments_hotel_center_id?: number;
+  // @Field(() => Float, { nullable: true })
+  // segments_hotel_center_id?: number;
 
-  @Field(() => String, { nullable: true })
-  segments_hotel_check_in_date?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_hotel_check_in_date?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_hotel_check_in_day_of_week?: string | enums.DayOfWeek;
+  // @Field(() => String, { nullable: true })
+  // segments_hotel_check_in_day_of_week?: string | enums.DayOfWeek;
 
-  @Field(() => String, { nullable: true })
-  segments_hotel_city?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_hotel_city?: string;
 
-  @Field(() => Int, { nullable: true })
-  segments_hotel_class?: number;
+  // @Field(() => Int, { nullable: true })
+  // segments_hotel_class?: number;
 
-  @Field(() => String, { nullable: true })
-  segments_hotel_country?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_hotel_country?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_hotel_date_selection_type?: string | enums.HotelDateSelectionType;
+  // @Field(() => String, { nullable: true })
+  // segments_hotel_date_selection_type?: string | enums.HotelDateSelectionType;
 
-  @Field(() => Int, { nullable: true })
-  segments_hotel_length_of_stay?: number;
+  // @Field(() => Int, { nullable: true })
+  // segments_hotel_length_of_stay?: number;
 
-  @Field(() => String, { nullable: true })
-  segments_hotel_price_bucket?: string | enums.HotelPriceBucket;
+  // @Field(() => String, { nullable: true })
+  // segments_hotel_price_bucket?: string | enums.HotelPriceBucket;
 
-  @Field(() => String, { nullable: true })
-  segments_hotel_rate_rule_id?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_hotel_rate_rule_id?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_hotel_rate_type?: string | enums.HotelRateType;
+  // @Field(() => String, { nullable: true })
+  // segments_hotel_rate_type?: string | enums.HotelRateType;
 
-  @Field(() => String, { nullable: true })
-  segments_hotel_state?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_hotel_state?: string;
 
-  @Field(() => Int, { nullable: true })
-  segments_hour?: number;
+  // @Field(() => Int, { nullable: true })
+  // segments_hour?: number;
 
-  @Field(() => Boolean, { nullable: true })
-  segments_interaction_on_this_extension?: boolean;
+  // @Field(() => Boolean, { nullable: true })
+  // segments_interaction_on_this_extension?: boolean;
 
-  @Field(() => String, { nullable: true })
-  segments_month?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_month?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_month_of_year?: string | enums.MonthOfYear;
+  // @Field(() => String, { nullable: true })
+  // segments_month_of_year?: string | enums.MonthOfYear;
 
-  @Field(() => String, { nullable: true })
-  segments_new_versus_returning_customers?: string | enums.ConvertingUserPriorEngagementTypeAndLtvBucket;
+  // @Field(() => String, { nullable: true })
+  // segments_new_versus_returning_customers?: string | enums.ConvertingUserPriorEngagementTypeAndLtvBucket;
 
-  @Field(() => String, { nullable: true })
-  segments_partner_hotel_id?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_partner_hotel_id?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_placeholder_type?: string | enums.PlaceholderType;
+  // @Field(() => String, { nullable: true })
+  // segments_placeholder_type?: string | enums.PlaceholderType;
 
-  @Field(() => Int, { nullable: true })
-  segments_product_aggregator_id?: number;
+  // @Field(() => Int, { nullable: true })
+  // segments_product_aggregator_id?: number;
 
-  @Field(() => String, { nullable: true })
-  segments_product_brand?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_brand?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_category_level1?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_category_level1?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_category_level2?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_category_level2?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_category_level3?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_category_level3?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_category_level4?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_category_level4?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_category_level5?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_category_level5?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_channel?: string | enums.ProductChannel;
+  // @Field(() => String, { nullable: true })
+  // segments_product_channel?: string | enums.ProductChannel;
 
-  @Field(() => String, { nullable: true })
-  segments_product_channel_exclusivity?: string | enums.ProductChannelExclusivity;
+  // @Field(() => String, { nullable: true })
+  // segments_product_channel_exclusivity?: string | enums.ProductChannelExclusivity;
 
-  @Field(() => String, { nullable: true })
-  segments_product_condition?: string | enums.ProductCondition;
+  // @Field(() => String, { nullable: true })
+  // segments_product_condition?: string | enums.ProductCondition;
 
-  @Field(() => String, { nullable: true })
-  segments_product_country?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_country?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_custom_attribute0?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_custom_attribute0?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_custom_attribute1?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_custom_attribute1?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_custom_attribute2?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_custom_attribute2?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_custom_attribute3?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_custom_attribute3?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_custom_attribute4?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_custom_attribute4?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_feed_label?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_feed_label?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_item_id?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_item_id?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_language?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_language?: string;
 
-  @Field(() => Int, { nullable: true })
-  segments_product_merchant_id?: number;
+  // @Field(() => Int, { nullable: true })
+  // segments_product_merchant_id?: number;
 
-  @Field(() => String, { nullable: true })
-  segments_product_store_id?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_store_id?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_title?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_title?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_type_l1?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_type_l1?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_type_l2?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_type_l2?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_type_l3?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_type_l3?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_type_l4?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_type_l4?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_product_type_l5?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_product_type_l5?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_quarter?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_quarter?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_search_engine_results_page_type?: string | enums.SearchEngineResultsPageType;
+  // @Field(() => String, { nullable: true })
+  // segments_search_engine_results_page_type?: string | enums.SearchEngineResultsPageType;
 
-  @Field(() => String, { nullable: true })
-  segments_slot?: string | enums.Slot;
+  // @Field(() => String, { nullable: true })
+  // segments_slot?: string | enums.Slot;
 
-  @Field(() => String, { nullable: true })
-  segments_week?: string;
-
-  @Field(() => Int, { nullable: true })
-  metrics_segments_year?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_absolute_top_impression_percentage?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_active_view_cpm?: number;
+  // @Field(() => String, { nullable: true })
+  // segments_week?: string;
 
   @Field(() => Float, { nullable: true })
   metrics_active_view_ctr?: number;
 
-  @Field(() => Int, { nullable: true })
-  metrics_active_view_impressions?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_active_view_measurability?: number;
-
-  @Field(() => Int, { nullable: true })
-  metrics_active_view_measurable_cost_micros?: number;
-
-  @Field(() => Int, { nullable: true })
-  metrics_active_view_measurable_impressions?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_active_view_viewability?: number;
-
   @Field(() => Float, { nullable: true })
   metrics_all_conversions?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_by_conversion_date?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_interactions_rate?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_interactions_value_per_interaction?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_value?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_value_by_conversion_date?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_value_per_cost?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_all_new_customer_lifetime_value?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_auction_insight_search_absolute_top_impression_percentage?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_auction_insight_search_impression_share?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_auction_insight_search_outranking_share?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_auction_insight_search_overlap_rate?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_auction_insight_search_position_above_rate?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_auction_insight_search_top_impression_percentage?: number;
 
   @Field(() => Float, { nullable: true })
   metrics_average_cart_size?: number;
@@ -513,41 +450,13 @@ export class AdGroupDto {
   @Field(() => Int, { nullable: true })
   metrics_average_order_value_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_average_page_views?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_average_time_on_site?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_benchmark_average_max_cpc?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_biddable_app_install_conversions?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_biddable_app_post_install_conversions?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_bounce_rate?: number;
-
   @Field(() => Int, { nullable: true })
   metrics_clicks?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_content_budget_lost_impression_share?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_content_impression_share?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_content_rank_lost_impression_share?: number;
 
   @Field(() => Float, { nullable: true })
   metrics_conversions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_conversions_by_conversion_date?: number;
 
   @Field(() => Float, { nullable: true })
   metrics_conversions_from_interactions_rate?: number;
@@ -558,11 +467,6 @@ export class AdGroupDto {
   @Field(() => Float, { nullable: true })
   metrics_conversions_value?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_conversions_value_by_conversion_date?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_conversions_value_per_cost?: number;
 
   @Field(() => Float, { nullable: true })
   metrics_cost_micros?: number;
@@ -570,20 +474,10 @@ export class AdGroupDto {
   @Field(() => Int, { nullable: true })
   metrics_cost_of_goods_sold_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_cost_per_all_conversions?: number;
 
   @Field(() => Float, { nullable: true })
   metrics_cost_per_conversion?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_cost_per_current_model_attributed_conversion?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_cross_device_conversions?: number;
-
-  @Field(() => Int, { nullable: true })
-  metrics_cross_device_conversions_value_micros?: number;
 
   @Field(() => Int, { nullable: true })
   metrics_cross_sell_cost_of_goods_sold_micros?: number;
@@ -600,20 +494,6 @@ export class AdGroupDto {
   @Field(() => Float, { nullable: true })
   metrics_ctr?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_current_model_attributed_conversions?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_current_model_attributed_conversions_from_interactions_rate?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_current_model_attributed_conversions_from_interactions_value_per_interaction?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_current_model_attributed_conversions_value?: number;
-
-  @Field(() => Float, { nullable: true })
-  metrics_current_model_attributed_conversions_value_per_cost?: number;
 
   @Field(() => Float, { nullable: true })
   metrics_engagement_rate?: number;
@@ -642,9 +522,42 @@ export class AdGroupDto {
   @Field(() => Float, { nullable: true })
   metrics_interaction_rate?: number;
 
+  @Field(() => [String], { nullable: true })
+  metrics_interaction_event_types?: string[];
+
   @Field(() => Int, { nullable: true })
   metrics_interactions?: number;
 
   @Field(() => Float, { nullable: true })
   metrics_value_per_all_conversions?: number;
+
+  @Field(() => Float, { nullable: true })
+  metrics_lead_cost_of_goods_sold_micros: number;
+
+  @Field(() => Float, { nullable: true })
+  metrics_lead_gross_profit_micros: number;
+
+  @Field(() => Float, { nullable: true })
+  metrics_lead_revenue_micros: number;
+
+  @Field(() => Float, { nullable: true })
+  metrics_lead_units_sold: number;
+
+  @Field(() => Float, { nullable: true })
+  metrics_new_customer_lifetime_value: number;
+
+  @Field(() => Float, { nullable: true })
+  metrics_orders: number;
+
+  @Field(() => Float, { nullable: true })
+  metrics_revenue_micros: number;
+
+  @Field(() => Float, { nullable: true })
+  metrics_units_sold: number;
+
+  @Field(() => Float, { nullable: true })
+  metrics_value_per_conversion: number;
+
+  @Field(() => Float, { nullable: true })
+  metrics_view_through_conversions: number;
 }
