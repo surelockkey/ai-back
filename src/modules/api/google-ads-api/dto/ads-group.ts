@@ -564,7 +564,7 @@ export class AdGroupDto {
   @Field(() => Float, { nullable: true })
   metrics_conversions_value_per_cost?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Float, { nullable: true })
   metrics_cost_micros?: number;
 
   @Field(() => Int, { nullable: true })
