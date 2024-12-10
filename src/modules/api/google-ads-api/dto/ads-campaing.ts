@@ -1,47 +1,6 @@
 import { Field, Float, Int, ObjectType } from "@nestjs/graphql"; // Assuming GraphQL is being used
 import { enums } from "google-ads-api"; // Import your enums from the correct module
 
-// @ObjectType()
-// export class AdsCampaignDto {
-//   @Field(() => Float, { nullable: true })
-//   campaign_id: number;
-
-//   @Field(() => String, { nullable: true })
-//   campaign_name: string;
-
-//   @Field(() => String, { nullable: true })
-//   campaign_status: string | enums.CampaignStatus;
-
-//   @Field(() => String, { nullable: true })
-//   campaign_primary_status: string | enums.CampaignPrimaryStatus;
-
-//   @Field(() => String, { nullable: true })
-//   campaign_bidding_strategy_type: string | enums.BiddingStrategyType | "UNSPECIFIED" | "UNKNOWN";
-
-//   @Field(() => Float, { nullable: true })
-//   campaign_budget_amount_micros: number;
-
-//   @Field(() => [String], { nullable: true })
-//   campaign_labels: string[];
-
-//   @Field(() => Float, { nullable: true })
-//   metrics_cost_micros: number;
-
-//   @Field(() => Float, { nullable: true })
-//   metrics_clicks: number;
-
-//   @Field(() => Float, { nullable: true })
-//   metrics_impressions: number;
-
-//   @Field(() => Float, { nullable: true })
-//   metrics_all_conversions: number;
-
-//   @Field(() => Float, { nullable: true })
-//   metrics_conversions: number;
-// }
-
-// import { Field, ObjectType, Int, Float } from '@nestjs/graphql';
-
 @ObjectType()
 export class AdsCampaignDto {
   @Field(() => String, { nullable: true })
@@ -473,421 +432,421 @@ export class AdsCampaignDto {
 
   // Metrics
 
-  @Field(() => Float, { nullable: true })
-  metrics_absolute_top_impression_percentage?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_absolute_top_impression_percentage?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_active_view_cpm?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_active_view_cpm?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_active_view_ctr?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_active_view_ctr?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_active_view_impressions?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_active_view_impressions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_active_view_measurability?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_active_view_measurability?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_active_view_measurable_cost_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_active_view_measurable_cost_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_active_view_measurable_impressions?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_active_view_measurable_impressions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_active_view_viewability?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_active_view_viewability?: number;
 
   @Field(() => Float, { nullable: true })
   metrics_all_conversions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_by_conversion_date?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_by_conversion_date?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_click_to_call?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_click_to_call?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_directions?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_directions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_interactions_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_interactions_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_location_asset_click_to_call?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_location_asset_click_to_call?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_location_asset_directions?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_location_asset_directions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_location_asset_menu?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_location_asset_menu?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_location_asset_order?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_location_asset_order?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_location_asset_other_engagement?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_location_asset_other_engagement?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_location_asset_store_visits?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_location_asset_store_visits?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_location_asset_website?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_location_asset_website?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_menu?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_menu?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_order?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_order?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_other_engagement?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_other_engagement?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_store_visit?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_store_visit?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_from_store_website?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_from_store_website?: number;
 
   @Field(() => Float, { nullable: true })
   metrics_all_conversions_value?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_conversions_value_by_conversion_date?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_conversions_value_by_conversion_date?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_all_new_customer_lifetime_value?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_all_new_customer_lifetime_value?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_auction_insight_search_absolute_top_impression_percentage?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_auction_insight_search_absolute_top_impression_percentage?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_auction_insight_search_impression_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_auction_insight_search_impression_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_auction_insight_search_outranking_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_auction_insight_search_outranking_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_auction_insight_search_overlap_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_auction_insight_search_overlap_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_auction_insight_search_position_above_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_auction_insight_search_position_above_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_auction_insight_search_top_impression_percentage?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_auction_insight_search_top_impression_percentage?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_average_cart_size?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_average_cart_size?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_average_cost?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_average_cost?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_average_cpc?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_average_cpc?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_average_cpe?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_average_cpe?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_average_cpm?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_average_cpm?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_average_cpv?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_average_cpv?: number;
 
 
-  @Field(() => Float, { nullable: true })
-  metrics_average_impression_frequency_per_user?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_average_impression_frequency_per_user?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_average_order_value_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_average_order_value_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_average_page_views?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_average_page_views?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_average_target_cpa_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_average_target_cpa_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_average_target_roas?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_average_target_roas?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_average_time_on_site?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_average_time_on_site?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_bounce_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_bounce_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_clicks?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_clicks?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_content_budget_lost_impression_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_content_budget_lost_impression_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_content_impression_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_content_impression_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_content_rank_lost_impression_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_content_rank_lost_impression_share?: number;
 
   @Field(() => Float, { nullable: true })
   metrics_conversions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_conversions_by_conversion_date?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_conversions_by_conversion_date?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_conversions_from_interactions_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_conversions_from_interactions_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_conversions_value?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_conversions_value?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_conversions_value_by_conversion_date?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_conversions_value_by_conversion_date?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_cost_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_cost_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_cost_of_goods_sold_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_cost_of_goods_sold_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_cost_per_all_conversions?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_cost_per_all_conversions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_cost_per_conversion?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_cost_per_conversion?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_cost_per_current_model_attributed_conversion?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_cost_per_current_model_attributed_conversion?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_cross_device_conversions?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_cross_device_conversions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_cross_device_conversions_value_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_cross_device_conversions_value_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_cross_sell_cost_of_goods_sold_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_cross_sell_cost_of_goods_sold_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_cross_sell_gross_profit_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_cross_sell_gross_profit_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_cross_sell_revenue_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_cross_sell_revenue_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_cross_sell_units_sold?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_cross_sell_units_sold?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_ctr?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_ctr?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_current_model_attributed_conversions?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_current_model_attributed_conversions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_current_model_attributed_conversions_from_interactions_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_current_model_attributed_conversions_from_interactions_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_current_model_attributed_conversions_from_interactions_value_per_interaction?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_current_model_attributed_conversions_from_interactions_value_per_interaction?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_current_model_attributed_conversions_value?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_current_model_attributed_conversions_value?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_current_model_attributed_conversions_value_per_cost?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_current_model_attributed_conversions_value_per_cost?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_eligible_impressions_from_location_asset_store_reach?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_eligible_impressions_from_location_asset_store_reach?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_engagement_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_engagement_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_engagements?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_engagements?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_gmail_forwards?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_gmail_forwards?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_gmail_saves?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_gmail_saves?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_gmail_secondary_clicks?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_gmail_secondary_clicks?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_gross_profit_margin?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_gross_profit_margin?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_gross_profit_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_gross_profit_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_impressions?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_impressions?: number;
 
-  @Field(() => [String], { nullable: true })
-  metrics_interaction_event_types?: string[];
+  // @Field(() => [String], { nullable: true })
+  // metrics_interaction_event_types?: string[];
 
-  @Field(() => Float, { nullable: true })
-  metrics_interaction_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_interaction_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_interactions?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_interactions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_invalid_click_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_invalid_click_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_invalid_clicks?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_invalid_clicks?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_lead_cost_of_goods_sold_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_lead_cost_of_goods_sold_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_lead_gross_profit_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_lead_gross_profit_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_lead_revenue_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_lead_revenue_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_lead_units_sold?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_lead_units_sold?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_new_customer_lifetime_value?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_new_customer_lifetime_value?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_optimization_score_uplift?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_optimization_score_uplift?: number;
 
-  @Field(() => [String], { nullable: true })
-  metrics_optimization_score_url?: string;
+  // @Field(() => [String], { nullable: true })
+  // metrics_optimization_score_url?: string;
 
-  @Field(() => Float, { nullable: true })
-  metrics_orders?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_orders?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_percent_new_visitors?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_percent_new_visitors?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_phone_calls?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_phone_calls?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_phone_impressions?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_phone_impressions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_phone_through_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_phone_through_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_publisher_organic_clicks?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_publisher_organic_clicks?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_publisher_purchased_clicks?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_publisher_purchased_clicks?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_publisher_unknown_clicks?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_publisher_unknown_clicks?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_relative_ctr?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_relative_ctr?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_revenue_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_revenue_micros?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_search_absolute_top_impression_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_search_absolute_top_impression_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_search_budget_lost_absolute_top_impression_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_search_budget_lost_absolute_top_impression_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_search_budget_lost_impression_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_search_budget_lost_impression_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_search_budget_lost_top_impression_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_search_budget_lost_top_impression_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_search_click_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_search_click_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_search_exact_match_impression_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_search_exact_match_impression_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_search_impression_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_search_impression_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_search_rank_lost_absolute_top_impression_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_search_rank_lost_absolute_top_impression_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_search_rank_lost_impression_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_search_rank_lost_impression_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_search_rank_lost_top_impression_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_search_rank_lost_top_impression_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_search_top_impression_share?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_search_top_impression_share?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_sk_ad_network_installs?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_sk_ad_network_installs?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_sk_ad_network_total_conversions?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_sk_ad_network_total_conversions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_top_impression_percentage?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_top_impression_percentage?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_unique_users?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_unique_users?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_units_sold?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_units_sold?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_value_per_all_conversions?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_value_per_all_conversions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_value_per_all_conversions_by_conversion_date?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_value_per_all_conversions_by_conversion_date?: number;
 
   @Field(() => Float, { nullable: true })
   metrics_value_per_conversion?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_value_per_conversions_by_conversion_date?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_value_per_conversions_by_conversion_date?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_value_per_current_model_attributed_conversion?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_value_per_current_model_attributed_conversion?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_video_quartile_p100_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_video_quartile_p100_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_video_quartile_p25_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_video_quartile_p25_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_video_quartile_p50_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_video_quartile_p50_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_video_quartile_p75_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_video_quartile_p75_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_video_view_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_video_view_rate?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_video_views?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_video_views?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_view_through_conversions?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_view_through_conversions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_view_through_conversions_from_location_asset_click_to_call?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_view_through_conversions_from_location_asset_click_to_call?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_view_through_conversions_from_location_asset_directions?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_view_through_conversions_from_location_asset_directions?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_view_through_conversions_from_location_asset_menu?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_view_through_conversions_from_location_asset_menu?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_view_through_conversions_from_location_asset_order?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_view_through_conversions_from_location_asset_order?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_view_through_conversions_from_location_asset_other_engagement?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_view_through_conversions_from_location_asset_other_engagement?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_view_through_conversions_from_location_asset_store_visits?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_view_through_conversions_from_location_asset_store_visits?: number;
 
-  @Field(() => Float, { nullable: true })
-  metrics_view_through_conversions_from_location_asset_website?: number;
+  // @Field(() => Float, { nullable: true })
+  // metrics_view_through_conversions_from_location_asset_website?: number;
 }
