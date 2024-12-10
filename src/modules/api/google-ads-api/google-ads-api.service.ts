@@ -152,7 +152,6 @@ export class GoogleAdsApiService {
           segments.day_of_week, 
           segments.external_conversion_source, 
           segments.new_versus_returning_customers, 
-          segments.ad_network_type
           metrics.value_per_conversion, 
           metrics.all_conversions, 
           metrics.conversions, 
@@ -167,7 +166,6 @@ export class GoogleAdsApiService {
       return response
         .map(({ campaign, metrics, segments }) => {
           return ({
-            campaign_accessible_bidding_strategy: campaign?.accessible_bidding_strategy,
             accessible_bidding_strategy: campaign?.accessible_bidding_strategy,
             ad_serving_optimization_status: enums?.AdServingOptimizationStatus[campaign?.ad_serving_optimization_status],
             advertising_channel_sub_type: enums?.AdvertisingChannelSubType[campaign?.advertising_channel_sub_type],
@@ -274,7 +272,7 @@ export class GoogleAdsApiService {
             // segments
 
             segments_ad_destination_type: enums?.AdDestinationType[segments?.ad_destination_type],
-            segments_ad_network_type: enums?.AdNetworkType[segments?.ad_network_type],
+            // segments_ad_network_type: enums?.AdNetworkType[segments?.ad_network_type],
             segments_conversion_action: segments?.conversion_action,
             segments_conversion_action_category: enums?.ConversionActionCategory[segments?.conversion_action_category],
             segments_conversion_action_name: segments?.conversion_action_name,
