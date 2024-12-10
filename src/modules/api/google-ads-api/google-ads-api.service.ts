@@ -156,7 +156,7 @@ export class GoogleAdsApiService {
           metrics.value_per_conversion, 
           metrics.all_conversions, 
           metrics.conversions, 
-          metrics.conversions_value, 
+          metrics.conversions_value
         FROM campaign 
         WHERE 
           campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
