@@ -319,7 +319,7 @@ export class GoogleAdsApiService {
           metrics.view_through_conversions_from_location_asset_order,
           metrics.view_through_conversions_from_location_asset_other_engagement,
           metrics.view_through_conversions_from_location_asset_store_visits,
-          metrics.view_through_conversions_from_location_asset_website,
+          metrics.view_through_conversions_from_location_asset_website
         FROM campaign 
         WHERE 
           campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
