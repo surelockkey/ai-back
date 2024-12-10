@@ -62,8 +62,8 @@ export class AdsCampaignDto {
   @Field(() => String, { nullable: true })
   app_campaign_setting_app_store?: string | enums.AppCampaignAppStore;
 
-  @Field(() => String, { nullable: true })
-  app_campaign_setting_bidding_strategy_goal_type?: string | enums.AppCampaignBiddingStrategyGoalType;
+  // @Field(() => String, { nullable: true })
+  // app_campaign_setting_bidding_strategy_goal_type?: string | enums.AppCampaignBiddingStrategyGoalType;
 
   @Field(() => String, { nullable: true })
   asset_automation_settings?: string;
@@ -80,8 +80,8 @@ export class AdsCampaignDto {
   @Field(() => String, { nullable: true })
   bidding_strategy_system_status?: string | enums.BiddingStrategySystemStatus;
 
-  @Field(() => String, { nullable: true })
-  bidding_strategy_type?: string | enums.BiddingStrategyType;
+  // @Field(() => String, { nullable: true })
+  // bidding_strategy_type?: string | enums.BiddingStrategyType;
 
   @Field(() => String, { nullable: true })
   campaign_budget?: string;
@@ -98,8 +98,8 @@ export class AdsCampaignDto {
   @Field(() => String, { nullable: true })
   dynamic_search_ads_setting_domain_name?: string;
 
-  @Field(() => [String], { nullable: true })
-  dynamic_search_ads_setting_feeds?: string[];
+  // @Field(() => [String], { nullable: true })
+  // dynamic_search_ads_setting_feeds?: string[];
 
   @Field(() => String, { nullable: true })
   dynamic_search_ads_setting_language_code?: string;
@@ -116,8 +116,8 @@ export class AdsCampaignDto {
   @Field(() => [String], { nullable: true })
   excluded_parent_asset_set_types?: string[];
 
-  @Field(() => String, { nullable: true })
-  experiment_type?: string | enums.CampaignExperimentType;
+  // @Field(() => String, { nullable: true })
+  // experiment_type?: string | enums.CampaignExperimentType;
 
   @Field(() => String, { nullable: true })
   final_url_suffix?: string;
@@ -131,11 +131,11 @@ export class AdsCampaignDto {
   @Field(() => String, { nullable: true })
   fixed_cpm_target_frequency_info_time_unit?: string | enums.FixedCpmTargetFrequencyTimeUnit;
 
-  @Field(() => String, { nullable: true })
-  frequency_caps?: string;
+  // @Field(() => String, { nullable: true })
+  // frequency_caps?: string;
 
-  @Field(() => String, { nullable: true })
-  geo_target_type_setting_negative_geo_target_type?: string | enums.NegativeGeoTargetType;
+  // @Field(() => String, { nullable: true })
+  // geo_target_type_setting_negative_geo_target_type?: string | enums.NegativeGeoTargetType;
 
   @Field(() => String, { nullable: true })
   geo_target_type_setting_positive_geo_target_type?: string | enums.PositiveGeoTargetType;
@@ -197,8 +197,8 @@ export class AdsCampaignDto {
   @Field(() => Boolean, { nullable: true })
   network_settings_target_partner_search_network?: boolean;
 
-  @Field(() => Boolean, { nullable: true })
-  network_settings_target_search_network?: boolean;
+  // @Field(() => Boolean, { nullable: true })
+  // network_settings_target_search_network?: boolean;
 
   @Field(() => Boolean, { nullable: true })
   network_settings_target_youtube?: boolean;
@@ -215,8 +215,8 @@ export class AdsCampaignDto {
   @Field(() => Float, { nullable: true })
   percent_cpc_cpc_bid_ceiling_micros?: number;
 
-  @Field(() => Boolean, { nullable: true })
-  percent_cpc_enhanced_cpc_enabled?: boolean;
+  // @Field(() => Boolean, { nullable: true })
+  // percent_cpc_enhanced_cpc_enabled?: boolean;
 
   @Field(() => String, { nullable: true })
   performance_max_upgrade_performance_max_campaign?: string;
@@ -254,8 +254,8 @@ export class AdsCampaignDto {
   @Field(() => Boolean, { nullable: true })
   shopping_setting_disable_product_feed?: boolean;
 
-  @Field(() => Boolean, { nullable: true })
-  shopping_setting_enable_local?: boolean;
+  // @Field(() => Boolean, { nullable: true })
+  // shopping_setting_enable_local?: boolean;
 
   @Field(() => String, { nullable: true })
   shopping_setting_feed_label?: string;
@@ -272,8 +272,8 @@ export class AdsCampaignDto {
   @Field(() => String, { nullable: true })
   status?: string | enums.CampaignStatus;
 
-  @Field(() => Float, { nullable: true })
-  target_cpa_cpc_bid_ceiling_micros?: number;
+  // @Field(() => Float, { nullable: true })
+  // target_cpa_cpc_bid_ceiling_micros?: number;
 
   //
 
@@ -316,11 +316,11 @@ export class AdsCampaignDto {
   @Field(() => Float, { nullable: true })
   target_spend_target_spend_micros?: number;
 
-  @Field(() => String, { nullable: true })
-  targeting_setting_target_restrictions?: string;
+  // @Field(() => String, { nullable: true })
+  // targeting_setting_target_restrictions?: string;
 
-  @Field(() => String, { nullable: true })
-  tracking_setting_tracking_url?: string;
+  // @Field(() => String, { nullable: true })
+  // tracking_setting_tracking_url?: string;
 
   @Field(() => String, { nullable: true })
   tracking_url_template?: string;
