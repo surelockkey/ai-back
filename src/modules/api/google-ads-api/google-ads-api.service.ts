@@ -152,6 +152,7 @@ export class GoogleAdsApiService {
           segments.day_of_week, 
           segments.external_conversion_source, 
           segments.new_versus_returning_customers, 
+          segments.ad_network_type,
           metrics.value_per_conversion, 
           metrics.all_conversions, 
           metrics.conversions, 
@@ -272,7 +273,7 @@ export class GoogleAdsApiService {
             // segments
 
             segments_ad_destination_type: enums?.AdDestinationType[segments?.ad_destination_type],
-            // segments_ad_network_type: enums?.AdNetworkType[segments?.ad_network_type],
+            segments_ad_network_type: enums?.AdNetworkType[segments?.ad_network_type],
             segments_conversion_action: segments?.conversion_action,
             segments_conversion_action_category: enums?.ConversionActionCategory[segments?.conversion_action_category],
             segments_conversion_action_name: segments?.conversion_action_name,

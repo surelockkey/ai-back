@@ -319,8 +319,8 @@ export class AdsCampaignDto {
   @Field(() => String, { nullable: true })
   segments_ad_format_type?: string | enums.AdFormatType;
 
-  // @Field(() => String, { nullable: true })
-  // segments_ad_network_type?: string | enums.AdNetworkType;
+  @Field(() => String, { nullable: true })
+  segments_ad_network_type?: string | enums.AdNetworkType;
 
   @Field(() => String, { nullable: true })
   segments_asset_interaction_target_asset?: string;
