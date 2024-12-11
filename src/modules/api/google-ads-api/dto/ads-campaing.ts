@@ -313,26 +313,26 @@ export class AdsCampaignDto {
 
 
   // Segments fields as flat properties
-  @Field(() => String, { nullable: true })
-  segments_ad_destination_type?: string | enums.AdDestinationType;
+  // @Field(() => String, { nullable: true })
+  // segments_ad_destination_type?: string | enums.AdDestinationType;
 
-  @Field(() => String, { nullable: true })
-  segments_ad_format_type?: string | enums.AdFormatType;
+  // @Field(() => String, { nullable: true })
+  // segments_ad_format_type?: string | enums.AdFormatType;
 
   @Field(() => String, { nullable: true })
   segments_ad_network_type?: string | enums.AdNetworkType;
 
-  @Field(() => String, { nullable: true })
-  segments_asset_interaction_target_asset?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_asset_interaction_target_asset?: string;
 
-  @Field(() => Boolean, { nullable: true })
-  segments_asset_interaction_target_interaction_on_this_asset?: boolean;
+  // @Field(() => Boolean, { nullable: true })
+  // segments_asset_interaction_target_interaction_on_this_asset?: boolean;
 
-  @Field(() => String, { nullable: true })
-  segments_auction_insight_domain?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_auction_insight_domain?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_click_type?: string | enums.ClickType;
+  // @Field(() => String, { nullable: true })
+  // segments_click_type?: string | enums.ClickType;
 
   @Field(() => String, { nullable: true })
   segments_conversion_action?: string;
@@ -355,80 +355,80 @@ export class AdsCampaignDto {
   @Field(() => String, { nullable: true })
   segments_conversion_or_adjustment_lag_bucket?: string | enums.ConversionOrAdjustmentLagBucket;
 
-  @Field(() => String, { nullable: true })
-  segments_conversion_value_rule_primary_dimension?: string | enums.ConversionValueRulePrimaryDimension;
+  // @Field(() => String, { nullable: true })
+  // segments_conversion_value_rule_primary_dimension?: string | enums.ConversionValueRulePrimaryDimension;
 
-  @Field(() => String, { nullable: true })
-  segments_date?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_date?: string;
 
   @Field(() => String, { nullable: true })
   segments_day_of_week?: string | enums.DayOfWeek;
 
-  @Field(() => String, { nullable: true })
-  segments_device?: string | enums.Device;
+  // @Field(() => String, { nullable: true })
+  // segments_device?: string | enums.Device;
 
   @Field(() => String, { nullable: true })
   segments_external_conversion_source?: string | enums.ExternalConversionSource;
 
-  @Field(() => Float, { nullable: true })
-  segments_hour?: number;
+  // @Field(() => Float, { nullable: true })
+  // segments_hour?: number;
 
-  @Field(() => String, { nullable: true })
-  segments_month?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_month?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_month_of_year?: string | enums.MonthOfYear;
+  // @Field(() => String, { nullable: true })
+  // segments_month_of_year?: string | enums.MonthOfYear;
 
   @Field(() => String, { nullable: true })
   segments_new_versus_returning_customers?: string | enums.ConvertingUserPriorEngagementTypeAndLtvBucket;
 
-  @Field(() => String, { nullable: true })
-  segments_quarter?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_quarter?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_recommendation_type?: string | enums.RecommendationType;
+  // @Field(() => String, { nullable: true })
+  // segments_recommendation_type?: string | enums.RecommendationType;
 
-  @Field(() => String, { nullable: true })
-  segments_sk_ad_network_ad_event_type?: string | enums.SkAdNetworkAdEventType;
+  // @Field(() => String, { nullable: true })
+  // segments_sk_ad_network_ad_event_type?: string | enums.SkAdNetworkAdEventType;
 
-  @Field(() => String, { nullable: true })
-  segments_sk_ad_network_attribution_credit?: string | enums.SkAdNetworkAttributionCredit;
+  // @Field(() => String, { nullable: true })
+  // segments_sk_ad_network_attribution_credit?: string | enums.SkAdNetworkAttributionCredit;
 
-  @Field(() => String, { nullable: true })
-  segments_sk_ad_network_coarse_conversion_value?: string | enums.SkAdNetworkCoarseConversionValue;
+  // @Field(() => String, { nullable: true })
+  // segments_sk_ad_network_coarse_conversion_value?: string | enums.SkAdNetworkCoarseConversionValue;
 
-  @Field(() => Float, { nullable: true })
-  segments_sk_ad_network_fine_conversion_value?: number;
+  // @Field(() => Float, { nullable: true })
+  // segments_sk_ad_network_fine_conversion_value?: number;
 
-  @Field(() => Float, { nullable: true })
-  segments_sk_ad_network_postback_sequence_index?: number;
+  // @Field(() => Float, { nullable: true })
+  // segments_sk_ad_network_postback_sequence_index?: number;
 
-  @Field(() => Float, { nullable: true })
-  segments_sk_ad_network_redistributed_fine_conversion_value?: number;
+  // @Field(() => Float, { nullable: true })
+  // segments_sk_ad_network_redistributed_fine_conversion_value?: number;
 
-  @Field(() => String, { nullable: true })
-  segments_sk_ad_network_source_app_id?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_sk_ad_network_source_app_id?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_sk_ad_network_source_domain?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_sk_ad_network_source_domain?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_sk_ad_network_source_type?: string | enums.SkAdNetworkSourceType;
+  // @Field(() => String, { nullable: true })
+  // segments_sk_ad_network_source_type?: string | enums.SkAdNetworkSourceType;
 
-  @Field(() => String, { nullable: true })
-  segments_sk_ad_network_user_type?: string | enums.SkAdNetworkUserType;
+  // @Field(() => String, { nullable: true })
+  // segments_sk_ad_network_user_type?: string | enums.SkAdNetworkUserType;
 
-  @Field(() => String, { nullable: true })
-  segments_sk_ad_network_version?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_sk_ad_network_version?: string;
 
-  @Field(() => String, { nullable: true })
-  segments_slot?: string | enums.Slot;
+  // @Field(() => String, { nullable: true })
+  // segments_slot?: string | enums.Slot;
 
-  @Field(() => String, { nullable: true })
-  segments_week?: string;
+  // @Field(() => String, { nullable: true })
+  // segments_week?: string;
 
-  @Field(() => Float, { nullable: true })
-  segments_year?: number;
+  // @Field(() => Float, { nullable: true })
+  // segments_year?: number;
 
   // Metrics
 
