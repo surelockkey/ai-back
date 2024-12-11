@@ -272,7 +272,7 @@ export class GoogleAdsApiService {
 
             // segments
 
-            segments_ad_destination_type: enums?.AdDestinationType[segments?.ad_destination_type],
+            // segments_ad_destination_type: enums?.AdDestinationType[segments?.ad_destination_type],
             segments_ad_network_type: enums?.AdNetworkType[segments?.ad_network_type],
             segments_conversion_action: segments?.conversion_action,
             segments_conversion_action_category: enums?.ConversionActionCategory[segments?.conversion_action_category],
