@@ -3,7 +3,7 @@ import { GoogleAdsApiService } from './google-ads-api.service';
 import { AdCampaignDto } from './dto/ads-campaign';
 import { AdGroupDto } from './dto/ads-group';
 import { AdDto } from './dto/ads-ad';
-import { AdCampaign } from './entity/ad-campaign';
+import { AdCampaign } from './entity/ad-campaign.entity';
 
 @Resolver()
 export class GoogleAdsApiResolver {

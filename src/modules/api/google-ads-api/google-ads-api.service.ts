@@ -4,7 +4,7 @@ import { GoogleAdsApi, enums } from 'google-ads-api';
 import { AdCampaignDto } from './dto/ads-campaign';
 import { AdGroupDto } from './dto/ads-group';
 import { AdDto } from './dto/ads-ad';
-import { AdCampaign } from './entity/ad-campaign';
+import { AdCampaign } from './entity/ad-campaign.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 @Injectable()
 export class GoogleAdsApiService {
