@@ -1,6 +1,6 @@
 import { Resolver, Query } from '@nestjs/graphql';
 import { GoogleAdsApiService } from './google-ads-api.service';
-import { AdsCampaignDto } from './dto/ads-campaing';
+import { AdCampaignDto } from './dto/ads-campaign';
 import { AdGroupDto } from './dto/ads-group';
 import { AdDto } from './dto/ads-ad';
 
@@ -11,13 +11,13 @@ export class GoogleAdsApiResolver {
   ) { }
 
   // @UseGuards(GqlAuthGuard)
-  @Query(() => [AdsCampaignDto])
-  async getAdsCampaigns(): Promise<AdsCampaignDto[]> {
-    return await this.googleAdsApiService.getCampaigns();
+  @Query(() => [AdCampaignDto])
+  async getAdsCampaigns(): Promise<AdCampaignDto[]> {
+    return await this.googleAdsApiService.getCampaignsByCustomer();
   }
 
-  @Query(() => [AdsCampaignDto])
-  async getAdsAllCampaigns(): Promise<AdsCampaignDto[]> {
+  @Query(() => [AdCampaignDto])
+  async getAdsAllCampaigns(): Promise<AdCampaignDto[]> {
     return await this.googleAdsApiService.getAllCampaigns();
   }
 

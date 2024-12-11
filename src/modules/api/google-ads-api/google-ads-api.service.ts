@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { GoogleAdsApi, Customer, enums } from 'google-ads-api';
-import { AdsCampaignDto } from './dto/ads-campaing';
+import { Repository } from 'typeorm';
+import { GoogleAdsApi, enums } from 'google-ads-api';
+import { AdCampaignDto } from './dto/ads-campaign';
 import { AdGroupDto } from './dto/ads-group';
 import { AdDto } from './dto/ads-ad';
+import { AdCampaign } from './entity/ad-campaign';
 @Injectable()
 export class GoogleAdsApiService {
   private readonly credentials = {
@@ -18,7 +20,10 @@ export class GoogleAdsApiService {
 
   private readonly googleAdsClient: GoogleAdsApi;
 
-  constructor() {
+  constructor(
+    protected readonly categoryRepository: Repository<AdCampaign>,
+
+  ) {
     this.googleAdsClient = new GoogleAdsApi(this.credentials);
   }
 
@@ -34,7 +39,7 @@ export class GoogleAdsApiService {
     return this.googleAdsClient.Customer({ ...this.customer_credentials, customer_id })
   }
 
-  public getCampaigns = async (customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID): Promise<AdsCampaignDto[]> => {
+  public getCampaignsByCustomer = async (customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID): Promise<AdCampaignDto[]> => {
     const customer = this.createCustomer(customer_id)
 
     try {
@@ -302,10 +307,10 @@ export class GoogleAdsApiService {
     }
   }
 
-  private getDataByAllSettledStrategy = async <T>(method: (cid: string) => Promise<T>) => {
+  private getDataByAllSettledStrategy = async <T>(method: (cid: string) => Promise<T[]>): Promise<T[]> => {
     const customer_ids = await this.getListCustomers()
 
-    let collect_data = [];
+    let collect_data: T[] = [];
 
     const promises = customer_ids.map((cid) =>
       method(cid).then((r) => r)
@@ -324,8 +329,12 @@ export class GoogleAdsApiService {
     return collect_data;
   }
 
-  public async getAllCampaigns(): Promise<AdsCampaignDto[]> {
-    return this.getDataByAllSettledStrategy(this.getCampaigns)
+  public async getAllCampaigns(): Promise<AdCampaignDto[]> {
+    await this.categoryRepository.delete({})
+
+    const campaigns = await this.getDataByAllSettledStrategy<AdCampaignDto>(this.getCampaignsByCustomer)
+
+    return this.categoryRepository.save(campaigns)
   }
 
   public getGroups = async (customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID): Promise<AdGroupDto[]> => {
