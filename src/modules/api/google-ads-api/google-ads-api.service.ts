@@ -173,6 +173,8 @@ export class GoogleAdsApiService {
 
       return response
         .map(({ campaign, metrics, segments }) => {
+          console.log(campaign);
+
           return ({
             accessible_bidding_strategy: campaign?.accessible_bidding_strategy,
             // ad_serving_optimization_status: enums?.AdServingOptimizationStatus[campaign?.ad_serving_optimization_status],
