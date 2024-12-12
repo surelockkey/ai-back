@@ -149,7 +149,7 @@ export class AdCampaign {
   hotel_setting_hotel_center_id?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'int' })
   campaign_id?: number;
 
   @Field(() => String, { nullable: true })
