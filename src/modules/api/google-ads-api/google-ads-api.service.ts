@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { GoogleAdsApi, enums } from 'google-ads-api';
-import { AdCampaignDto } from './dto/ads-campaign';
-import { AdGroupDto } from './dto/ads-group';
-import { AdDto } from './dto/ads-ad';
+import { AdCampaignDto } from './dto/ads-campaign.dto';
+import { AdGroupDto } from './dto/ads-group.dto';
+import { AdDto } from './dto/ads-ad.dto';
 import { AdCampaign } from './entity/ad-campaign.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 @Injectable()
