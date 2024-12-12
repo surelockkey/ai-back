@@ -173,7 +173,6 @@ export class GoogleAdsApiService {
 
       return response
         .map(({ campaign, metrics, segments }) => {
-          console.log(campaign);
 
           return ({
             accessible_bidding_strategy: campaign?.accessible_bidding_strategy,
@@ -337,7 +336,10 @@ export class GoogleAdsApiService {
 
     const campaigns = await this.getDataByAllSettledStrategy<AdCampaignDto>(this.getCampaignsByCustomer)
 
-    return await this.categoryRepository.save(campaigns, { chunk: 100 })
+    const campaignsSaved = await this.categoryRepository.save(campaigns, { chunk: 100 })
+    console.log(campaignsSaved);
+
+    return campaignsSaved
   }
 
   public getGroups = async (customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID): Promise<AdGroupDto[]> => {
