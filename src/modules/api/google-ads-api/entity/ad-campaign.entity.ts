@@ -3,7 +3,7 @@ import { enums } from 'google-ads-api';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 const prepareEnum = <T>(en: T): string[] => {
-  return Object.keys(en).filter(e => typeof e === 'string')
+  return Object.values(en).filter(e => typeof e !== 'string')
 }
 @Entity('ad-campaign')
 @ObjectType()
