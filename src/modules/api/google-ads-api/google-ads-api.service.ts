@@ -179,7 +179,7 @@ export class GoogleAdsApiService {
             accessible_bidding_strategy: campaign?.accessible_bidding_strategy,
             // ad_serving_optimization_status: enums?.AdServingOptimizationStatus[campaign?.ad_serving_optimization_status],
             advertising_channel_sub_type: enums?.AdvertisingChannelSubType[campaign?.advertising_channel_sub_type],
-            // advertising_channel_type: enums?.AdvertisingChannelType[campaign?.advertising_channel_type] || null,
+            advertising_channel_type: enums?.AdvertisingChannelType[campaign?.advertising_channel_type],
             app_campaign_setting_app_id: campaign?.app_campaign_setting?.app_id,
             app_campaign_setting_app_store: enums?.AppCampaignAppStore[campaign?.app_campaign_setting?.app_store],
             app_campaign_setting_bidding_strategy_goal_type: enums?.AppCampaignBiddingStrategyGoalType[campaign?.app_campaign_setting?.bidding_strategy_goal_type],
