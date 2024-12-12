@@ -1,21 +1,9 @@
 import { Field, ID, Float, ObjectType } from '@nestjs/graphql';
 import { enums } from 'google-ads-api';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-enum AdvertisingChannelType {
-  UNSPECIFIED = 0,// UNSPECIFIED
-  UNKNOWN = 1,// UNKNOWN
-  SEARCH = 2,// SEARCH
-  DISPLAY = 3,// DISPLAY
-  SHOPPING = 4,// SHOPPING
-  HOTEL = 5,// HOTEL
-  VIDEO = 6,// VIDEO
-  MULTI_CHANNEL = 7,// MULTI_CHANNEL
-  LOCAL = 8,// LOCAL
-  SMART = 9,// SMART
-  PERFORMANCE_MAX = 10,// PERFORMANCE_MAX
-  LOCAL_SERVICES = 11,// LOCAL_SERVICES
-  TRAVEL = 13,// TRAVEL
-  DEMAND_GEN = 14
+
+const prepareEnum = <T>(en: T): string[] => {
+  return Object.keys(en).filter(e => typeof e === 'string')
 }
 @Entity('ad-campaign')
 @ObjectType()
@@ -37,8 +25,8 @@ export class AdCampaign {
   // advertising_channel_sub_type?: string | enums.AdvertisingChannelSubType;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: Object.keys(AdvertisingChannelType), default: null })
-  advertising_channel_type?: string | AdvertisingChannelType;
+  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.AdvertisingChannelType), default: null })
+  advertising_channel_type?: string | enums.AdvertisingChannelType;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -293,7 +281,7 @@ export class AdCampaign {
   // serving_status?: string | enums.CampaignServingStatus;
 
   @Field(() => [Float], { nullable: true })
-  @Column("int", { nullable: true, array: true })
+  @Column("float", { nullable: true, array: true })
   shopping_setting_advertising_partner_ids?: number[];
 
   @Field(() => Float, { nullable: true })
