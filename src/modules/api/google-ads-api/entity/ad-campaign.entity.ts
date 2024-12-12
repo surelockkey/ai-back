@@ -3,7 +3,7 @@ import { enums } from 'google-ads-api';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 const prepareEnum = <T>(en: T): string[] => {
-  return Object.values(en).filter(e => typeof e === 'string')
+  return Object.values(en).filter(e => typeof e !== 'string')
 }
 @Entity('ad-campaign')
 @ObjectType()
@@ -280,9 +280,9 @@ export class AdCampaign {
   // // @Column({ type: 'enum', nullable: true, enum: enums.CampaignServingStatus, default: null })
   // serving_status?: string | enums.CampaignServingStatus;
 
-  @Field(() => [Float], { nullable: true })
-  @Column({ type: 'float', nullable: true, array: true })
-  shopping_setting_advertising_partner_ids?: number[];
+  // @Field(() => [Float], { nullable: true })
+  // @Column({type: 'float', nullable: true, array: true })
+  // shopping_setting_advertising_partner_ids?: number[];
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true })
