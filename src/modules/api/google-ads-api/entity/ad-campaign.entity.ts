@@ -22,7 +22,7 @@ export class AdCampaign {
   advertising_channel_sub_type?: string | enums.AdvertisingChannelSubType;
 
   @Field(() => String, { nullable: true })
-  @Column('enum', { nullable: true, enum: Object.values(enums.AdvertisingChannelType), default: null })
+  @Column('enum', { nullable: true, enum: enums.AdvertisingChannelType, default: null })
   advertising_channel_type?: string | enums.AdvertisingChannelType;
 
   @Field(() => String, { nullable: true })
