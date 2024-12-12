@@ -336,7 +336,7 @@ export class GoogleAdsApiService {
 
     const campaigns = await this.getDataByAllSettledStrategy<AdCampaignDto>(this.getCampaignsByCustomer)
 
-    return await this.categoryRepository.save(campaigns)
+    return await this.categoryRepository.save(campaigns, { chunk: 100 })
   }
 
   public getGroups = async (customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID): Promise<AdGroupDto[]> => {
