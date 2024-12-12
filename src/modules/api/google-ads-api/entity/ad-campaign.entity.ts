@@ -228,8 +228,8 @@ export class AdCampaign {
   @Column({ nullable: true, array: true, type: 'text', default: [] })
   optimization_goal_setting_optimization_goal_types?: string[];
 
-  @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Field(() => Number, { nullable: true })
+  @Column({ nullable: true, type: 'double' })
   optimization_score?: number;
 
   @Field(() => String, { nullable: true })
