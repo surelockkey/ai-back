@@ -336,8 +336,9 @@ export class GoogleAdsApiService {
 
     const campaigns = await this.getDataByAllSettledStrategy<AdCampaignDto>(this.getCampaignsByCustomer)
 
+    console.log(campaigns);
+
     const campaignsSaved = await this.categoryRepository.save(campaigns, { chunk: 100 })
-    console.log(campaignsSaved);
 
     return campaignsSaved
   }
