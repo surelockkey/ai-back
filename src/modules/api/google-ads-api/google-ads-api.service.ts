@@ -173,7 +173,7 @@ export class GoogleAdsApiService {
 
       return response
         .map(({ campaign, metrics, segments }) => {
-          console.log(campaign);
+          console.log(campaign.advertising_channel_type);
 
           return ({
             accessible_bidding_strategy: campaign?.accessible_bidding_strategy,
