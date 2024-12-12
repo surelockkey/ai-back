@@ -237,7 +237,7 @@ export class AdCampaign {
   payment_mode?: string | enums.PaymentMode;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   percent_cpc_cpc_bid_ceiling_micros?: number;
 
   @Field(() => Boolean, { nullable: true })
@@ -285,7 +285,7 @@ export class AdCampaign {
   // shopping_setting_advertising_partner_ids?: number[];
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   shopping_setting_campaign_priority?: number;
 
   @Field(() => Boolean, { nullable: true })
@@ -301,7 +301,7 @@ export class AdCampaign {
   shopping_setting_feed_label?: string;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   shopping_setting_merchant_id?: number;
 
   @Field(() => Boolean, { nullable: true })
@@ -317,21 +317,21 @@ export class AdCampaign {
   status?: string | enums.CampaignStatus;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   target_cpa_cpc_bid_ceiling_micros?: number;
 
   //
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   target_cpa_cpc_bid_floor_micros?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   target_cpa_target_cpa_micros?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   target_cpm_target_frequency_goal_target_count?: number;
 
   @Field(() => String, { nullable: true })
@@ -343,7 +343,7 @@ export class AdCampaign {
   target_cpv?: string;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   target_impression_share_cpc_bid_ceiling_micros?: number;
 
   @Field(() => String, { nullable: true })
@@ -351,27 +351,27 @@ export class AdCampaign {
   target_impression_share_location?: string | enums.TargetImpressionShareLocation;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   target_impression_share_location_fraction_micros?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   target_roas_cpc_bid_ceiling_micros?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   target_roas_cpc_bid_floor_micros?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   target_roas_target_roas?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   target_spend_cpc_bid_ceiling_micros?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   target_spend_target_spend_micros?: number;
 
   @Field(() => String, { nullable: true })
@@ -387,7 +387,7 @@ export class AdCampaign {
   tracking_url_template?: string;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   travel_campaign_settings_travel_account_id?: number;
 
   @Field(() => String, { nullable: true })
@@ -468,19 +468,19 @@ export class AdCampaign {
   segments_new_versus_returning_customers?: string | enums.ConvertingUserPriorEngagementTypeAndLtvBucket;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   metrics_all_conversions?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   metrics_all_conversions_value?: number;
 
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   metrics_conversions?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   metrics_value_per_conversion?: number;
 }
