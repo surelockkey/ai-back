@@ -1,4 +1,4 @@
-import { Field, ID, Float, ObjectType, Int } from '@nestjs/graphql';
+import { Field, ID, Float, ObjectType } from '@nestjs/graphql';
 import { enums } from 'google-ads-api';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
@@ -148,7 +148,7 @@ export class AdCampaign {
   @Column({ nullable: true, type: 'int' })
   hotel_setting_hotel_center_id?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Number, { nullable: true })
   @Column({ nullable: true, type: 'bigint' })
   campaign_id?: number;
 
