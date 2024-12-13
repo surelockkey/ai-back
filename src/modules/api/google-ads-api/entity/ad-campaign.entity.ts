@@ -280,9 +280,9 @@ export class AdCampaign {
   @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.CampaignServingStatus), default: null })
   serving_status?: string | enums.CampaignServingStatus;
 
-  // @Field(() => [Float], { nullable: true })
+  @Field(() => [Float], { nullable: true })
   @Column({ type: 'float', nullable: true, array: true })
-  // shopping_setting_advertising_partner_ids?: number[];
+  shopping_setting_advertising_partner_ids?: number[];
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
