@@ -242,7 +242,7 @@ export class GoogleAdsApiService {
             resource_name: campaign?.resource_name,
             selective_optimization_conversion_actions: campaign?.selective_optimization?.conversion_actions,
             serving_status: enums?.CampaignServingStatus[campaign?.serving_status],
-            // shopping_setting_advertising_partner_ids: campaign?.shopping_setting?.advertising_partner_ids,
+            shopping_setting_advertising_partner_ids: campaign?.shopping_setting?.advertising_partner_ids,
             shopping_setting_campaign_priority: campaign?.shopping_setting?.campaign_priority,
             shopping_setting_disable_product_feed: campaign?.shopping_setting?.disable_product_feed,
             shopping_setting_enable_local: campaign?.shopping_setting?.enable_local,
