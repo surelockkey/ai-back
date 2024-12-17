@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Call } from './entity/call.entity';
 import { IsNull, MoreThanOrEqual, Not, Repository } from 'typeorm';
-import { WorkizCoreApiService } from 'src/modules/api/workiz-api/workiz-core.service';
 import { OpenAiService } from 'src/modules/open-ai/open-ai.service';
 import { createReadStream, createWriteStream, unlinkSync } from 'fs';
 import { get } from 'https';
@@ -11,7 +10,6 @@ import { get } from 'https';
 export class CallTranscriptionService {
   constructor(
     @InjectRepository(Call) private readonly callRepository: Repository<Call>,
-    private readonly workizCoreApiService: WorkizCoreApiService,
     private readonly openAiService: OpenAiService,
   ) {}
 
@@ -19,7 +17,7 @@ export class CallTranscriptionService {
     const formatted_from = this.formatDate(from);
     const calls = await this.fetchEligibleCalls(formatted_from, limit);
 
-    console.log('calls length', calls.length);
+    console.log('Calls length: ', calls.length);
 
     for (const [index, call] of calls.entries()) {
       await this.processCall(call, index + 1);
@@ -43,7 +41,18 @@ export class CallTranscriptionService {
   }
 
   private async processCall(call: any, call_index: number) {
-    if (call.transcription || !call.recording_url.trim()) return;
+    if (call.transcription) {
+      console.log(`Skip call (already have transcription) #${call_index}`);
+      return;
+    }
+
+    if (!call.recording_url.trim()) {
+      console.log(`Skip call (don't have recording url) #${call_index}`, {
+        id: call.id,
+        recording_url: call.recording_url,
+      });
+      return;
+    }
 
     const file_name = `${call.id}.wav`;
     console.log(call.recording_url);
@@ -62,7 +71,6 @@ export class CallTranscriptionService {
     } catch (error) {
       this.logError(error, call);
     }
-
     console.log(`Processed call #${call_index}`);
   }
 
