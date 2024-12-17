@@ -3,8 +3,8 @@ import { enums } from 'google-ads-api';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 const prepareEnum = <T>(en: T): string[] => {
-  return Object.values(en).filter(e => typeof e === 'string')
-}
+  return Object.values(en).filter((e) => typeof e === 'string');
+};
 @Entity('ad-campaign')
 @ObjectType()
 export class AdCampaign {
@@ -17,15 +17,30 @@ export class AdCampaign {
   accessible_bidding_strategy?: string;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.AdServingOptimizationStatus), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.AdServingOptimizationStatus),
+    default: null,
+  })
   ad_serving_optimization_status?: string | enums.AdServingOptimizationStatus;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.AdvertisingChannelSubType), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.AdvertisingChannelSubType),
+    default: null,
+  })
   advertising_channel_sub_type?: string | enums.AdvertisingChannelSubType;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.AdvertisingChannelType), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.AdvertisingChannelType),
+    default: null,
+  })
   advertising_channel_type?: string | enums.AdvertisingChannelType;
 
   @Field(() => String, { nullable: true })
@@ -33,12 +48,25 @@ export class AdCampaign {
   app_campaign_setting_app_id?: string;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.AppCampaignAppStore), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.AppCampaignAppStore),
+    default: null,
+  })
   app_campaign_setting_app_store?: string | enums.AppCampaignAppStore;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.AppCampaignBiddingStrategyGoalType), default: null })
-  app_campaign_setting_bidding_strategy_goal_type?: string | enums.AppCampaignBiddingStrategyGoalType;
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.AppCampaignBiddingStrategyGoalType),
+    default: null,
+    enumName: 'app_campaign_setting_bidding_strategy_goal_type_enum',
+  })
+  app_campaign_setting_bidding_strategy_goal_type?:
+    | string
+    | enums.AppCampaignBiddingStrategyGoalType;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -57,11 +85,21 @@ export class AdCampaign {
   bidding_strategy?: string;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.BiddingStrategySystemStatus), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.BiddingStrategySystemStatus),
+    default: null,
+  })
   bidding_strategy_system_status?: string | enums.BiddingStrategySystemStatus;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.BiddingStrategyType), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.BiddingStrategyType),
+    default: null,
+  })
   bidding_strategy_type?: string | enums.BiddingStrategyType;
 
   @Field(() => String, { nullable: true })
@@ -109,7 +147,12 @@ export class AdCampaign {
   excluded_parent_asset_set_types?: string[];
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.CampaignExperimentType), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.CampaignExperimentType),
+    default: null,
+  })
   experiment_type?: string | enums.CampaignExperimentType;
 
   @Field(() => String, { nullable: true })
@@ -117,7 +160,12 @@ export class AdCampaign {
   final_url_suffix?: string;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.FixedCpmGoal), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.FixedCpmGoal),
+    default: null,
+  })
   fixed_cpm_goal?: string | enums.FixedCpmGoal;
 
   @Field(() => Float, { nullable: true })
@@ -125,20 +173,43 @@ export class AdCampaign {
   fixed_cpm_target_frequency_info_target_count?: number;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.FixedCpmTargetFrequencyTimeUnit), default: null })
-  fixed_cpm_target_frequency_info_time_unit?: string | enums.FixedCpmTargetFrequencyTimeUnit;
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.FixedCpmTargetFrequencyTimeUnit),
+    default: null,
+  })
+  fixed_cpm_target_frequency_info_time_unit?:
+    | string
+    | enums.FixedCpmTargetFrequencyTimeUnit;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   frequency_caps?: string;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.NegativeGeoTargetType), default: null })
-  geo_target_type_setting_negative_geo_target_type?: string | enums.NegativeGeoTargetType;
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.NegativeGeoTargetType),
+    enumName: 'geo_target_type_setting_negative_geo_target_type_enum',
+    default: null,
+  })
+  geo_target_type_setting_negative_geo_target_type?:
+    | string
+    | enums.NegativeGeoTargetType;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.PositiveGeoTargetType), default: null })
-  geo_target_type_setting_positive_geo_target_type?: string | enums.PositiveGeoTargetType;
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.PositiveGeoTargetType),
+    enumName: 'geo_target_type_setting_positive_geo_target_type_enum',
+    default: null,
+  })
+  geo_target_type_setting_positive_geo_target_type?:
+    | string
+    | enums.PositiveGeoTargetType;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -153,7 +224,12 @@ export class AdCampaign {
   campaign_id?: number;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.CampaignKeywordMatchType), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.CampaignKeywordMatchType),
+    default: null,
+  })
   keyword_match_type?: string | enums.CampaignKeywordMatchType;
 
   @Field(() => [String], { nullable: true })
@@ -161,12 +237,24 @@ export class AdCampaign {
   labels?: string[];
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.ListingType), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.ListingType),
+    default: null,
+  })
   listing_type?: string | enums.ListingType;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.LocationSourceType), default: null })
-  local_campaign_setting_location_source_type?: string | enums.LocationSourceType;
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.LocationSourceType),
+    default: null,
+  })
+  local_campaign_setting_location_source_type?:
+    | string
+    | enums.LocationSourceType;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -233,7 +321,12 @@ export class AdCampaign {
   optimization_score?: number;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.PaymentMode), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.PaymentMode),
+    default: null,
+  })
   payment_mode?: string | enums.PaymentMode;
 
   @Field(() => Float, { nullable: true })
@@ -253,11 +346,21 @@ export class AdCampaign {
   performance_max_upgrade_pre_upgrade_campaign?: string;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.PerformanceMaxUpgradeStatus), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.PerformanceMaxUpgradeStatus),
+    default: null,
+  })
   performance_max_upgrade_status?: string | enums.PerformanceMaxUpgradeStatus;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.CampaignPrimaryStatus), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.CampaignPrimaryStatus),
+    default: null,
+  })
   primary_status?: string | enums.CampaignPrimaryStatus;
 
   @Field(() => [String], { nullable: true })
@@ -277,7 +380,12 @@ export class AdCampaign {
   selective_optimization_conversion_actions?: string[];
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.CampaignServingStatus), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.CampaignServingStatus),
+    default: null,
+  })
   serving_status?: string | enums.CampaignServingStatus;
 
   @Field(() => [Float], { nullable: true })
@@ -313,7 +421,12 @@ export class AdCampaign {
   start_date?: string;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.CampaignStatus), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.CampaignStatus),
+    default: null,
+  })
   status?: string | enums.CampaignStatus;
 
   @Field(() => Float, { nullable: true })
@@ -335,8 +448,15 @@ export class AdCampaign {
   target_cpm_target_frequency_goal_target_count?: number;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.TargetFrequencyTimeUnit), default: null })
-  target_cpm_target_frequency_goal_time_unit?: string | enums.TargetFrequencyTimeUnit;
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.TargetFrequencyTimeUnit),
+    default: null,
+  })
+  target_cpm_target_frequency_goal_time_unit?:
+    | string
+    | enums.TargetFrequencyTimeUnit;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
@@ -347,8 +467,15 @@ export class AdCampaign {
   target_impression_share_cpc_bid_ceiling_micros?: number;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.TargetImpressionShareLocation), default: null })
-  target_impression_share_location?: string | enums.TargetImpressionShareLocation;
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.TargetImpressionShareLocation),
+    default: null,
+  })
+  target_impression_share_location?:
+    | string
+    | enums.TargetImpressionShareLocation;
 
   @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
@@ -399,15 +526,32 @@ export class AdCampaign {
   url_expansion_opt_out?: boolean;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.VanityPharmaDisplayUrlMode), default: null })
-  vanity_pharma_vanity_pharma_display_url_mode?: string | enums.VanityPharmaDisplayUrlMode;
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.VanityPharmaDisplayUrlMode),
+    default: null,
+  })
+  vanity_pharma_vanity_pharma_display_url_mode?:
+    | string
+    | enums.VanityPharmaDisplayUrlMode;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.VanityPharmaText), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.VanityPharmaText),
+    default: null,
+  })
   vanity_pharma_vanity_pharma_text?: string | enums.VanityPharmaText;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.BrandSafetySuitability), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.BrandSafetySuitability),
+    default: null,
+  })
   video_brand_safety_suitability?: string | enums.BrandSafetySuitability;
 
   @Field(() => Boolean, { nullable: true })
@@ -422,9 +566,13 @@ export class AdCampaign {
   @Column({ nullable: true })
   video_campaign_settings_video_ad_inventory_control_allow_shorts?: boolean;
 
-
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.AdNetworkType), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.AdNetworkType),
+    default: null,
+  })
   segments_ad_network_type?: string | enums.AdNetworkType;
 
   @Field(() => String, { nullable: true })
@@ -432,7 +580,12 @@ export class AdCampaign {
   segments_conversion_action?: string;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.ConversionActionCategory), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.ConversionActionCategory),
+    default: null,
+  })
   segments_conversion_action_category?: string | enums.ConversionActionCategory;
 
   @Field(() => String, { nullable: true })
@@ -444,28 +597,64 @@ export class AdCampaign {
   segments_conversion_adjustment?: boolean;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.ConversionAttributionEventType), default: null })
-  segments_conversion_attribution_event_type?: string | enums.ConversionAttributionEventType;
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.ConversionAttributionEventType),
+    default: null,
+  })
+  segments_conversion_attribution_event_type?:
+    | string
+    | enums.ConversionAttributionEventType;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.ConversionLagBucket), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.ConversionLagBucket),
+    default: null,
+  })
   segments_conversion_lag_bucket?: string | enums.ConversionLagBucket;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.ConversionOrAdjustmentLagBucket), default: null })
-  segments_conversion_or_adjustment_lag_bucket?: string | enums.ConversionOrAdjustmentLagBucket;
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.ConversionOrAdjustmentLagBucket),
+    default: null,
+  })
+  segments_conversion_or_adjustment_lag_bucket?:
+    | string
+    | enums.ConversionOrAdjustmentLagBucket;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.DayOfWeek), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.DayOfWeek),
+    default: null,
+  })
   segments_day_of_week?: string | enums.DayOfWeek;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.ExternalConversionSource), default: null })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.ExternalConversionSource),
+    default: null,
+  })
   segments_external_conversion_source?: string | enums.ExternalConversionSource;
 
   @Field(() => String, { nullable: true })
-  @Column({ type: 'enum', nullable: true, enum: prepareEnum(enums.ConvertingUserPriorEngagementTypeAndLtvBucket), default: null })
-  segments_new_versus_returning_customers?: string | enums.ConvertingUserPriorEngagementTypeAndLtvBucket;
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.ConvertingUserPriorEngagementTypeAndLtvBucket),
+    default: null,
+  })
+  segments_new_versus_returning_customers?:
+    | string
+    | enums.ConvertingUserPriorEngagementTypeAndLtvBucket;
 
   @Field(() => Float, { nullable: true })
   @Column({ type: 'float', nullable: true })

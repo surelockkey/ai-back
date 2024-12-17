@@ -6,7 +6,6 @@ import { AdCampaign } from './entity/ad-campaign.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([AdCampaign])],
-
   providers: [GoogleAdsApiService, GoogleAdsApiResolver],
 })
-export class GoogleAdsApiModule { }
+export class GoogleAdsApiModule {}
