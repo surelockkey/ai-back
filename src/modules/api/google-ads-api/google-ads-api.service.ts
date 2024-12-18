@@ -7,7 +7,7 @@ import { AdPageDto } from './dto/ads-page.dto';
 import { AdCampaign } from './entity/ad-campaign.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AdGroup } from './entity/ad-group.entity';
-import { AdPage } from './entity/ad-ad.entity';
+import { AdPage } from './entity/ad-page.entity';
 @Injectable()
 export class GoogleAdsApiService {
   private readonly credentials = {
@@ -905,8 +905,7 @@ export class GoogleAdsApiService {
         call_ad_business_name: ad?.call_ad?.business_name,
         call_ad_call_tracked: ad?.call_ad?.call_tracked,
         call_ad_conversion_action: ad?.call_ad?.conversion_action,
-        call_ad_conversion_reporting_state:
-          ad?.call_ad?.conversion_reporting_state,
+        call_ad_conversion_reporting_state: enums.CallConversionReportingState[ad?.call_ad?.conversion_reporting_state],
         call_ad_country_code: ad?.call_ad?.country_code,
         call_ad_description1: ad?.call_ad?.description1,
         call_ad_description2: ad?.call_ad?.description2,
@@ -997,17 +996,11 @@ export class GoogleAdsApiService {
         demand_gen_video_responsive_ad_videos:
           ad?.demand_gen_video_responsive_ad?.videos?.map((item) => item.asset),
         device_preference: enums.Device[ad?.device_preference],
-        display_upload_ad_display_upload_product_type:
-          enums.DisplayUploadProductType[
-          ad?.display_upload_ad?.display_upload_product_type
-          ],
-        display_upload_ad_media_bundle:
-          ad?.display_upload_ad?.media_bundle.asset,
+        display_upload_ad_display_upload_product_type: enums.DisplayUploadProductType[ad?.display_upload_ad?.display_upload_product_type],
+        display_upload_ad_media_bundle: enums.MediaType[ad?.display_upload_ad?.media_bundle.asset],
         display_url: ad?.display_url,
-        expanded_dynamic_search_ad_description:
-          ad?.expanded_dynamic_search_ad?.description,
-        expanded_dynamic_search_ad_description2:
-          ad?.expanded_dynamic_search_ad?.description2,
+        expanded_dynamic_search_ad_description: ad?.expanded_dynamic_search_ad?.description,
+        expanded_dynamic_search_ad_description2: ad?.expanded_dynamic_search_ad?.description2,
         expanded_text_ad_description: ad?.expanded_text_ad?.description,
         expanded_text_ad_description2: ad?.expanded_text_ad?.description2,
         expanded_text_ad_headline_part1: ad?.expanded_text_ad?.headline_part1,
@@ -1040,10 +1033,7 @@ export class GoogleAdsApiService {
           ad?.legacy_responsive_display_ad?.call_to_action_text,
         legacy_responsive_display_ad_description:
           ad?.legacy_responsive_display_ad?.description,
-        legacy_responsive_display_ad_format_setting:
-          enums.DisplayAdFormatSetting[
-          ad?.legacy_responsive_display_ad?.format_setting
-          ],
+        legacy_responsive_display_ad_format_setting: enums.DisplayAdFormatSetting[ad?.legacy_responsive_display_ad?.format_setting],
         legacy_responsive_display_ad_logo_image:
           ad?.legacy_responsive_display_ad?.logo_image,
         legacy_responsive_display_ad_long_headline:

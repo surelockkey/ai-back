@@ -4,7 +4,7 @@ import { GoogleAdsApiResolver } from './google-ads-api.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdCampaign } from './entity/ad-campaign.entity';
 import { AdGroup } from './entity/ad-group.entity';
-import { AdPage } from './entity/ad-ad.entity';
+import { AdPage } from './entity/ad-page.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([AdCampaign, AdGroup, AdPage])],
