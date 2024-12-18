@@ -18,7 +18,7 @@ export function workizCallToTableCall(
     client_number: call.clientNumber,
     user_number: call.userNumber,
     created_sql: call.created_sql,
-    recording_url: call.recording_url,
+    recording_url: call.recording_url.trim() ?? call.conf_recordings[0],
     call_duration_int: call.call_duration_int,
     account,
   };
