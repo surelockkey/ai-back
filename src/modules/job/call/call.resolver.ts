@@ -2,10 +2,14 @@ import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CallService } from './call.service';
 import { SendDto } from '@tech-slk/nest-crud';
 import { Account } from '../enum/account.enum';
+import { CallTranscriptionService } from './call-trascription.service';
 
 @Resolver()
 export class CallResolver {
-  constructor(private readonly callService: CallService) {}
+  constructor(
+    private readonly callService: CallService,
+    private readonly callTranscriptionService: CallTranscriptionService,
+  ) {}
 
   @Mutation(() => SendDto)
   getCallsByRange(
@@ -34,7 +38,7 @@ export class CallResolver {
     @Args('from') from: string,
     @Args('limit', { type: () => Int, nullable: true }) limit: number,
   ) {
-    return this.callService.transcriptCalls(from, limit);
+    return this.callTranscriptionService.transcriptCalls(from, limit);
   }
 
   @Mutation(() => String)

@@ -16,14 +16,14 @@ async function bootstrap() {
     database: process.env.DATABASE_NAME,
     entities: ['dist/**/*.entity.js'],
     synchronize: true,
-    logging: true,
+    logging: false,
   });
 
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   app.useGlobalPipes(new ValidationPipe());
 
-  app.use(graphqlUploadExpress({ maxFileSize: 1000000, maxFiles: 10 }));
+  app.use(graphqlUploadExpress({ maxFileSize: 20000000, maxFiles: 10 }));
   app.enableCors({
     allowedHeaders: '*',
   });
