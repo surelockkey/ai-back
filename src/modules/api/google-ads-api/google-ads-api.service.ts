@@ -569,8 +569,7 @@ export class GoogleAdsApiService {
       const response = await customer.query(query);
 
       return response.map(({ ad_group, campaign, metrics, segments }) => ({
-        ad_rotation_mode:
-          enums.AdGroupAdRotationMode[ad_group?.ad_rotation_mode],
+        ad_rotation_mode: enums.AdGroupAdRotationMode[ad_group?.ad_rotation_mode],
         audience_setting_use_audience_grouped:
           ad_group?.audience_setting?.use_audience_grouped,
         base_ad_group: ad_group?.base_ad_group,
@@ -602,8 +601,8 @@ export class GoogleAdsApiService {
         name: ad_group?.name,
         optimized_targeting_enabled: ad_group?.optimized_targeting_enabled,
         percent_cpc_bid_micros: ad_group?.percent_cpc_bid_micros,
-        primary_status: ad_group?.primary_status,
-        primary_status_reasons: ad_group?.primary_status_reasons,
+        primary_status: enums.AdGroupPrimaryStatus[ad_group?.primary_status],
+        primary_status_reasons: ad_group?.primary_status_reasons.map(t => enums.AdGroupPrimaryStatusReason[t]),
         resource_name: ad_group?.resource_name,
         status: ad_group?.status,
         target_cpa_micros: ad_group?.target_cpa_micros,
