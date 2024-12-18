@@ -602,7 +602,7 @@ export class GoogleAdsApiService {
       optimized_targeting_enabled: ad_group?.optimized_targeting_enabled,
       percent_cpc_bid_micros: ad_group?.percent_cpc_bid_micros,
       primary_status: enums.AdGroupPrimaryStatus[ad_group?.primary_status],
-      primary_status_reasons: ad_group?.primary_status_reasons.map(t => enums.AdGroupPrimaryStatusReason[t]),
+      primary_status_reasons: ad_group?.primary_status_reasons?.map(t => enums.AdGroupPrimaryStatusReason[t]),
       resource_name: ad_group?.resource_name,
       status: ad_group?.status,
       target_cpa_micros: ad_group?.target_cpa_micros,
