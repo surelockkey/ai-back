@@ -1084,8 +1084,7 @@ export class GoogleAdsApiService {
           ad?.responsive_display_ad?.control_spec?.enable_autogen_video,
         responsive_display_ad_descriptions:
           ad?.responsive_display_ad?.descriptions?.map((item) => item.text),
-        responsive_display_ad_format_setting:
-          ad?.responsive_display_ad?.format_setting,
+        responsive_display_ad_format_setting: enums.DisplayAdFormatSetting[ad?.responsive_display_ad?.format_setting],
         responsive_display_ad_headlines:
           ad?.responsive_display_ad?.headlines?.map((item) => item.text),
         responsive_display_ad_logo_images:
