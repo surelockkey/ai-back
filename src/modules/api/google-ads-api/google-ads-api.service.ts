@@ -3,10 +3,11 @@ import { Repository } from 'typeorm';
 import { GoogleAdsApi, enums } from 'google-ads-api';
 import { AdCampaignDto } from './dto/ads-campaign.dto';
 import { AdGroupDto } from './dto/ads-group.dto';
-import { AdDto } from './dto/ads-ad.dto';
+import { AdPageDto } from './dto/ads-page.dto';
 import { AdCampaign } from './entity/ad-campaign.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AdGroup } from './entity/ads-group.entity';
+import { AdGroup } from './entity/ad-group.entity';
+import { AdPage } from './entity/ad-ad.entity';
 @Injectable()
 export class GoogleAdsApiService {
   private readonly credentials = {
@@ -27,6 +28,8 @@ export class GoogleAdsApiService {
     protected readonly categoryRepository: Repository<AdCampaign>,
     @InjectRepository(AdGroup)
     protected readonly groupRepository: Repository<AdGroup>,
+    @InjectRepository(AdPage)
+    protected readonly pageRepository: Repository<AdPage>,
   ) {
     this.googleAdsClient = new GoogleAdsApi(this.credentials);
   }
@@ -687,9 +690,9 @@ export class GoogleAdsApiService {
     return groupsSaved
   }
 
-  public getAD = async (
+  public getADPages = async (
     customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID,
-  ): Promise<AdDto[]> => {
+  ): Promise<AdPageDto[]> => {
     const customer = this.createCustomer(customer_id);
 
     try {
@@ -1181,4 +1184,15 @@ export class GoogleAdsApiService {
       );
     }
   };
+
+  public async getAllAdPages(): Promise<AdPageDto[]> {
+    await this.pageRepository.delete({});
+
+    const pages = await this.getDataByAllSettledStrategy(this.getADPages);
+
+    const groupsSaved = await this.pageRepository.save(pages, { chunk: 100 });
+
+    return groupsSaved
+  }
+
 }
