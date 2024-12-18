@@ -159,4 +159,18 @@ export class AuthorizationService extends NestAuthService<
 
     return new_user;
   }
+
+  public async changeUserPassByEmail(email: string, new_password: string) {
+    const password = await this.hashPassword(new_password);
+
+    await this.userService.updateByCriteriaAndReturnOne(
+      { email },
+      { password },
+    );
+
+    return {
+      message: 'Success',
+      status: 201,
+    };
+  }
 }

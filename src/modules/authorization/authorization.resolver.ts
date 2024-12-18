@@ -98,4 +98,12 @@ export class AuthorizationResolver {
   ) {
     return this.authorizationService.changePassword(passwords, email);
   }
+
+  @Mutation(() => SendDto)
+  changeUserPassByEmail(
+    @Args('email') email: string,
+    @Args('new_password') new_password: string,
+  ) {
+    return this.authorizationService.changeUserPassByEmail(email, new_password);
+  }
 }

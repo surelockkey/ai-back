@@ -1516,6 +1516,7 @@ type Mutation {
   changeCallsDateToIso: String!
   changeCallsJobIds: String!
   changePassword(passwords: ChangePasswordDto!): SendDto!
+  changeUserPassByEmail(email: String!, new_password: String!): SendDto!
 
   """create blog"""
   createBlog(createBlog: CreateConstructorBlogDto!): ConstructorBlog!
