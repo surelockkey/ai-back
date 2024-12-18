@@ -23,7 +23,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   app.useGlobalPipes(new ValidationPipe());
 
-  app.use(graphqlUploadExpress({ maxFileSize: 20000000, maxFiles: 10 }));
+  app.use(graphqlUploadExpress({ maxFileSize: 100000000, maxFiles: 40 }));
   app.enableCors({
     allowedHeaders: '*',
   });
