@@ -869,6 +869,9 @@ export class GoogleAdsApiService {
 
       const response = await customer.query(query);
 
+      console.log(JSON.stringify(response, null, 2));
+
+
       return response.map(({ ad }) => ({
         added_by_google_ads: ad?.added_by_google_ads,
         app_ad_descriptions: ad?.app_ad?.descriptions?.map((item) => item.text),
