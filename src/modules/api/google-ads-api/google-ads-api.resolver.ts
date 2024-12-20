@@ -13,12 +13,15 @@ export class GoogleAdsApiResolver {
   // @UseGuards(GqlAuthGuard)
   @Query(() => String)
   async getAdAll(): Promise<String> {
-    await Promise.all([
+    return await Promise.all([
       this.getAdAllCampaigns(),
       this.getAdAllGroups(),
       this.getAdAllPages()
-    ])
-    return 'parsed'
+    ]).then(() => 'parsed')
+      .catch((e) => {
+        console.log(e)
+        return 'failed'
+      })
   }
 
   @Query(() => [AdCampaignDto])
