@@ -173,11 +173,21 @@ export class AdUserLocationMetrics {
   @Column({ nullable: true })
   metrics_view_through_conversions?: number;
 
-  @Field(() => prepareEnum(enums.DayOfWeek), { nullable: true })
-  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.DayOfWeek),
+    default: null,
+  })
   segments_day_of_week?: string | enums.DayOfWeek;
 
-  @Field(() => prepareEnum(enums.Device), { nullable: true })
-  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.Device),
+    default: null,
+  })
   segments_device?: string | enums.Device;
 }
