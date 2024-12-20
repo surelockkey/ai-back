@@ -1244,6 +1244,7 @@ export class GoogleAdsApiService {
       `;
 
     const response = await customer.query(query);
+    console.log(response);
 
 
     return response.map(({ user_location_view, metrics, segments, campaign }) => ({
