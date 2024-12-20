@@ -1239,8 +1239,6 @@ export class GoogleAdsApiService {
           segments.device,
           campaign.primary_status 
         FROM user_location_view 
-        WHERE 
-          campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
       `;
 
     const response = await customer.query(query);
