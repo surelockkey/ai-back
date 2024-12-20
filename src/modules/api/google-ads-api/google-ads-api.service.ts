@@ -8,6 +8,8 @@ import { AdCampaign } from './entity/ad-campaign.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AdGroup } from './entity/ad-group.entity';
 import { AdPage } from './entity/ad-page.entity';
+import { AdAdUserLocationMetricsDto } from './dto/ad-user-location-view.dto';
+import { AdUserLocationMetrics } from './entity/ad-user-location-view.entity';
 @Injectable()
 export class GoogleAdsApiService {
   private readonly credentials = {
@@ -30,6 +32,8 @@ export class GoogleAdsApiService {
     protected readonly groupRepository: Repository<AdGroup>,
     @InjectRepository(AdPage)
     protected readonly pageRepository: Repository<AdPage>,
+    @InjectRepository(AdUserLocationMetrics)
+    protected readonly userLocationMetricsRepository: Repository<AdUserLocationMetrics>,
   ) {
     this.googleAdsClient = new GoogleAdsApi(this.credentials);
   }
@@ -1184,4 +1188,116 @@ export class GoogleAdsApiService {
     return groupsSaved
   }
 
+
+  public getADUserLocationMetrics = async (
+    customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID,
+  ): Promise<AdAdUserLocationMetricsDto[]> => {
+    const customer = this.createCustomer(customer_id);
+
+    const query = `
+        SELECT 
+          user_location_view.country_criterion_id,
+          user_location_view.resource_name,
+          user_location_view.targeting_location,
+          segments.geo_target_airport,
+          segments.geo_target_canton,
+          segments.geo_target_city,
+          segments.geo_target_county,
+          segments.geo_target_district,
+          segments.geo_target_metro,
+          segments.geo_target_postal_code,
+          segments.geo_target_most_specific_location,
+          segments.geo_target_province,
+          segments.geo_target_region,
+          segments.geo_target_state,
+          metrics.all_conversions,
+          metrics.all_conversions_from_interactions_rate,
+          metrics.all_conversions_value,
+          metrics.average_cost,
+          metrics.average_cpc,
+          metrics.average_cpm,
+          metrics.average_cpv,
+          metrics.clicks,
+          metrics.conversions,
+          metrics.conversions_from_interactions_rate,
+          metrics.conversions_value,
+          metrics.cost_micros,
+          metrics.cost_per_all_conversions,
+          metrics.cost_per_conversion,
+          metrics.cross_device_conversions,
+          metrics.ctr,
+          metrics.impressions,
+          metrics.interaction_event_types,
+          metrics.interaction_rate,
+          metrics.interactions,
+          metrics.value_per_all_conversions,
+          metrics.value_per_conversion,
+          metrics.video_view_rate,
+          metrics.video_views,
+          metrics.view_through_conversions,
+          segments.day_of_week,
+          segments.device,
+          campaign.primary_status 
+        FROM user_location_view 
+        WHERE 
+          campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
+      `;
+
+    const response = await customer.query(query);
+
+
+    return response.map(({ user_location_view, metrics, segments, campaign }) => ({
+      user_location_view_country_criterion_id: user_location_view.country_criterion_id,
+      user_location_view_resource_name: user_location_view.resource_name,
+      user_location_view_targeting_location: user_location_view.targeting_location,
+      segments_geo_target_airport: segments.geo_target_airport,
+      segments_geo_target_canton: segments.geo_target_canton,
+      segments_geo_target_city: segments.geo_target_city,
+      segments_geo_target_county: segments.geo_target_county,
+      segments_geo_target_district: segments.geo_target_district,
+      segments_geo_target_metro: segments.geo_target_metro,
+      segments_geo_target_postal_code: segments.geo_target_postal_code,
+      segments_geo_target_most_specific_location: segments.geo_target_most_specific_location,
+      segments_geo_target_province: segments.geo_target_province,
+      segments_geo_target_region: segments.geo_target_region,
+      segments_geo_target_state: segments.geo_target_state,
+      metrics_all_conversions: metrics.all_conversions,
+      metrics_all_conversions_from_interactions_rate: metrics.all_conversions_from_interactions_rate,
+      metrics_all_conversions_value: metrics.all_conversions_value,
+      metrics_average_cost: metrics.average_cost,
+      metrics_average_cpc: metrics.average_cpc,
+      metrics_average_cpm: metrics.average_cpm,
+      metrics_average_cpv: metrics.average_cpv,
+      metrics_clicks: metrics.clicks,
+      metrics_conversions: metrics.conversions,
+      metrics_conversions_from_interactions_rate: metrics.conversions_from_interactions_rate,
+      metrics_conversions_value: metrics.conversions_value,
+      metrics_cost_micros: metrics.cost_micros,
+      metrics_cost_per_all_conversions: metrics.cost_per_all_conversions,
+      metrics_cost_per_conversion: metrics.cost_per_conversion,
+      metrics_cross_device_conversions: metrics.cross_device_conversions,
+      metrics_ctr: metrics.ctr,
+      metrics_impressions: metrics.impressions,
+      metrics_interaction_event_types: metrics.interaction_event_types.map(t => enums.InteractionType[t]),
+      metrics_interaction_rate: metrics.interaction_rate,
+      metrics_interactions: metrics.interactions,
+      metrics_value_per_all_conversions: metrics.value_per_all_conversions,
+      metrics_value_per_conversion: metrics.value_per_conversion,
+      metrics_video_view_rate: metrics.video_view_rate,
+      metrics_video_views: metrics.video_views,
+      metrics_view_through_conversions: metrics.view_through_conversions,
+      segments_day_of_week: enums.DayOfWeek[segments.day_of_week],
+      segments_device: enums.Device[segments.device],
+    }))
+
+  }
+  public async getAllAdUserLocationMetrics(): Promise<AdAdUserLocationMetricsDto[]> {
+    await this.pageRepository.delete({});
+
+    const locationMetricsRepository = await this.getDataByAllSettledStrategy(this.getADUserLocationMetrics);
+
+    const locationMetricsRepositorySaved = await this.userLocationMetricsRepository.save(locationMetricsRepository, { chunk: 100 });
+
+    return locationMetricsRepositorySaved
+  }
 }

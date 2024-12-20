@@ -3,6 +3,7 @@ import { GoogleAdsApiService } from './google-ads-api.service';
 import { AdCampaignDto } from './dto/ads-campaign.dto';
 import { AdGroupDto } from './dto/ads-group.dto';
 import { AdPageDto } from './dto/ads-page.dto';
+import { AdAdUserLocationMetricsDto } from './dto/ad-user-location-view.dto';
 
 @Resolver()
 export class GoogleAdsApiResolver {
@@ -16,7 +17,8 @@ export class GoogleAdsApiResolver {
     return await Promise.all([
       this.getAdAllCampaigns(),
       this.getAdAllGroups(),
-      this.getAdAllPages()
+      this.getAdAllPages(),
+      this.getAdAllUserLocationMetrics()
     ]).then(() => 'parsed')
       .catch((e) => {
         console.log(e)
@@ -57,5 +59,9 @@ export class GoogleAdsApiResolver {
   @Query(() => [AdPageDto])
   async getAdAllPages(): Promise<AdPageDto[]> {
     return await this.googleAdsApiService.getAllAdPages();
+  }
+  @Query(() => [AdAdUserLocationMetricsDto])
+  async getAdAllUserLocationMetrics(): Promise<AdAdUserLocationMetricsDto[]> {
+    return await this.googleAdsApiService.getAllAdUserLocationMetrics();
   }
 }
