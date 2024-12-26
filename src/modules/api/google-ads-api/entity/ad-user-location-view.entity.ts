@@ -35,6 +35,7 @@ export class AdUserLocationMetrics {
   })
   campaign_status?: string | enums.CampaignStatus;
 
+  @Field(() => String, { nullable: true })
   @Column({
     type: 'enum',
     nullable: true,
