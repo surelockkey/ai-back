@@ -1260,7 +1260,7 @@ export class GoogleAdsApiService {
       metrics_engagement_rate: metrics?.engagement_rate,
       metrics_impressions: metrics?.impressions,
       metrics_engagements: metrics?.engagements,
-      metrics_interaction_event_types: metrics?.interaction_event_types?.map(t => enums?.InteractionType[t]) || [],
+      metrics_interaction_event_types: (metrics?.interaction_event_types || [])?.map(t => enums?.InteractionType[t]),
       metrics_interaction_rate: metrics?.interaction_rate,
       metrics_interactions: metrics?.interactions,
       metrics_value_per_all_conversions: metrics?.value_per_all_conversions,
