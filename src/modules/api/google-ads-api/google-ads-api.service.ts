@@ -1267,7 +1267,7 @@ export class GoogleAdsApiService {
       metrics_value_per_conversion: metrics?.value_per_conversion,
       metrics_video_views: metrics?.video_views,
       metrics_view_through_conversions: metrics?.view_through_conversions,
-      metrics_video_view_rat: metrics?.video_view_rate
+      metrics_video_view_rate: metrics?.video_view_rate
     }))
 
   }

@@ -160,11 +160,11 @@ export class AdUserLocationMetrics {
   @Column({ type: 'float', nullable: true })
   metrics_ctr?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Float, { nullable: true })
   @Column({ nullable: true })
   metrics_impressions?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Float, { nullable: true })
   @Column({ nullable: true })
   metrics_engagement_rate?: number;
 
