@@ -180,7 +180,7 @@ export class AdUserLocationMetrics {
   @Column({ nullable: true, type: 'float' })
   metrics_interactions?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Float, { nullable: true })
   @Column({ nullable: true, type: 'float' })
   metrics_engagements?: number;
 
@@ -196,11 +196,11 @@ export class AdUserLocationMetrics {
   @Column({ type: 'float', nullable: true })
   metrics_video_view_rate?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Float, { nullable: true })
   @Column({ nullable: true })
   metrics_video_views?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Float, { nullable: true })
   @Column({ nullable: true })
   metrics_view_through_conversions?: number;
 
