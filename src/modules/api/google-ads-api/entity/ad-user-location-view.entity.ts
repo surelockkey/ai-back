@@ -181,7 +181,7 @@ export class AdUserLocationMetrics {
   metrics_interactions?: number;
 
   @Field(() => Int, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   metrics_engagements?: number;
 
   @Field(() => Float, { nullable: true })
