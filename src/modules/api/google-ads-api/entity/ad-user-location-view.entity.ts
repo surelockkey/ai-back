@@ -21,6 +21,29 @@ export class AdUserLocationMetrics {
   @Column({ nullable: true })
   location_view_resource_name?: string;
 
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  campaign_name?: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.CampaignStatus),
+    default: null,
+  })
+  campaign_status?: string | enums.CampaignStatus;
+
+  @Column({
+    type: 'enum',
+    nullable: true,
+    enum: prepareEnum(enums.CampaignPrimaryStatus),
+    default: null,
+  })
+  campaign_primary_status?: string | enums.CampaignPrimaryStatus;
+
+
   // @Field(() => Boolean, { nullable: true })
   // @Column({ nullable: true })
   // user_location_view_targeting_location?: boolean;
@@ -97,6 +120,10 @@ export class AdUserLocationMetrics {
   @Column({ type: 'float', nullable: true })
   metrics_average_cpv?: number;
 
+  @Field(() => Float, { nullable: true })
+  @Column({ type: 'float', nullable: true })
+  metrics_average_cpe?: number;
+
   @Field(() => Int, { nullable: true })
   @Column({ nullable: true })
   metrics_clicks?: number;
@@ -165,9 +192,9 @@ export class AdUserLocationMetrics {
   @Column({ type: 'float', nullable: true })
   metrics_value_per_conversion?: number;
 
-  // @Field(() => Float, { nullable: true })
-  // @Column({ type: 'float', nullable: true })
-  // metrics_video_view_rate?: number;
+  @Field(() => Float, { nullable: true })
+  @Column({ type: 'float', nullable: true })
+  metrics_video_view_rate?: number;
 
   @Field(() => Int, { nullable: true })
   @Column({ nullable: true })
