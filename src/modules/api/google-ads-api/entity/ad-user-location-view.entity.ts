@@ -176,8 +176,8 @@ export class AdUserLocationMetrics {
   @Column({ type: 'float', nullable: true })
   metrics_interaction_rate?: number;
 
-  @Field(() => Int, { nullable: true })
-  @Column({ nullable: true })
+  @Field(() => Float, { nullable: true })
+  @Column({ nullable: true, type: 'float' })
   metrics_interactions?: number;
 
   @Field(() => Int, { nullable: true })
