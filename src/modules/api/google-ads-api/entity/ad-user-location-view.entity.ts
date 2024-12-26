@@ -170,8 +170,8 @@ export class AdUserLocationMetrics {
   metrics_engagement_rate?: number;
 
   @Field(() => [String], { nullable: true })
-  @Column({ nullable: true, array: true, type: 'text', default: [], enum: enums.InteractionType })
-  metrics_interaction_event_types?: (string | enums.InteractionType)[];
+  @Column({ nullable: true, array: true, type: 'text', default: [], enum: enums.InteractionEventType })
+  metrics_interaction_event_types?: (string | enums.InteractionEventType)[];
 
   @Field(() => Float, { nullable: true })
   @Column({ type: 'float', nullable: true })
