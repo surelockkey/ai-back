@@ -124,11 +124,11 @@ export class AdUserLocationMetrics {
   @Column({ type: 'float', nullable: true })
   metrics_average_cpe?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Float, { nullable: true })
   @Column({ nullable: true })
   metrics_clicks?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Float, { nullable: true })
   @Column({ nullable: true })
   metrics_conversions?: number;
 
