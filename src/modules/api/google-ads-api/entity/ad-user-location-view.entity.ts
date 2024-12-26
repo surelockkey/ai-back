@@ -6,7 +6,7 @@ const prepareEnum = <T>(en: T): string[] => {
   return Object.values(en).filter((e) => typeof e === 'string');
 };
 
-@Entity("ad-user-location-view")
+@Entity("ad-location-view")
 @ObjectType()
 export class AdUserLocationMetrics {
   @Field(() => String, { nullable: true })
