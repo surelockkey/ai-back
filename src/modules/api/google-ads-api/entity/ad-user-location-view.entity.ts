@@ -13,61 +13,61 @@ export class AdUserLocationMetrics {
   @PrimaryGeneratedColumn()
   id?: string;
 
-  @Field(() => Number, { nullable: true })
-  @Column({ nullable: true, type: 'bigint' })
-  user_location_view_country_criterion_id?: number;
+  // @Field(() => Number, { nullable: true })
+  // @Column({ nullable: true, type: 'bigint' })
+  // user_location_view_country_criterion_id?: number;
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  user_location_view_resource_name?: string;
+  location_view_resource_name?: string;
 
-  @Field(() => Boolean, { nullable: true })
-  @Column({ nullable: true })
-  user_location_view_targeting_location?: boolean;
+  // @Field(() => Boolean, { nullable: true })
+  // @Column({ nullable: true })
+  // user_location_view_targeting_location?: boolean;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  segments_geo_target_airport?: string;
+  // @Field(() => String, { nullable: true })
+  // @Column({ nullable: true })
+  // segments_geo_target_airport?: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  segments_geo_target_canton?: string;
+  // @Field(() => String, { nullable: true })
+  // @Column({ nullable: true })
+  // segments_geo_target_canton?: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  segments_geo_target_city?: string;
+  // @Field(() => String, { nullable: true })
+  // @Column({ nullable: true })
+  // segments_geo_target_city?: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  segments_geo_target_county?: string;
+  // @Field(() => String, { nullable: true })
+  // @Column({ nullable: true })
+  // segments_geo_target_county?: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  segments_geo_target_district?: string;
+  // @Field(() => String, { nullable: true })
+  // @Column({ nullable: true })
+  // segments_geo_target_district?: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  segments_geo_target_metro?: string;
+  // @Field(() => String, { nullable: true })
+  // @Column({ nullable: true })
+  // segments_geo_target_metro?: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  segments_geo_target_postal_code?: string;
+  // @Field(() => String, { nullable: true })
+  // @Column({ nullable: true })
+  // segments_geo_target_postal_code?: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  segments_geo_target_most_specific_location?: string;
+  // @Field(() => String, { nullable: true })
+  // @Column({ nullable: true })
+  // segments_geo_target_most_specific_location?: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  segments_geo_target_province?: string;
+  // @Field(() => String, { nullable: true })
+  // @Column({ nullable: true })
+  // segments_geo_target_province?: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  segments_geo_target_region?: string;
+  // @Field(() => String, { nullable: true })
+  // @Column({ nullable: true })
+  // segments_geo_target_region?: string;
 
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
-  segments_geo_target_state?: string;
+  // @Field(() => String, { nullable: true })
+  // @Column({ nullable: true })
+  // segments_geo_target_state?: string;
 
   @Field(() => Float, { nullable: true })
   @Column({ type: 'float', nullable: true })
@@ -137,9 +137,9 @@ export class AdUserLocationMetrics {
   @Column({ nullable: true })
   metrics_impressions?: number;
 
-  @Field(() => [String], { nullable: true })
-  @Column({ nullable: true, array: true, type: 'text', default: [] })
-  dynamic_search_ads_setting_feeds?: string[];
+  @Field(() => Int, { nullable: true })
+  @Column({ nullable: true })
+  metrics_engagement_rate?: number;
 
   @Field(() => [String], { nullable: true })
   @Column({ nullable: true, array: true, type: 'text', default: [], enum: enums.InteractionType })
@@ -153,6 +153,10 @@ export class AdUserLocationMetrics {
   @Column({ nullable: true })
   metrics_interactions?: number;
 
+  @Field(() => Int, { nullable: true })
+  @Column({ nullable: true })
+  metrics_engagements?: number;
+
   @Field(() => Float, { nullable: true })
   @Column({ type: 'float', nullable: true })
   metrics_value_per_all_conversions?: number;
@@ -161,9 +165,9 @@ export class AdUserLocationMetrics {
   @Column({ type: 'float', nullable: true })
   metrics_value_per_conversion?: number;
 
-  @Field(() => Float, { nullable: true })
-  @Column({ type: 'float', nullable: true })
-  metrics_video_view_rate?: number;
+  // @Field(() => Float, { nullable: true })
+  // @Column({ type: 'float', nullable: true })
+  // metrics_video_view_rate?: number;
 
   @Field(() => Int, { nullable: true })
   @Column({ nullable: true })
@@ -173,21 +177,21 @@ export class AdUserLocationMetrics {
   @Column({ nullable: true })
   metrics_view_through_conversions?: number;
 
-  @Field(() => String, { nullable: true })
-  @Column({
-    type: 'enum',
-    nullable: true,
-    enum: prepareEnum(enums.DayOfWeek),
-    default: null,
-  })
-  segments_day_of_week?: string | enums.DayOfWeek;
+  // @Field(() => String, { nullable: true })
+  // @Column({
+  //   type: 'enum',
+  //   nullable: true,
+  //   enum: prepareEnum(enums.DayOfWeek),
+  // default: null,
+  // })
+  // segments_day_of_week?: string | enums.DayOfWeek;
 
-  @Field(() => String, { nullable: true })
-  @Column({
-    type: 'enum',
-    nullable: true,
-    enum: prepareEnum(enums.Device),
-    default: null,
-  })
-  segments_device?: string | enums.Device;
+  // @Field(() => String, { nullable: true })
+  // @Column({
+  //   type: 'enum',
+  //   nullable: true,
+  //   enum: prepareEnum(enums.Device),
+  // default: null,
+  // })
+  // segments_device?: string | enums.Device;
 }
