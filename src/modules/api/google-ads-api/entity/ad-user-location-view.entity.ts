@@ -1,6 +1,6 @@
 import { enums } from "google-ads-api";
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
-import { ObjectType, Field, Float, Int } from "@nestjs/graphql";
+import { ObjectType, Field, Float } from "@nestjs/graphql";
 
 const prepareEnum = <T>(en: T): string[] => {
   return Object.values(en).filter((e) => typeof e === 'string');
@@ -125,11 +125,11 @@ export class AdUserLocationMetrics {
   metrics_average_cpe?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float', })
   metrics_clicks?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float', })
   metrics_conversions?: number;
 
   @Field(() => Float, { nullable: true })
@@ -161,11 +161,11 @@ export class AdUserLocationMetrics {
   metrics_ctr?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   metrics_impressions?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   metrics_engagement_rate?: number;
 
   @Field(() => [String], { nullable: true })
@@ -197,11 +197,11 @@ export class AdUserLocationMetrics {
   metrics_video_view_rate?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   metrics_video_views?: number;
 
   @Field(() => Float, { nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'float' })
   metrics_view_through_conversions?: number;
 
   // @Field(() => String, { nullable: true })
