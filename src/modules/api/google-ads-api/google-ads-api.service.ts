@@ -10,6 +10,7 @@ import { AdGroup } from './entity/ad-group.entity';
 import { AdPage } from './entity/ad-page.entity';
 import { AdAdUserLocationMetricsDto } from './dto/ad-user-location-view.dto';
 import { AdUserLocationMetrics } from './entity/ad-user-location-view.entity';
+import moment from 'moment';
 @Injectable()
 export class GoogleAdsApiService {
   private readonly credentials = {
@@ -1188,7 +1189,6 @@ export class GoogleAdsApiService {
     return groupsSaved
   }
 
-
   public getADUserLocationMetrics = async (
     customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID,
   ): Promise<AdAdUserLocationMetricsDto[]> => {
@@ -1273,6 +1273,7 @@ export class GoogleAdsApiService {
     }))
 
   }
+
   public async getAllAdUserLocationMetrics(): Promise<AdAdUserLocationMetricsDto[]> {
     await this.pageRepository.delete({});
 
@@ -1281,5 +1282,50 @@ export class GoogleAdsApiService {
     const locationMetricsRepositorySaved = await this.userLocationMetricsRepository.save(locationMetricsRepository, { chunk: 100 });
 
     return locationMetricsRepositorySaved
+  }
+
+  public async getPreparedCampaign() {
+    // const date = moment('2021-01-01', 'YYYY-MM-DD')
+
+    try {
+
+
+
+      const campaign_query = `
+      SELECT 
+        customer.id, 
+        campaign.id, 
+        campaign.advertising_channel_type, 
+        campaign.resource_name, 
+        metrics.all_conversions, 
+        segments.slot, 
+        segments.day_of_week, 
+        segments.week, 
+        segments.year, 
+        segments.month, 
+        segments.date 
+      FROM campaign 
+      WHERE 
+        segments.date = '2021-01-01' 
+        AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
+    `;
+      const customer_ids = await this.getListCustomers();
+
+      // for await (const id of customer_ids) {
+      const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
+
+      const campaigns = await customer.query(campaign_query);
+
+      console.log(JSON.stringify(campaigns, null, 2));
+
+      // date.add('1', 'week')
+      // }
+
+
+    } catch (error) {
+      console.log(JSON.stringify(error, null, 2));
+
+    }
+
   }
 }

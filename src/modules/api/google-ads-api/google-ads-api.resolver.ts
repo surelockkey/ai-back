@@ -26,6 +26,12 @@ export class GoogleAdsApiResolver {
       })
   }
 
+  @Query()
+  async getPreparedCampaign(): Promise<string> {
+    await this.googleAdsApiService.getPreparedCampaign();
+    return 'parsed'
+  }
+
   @Query(() => [AdCampaignDto])
   async getAdCampaigns(): Promise<AdCampaignDto[]> {
     return await this.googleAdsApiService.getCampaignsByCustomer();
