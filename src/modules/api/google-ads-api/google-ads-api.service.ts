@@ -1343,15 +1343,24 @@ export class GoogleAdsApiService {
       // for await (const id of customer_ids) {
       const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
 
+      const data = []
+
       while (date.isBefore(current_date)) {
         console.log(date.format(date_forma));
 
-        const campaigns = await customer.query(campaign_query);
+        const campaigns = customer.query(campaign_query);
 
-        console.log(JSON.stringify(campaigns, null, 2));
 
         date.add('1', 'week')
+
+        data.push(campaigns)
       }
+
+      // console.log(JSON.stringify(campaigns, null, 2));
+      await Promise.all(data)
+        .then(r => {
+          console.log(r);
+        })
 
 
     } catch (error) {
