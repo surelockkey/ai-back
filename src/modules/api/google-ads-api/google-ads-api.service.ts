@@ -1345,6 +1345,8 @@ export class GoogleAdsApiService {
 
       const data = []
 
+      console.log('DDDDDDD');
+
       while (date.isBefore(current_date)) {
         console.log(date.format(date_forma));
 
