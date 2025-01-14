@@ -1341,8 +1341,9 @@ export class GoogleAdsApiService {
       const customer_ids = await this.getListCustomers();
 
       // for await (const id of customer_ids) {
+      const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
+
       while (date.isAfter(current_date)) {
-        const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
 
         const campaigns = await customer.query(campaign_query);
 
