@@ -1318,6 +1318,8 @@ export class GoogleAdsApiService {
       const date = moment('2021-01-01', date_format)
       const current_date = moment();
 
+      let segments_date = date.format(date_format)
+
       console.log(date.format(date_format));
 
 
@@ -1336,7 +1338,7 @@ export class GoogleAdsApiService {
           segments.date 
         FROM campaign 
         WHERE 
-          segments.date = '${date.format(date_format)}'
+          segments.date = '${segments_date}'
           AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
       `;
       // const customer_ids = await this.getListCustomers();
@@ -1354,7 +1356,8 @@ export class GoogleAdsApiService {
         const campaigns = customer.query(campaign_query);
 
 
-        date.add('1', 'week')
+        date.add('1', 'week');
+        segments_date = date.format(date_format);
 
         data.push(campaigns)
         console.log('loop');
@@ -1364,7 +1367,8 @@ export class GoogleAdsApiService {
       // console.log(JSON.stringify(campaigns, null, 2));
       await Promise.allSettled(data)
         .then(r => {
-          console.log(JSON.stringify(r, null, 2));
+          const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
+          console.log(JSON.stringify(result, null, 2));
         })
 
 
