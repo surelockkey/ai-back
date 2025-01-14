@@ -1340,6 +1340,7 @@ export class GoogleAdsApiService {
       `;
       const group_query = () => `
         SELECT 
+          campaign.id, 
           metrics.conversions, 
           metrics.cost_micros, 
           segments.day_of_week, 
