@@ -1362,7 +1362,7 @@ export class GoogleAdsApiService {
       }
 
       // console.log(JSON.stringify(campaigns, null, 2));
-      await Promise.all(data)
+      await Promise.allSettled(data)
         .then(r => {
           console.log(r);
         })
