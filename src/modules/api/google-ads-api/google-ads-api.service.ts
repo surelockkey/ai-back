@@ -1318,8 +1318,6 @@ export class GoogleAdsApiService {
       const date = moment('2021-01-01', date_forma)
       const current_date = moment();
 
-
-
       const campaign_query = `
       SELECT 
         customer.id, 
@@ -1366,7 +1364,7 @@ export class GoogleAdsApiService {
 
 
     } catch (error) {
-      console.log(JSON.stringify(error, null, 2));
+      console.log(`ERROR: ${JSON.stringify(error, null, 2)}`);
     }
   }
 }
