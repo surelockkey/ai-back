@@ -1345,22 +1345,22 @@ export class GoogleAdsApiService {
 
       console.log('DDDDDDD');
 
-      while (date.isBefore(current_date)) {
-        console.log(date.format(date_forma));
+      const campaigns = customer.query(campaign_query);
+      // while (current_date.isBefore(date)) {
+      //   console.log(date.format(date_forma));
 
-        const campaigns = customer.query(campaign_query);
 
 
-        date.add('1', 'week')
+      //   date.add('1', 'week')
 
-        data.push(campaigns)
-      }
+      //   data.push(campaigns)
+      // }
 
-      // console.log(JSON.stringify(campaigns, null, 2));
-      await Promise.allSettled(data)
-        .then(r => {
-          console.log(r);
-        })
+      // // console.log(JSON.stringify(campaigns, null, 2));
+      // await Promise.allSettled(data)
+      //   .then(r => {
+      //     console.log(r);
+      //   })
 
 
     } catch (error) {
