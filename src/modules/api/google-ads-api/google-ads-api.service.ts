@@ -1369,7 +1369,7 @@ export class GoogleAdsApiService {
         segments_date = date.format(date_format);
 
         campaigns_data.push(campaigns)
-        group_data.push(campaigns)
+        group_data.push(group)
       }
 
 
