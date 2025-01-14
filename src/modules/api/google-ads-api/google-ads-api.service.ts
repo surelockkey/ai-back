@@ -1313,9 +1313,9 @@ export class GoogleAdsApiService {
   }
 
   public async getPreparedCampaign() {
-
+    const date_forma = 'YYYY-MM-DD'
     try {
-      const date = moment('2021-01-01', 'YYYY-MM-DD')
+      const date = moment('2021-01-01', date_forma)
       const current_date = moment();
 
 
@@ -1335,7 +1335,7 @@ export class GoogleAdsApiService {
         segments.date 
       FROM campaign 
       WHERE 
-        segments.date = '${date.format('YYYY-MM-DD')}' 
+        segments.date = '${date.format(date_forma)}' 
         AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
     `;
       const customer_ids = await this.getListCustomers();
@@ -1343,7 +1343,8 @@ export class GoogleAdsApiService {
       // for await (const id of customer_ids) {
       const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
 
-      while (date.isAfter(current_date)) {
+      while (date.isBefore(current_date)) {
+        console.log(date.format(date_forma));
 
         const campaigns = await customer.query(campaign_query);
 
