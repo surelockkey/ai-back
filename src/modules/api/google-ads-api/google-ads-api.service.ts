@@ -1323,7 +1323,7 @@ export class GoogleAdsApiService {
       console.log(date.format(date_format));
 
 
-      const campaign_query = `
+      const campaign_query = () => `
         SELECT 
           customer.id, 
           campaign.id, 
@@ -1351,8 +1351,8 @@ export class GoogleAdsApiService {
       while (current_date.isAfter(date)) {
         console.log(date.format(date_format));
 
-        console.log(segments_date, campaign_query);
-        const campaigns = customer.query(campaign_query);
+        console.log(segments_date, campaign_query());
+        const campaigns = customer.query(campaign_query());
 
 
         date.add('1', 'week');
