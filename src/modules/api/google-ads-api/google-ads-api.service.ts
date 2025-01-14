@@ -1345,7 +1345,7 @@ export class GoogleAdsApiService {
 
       console.log('DDDDDDD');
 
-      const campaigns = customer.query(campaign_query);
+      const campaigns = await customer.query(campaign_query);
       // while (current_date.isBefore(date)) {
       //   console.log(date.format(date_forma));
 
