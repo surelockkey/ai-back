@@ -99,6 +99,7 @@ export class AuthorizationResolver {
     return this.authorizationService.changePassword(passwords, email);
   }
 
+  @RoleGuard(UserRole.ADMIN)
   @Mutation(() => SendDto)
   changeUserPassByEmail(
     @Args('email') email: string,

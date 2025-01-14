@@ -554,13 +554,13 @@ export class AdCampaign {
   })
   video_brand_safety_suitability?: string | enums.BrandSafetySuitability;
 
-  @Field(() => Boolean, { nullable: true })
-  @Column({ nullable: true })
-  video_campaign_settings_video_ad_inventory_control_allow_in_feed?: boolean;
+  // @Field(() => Boolean, { nullable: true })
+  // @Column({ nullable: true })
+  // video_campaign_settings_video_ad_inventory_control_allow_in_feed?: boolean;
 
-  @Field(() => Boolean, { nullable: true })
-  @Column({ nullable: true })
-  video_campaign_settings_video_ad_inventory_control_allow_in_stream?: boolean;
+  // @Field(() => Boolean, { nullable: true })
+  // @Column({ nullable: true })
+  // video_campaign_settings_video_ad_inventory_control_allow_in_stream?: boolean;
 
   @Field(() => Boolean, { nullable: true })
   @Column({ nullable: true })

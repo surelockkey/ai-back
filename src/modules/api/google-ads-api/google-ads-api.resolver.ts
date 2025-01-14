@@ -7,9 +7,7 @@ import { AdAdUserLocationMetricsDto } from './dto/ad-user-location-view.dto';
 
 @Resolver()
 export class GoogleAdsApiResolver {
-  constructor(
-    private readonly googleAdsApiService: GoogleAdsApiService,
-  ) { }
+  constructor(private readonly googleAdsApiService: GoogleAdsApiService) { }
 
   // @UseGuards(GqlAuthGuard)
   @Query(() => String)
@@ -18,18 +16,19 @@ export class GoogleAdsApiResolver {
       this.getAdAllCampaigns(),
       this.getAdAllGroups(),
       this.getAdAllPages(),
-      this.getAdAllUserLocationMetrics()
-    ]).then(() => 'parsed')
+      this.getAdAllUserLocationMetrics(),
+    ])
+      .then(() => 'parsed')
       .catch((e) => {
-        console.log(e)
-        return 'failed'
-      })
+        console.log(e);
+        return 'failed';
+      });
   }
 
-  @Query(() => [String])
+  @Query(() => String)
   async getPreparedCampaign(): Promise<string> {
     await this.googleAdsApiService.getPreparedCampaign();
-    return 'parsed'
+    return 'parsed';
   }
 
   @Query(() => [AdCampaignDto])

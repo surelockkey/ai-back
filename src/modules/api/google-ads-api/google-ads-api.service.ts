@@ -394,9 +394,9 @@ export class GoogleAdsApiService {
             enums?.BrandSafetySuitability[
             campaign?.video_brand_safety_suitability
             ],
-          video_campaign_settings_video_ad_inventory_control_allow_in_feed:
-            campaign?.video_campaign_settings?.video_ad_inventory_control
-              ?.allow_in_feed,
+          // video_campaign_settings_video_ad_inventory_control_allow_in_feed:
+          //   campaign?.video_campaign_settings?.video_ad_inventory_control
+          //     ?.allow_in_feed,
           video_campaign_settings_video_ad_inventory_control_allow_in_stream:
             campaign?.video_campaign_settings?.video_ad_inventory_control
               ?.allow_in_stream,
@@ -480,7 +480,9 @@ export class GoogleAdsApiService {
       this.getCampaignsByCustomer,
     );
 
-    const campaignsSaved = await this.categoryRepository.save(campaigns, { chunk: 100 });
+    const campaignsSaved = await this.categoryRepository.save(campaigns, {
+      chunk: 100,
+    });
 
     return campaignsSaved;
   }
@@ -577,7 +579,8 @@ export class GoogleAdsApiService {
       const response = await customer.query(query);
 
       return response.map(({ ad_group, campaign, metrics, segments }) => ({
-        ad_rotation_mode: enums.AdGroupAdRotationMode[ad_group?.ad_rotation_mode],
+        ad_rotation_mode:
+          enums.AdGroupAdRotationMode[ad_group?.ad_rotation_mode],
         audience_setting_use_audience_grouped:
           ad_group?.audience_setting?.use_audience_grouped,
         base_ad_group: ad_group?.base_ad_group,
@@ -610,7 +613,9 @@ export class GoogleAdsApiService {
         optimized_targeting_enabled: ad_group?.optimized_targeting_enabled,
         percent_cpc_bid_micros: ad_group?.percent_cpc_bid_micros,
         primary_status: enums.AdGroupPrimaryStatus[ad_group?.primary_status],
-        primary_status_reasons: ad_group?.primary_status_reasons?.map(t => enums.AdGroupPrimaryStatusReason[t]),
+        primary_status_reasons: ad_group?.primary_status_reasons?.map(
+          (t) => enums.AdGroupPrimaryStatusReason[t],
+        ),
         resource_name: ad_group?.resource_name,
         status: ad_group?.status,
         target_cpa_micros: ad_group?.target_cpa_micros,
@@ -692,7 +697,7 @@ export class GoogleAdsApiService {
 
     const groupsSaved = await this.groupRepository.save(groups, { chunk: 100 });
 
-    return groupsSaved
+    return groupsSaved;
   }
 
   public getADPages = async (
@@ -910,7 +915,10 @@ export class GoogleAdsApiService {
         call_ad_business_name: ad?.call_ad?.business_name,
         call_ad_call_tracked: ad?.call_ad?.call_tracked,
         call_ad_conversion_action: ad?.call_ad?.conversion_action,
-        call_ad_conversion_reporting_state: enums.CallConversionReportingState[ad?.call_ad?.conversion_reporting_state],
+        call_ad_conversion_reporting_state:
+          enums.CallConversionReportingState[
+          ad?.call_ad?.conversion_reporting_state
+          ],
         call_ad_country_code: ad?.call_ad?.country_code,
         call_ad_description1: ad?.call_ad?.description1,
         call_ad_description2: ad?.call_ad?.description2,
@@ -1001,11 +1009,18 @@ export class GoogleAdsApiService {
         demand_gen_video_responsive_ad_videos:
           ad?.demand_gen_video_responsive_ad?.videos?.map((item) => item.asset),
         device_preference: enums.Device[ad?.device_preference],
-        display_upload_ad_display_upload_product_type: enums.DisplayUploadProductType[ad?.display_upload_ad?.display_upload_product_type],
-        display_upload_ad_media_bundle: enums.MediaType[ad?.display_upload_ad?.media_bundle.asset],
+        display_upload_ad_display_upload_product_type:
+          enums.DisplayUploadProductType[
+          ad?.display_upload_ad?.display_upload_product_type
+          ],
+        display_upload_ad_media_bundle:
+          ad?.display_upload_ad?.media_bundle.asset,
+
         display_url: ad?.display_url,
-        expanded_dynamic_search_ad_description: ad?.expanded_dynamic_search_ad?.description,
-        expanded_dynamic_search_ad_description2: ad?.expanded_dynamic_search_ad?.description2,
+        expanded_dynamic_search_ad_description:
+          ad?.expanded_dynamic_search_ad?.description,
+        expanded_dynamic_search_ad_description2:
+          ad?.expanded_dynamic_search_ad?.description2,
         expanded_text_ad_description: ad?.expanded_text_ad?.description,
         expanded_text_ad_description2: ad?.expanded_text_ad?.description2,
         expanded_text_ad_headline_part1: ad?.expanded_text_ad?.headline_part1,
@@ -1038,7 +1053,10 @@ export class GoogleAdsApiService {
           ad?.legacy_responsive_display_ad?.call_to_action_text,
         legacy_responsive_display_ad_description:
           ad?.legacy_responsive_display_ad?.description,
-        legacy_responsive_display_ad_format_setting: enums.DisplayAdFormatSetting[ad?.legacy_responsive_display_ad?.format_setting],
+        legacy_responsive_display_ad_format_setting:
+          enums.DisplayAdFormatSetting[
+          ad?.legacy_responsive_display_ad?.format_setting
+          ],
         legacy_responsive_display_ad_logo_image:
           ad?.legacy_responsive_display_ad?.logo_image,
         legacy_responsive_display_ad_long_headline:
@@ -1089,7 +1107,10 @@ export class GoogleAdsApiService {
           ad?.responsive_display_ad?.control_spec?.enable_autogen_video,
         responsive_display_ad_descriptions:
           ad?.responsive_display_ad?.descriptions?.map((item) => item.text),
-        responsive_display_ad_format_setting: enums.DisplayAdFormatSetting[ad?.responsive_display_ad?.format_setting],
+        responsive_display_ad_format_setting:
+          enums.DisplayAdFormatSetting[
+          ad?.responsive_display_ad?.format_setting
+          ],
         responsive_display_ad_headlines:
           ad?.responsive_display_ad?.headlines?.map((item) => item.text),
         responsive_display_ad_logo_images:
@@ -1186,7 +1207,7 @@ export class GoogleAdsApiService {
 
     const groupsSaved = await this.pageRepository.save(pages, { chunk: 100 });
 
-    return groupsSaved
+    return groupsSaved;
   }
 
   public getADUserLocationMetrics = async (
@@ -1236,7 +1257,6 @@ export class GoogleAdsApiService {
     const response = await customer.query(query);
     console.log(JSON.stringify(response, null, 2));
 
-
     return response.map(({ location_view, metrics, campaign }) => ({
       campaign_name: campaign.name,
       campaign_status: enums.CampaignStatus[campaign.status],
@@ -1248,10 +1268,12 @@ export class GoogleAdsApiService {
       metrics_average_cpm: metrics?.average_cpm,
       metrics_average_cpv: metrics?.average_cpv,
       metrics_all_conversions: metrics?.all_conversions,
-      metrics_all_conversions_from_interactions_rate: metrics?.all_conversions_from_interactions_rate,
+      metrics_all_conversions_from_interactions_rate:
+        metrics?.all_conversions_from_interactions_rate,
       metrics_all_conversions_value: metrics?.all_conversions_value,
       metrics_clicks: metrics?.clicks,
-      metrics_conversions_from_interactions_rate: metrics?.conversions_from_interactions_rate,
+      metrics_conversions_from_interactions_rate:
+        metrics?.conversions_from_interactions_rate,
       metrics_conversions: metrics?.conversions,
       metrics_conversions_value: metrics?.conversions_value,
       metrics_cost_micros: metrics?.cost_micros,
@@ -1262,26 +1284,32 @@ export class GoogleAdsApiService {
       metrics_engagement_rate: metrics?.engagement_rate,
       metrics_impressions: metrics?.impressions,
       metrics_engagements: metrics?.engagements,
-      metrics_interaction_event_types: (metrics?.interaction_event_types || []),
+      metrics_interaction_event_types: metrics?.interaction_event_types || [],
       metrics_interaction_rate: metrics?.interaction_rate,
       metrics_interactions: metrics?.interactions,
       metrics_value_per_all_conversions: metrics?.value_per_all_conversions,
       metrics_value_per_conversion: metrics?.value_per_conversion,
       metrics_video_views: metrics?.video_views,
       metrics_view_through_conversions: metrics?.view_through_conversions,
-      metrics_video_view_rate: metrics?.video_view_rate
-    }))
+      metrics_video_view_rate: metrics?.video_view_rate,
+    }));
+  };
 
-  }
-
-  public async getAllAdUserLocationMetrics(): Promise<AdAdUserLocationMetricsDto[]> {
+  public async getAllAdUserLocationMetrics(): Promise<
+    AdAdUserLocationMetricsDto[]
+  > {
     await this.pageRepository.delete({});
 
-    const locationMetricsRepository = await this.getDataByAllSettledStrategy(this.getADUserLocationMetrics);
+    const locationMetricsRepository = await this.getDataByAllSettledStrategy(
+      this.getADUserLocationMetrics,
+    );
 
-    const locationMetricsRepositorySaved = await this.userLocationMetricsRepository.save(locationMetricsRepository, { chunk: 100 });
+    const locationMetricsRepositorySaved =
+      await this.userLocationMetricsRepository.save(locationMetricsRepository, {
+        chunk: 100,
+      });
 
-    return locationMetricsRepositorySaved
+    return locationMetricsRepositorySaved;
   }
 
   public async getPreparedCampaign() {
@@ -1326,8 +1354,6 @@ export class GoogleAdsApiService {
 
     } catch (error) {
       console.log(JSON.stringify(error, null, 2));
-
     }
-
   }
 }
