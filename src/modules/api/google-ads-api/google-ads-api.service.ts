@@ -1348,7 +1348,7 @@ export class GoogleAdsApiService {
 
       console.log('DDDDDDD');
 
-      while (current_date.isBefore(date)) {
+      while (current_date.isAfter(date)) {
         console.log(date.format(date_format));
 
         const campaigns = customer.query(campaign_query);
@@ -1357,10 +1357,12 @@ export class GoogleAdsApiService {
         date.add('1', 'week')
 
         data.push(campaigns)
+        console.log('loop');
+
       }
 
       // console.log(JSON.stringify(campaigns, null, 2));
-      await Promise.allSettled(data)
+      await Promise.all(data)
         .then(r => {
           console.log(r);
         })
