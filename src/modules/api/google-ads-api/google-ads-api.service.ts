@@ -10,7 +10,7 @@ import { AdGroup } from './entity/ad-group.entity';
 import { AdPage } from './entity/ad-page.entity';
 import { AdAdUserLocationMetricsDto } from './dto/ad-user-location-view.dto';
 import { AdUserLocationMetrics } from './entity/ad-user-location-view.entity';
-import moment from 'moment';
+import * as moment from 'moment';
 @Injectable()
 export class GoogleAdsApiService {
   private readonly credentials = {
@@ -1313,10 +1313,13 @@ export class GoogleAdsApiService {
   }
 
   public async getPreparedCampaign() {
-    const date_forma = 'YYYY-MM-DD'
     try {
-      // const date = moment('2021-01-01', date_forma)
-      // const current_date = moment();
+      const date_format = 'YYYY-MM-DD'
+      const date = moment('2021-01-01', date_format)
+      const current_date = moment();
+
+      console.log(date.format(date_format));
+
 
       //   const campaign_query = `
       //   SELECT 
@@ -1333,7 +1336,7 @@ export class GoogleAdsApiService {
       //     segments.date 
       //   FROM campaign 
       //   WHERE 
-      //     segments.date = ${date.format(date_forma)} 
+      //     segments.date = ${date.format(date_format)} 
       //     AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
       // `;
       // const customer_ids = await this.getListCustomers();
@@ -1347,7 +1350,7 @@ export class GoogleAdsApiService {
 
       // const campaigns = await customer.query(campaign_query);
       // while (current_date.isBefore(date)) {
-      //   console.log(date.format(date_forma));
+      //   console.log(date.format(date_format));
 
 
 
@@ -1362,7 +1365,6 @@ export class GoogleAdsApiService {
       //     console.log(r);
       //   })
 
-      console.log('bed');
 
     } catch (error) {
       console.log(`ERROR: ${JSON.stringify(error, null, 2)}`);
