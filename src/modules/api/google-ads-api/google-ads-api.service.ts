@@ -1348,11 +1348,10 @@ export class GoogleAdsApiService {
 
       const data = []
 
-      console.log('DDDDDDD');
-
       while (current_date.isAfter(date)) {
         console.log(date.format(date_format));
 
+        console.log(segments_date, campaign_query);
         const campaigns = customer.query(campaign_query);
 
 
