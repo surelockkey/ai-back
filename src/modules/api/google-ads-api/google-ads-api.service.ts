@@ -1363,6 +1363,9 @@ export class GoogleAdsApiService {
 
       }
 
+      console.log(campaign_query);
+
+
       // console.log(JSON.stringify(campaigns, null, 2));
       await Promise.allSettled(data)
         .then(r => {
