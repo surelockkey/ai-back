@@ -1315,13 +1315,10 @@ export class GoogleAdsApiService {
   public async getPreparedCampaign() {
     try {
       const date_format = 'YYYY-MM-DD'
-      const date = moment('2021-01-01', date_format)
+      const date = moment('2025-01-06', date_format)
       const current_date = moment();
 
       let segments_date = date.format(date_format)
-
-      console.log(date.format(date_format));
-
 
       const campaign_query = () => `
         SELECT 
@@ -1341,33 +1338,49 @@ export class GoogleAdsApiService {
           segments.date = '${segments_date}'
           AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
       `;
+      const group_query = () => `
+        SELECT 
+          metrics.conversions, 
+          metrics.cost_micros, 
+          segments.day_of_week, 
+          segments.week, 
+          segments.year, 
+          segments.month, 
+          segments.date 
+        FROM ad_group 
+        WHERE 
+          segments.date = '${segments_date}' 
+          AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
+      `;
+
       // const customer_ids = await this.getListCustomers();
 
       // for await (const id of customer_ids) {
       const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
 
-      const data = []
+      const campaigns_data = []
+      const group_data = []
 
       while (current_date.isAfter(date)) {
-        console.log(date.format(date_format));
-
-        console.log(segments_date, campaign_query());
         const campaigns = customer.query(campaign_query());
-
+        const group = customer.query(group_query());
 
         date.add('1', 'week');
         segments_date = date.format(date_format);
 
-        data.push(campaigns)
-        console.log('loop');
-
+        campaigns_data.push(campaigns)
+        group_data.push(campaigns)
       }
-
-      console.log(campaign_query);
 
 
       // console.log(JSON.stringify(campaigns, null, 2));
-      await Promise.allSettled(data)
+      await Promise.allSettled(campaigns_data)
+        .then(r => {
+          const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
+          console.log(JSON.stringify(result, null, 2));
+        })
+
+      await Promise.allSettled(group_data)
         .then(r => {
           const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
           console.log(JSON.stringify(result, null, 2));
