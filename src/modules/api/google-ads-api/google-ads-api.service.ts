@@ -1315,27 +1315,27 @@ export class GoogleAdsApiService {
   public async getPreparedCampaign() {
     const date_forma = 'YYYY-MM-DD'
     try {
-      const date = moment('2021-01-01', date_forma)
-      const current_date = moment();
+      // const date = moment('2021-01-01', date_forma)
+      // const current_date = moment();
 
-      const campaign_query = `
-      SELECT 
-        customer.id, 
-        campaign.id, 
-        campaign.advertising_channel_type, 
-        campaign.resource_name, 
-        metrics.all_conversions, 
-        segments.slot, 
-        segments.day_of_week, 
-        segments.week, 
-        segments.year, 
-        segments.month, 
-        segments.date 
-      FROM campaign 
-      WHERE 
-        segments.date = ${date.format(date_forma)} 
-        AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
-    `;
+      //   const campaign_query = `
+      //   SELECT 
+      //     customer.id, 
+      //     campaign.id, 
+      //     campaign.advertising_channel_type, 
+      //     campaign.resource_name, 
+      //     metrics.all_conversions, 
+      //     segments.slot, 
+      //     segments.day_of_week, 
+      //     segments.week, 
+      //     segments.year, 
+      //     segments.month, 
+      //     segments.date 
+      //   FROM campaign 
+      //   WHERE 
+      //     segments.date = ${date.format(date_forma)} 
+      //     AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
+      // `;
       // const customer_ids = await this.getListCustomers();
 
       // for await (const id of customer_ids) {
@@ -1362,6 +1362,7 @@ export class GoogleAdsApiService {
       //     console.log(r);
       //   })
 
+      console.log('bed');
 
     } catch (error) {
       console.log(`ERROR: ${JSON.stringify(error, null, 2)}`);
