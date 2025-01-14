@@ -138,7 +138,6 @@ type AdCampaignDto {
   vanity_pharma_vanity_pharma_display_url_mode: String
   vanity_pharma_vanity_pharma_text: String
   video_brand_safety_suitability: String
-  video_campaign_settings_video_ad_inventory_control_allow_in_feed: Boolean
   video_campaign_settings_video_ad_inventory_control_allow_in_stream: Boolean
   video_campaign_settings_video_ad_inventory_control_allow_shorts: Boolean
 }
