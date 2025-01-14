@@ -1321,49 +1321,49 @@ export class GoogleAdsApiService {
       console.log(date.format(date_format));
 
 
-      //   const campaign_query = `
-      //   SELECT 
-      //     customer.id, 
-      //     campaign.id, 
-      //     campaign.advertising_channel_type, 
-      //     campaign.resource_name, 
-      //     metrics.all_conversions, 
-      //     segments.slot, 
-      //     segments.day_of_week, 
-      //     segments.week, 
-      //     segments.year, 
-      //     segments.month, 
-      //     segments.date 
-      //   FROM campaign 
-      //   WHERE 
-      //     segments.date = ${date.format(date_format)} 
-      //     AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
-      // `;
-      // const customer_ids = await this.getListCustomers();
+      const campaign_query = `
+        SELECT 
+          customer.id, 
+          campaign.id, 
+          campaign.advertising_channel_type, 
+          campaign.resource_name, 
+          metrics.all_conversions, 
+          segments.slot, 
+          segments.day_of_week, 
+          segments.week, 
+          segments.year, 
+          segments.month, 
+          segments.date 
+        FROM campaign 
+        WHERE 
+          segments.date = ${date.format(date_format)} 
+          AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
+      `;
+      const customer_ids = await this.getListCustomers();
 
       // for await (const id of customer_ids) {
-      // const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
+      const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
 
-      // const data = []
+      const data = []
 
-      // console.log('DDDDDDD');
+      console.log('DDDDDDD');
 
-      // const campaigns = await customer.query(campaign_query);
-      // while (current_date.isBefore(date)) {
-      //   console.log(date.format(date_format));
+      while (current_date.isBefore(date)) {
+        console.log(date.format(date_format));
+
+        const campaigns = await customer.query(campaign_query);
 
 
+        date.add('1', 'week')
 
-      //   date.add('1', 'week')
+        data.push(campaigns)
+      }
 
-      //   data.push(campaigns)
-      // }
-
-      // // console.log(JSON.stringify(campaigns, null, 2));
-      // await Promise.allSettled(data)
-      //   .then(r => {
-      //     console.log(r);
-      //   })
+      // console.log(JSON.stringify(campaigns, null, 2));
+      await Promise.allSettled(data)
+        .then(r => {
+          console.log(r);
+        })
 
 
     } catch (error) {
