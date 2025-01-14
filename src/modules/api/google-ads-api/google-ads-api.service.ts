@@ -1336,7 +1336,7 @@ export class GoogleAdsApiService {
         segments.date = '${date.format(date_forma)}' 
         AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
     `;
-      const customer_ids = await this.getListCustomers();
+      // const customer_ids = await this.getListCustomers();
 
       // for await (const id of customer_ids) {
       const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
@@ -1357,7 +1357,7 @@ export class GoogleAdsApiService {
       }
 
       // console.log(JSON.stringify(campaigns, null, 2));
-      await Promise.all(data)
+      await Promise.allSettled(data)
         .then(r => {
           console.log(r);
         })
