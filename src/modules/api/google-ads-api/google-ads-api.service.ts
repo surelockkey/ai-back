@@ -1336,10 +1336,10 @@ export class GoogleAdsApiService {
           segments.date 
         FROM campaign 
         WHERE 
-          segments.date = ${date.format(date_format)} 
+          segments.date = '${date.format(date_format)}'
           AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
       `;
-      const customer_ids = await this.getListCustomers();
+      // const customer_ids = await this.getListCustomers();
 
       // for await (const id of customer_ids) {
       const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
@@ -1351,7 +1351,7 @@ export class GoogleAdsApiService {
       while (current_date.isBefore(date)) {
         console.log(date.format(date_format));
 
-        const campaigns = await customer.query(campaign_query);
+        const campaigns = customer.query(campaign_query);
 
 
         date.add('1', 'week')
