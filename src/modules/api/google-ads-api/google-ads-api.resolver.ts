@@ -26,7 +26,7 @@ export class GoogleAdsApiResolver {
       })
   }
 
-  @Query()
+  @Query(() => [String])
   async getPreparedCampaign(): Promise<string> {
     await this.googleAdsApiService.getPreparedCampaign();
     return 'parsed'
