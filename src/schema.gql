@@ -23,6 +23,41 @@ enum Account {
   main
 }
 
+type AdAdUserLocationMetricsDto {
+  campaign_name: String
+  campaign_primary_status: String
+  campaign_status: String
+  location_view_resource_name: String
+  metrics_all_conversions: Float
+  metrics_all_conversions_from_interactions_rate: Float
+  metrics_all_conversions_value: Float
+  metrics_average_cost: Float
+  metrics_average_cpc: Float
+  metrics_average_cpe: Float
+  metrics_average_cpm: Float
+  metrics_average_cpv: Float
+  metrics_clicks: Float
+  metrics_conversions: Float
+  metrics_conversions_from_interactions_rate: Float
+  metrics_conversions_value: Float
+  metrics_cost_micros: Float
+  metrics_cost_per_all_conversions: Float
+  metrics_cost_per_conversion: Float
+  metrics_cross_device_conversions: Float
+  metrics_ctr: Float
+  metrics_engagement_rate: Float
+  metrics_engagements: Float
+  metrics_impressions: Float
+  metrics_interaction_event_types: [String!]
+  metrics_interaction_rate: Float
+  metrics_interactions: Float
+  metrics_value_per_all_conversions: Float
+  metrics_value_per_conversion: Float
+  metrics_video_view_rate: Float
+  metrics_video_views: Float
+  metrics_view_through_conversions: Float
+}
+
 type AdCampaignDto {
   accessible_bidding_strategy: String
   ad_serving_optimization_status: String
@@ -138,11 +173,92 @@ type AdCampaignDto {
   vanity_pharma_vanity_pharma_display_url_mode: String
   vanity_pharma_vanity_pharma_text: String
   video_brand_safety_suitability: String
-  video_campaign_settings_video_ad_inventory_control_allow_in_stream: Boolean
   video_campaign_settings_video_ad_inventory_control_allow_shorts: Boolean
 }
 
-type AdDto {
+type AdGroupDto {
+  ad_group_id: Float!
+  ad_rotation_mode: String
+  audience_setting_use_audience_grouped: Boolean
+  base_ad_group: String
+  campaign: String
+  cpc_bid_micros: Float
+  cpm_bid_micros: Float
+  cpv_bid_micros: Float
+  display_custom_bid_dimension: String
+  effective_cpc_bid_micros: Float
+  effective_target_cpa_micros: Float
+  effective_target_cpa_source: String
+  effective_target_roas: Float
+  effective_target_roas_source: String
+  excluded_parent_asset_field_types: [String!]
+  excluded_parent_asset_set_types: [String!]
+  final_url_suffix: String
+  fixed_cpm_micros: Float
+  labels: [String!]
+  metrics_active_view_ctr: Float
+  metrics_all_conversions: Float
+  metrics_average_cart_size: Float
+  metrics_average_cost: Float
+  metrics_average_cpc: Float
+  metrics_average_cpe: Float
+  metrics_average_cpm: Float
+  metrics_average_cpv: Float
+  metrics_average_order_value_micros: Int
+  metrics_clicks: Int
+  metrics_conversions: Float
+  metrics_conversions_from_interactions_rate: Float
+  metrics_conversions_from_interactions_value_per_interaction: Float
+  metrics_conversions_value: Float
+  metrics_cost_micros: Float
+  metrics_cost_of_goods_sold_micros: Int
+  metrics_cost_per_conversion: Float
+  metrics_cross_sell_cost_of_goods_sold_micros: Int
+  metrics_cross_sell_gross_profit_micros: Int
+  metrics_cross_sell_revenue_micros: Int
+  metrics_cross_sell_units_sold: Int
+  metrics_ctr: Float
+  metrics_engagement_rate: Float
+  metrics_engagements: Int
+  metrics_gmail_forwards: Int
+  metrics_gmail_saves: Int
+  metrics_gmail_secondary_clicks: Int
+  metrics_gross_profit_margin: Float
+  metrics_gross_profit_micros: Int
+  metrics_impressions: Int
+  metrics_interaction_event_types: [String!]
+  metrics_interaction_rate: Float
+  metrics_interactions: Int
+  metrics_lead_cost_of_goods_sold_micros: Float
+  metrics_lead_gross_profit_micros: Float
+  metrics_lead_revenue_micros: Float
+  metrics_lead_units_sold: Float
+  metrics_new_customer_lifetime_value: Float
+  metrics_orders: Float
+  metrics_revenue_micros: Float
+  metrics_units_sold: Float
+  metrics_value_per_all_conversions: Float
+  metrics_value_per_conversion: Float
+  metrics_view_through_conversions: Float
+  name: String
+  optimized_targeting_enabled: Boolean
+  percent_cpc_bid_micros: Float
+  primary_status: String
+  primary_status_reasons: [String!]
+  resource_name: String
+  segments_slot: String
+  status: String
+  target_cpa_micros: Float
+  target_cpm_micros: Float
+  target_cpv_micros: Float
+  target_roas: Float
+  targeting_setting_target_restrictions: [String!]
+  tracking_url_template: String
+  type: String
+  url_custom_parameters: [String!]
+}
+
+type AdPageDto {
   ad_id: Float
   added_by_google_ads: Boolean
   app_ad_descriptions: [String!]
@@ -343,88 +459,6 @@ type AdDto {
   video_responsive_ad_long_headlines: [String!]
   video_responsive_ad_videos: [String!]
   video_responsive_ad_videos_asset: [String!]
-}
-
-type AdGroupDto {
-  ad_group_id: Float!
-  ad_rotation_mode: String
-  audience_setting_use_audience_grouped: Boolean
-  base_ad_group: String
-  campaign: String
-  cpc_bid_micros: Float
-  cpm_bid_micros: Float
-  cpv_bid_micros: Float
-  display_custom_bid_dimension: String
-  effective_cpc_bid_micros: Float
-  effective_target_cpa_micros: Float
-  effective_target_cpa_source: String
-  effective_target_roas: Float
-  effective_target_roas_source: String
-  excluded_parent_asset_field_types: [String!]
-  excluded_parent_asset_set_types: [String!]
-  final_url_suffix: String
-  fixed_cpm_micros: Float
-  labels: [String!]
-  metrics_active_view_ctr: Float
-  metrics_all_conversions: Float
-  metrics_average_cart_size: Float
-  metrics_average_cost: Float
-  metrics_average_cpc: Float
-  metrics_average_cpe: Float
-  metrics_average_cpm: Float
-  metrics_average_cpv: Float
-  metrics_average_order_value_micros: Int
-  metrics_clicks: Int
-  metrics_conversions: Float
-  metrics_conversions_from_interactions_rate: Float
-  metrics_conversions_from_interactions_value_per_interaction: Float
-  metrics_conversions_value: Float
-  metrics_cost_micros: Float
-  metrics_cost_of_goods_sold_micros: Int
-  metrics_cost_per_conversion: Float
-  metrics_cross_sell_cost_of_goods_sold_micros: Int
-  metrics_cross_sell_gross_profit_micros: Int
-  metrics_cross_sell_revenue_micros: Int
-  metrics_cross_sell_units_sold: Int
-  metrics_ctr: Float
-  metrics_engagement_rate: Float
-  metrics_engagements: Int
-  metrics_gmail_forwards: Int
-  metrics_gmail_saves: Int
-  metrics_gmail_secondary_clicks: Int
-  metrics_gross_profit_margin: Float
-  metrics_gross_profit_micros: Int
-  metrics_impressions: Int
-  metrics_interaction_event_types: [String!]
-  metrics_interaction_rate: Float
-  metrics_interactions: Int
-  metrics_lead_cost_of_goods_sold_micros: Float
-  metrics_lead_gross_profit_micros: Float
-  metrics_lead_revenue_micros: Float
-  metrics_lead_units_sold: Float
-  metrics_new_customer_lifetime_value: Float
-  metrics_orders: Float
-  metrics_revenue_micros: Float
-  metrics_units_sold: Float
-  metrics_value_per_all_conversions: Float
-  metrics_value_per_conversion: Float
-  metrics_view_through_conversions: Float
-  name: String
-  optimized_targeting_enabled: Boolean
-  percent_cpc_bid_micros: Float
-  primary_status: String
-  primary_status_reasons: [String!]
-  resource_name: String
-  segments_slot: String
-  status: String
-  target_cpa_micros: Float
-  target_cpm_micros: Float
-  target_cpv_micros: Float
-  target_roas: Float
-  targeting_setting_target_restrictions: [String!]
-  tracking_url_template: String
-  type: String
-  url_custom_parameters: [String!]
 }
 
 type Address {
@@ -1712,12 +1746,15 @@ type Query {
   findTranscription(call_id: String!): Transcription!
   generateDifferenceReport(only_less: Boolean! = true, workiz_id: String!): [ItemCompareResult!]!
   generateDifferenceReportForAll: [ItemCompareResult!]!
-  getADs: [AdDto!]!
-  getAdsAllCampaigns: [AdCampaignDto!]!
-  getAdsAllGroups: [AdGroupDto!]!
-  getAdsCampaigns: [AdCampaignDto!]!
-  getAdsCustomer: [String!]!
-  getAdsGroups: [AdGroupDto!]!
+  getAdAll: String!
+  getAdAllCampaigns: [AdCampaignDto!]!
+  getAdAllGroups: [AdGroupDto!]!
+  getAdAllPages: [AdPageDto!]!
+  getAdAllUserLocationMetrics: [AdAdUserLocationMetricsDto!]!
+  getAdCampaigns: [AdCampaignDto!]!
+  getAdCustomer: [String!]!
+  getAdGroups: [AdGroupDto!]!
+  getAdPages: [AdPageDto!]!
 
   """get all photo """
   getAllBlogPhoto: [PhotoBlog!]!
@@ -1786,6 +1823,7 @@ type Query {
   getMyOrders: [Order!]!
   getMySchedule(from: Int!, to: Int!): UserWithSchedule!
   getOrderById(id: ID!): Order!
+  getPreparedCampaign: String!
   getSystemSettings: SystemSettings!
   getTemplateById(id: ID!): Template!
   getUniqueLocations: [String!]

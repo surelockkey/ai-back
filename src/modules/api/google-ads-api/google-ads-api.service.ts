@@ -3,10 +3,14 @@ import { Repository } from 'typeorm';
 import { GoogleAdsApi, enums } from 'google-ads-api';
 import { AdCampaignDto } from './dto/ads-campaign.dto';
 import { AdGroupDto } from './dto/ads-group.dto';
-import { AdDto } from './dto/ads-ad.dto';
+import { AdPageDto } from './dto/ads-page.dto';
 import { AdCampaign } from './entity/ad-campaign.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AdGroup } from './entity/ads-group.entity';
+import { AdGroup } from './entity/ad-group.entity';
+import { AdPage } from './entity/ad-page.entity';
+import { AdAdUserLocationMetricsDto } from './dto/ad-user-location-view.dto';
+import { AdUserLocationMetrics } from './entity/ad-user-location-view.entity';
+import moment from 'moment';
 @Injectable()
 export class GoogleAdsApiService {
   private readonly credentials = {
@@ -27,6 +31,10 @@ export class GoogleAdsApiService {
     protected readonly categoryRepository: Repository<AdCampaign>,
     @InjectRepository(AdGroup)
     protected readonly groupRepository: Repository<AdGroup>,
+    @InjectRepository(AdPage)
+    protected readonly pageRepository: Repository<AdPage>,
+    @InjectRepository(AdUserLocationMetrics)
+    protected readonly userLocationMetricsRepository: Repository<AdUserLocationMetrics>,
   ) {
     this.googleAdsClient = new GoogleAdsApi(this.credentials);
   }
@@ -692,9 +700,9 @@ export class GoogleAdsApiService {
     return groupsSaved;
   }
 
-  public getAD = async (
+  public getADPages = async (
     customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID,
-  ): Promise<AdDto[]> => {
+  ): Promise<AdPageDto[]> => {
     const customer = this.createCustomer(customer_id);
 
     try {
@@ -908,7 +916,9 @@ export class GoogleAdsApiService {
         call_ad_call_tracked: ad?.call_ad?.call_tracked,
         call_ad_conversion_action: ad?.call_ad?.conversion_action,
         call_ad_conversion_reporting_state:
-          ad?.call_ad?.conversion_reporting_state,
+          enums.CallConversionReportingState[
+            ad?.call_ad?.conversion_reporting_state
+          ],
         call_ad_country_code: ad?.call_ad?.country_code,
         call_ad_description1: ad?.call_ad?.description1,
         call_ad_description2: ad?.call_ad?.description2,
@@ -1005,6 +1015,7 @@ export class GoogleAdsApiService {
           ],
         display_upload_ad_media_bundle:
           ad?.display_upload_ad?.media_bundle.asset,
+
         display_url: ad?.display_url,
         expanded_dynamic_search_ad_description:
           ad?.expanded_dynamic_search_ad?.description,
@@ -1097,7 +1108,9 @@ export class GoogleAdsApiService {
         responsive_display_ad_descriptions:
           ad?.responsive_display_ad?.descriptions?.map((item) => item.text),
         responsive_display_ad_format_setting:
-          ad?.responsive_display_ad?.format_setting,
+          enums.DisplayAdFormatSetting[
+            ad?.responsive_display_ad?.format_setting
+          ],
         responsive_display_ad_headlines:
           ad?.responsive_display_ad?.headlines?.map((item) => item.text),
         responsive_display_ad_logo_images:
@@ -1186,4 +1199,154 @@ export class GoogleAdsApiService {
       );
     }
   };
+
+  public async getAllAdPages(): Promise<AdPageDto[]> {
+    await this.pageRepository.delete({});
+
+    const pages = await this.getDataByAllSettledStrategy(this.getADPages);
+
+    const groupsSaved = await this.pageRepository.save(pages, { chunk: 100 });
+
+    return groupsSaved;
+  }
+
+  public getADUserLocationMetrics = async (
+    customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID,
+  ): Promise<AdAdUserLocationMetricsDto[]> => {
+    const customer = this.createCustomer(customer_id);
+
+    const query = `
+      SELECT 
+        location_view.resource_name, 
+        campaign.primary_status, 
+        campaign.status, 
+        campaign.name, 
+        metrics.average_cost, 
+        metrics.average_cpc, 
+        metrics.average_cpe, 
+        metrics.average_cpm, 
+        metrics.average_cpv, 
+        metrics.all_conversions, 
+        metrics.all_conversions_from_interactions_rate, 
+        metrics.all_conversions_value, 
+        metrics.clicks, 
+        metrics.conversions_from_interactions_rate, 
+        metrics.conversions, 
+        metrics.conversions_value, 
+        metrics.cost_micros, 
+        metrics.cost_per_all_conversions, 
+        metrics.cost_per_conversion, 
+        metrics.cross_device_conversions, 
+        metrics.ctr, 
+        metrics.engagement_rate, 
+        metrics.impressions, 
+        metrics.engagements, 
+        metrics.interaction_event_types, 
+        metrics.interaction_rate, 
+        metrics.interactions, 
+        metrics.value_per_all_conversions, 
+        metrics.value_per_conversion, 
+        metrics.video_views, 
+        metrics.view_through_conversions, 
+        metrics.video_view_rate 
+      FROM location_view 
+      WHERE 
+        campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
+      `;
+
+    const response = await customer.query(query);
+    console.log(JSON.stringify(response, null, 2));
+
+    return response.map(({ location_view, metrics, campaign }) => ({
+      campaign_name: campaign.name,
+      campaign_status: enums.CampaignStatus[campaign.status],
+      campaign_primary_status: enums.CampaignPrimaryStatus[campaign.status],
+      location_view_resource_name: location_view?.resource_name,
+      metrics_average_cost: metrics?.average_cost,
+      metrics_average_cpc: metrics?.average_cpc,
+      metrics_average_cpe: metrics?.average_cpe,
+      metrics_average_cpm: metrics?.average_cpm,
+      metrics_average_cpv: metrics?.average_cpv,
+      metrics_all_conversions: metrics?.all_conversions,
+      metrics_all_conversions_from_interactions_rate:
+        metrics?.all_conversions_from_interactions_rate,
+      metrics_all_conversions_value: metrics?.all_conversions_value,
+      metrics_clicks: metrics?.clicks,
+      metrics_conversions_from_interactions_rate:
+        metrics?.conversions_from_interactions_rate,
+      metrics_conversions: metrics?.conversions,
+      metrics_conversions_value: metrics?.conversions_value,
+      metrics_cost_micros: metrics?.cost_micros,
+      metrics_cost_per_all_conversions: metrics?.cost_per_all_conversions,
+      metrics_cost_per_conversion: metrics?.cost_per_conversion,
+      metrics_cross_device_conversions: metrics?.cross_device_conversions,
+      metrics_ctr: metrics?.ctr,
+      metrics_engagement_rate: metrics?.engagement_rate,
+      metrics_impressions: metrics?.impressions,
+      metrics_engagements: metrics?.engagements,
+      metrics_interaction_event_types: metrics?.interaction_event_types || [],
+      metrics_interaction_rate: metrics?.interaction_rate,
+      metrics_interactions: metrics?.interactions,
+      metrics_value_per_all_conversions: metrics?.value_per_all_conversions,
+      metrics_value_per_conversion: metrics?.value_per_conversion,
+      metrics_video_views: metrics?.video_views,
+      metrics_view_through_conversions: metrics?.view_through_conversions,
+      metrics_video_view_rate: metrics?.video_view_rate,
+    }));
+  };
+
+  public async getAllAdUserLocationMetrics(): Promise<
+    AdAdUserLocationMetricsDto[]
+  > {
+    await this.pageRepository.delete({});
+
+    const locationMetricsRepository = await this.getDataByAllSettledStrategy(
+      this.getADUserLocationMetrics,
+    );
+
+    const locationMetricsRepositorySaved =
+      await this.userLocationMetricsRepository.save(locationMetricsRepository, {
+        chunk: 100,
+      });
+
+    return locationMetricsRepositorySaved;
+  }
+
+  public async getPreparedCampaign() {
+    // const date = moment('2021-01-01', 'YYYY-MM-DD')
+
+    try {
+      const campaign_query = `
+      SELECT 
+        customer.id, 
+        campaign.id, 
+        campaign.advertising_channel_type, 
+        campaign.resource_name, 
+        metrics.all_conversions, 
+        segments.slot, 
+        segments.day_of_week, 
+        segments.week, 
+        segments.year, 
+        segments.month, 
+        segments.date 
+      FROM campaign 
+      WHERE 
+        segments.date = '2021-01-01' 
+        AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
+    `;
+      const customer_ids = await this.getListCustomers();
+
+      // for await (const id of customer_ids) {
+      const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
+
+      const campaigns = await customer.query(campaign_query);
+
+      console.log(JSON.stringify(campaigns, null, 2));
+
+      // date.add('1', 'week')
+      // }
+    } catch (error) {
+      console.log(JSON.stringify(error, null, 2));
+    }
+  }
 }
