@@ -1337,8 +1337,8 @@ export class GoogleAdsApiService {
         FROM campaign 
         WHERE 
           campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
-          AND campaign.end_date = '${campaign_start_date}' 
-          AND campaign.start_date = '${campaign_end_date}' 
+          AND campaign.start_date = '${campaign_start_date}' 
+          AND campaign.end_date = '${campaign_end_date}' 
       `;
       // const group_query = () => `
       //   SELECT 
