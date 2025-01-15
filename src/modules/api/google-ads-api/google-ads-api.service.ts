@@ -1318,10 +1318,13 @@ export class GoogleAdsApiService {
       const date = moment('2025-01-06', date_format)
       const current_date = moment();
 
-      let campaign_start_date = date.format(date_format)
-      let campaign_end_date = date.clone().add('1', 'week').format(date_format)
 
-      const campaign_query = () => `
+      const campaign_query = () => {
+        let campaign_start_date = date.format(date_format)
+        let campaign_end_date = date.clone().add('1', 'week').format(date_format)
+        console.log(campaign_start_date);
+
+        return (`
         SELECT 
           customer.id, 
           campaign.id, 
@@ -1339,7 +1342,8 @@ export class GoogleAdsApiService {
           campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
           AND campaign.start_date = '${campaign_start_date}' 
           AND campaign.end_date = '${campaign_end_date}' 
-      `;
+      `)
+      };
       // const group_query = () => `
       //   SELECT 
       //     campaign.id, 
@@ -1369,8 +1373,6 @@ export class GoogleAdsApiService {
         // const group = customer.query(group_query());
 
         date.add('1', 'week');
-
-        console.log(campaign_start_date);
 
 
         campaigns_data.push(campaigns)
