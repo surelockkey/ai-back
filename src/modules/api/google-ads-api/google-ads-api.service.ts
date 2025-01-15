@@ -1335,8 +1335,7 @@ export class GoogleAdsApiService {
           segments.date 
         FROM campaign 
         WHERE 
-          segments.date = '${segments_date}'
-          AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
+          campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
       `;
       const group_query = () => `
         SELECT 
@@ -1350,8 +1349,7 @@ export class GoogleAdsApiService {
           segments.date 
         FROM ad_group 
         WHERE 
-          segments.date = '${segments_date}' 
-          AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
+          campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
       `;
 
       // const customer_ids = await this.getListCustomers();
@@ -1362,16 +1360,16 @@ export class GoogleAdsApiService {
       const campaigns_data = []
       const group_data = []
 
-      while (current_date.isAfter(date)) {
-        const campaigns = customer.query(campaign_query());
-        const group = customer.query(group_query());
+      // while (current_date.isAfter(date)) {
+      const campaigns = customer.query(campaign_query());
+      const group = customer.query(group_query());
 
-        date.add('1', 'week');
-        segments_date = date.format(date_format);
+      // date.add('1', 'week');
+      // segments_date = date.format(date_format);
 
-        campaigns_data.push(campaigns)
-        group_data.push(group)
-      }
+      campaigns_data.push(campaigns)
+      group_data.push(group)
+      // }
 
 
       // console.log(JSON.stringify(campaigns, null, 2));
