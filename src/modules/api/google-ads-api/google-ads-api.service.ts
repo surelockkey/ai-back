@@ -1315,7 +1315,7 @@ export class GoogleAdsApiService {
   public async getPreparedCampaign() {
     try {
       const date_format = 'YYYY-MM-DD'
-      const date = moment('2025-01-06', date_format)
+      const date = moment('2021-01-01', date_format)
       const current_date = moment();
 
 
