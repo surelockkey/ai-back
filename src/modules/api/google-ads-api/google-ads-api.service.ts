@@ -1318,7 +1318,8 @@ export class GoogleAdsApiService {
       const date = moment('2025-01-06', date_format)
       const current_date = moment();
 
-      let segments_date = date.format(date_format)
+      let campaign_start_date = date.format(date_format)
+      let campaign_end_date = date.clone().add('1', 'week').format(date_format)
 
       const campaign_query = () => `
         SELECT 
@@ -1336,21 +1337,24 @@ export class GoogleAdsApiService {
         FROM campaign 
         WHERE 
           campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
+          AND campaign.end_date = '${campaign_start_date}' 
+          AND campaign.start_date = '${campaign_end_date}' 
       `;
-      const group_query = () => `
-        SELECT 
-          campaign.id, 
-          metrics.conversions, 
-          metrics.cost_micros, 
-          segments.day_of_week, 
-          segments.week, 
-          segments.year, 
-          segments.month, 
-          segments.date 
-        FROM ad_group 
-        WHERE 
-          campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
-      `;
+      // const group_query = () => `
+      //   SELECT 
+      //     campaign.id, 
+      //     metrics.conversions, 
+      //     metrics.cost_micros, 
+      //     segments.day_of_week, 
+      //     segments.week, 
+      //     segments.year, 
+      //     segments.month, 
+      //     segments.date 
+      //   FROM ad_group 
+      //   WHERE 
+      //     segments.date = '' 
+      //     AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
+      // `;
 
       // const customer_ids = await this.getListCustomers();
 
@@ -1360,16 +1364,15 @@ export class GoogleAdsApiService {
       const campaigns_data = []
       const group_data = []
 
-      // while (current_date.isAfter(date)) {
-      const campaigns = customer.query(campaign_query());
-      const group = customer.query(group_query());
+      while (current_date.isAfter(date)) {
+        const campaigns = customer.query(campaign_query());
+        // const group = customer.query(group_query());
 
-      // date.add('1', 'week');
-      // segments_date = date.format(date_format);
+        date.add('1', 'week');
 
-      campaigns_data.push(campaigns)
-      group_data.push(group)
-      // }
+        campaigns_data.push(campaigns)
+        // group_data.push(group)
+      }
 
 
       // console.log(JSON.stringify(campaigns, null, 2));
@@ -1379,11 +1382,11 @@ export class GoogleAdsApiService {
           console.log(JSON.stringify(result, null, 2));
         })
 
-      await Promise.allSettled(group_data)
-        .then(r => {
-          const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
-          console.log(JSON.stringify(result, null, 2));
-        })
+      // await Promise.allSettled(group_data)
+      //   .then(r => {
+      //     const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
+      //     console.log(JSON.stringify(result, null, 2));
+      //   })
 
 
     } catch (error) {
