@@ -1370,6 +1370,9 @@ export class GoogleAdsApiService {
 
         date.add('1', 'week');
 
+        console.log(campaign_start_date);
+
+
         campaigns_data.push(campaigns)
         // group_data.push(group)
       }
