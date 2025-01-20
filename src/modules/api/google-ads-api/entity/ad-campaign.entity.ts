@@ -558,9 +558,9 @@ export class AdCampaign {
   // @Column({ nullable: true })
   // video_campaign_settings_video_ad_inventory_control_allow_in_feed?: boolean;
 
-  @Field(() => Boolean, { nullable: true })
-  @Column({ nullable: true })
-  video_campaign_settings_video_ad_inventory_control_allow_in_stream?: boolean;
+  // @Field(() => Boolean, { nullable: true })
+  // @Column({ nullable: true })
+  // video_campaign_settings_video_ad_inventory_control_allow_in_stream?: boolean;
 
   @Field(() => Boolean, { nullable: true })
   @Column({ nullable: true })

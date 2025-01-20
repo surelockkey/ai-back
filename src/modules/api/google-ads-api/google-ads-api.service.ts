@@ -3,10 +3,14 @@ import { Repository } from 'typeorm';
 import { GoogleAdsApi, enums } from 'google-ads-api';
 import { AdCampaignDto } from './dto/ads-campaign.dto';
 import { AdGroupDto } from './dto/ads-group.dto';
-import { AdDto } from './dto/ads-ad.dto';
+import { AdPageDto } from './dto/ads-page.dto';
 import { AdCampaign } from './entity/ad-campaign.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AdGroup } from './entity/ads-group.entity';
+import { AdGroup } from './entity/ad-group.entity';
+import { AdPage } from './entity/ad-page.entity';
+import { AdAdUserLocationMetricsDto } from './dto/ad-user-location-view.dto';
+import { AdUserLocationMetrics } from './entity/ad-user-location-view.entity';
+import * as moment from 'moment';
 @Injectable()
 export class GoogleAdsApiService {
   private readonly credentials = {
@@ -27,6 +31,10 @@ export class GoogleAdsApiService {
     protected readonly categoryRepository: Repository<AdCampaign>,
     @InjectRepository(AdGroup)
     protected readonly groupRepository: Repository<AdGroup>,
+    @InjectRepository(AdPage)
+    protected readonly pageRepository: Repository<AdPage>,
+    @InjectRepository(AdUserLocationMetrics)
+    protected readonly userLocationMetricsRepository: Repository<AdUserLocationMetrics>,
   ) {
     this.googleAdsClient = new GoogleAdsApi(this.credentials);
   }
@@ -184,18 +192,18 @@ export class GoogleAdsApiService {
           // ad_serving_optimization_status: enums?.AdServingOptimizationStatus[campaign?.ad_serving_optimization_status],
           advertising_channel_sub_type:
             enums?.AdvertisingChannelSubType[
-              campaign?.advertising_channel_sub_type
+            campaign?.advertising_channel_sub_type
             ],
           advertising_channel_type:
             enums?.AdvertisingChannelType[campaign?.advertising_channel_type],
           app_campaign_setting_app_id: campaign?.app_campaign_setting?.app_id,
           app_campaign_setting_app_store:
             enums?.AppCampaignAppStore[
-              campaign?.app_campaign_setting?.app_store
+            campaign?.app_campaign_setting?.app_store
             ],
           app_campaign_setting_bidding_strategy_goal_type:
             enums?.AppCampaignBiddingStrategyGoalType[
-              campaign?.app_campaign_setting?.bidding_strategy_goal_type
+            campaign?.app_campaign_setting?.bidding_strategy_goal_type
             ],
           asset_automation_settings: JSON?.stringify(
             campaign?.asset_automation_settings || '',
@@ -206,7 +214,7 @@ export class GoogleAdsApiService {
           bidding_strategy: campaign?.bidding_strategy,
           bidding_strategy_system_status:
             enums?.BiddingStrategySystemStatus[
-              campaign?.bidding_strategy_system_status
+            campaign?.bidding_strategy_system_status
             ],
           bidding_strategy_type:
             enums?.BiddingStrategyType[campaign?.bidding_strategy_type],
@@ -241,16 +249,16 @@ export class GoogleAdsApiService {
             campaign?.fixed_cpm?.target_frequency_info?.target_count,
           fixed_cpm_target_frequency_info_time_unit:
             enums?.FixedCpmTargetFrequencyTimeUnit[
-              campaign?.fixed_cpm?.target_frequency_info?.time_unit
+            campaign?.fixed_cpm?.target_frequency_info?.time_unit
             ],
           frequency_caps: JSON?.stringify(campaign?.frequency_caps || ''),
           geo_target_type_setting_negative_geo_target_type:
             enums?.NegativeGeoTargetType[
-              campaign?.geo_target_type_setting?.negative_geo_target_type
+            campaign?.geo_target_type_setting?.negative_geo_target_type
             ],
           geo_target_type_setting_positive_geo_target_type:
             enums?.PositiveGeoTargetType[
-              campaign?.geo_target_type_setting?.positive_geo_target_type
+            campaign?.geo_target_type_setting?.positive_geo_target_type
             ],
           hotel_property_asset_set: campaign?.hotel_property_asset_set,
           hotel_setting_hotel_center_id:
@@ -262,7 +270,7 @@ export class GoogleAdsApiService {
           listing_type: enums?.ListingType[campaign?.listing_type],
           local_campaign_setting_location_source_type:
             enums?.LocationSourceType[
-              campaign?.local_campaign_setting?.location_source_type
+            campaign?.local_campaign_setting?.location_source_type
             ],
           local_services_campaign_settings_category_bids: JSON?.stringify(
             campaign?.local_services_campaign_settings?.category_bids || '',
@@ -305,7 +313,7 @@ export class GoogleAdsApiService {
             campaign?.performance_max_upgrade?.pre_upgrade_campaign,
           performance_max_upgrade_status:
             enums?.PerformanceMaxUpgradeStatus[
-              campaign?.performance_max_upgrade?.status
+            campaign?.performance_max_upgrade?.status
             ],
           primary_status:
             enums?.CampaignPrimaryStatus[campaign?.primary_status],
@@ -342,14 +350,14 @@ export class GoogleAdsApiService {
             campaign?.target_cpm?.target_frequency_goal?.target_count,
           target_cpm_target_frequency_goal_time_unit:
             enums?.TargetFrequencyTimeUnit[
-              campaign?.target_cpm?.target_frequency_goal?.time_unit
+            campaign?.target_cpm?.target_frequency_goal?.time_unit
             ],
           target_cpv: campaign?.target_cpv as string,
           target_impression_share_cpc_bid_ceiling_micros:
             campaign?.target_impression_share?.cpc_bid_ceiling_micros,
           target_impression_share_location:
             enums?.TargetImpressionShareLocation[
-              campaign?.target_impression_share?.location
+            campaign?.target_impression_share?.location
             ],
           target_impression_share_location_fraction_micros:
             campaign?.target_impression_share?.location_fraction_micros,
@@ -376,15 +384,15 @@ export class GoogleAdsApiService {
           url_expansion_opt_out: campaign?.url_expansion_opt_out,
           vanity_pharma_vanity_pharma_display_url_mode:
             enums?.VanityPharmaDisplayUrlMode[
-              campaign?.vanity_pharma?.vanity_pharma_display_url_mode
+            campaign?.vanity_pharma?.vanity_pharma_display_url_mode
             ],
           vanity_pharma_vanity_pharma_text:
             enums?.VanityPharmaText[
-              campaign?.vanity_pharma?.vanity_pharma_text
+            campaign?.vanity_pharma?.vanity_pharma_text
             ],
           video_brand_safety_suitability:
             enums?.BrandSafetySuitability[
-              campaign?.video_brand_safety_suitability
+            campaign?.video_brand_safety_suitability
             ],
           // video_campaign_settings_video_ad_inventory_control_allow_in_feed:
           //   campaign?.video_campaign_settings?.video_ad_inventory_control
@@ -404,28 +412,28 @@ export class GoogleAdsApiService {
           segments_conversion_action: segments?.conversion_action,
           segments_conversion_action_category:
             enums?.ConversionActionCategory[
-              segments?.conversion_action_category
+            segments?.conversion_action_category
             ],
           segments_conversion_action_name: segments?.conversion_action_name,
           segments_conversion_adjustment: segments?.conversion_adjustment,
           segments_conversion_attribution_event_type:
             enums?.ConversionAttributionEventType[
-              segments?.conversion_attribution_event_type
+            segments?.conversion_attribution_event_type
             ],
           segments_conversion_lag_bucket:
             enums?.ConversionLagBucket[segments?.conversion_lag_bucket],
           segments_conversion_or_adjustment_lag_bucket:
             enums?.ConversionOrAdjustmentLagBucket[
-              segments?.conversion_or_adjustment_lag_bucket
+            segments?.conversion_or_adjustment_lag_bucket
             ],
           segments_day_of_week: enums?.DayOfWeek[segments?.day_of_week],
           segments_external_conversion_source:
             enums?.ExternalConversionSource[
-              segments?.external_conversion_source
+            segments?.external_conversion_source
             ],
           segments_new_versus_returning_customers:
             enums?.ConvertingUserPriorEngagementTypeAndLtvBucket[
-              segments?.new_versus_returning_customers
+            segments?.new_versus_returning_customers
             ],
 
           // metrics
@@ -692,9 +700,9 @@ export class GoogleAdsApiService {
     return groupsSaved;
   }
 
-  public getAD = async (
+  public getADPages = async (
     customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID,
-  ): Promise<AdDto[]> => {
+  ): Promise<AdPageDto[]> => {
     const customer = this.createCustomer(customer_id);
 
     try {
@@ -908,7 +916,9 @@ export class GoogleAdsApiService {
         call_ad_call_tracked: ad?.call_ad?.call_tracked,
         call_ad_conversion_action: ad?.call_ad?.conversion_action,
         call_ad_conversion_reporting_state:
-          ad?.call_ad?.conversion_reporting_state,
+          enums.CallConversionReportingState[
+          ad?.call_ad?.conversion_reporting_state
+          ],
         call_ad_country_code: ad?.call_ad?.country_code,
         call_ad_description1: ad?.call_ad?.description1,
         call_ad_description2: ad?.call_ad?.description2,
@@ -1001,10 +1011,11 @@ export class GoogleAdsApiService {
         device_preference: enums.Device[ad?.device_preference],
         display_upload_ad_display_upload_product_type:
           enums.DisplayUploadProductType[
-            ad?.display_upload_ad?.display_upload_product_type
+          ad?.display_upload_ad?.display_upload_product_type
           ],
         display_upload_ad_media_bundle:
           ad?.display_upload_ad?.media_bundle.asset,
+
         display_url: ad?.display_url,
         expanded_dynamic_search_ad_description:
           ad?.expanded_dynamic_search_ad?.description,
@@ -1044,7 +1055,7 @@ export class GoogleAdsApiService {
           ad?.legacy_responsive_display_ad?.description,
         legacy_responsive_display_ad_format_setting:
           enums.DisplayAdFormatSetting[
-            ad?.legacy_responsive_display_ad?.format_setting
+          ad?.legacy_responsive_display_ad?.format_setting
           ],
         legacy_responsive_display_ad_logo_image:
           ad?.legacy_responsive_display_ad?.logo_image,
@@ -1097,7 +1108,9 @@ export class GoogleAdsApiService {
         responsive_display_ad_descriptions:
           ad?.responsive_display_ad?.descriptions?.map((item) => item.text),
         responsive_display_ad_format_setting:
-          ad?.responsive_display_ad?.format_setting,
+          enums.DisplayAdFormatSetting[
+          ad?.responsive_display_ad?.format_setting
+          ],
         responsive_display_ad_headlines:
           ad?.responsive_display_ad?.headlines?.map((item) => item.text),
         responsive_display_ad_logo_images:
@@ -1186,4 +1199,203 @@ export class GoogleAdsApiService {
       );
     }
   };
+
+  public async getAllAdPages(): Promise<AdPageDto[]> {
+    await this.pageRepository.delete({});
+
+    const pages = await this.getDataByAllSettledStrategy(this.getADPages);
+
+    const groupsSaved = await this.pageRepository.save(pages, { chunk: 100 });
+
+    return groupsSaved;
+  }
+
+  public getADUserLocationMetrics = async (
+    customer_id = process.env.GOOGLE_ADS_CUSTOMER_ID,
+  ): Promise<AdAdUserLocationMetricsDto[]> => {
+    const customer = this.createCustomer(customer_id);
+
+    const query = `
+      SELECT 
+        location_view.resource_name, 
+        campaign.primary_status, 
+        campaign.status, 
+        campaign.name, 
+        metrics.average_cost, 
+        metrics.average_cpc, 
+        metrics.average_cpe, 
+        metrics.average_cpm, 
+        metrics.average_cpv, 
+        metrics.all_conversions, 
+        metrics.all_conversions_from_interactions_rate, 
+        metrics.all_conversions_value, 
+        metrics.clicks, 
+        metrics.conversions_from_interactions_rate, 
+        metrics.conversions, 
+        metrics.conversions_value, 
+        metrics.cost_micros, 
+        metrics.cost_per_all_conversions, 
+        metrics.cost_per_conversion, 
+        metrics.cross_device_conversions, 
+        metrics.ctr, 
+        metrics.engagement_rate, 
+        metrics.impressions, 
+        metrics.engagements, 
+        metrics.interaction_event_types, 
+        metrics.interaction_rate, 
+        metrics.interactions, 
+        metrics.value_per_all_conversions, 
+        metrics.value_per_conversion, 
+        metrics.video_views, 
+        metrics.view_through_conversions, 
+        metrics.video_view_rate 
+      FROM location_view 
+      WHERE 
+        campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
+      `;
+
+    const response = await customer.query(query);
+    console.log(JSON.stringify(response, null, 2));
+
+    return response.map(({ location_view, metrics, campaign }) => ({
+      campaign_name: campaign.name,
+      campaign_status: enums.CampaignStatus[campaign.status],
+      campaign_primary_status: enums.CampaignPrimaryStatus[campaign.status],
+      location_view_resource_name: location_view?.resource_name,
+      metrics_average_cost: metrics?.average_cost,
+      metrics_average_cpc: metrics?.average_cpc,
+      metrics_average_cpe: metrics?.average_cpe,
+      metrics_average_cpm: metrics?.average_cpm,
+      metrics_average_cpv: metrics?.average_cpv,
+      metrics_all_conversions: metrics?.all_conversions,
+      metrics_all_conversions_from_interactions_rate:
+        metrics?.all_conversions_from_interactions_rate,
+      metrics_all_conversions_value: metrics?.all_conversions_value,
+      metrics_clicks: metrics?.clicks,
+      metrics_conversions_from_interactions_rate:
+        metrics?.conversions_from_interactions_rate,
+      metrics_conversions: metrics?.conversions,
+      metrics_conversions_value: metrics?.conversions_value,
+      metrics_cost_micros: metrics?.cost_micros,
+      metrics_cost_per_all_conversions: metrics?.cost_per_all_conversions,
+      metrics_cost_per_conversion: metrics?.cost_per_conversion,
+      metrics_cross_device_conversions: metrics?.cross_device_conversions,
+      metrics_ctr: metrics?.ctr,
+      metrics_engagement_rate: metrics?.engagement_rate,
+      metrics_impressions: metrics?.impressions,
+      metrics_engagements: metrics?.engagements,
+      metrics_interaction_event_types: metrics?.interaction_event_types || [],
+      metrics_interaction_rate: metrics?.interaction_rate,
+      metrics_interactions: metrics?.interactions,
+      metrics_value_per_all_conversions: metrics?.value_per_all_conversions,
+      metrics_value_per_conversion: metrics?.value_per_conversion,
+      metrics_video_views: metrics?.video_views,
+      metrics_view_through_conversions: metrics?.view_through_conversions,
+      metrics_video_view_rate: metrics?.video_view_rate,
+    }));
+  };
+
+  public async getAllAdUserLocationMetrics(): Promise<
+    AdAdUserLocationMetricsDto[]
+  > {
+    await this.pageRepository.delete({});
+
+    const locationMetricsRepository = await this.getDataByAllSettledStrategy(
+      this.getADUserLocationMetrics,
+    );
+
+    const locationMetricsRepositorySaved =
+      await this.userLocationMetricsRepository.save(locationMetricsRepository, {
+        chunk: 100,
+      });
+
+    return locationMetricsRepositorySaved;
+  }
+
+  public async getPreparedCampaign() {
+    try {
+      const date_format = 'YYYY-MM-DD'
+      const date = moment('2021-01-01', date_format)
+      const current_date = moment();
+
+
+      const campaign_query = () => {
+        let campaign_start_date = date.format(date_format)
+        let campaign_end_date = date.clone().add('1', 'week').format(date_format)
+        console.log(campaign_start_date);
+
+        return (`
+        SELECT 
+          customer.id, 
+          campaign.id, 
+          campaign.advertising_channel_type, 
+          campaign.resource_name, 
+          metrics.all_conversions, 
+          segments.slot, 
+          segments.day_of_week, 
+          segments.week, 
+          segments.year, 
+          segments.month, 
+          segments.date 
+        FROM campaign 
+        WHERE 
+          campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
+          AND campaign.start_date = '${campaign_start_date}' 
+          AND campaign.end_date = '${campaign_end_date}' 
+      `)
+      };
+      // const group_query = () => `
+      //   SELECT 
+      //     campaign.id, 
+      //     metrics.conversions, 
+      //     metrics.cost_micros, 
+      //     segments.day_of_week, 
+      //     segments.week, 
+      //     segments.year, 
+      //     segments.month, 
+      //     segments.date 
+      //   FROM ad_group 
+      //   WHERE 
+      //     segments.date = '' 
+      //     AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
+      // `;
+
+      // const customer_ids = await this.getListCustomers();
+
+      // for await (const id of customer_ids) {
+      const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
+
+      const campaigns_data = []
+      const group_data = []
+
+      while (current_date.isAfter(date)) {
+        const campaigns = customer.query(campaign_query());
+        // const group = customer.query(group_query());
+
+        date.add('1', 'week');
+
+
+        campaigns_data.push(campaigns)
+        // group_data.push(group)
+      }
+
+
+      // console.log(JSON.stringify(campaigns, null, 2));
+      await Promise.allSettled(campaigns_data)
+        .then(r => {
+          const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
+          console.log(JSON.stringify(result, null, 2));
+        })
+
+      // await Promise.allSettled(group_data)
+      //   .then(r => {
+      //     const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
+      //     console.log(JSON.stringify(result, null, 2));
+      //   })
+
+
+    } catch (error) {
+      console.log(`ERROR: ${JSON.stringify(error, null, 2)}`);
+    }
+  }
 }
