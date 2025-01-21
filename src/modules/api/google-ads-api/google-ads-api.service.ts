@@ -1342,23 +1342,23 @@ export class GoogleAdsApiService {
           AND segments.date = '${segments_date}' 
       `)
       };
-      // const group_query = () => `
-      //   SELECT 
-      //     campaign.id, 
-      //     metrics.conversions, 
-      //     metrics.cost_micros, 
-      //     segments.day_of_week, 
-      //     segments.week, 
-      //     segments.year, 
-      //     segments.month, 
-      //     segments.date 
-      //   FROM ad_group 
-      //   WHERE 
-      //     segments.date = '' 
-      //     AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
-      // `;
+      const group_query = () => `
+        SELECT 
+          campaign.id, 
+          metrics.conversions, 
+          metrics.cost_micros, 
+          segments.day_of_week, 
+          segments.week, 
+          segments.year, 
+          segments.month, 
+          segments.date 
+        FROM ad_group 
+        WHERE 
+          segments.date = '' 
+          AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
+      `;
 
-      // const customer_ids = await this.getListCustomers();
+      const customer_ids = await this.getListCustomers();
 
       // for await (const id of customer_ids) {
       const customer = this.createCustomer(process.env.GOOGLE_ADS_CUSTOMER_ID);
@@ -1369,41 +1369,67 @@ export class GoogleAdsApiService {
 
       while (current_date.isAfter(date)) {
         const campaigns = customer.query(campaign_query());
-        // const group = customer.query(group_query());
+        const group = customer.query(group_query());
 
         date.add('1', 'day');
 
 
-        campaigns_data.push(campaigns)
-        // group_data.push(group)
+        campaigns_data.push(campaigns);
+        group_data.push(group);
       }
 
 
       // console.log(JSON.stringify(campaigns, null, 2));
-      await Promise.allSettled(campaigns_data)
+      const campaigns = await Promise.allSettled(campaigns_data)
         .then(r => {
           const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
 
           const formatted = result.map(i => {
-            const r = {
-              customer: i.customer.id,
-              campaign: i.campaign.id,
+            return {
+              customer_id: i.customer.id,
+              campaign_id: i.campaign.id,
               name: i.campaign.name,
-              advertising_channel_type: enums?.AdvertisingChannelType[i.campaign.advertising_channel_type],
+              advertising_channel_type: enums?.AdvertisingChannelType[i?.campaign?.advertising_channel_type],
               resource_name: i.campaign.resource_name,
               metrics_conversions: i.metrics.all_conversions,
+              group_metrics_conversions: 0,
+              group_metrics_cost_micros: 0,
+              segments_week: i.segments.week,
+              segments_year: i.segments.year,
+              segments_month: i.segments.month,
+              segments_date: i.segments.date
             }
-            return r
           })
 
-          console.log(JSON.stringify(formatted, null, 2));
+          return formatted
         })
 
-      // await Promise.allSettled(group_data)
-      //   .then(r => {
-      //     const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
-      //     console.log(JSON.stringify(result, null, 2));
-      //   })
+      const groups = await Promise.allSettled(group_data)
+        .then(r => {
+          const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
+          return result.map(i => {
+            return {
+              campaign_id: i.campaign.id,
+              metrics_conversions: i.metrics.conversions,
+              metrics_cost_micros: i.metrics.cost_micros,
+              segments_week: i.segments.week,
+              segments_year: i.segments.year,
+              segments_month: i.segments.month,
+              segments_date: i.segments.date
+            }
+          })
+        })
+
+      const result = campaigns.map(c => {
+        const campaign = { ...c }
+        const g = groups.find(g => g.segments_date === c.segments_date && g.campaign_id === c.campaign_id)
+        campaign.group_metrics_conversions += g.metrics_conversions;
+        campaign.group_metrics_cost_micros += g.metrics_cost_micros;
+
+        return campaign
+      })
+
+      console.log(JSON.stringify(result, null, 2));
 
 
     } catch (error) {
