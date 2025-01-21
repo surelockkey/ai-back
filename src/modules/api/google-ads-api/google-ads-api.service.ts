@@ -1403,8 +1403,8 @@ export class GoogleAdsApiService {
 
           return formatted
         }).catch(e => {
-          console.log(e)
-          return []
+          console.log(e);
+          return [];
         })
 
       const groups = await Promise.allSettled(group_data)
@@ -1422,20 +1422,20 @@ export class GoogleAdsApiService {
             }
           })
         }).catch(e => {
-          console.log(e)
-          return []
+          console.log(e);
+          return [];
         })
 
-      const result = campaigns.map(c => {
-        const campaign = { ...c }
-        const g = groups.find(g => g.segments_date === c.segments_date && g.campaign_id === c.campaign_id)
-        campaign.group_metrics_conversions += g.metrics_conversions;
-        campaign.group_metrics_cost_micros += g.metrics_cost_micros;
+      // const result = campaigns.map(c => {
+      //   const campaign = { ...c }
+      //   const g = groups.find(g => g.segments_date === c.segments_date && g.campaign_id === c.campaign_id)
+      //   campaign.group_metrics_conversions += g.metrics_conversions;
+      //   campaign.group_metrics_cost_micros += g.metrics_cost_micros;
 
-        return campaign
-      })
+      //   return campaign
+      // })
 
-      console.log(JSON.stringify(result, null, 2));
+      // console.log(JSON.stringify(result, null, 2));
 
 
     } catch (error) {
