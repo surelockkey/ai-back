@@ -1326,6 +1326,7 @@ export class GoogleAdsApiService {
         SELECT 
           customer.id, 
           campaign.id, 
+          campaign.name,
           campaign.advertising_channel_type, 
           campaign.resource_name, 
           metrics.all_conversions, 
@@ -1382,6 +1383,19 @@ export class GoogleAdsApiService {
       await Promise.allSettled(campaigns_data)
         .then(r => {
           const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
+
+          console.log(result.map(i => {
+            const r = {
+              customer: i.customer.id,
+              campaign: i.campaign.id,
+              name: i.campaign.name,
+              advertising_channel_type: enums?.AdvertisingChannelType[i.campaign.advertising_channel_type],
+              resource_name: i.campaign.resource_name,
+              metrics_conversions: i.metrics.all_conversions,
+            }
+            return r
+          }));
+
           console.log(JSON.stringify(result, null, 2));
         })
 
