@@ -1373,12 +1373,12 @@ export class GoogleAdsApiService {
 
       while (current_date.isAfter(date)) {
         const campaigns = customer.query(campaign_query());
-        const group = customer.query(group_query());
+        // const group = customer.query(group_query());
 
         date.add('1', 'day');
 
         campaigns_data.push(campaigns);
-        group_data.push(group);
+        // group_data.push(group);
       }
 
 
@@ -1410,27 +1410,27 @@ export class GoogleAdsApiService {
           return [];
         })
 
-      const groups = await Promise.allSettled(group_data)
-        .then(r => {
-          const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
-          console.log('groups');
+      // const groups = await Promise.allSettled(group_data)
+      //   .then(r => {
+      //     const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
+      //     console.log('groups');
 
-          return result.map(i => {
-            return {
-              campaign_id: i.campaign.id,
-              metrics_conversions: i.metrics.conversions,
-              metrics_cost_micros: i.metrics.cost_micros,
-              segments_week: i.segments.week,
-              segments_year: i.segments.year,
-              segments_month: i.segments.month,
-              segments_date: i.segments.date
-            }
-          })
+      //     return result.map(i => {
+      //       return {
+      //         campaign_id: i.campaign.id,
+      //         metrics_conversions: i.metrics.conversions,
+      //         metrics_cost_micros: i.metrics.cost_micros,
+      //         segments_week: i.segments.week,
+      //         segments_year: i.segments.year,
+      //         segments_month: i.segments.month,
+      //         segments_date: i.segments.date
+      //       }
+      //     })
 
-        }).catch(e => {
-          console.log(e);
-          return [];
-        })
+      //   }).catch(e => {
+      //     console.log(e);
+      //     return [];
+      //   })
 
       // const result = campaigns.map(c => {
       //   const campaign = { ...c }
