@@ -1320,9 +1320,7 @@ export class GoogleAdsApiService {
 
 
       const campaign_query = () => {
-        let campaign_start_date = date.format(date_format)
-        let campaign_end_date = date.clone().add('1', 'week').format(date_format)
-        console.log(campaign_start_date);
+        const segments_date = date.format(date_format)
 
         return (`
         SELECT 
@@ -1340,8 +1338,7 @@ export class GoogleAdsApiService {
         FROM campaign 
         WHERE 
           campaign.primary_status IN ('ELIGIBLE', 'LIMITED') 
-          AND campaign.start_date = '${campaign_start_date}' 
-          AND campaign.end_date = '${campaign_end_date}' 
+          AND segments.date = '${segments_date}' 
       `)
       };
       // const group_query = () => `
@@ -1368,11 +1365,12 @@ export class GoogleAdsApiService {
       const campaigns_data = []
       const group_data = []
 
+
       while (current_date.isAfter(date)) {
         const campaigns = customer.query(campaign_query());
         // const group = customer.query(group_query());
 
-        date.add('1', 'week');
+        date.add('1', 'day');
 
 
         campaigns_data.push(campaigns)
