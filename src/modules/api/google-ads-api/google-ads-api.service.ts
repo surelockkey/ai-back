@@ -1402,6 +1402,9 @@ export class GoogleAdsApiService {
           })
 
           return formatted
+        }).catch(e => {
+          console.log(e)
+          return []
         })
 
       const groups = await Promise.allSettled(group_data)
@@ -1418,6 +1421,9 @@ export class GoogleAdsApiService {
               segments_date: i.segments.date
             }
           })
+        }).catch(e => {
+          console.log(e)
+          return []
         })
 
       const result = campaigns.map(c => {
