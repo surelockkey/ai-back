@@ -1384,7 +1384,7 @@ export class GoogleAdsApiService {
         .then(r => {
           const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
 
-          console.log(result.map(i => {
+          const formatted = result.map(i => {
             const r = {
               customer: i.customer.id,
               campaign: i.campaign.id,
@@ -1394,9 +1394,9 @@ export class GoogleAdsApiService {
               metrics_conversions: i.metrics.all_conversions,
             }
             return r
-          }));
+          })
 
-          console.log(JSON.stringify(result, null, 2));
+          console.log(JSON.stringify(formatted, null, 2));
         })
 
       // await Promise.allSettled(group_data)
