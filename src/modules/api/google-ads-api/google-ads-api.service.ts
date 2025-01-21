@@ -1320,7 +1320,7 @@ export class GoogleAdsApiService {
 
 
       const campaign_query = () => {
-        const segments_date = date.format(date_format)
+        const segments_date = date.format(date_format);
 
         return (`
         SELECT 
@@ -1342,7 +1342,10 @@ export class GoogleAdsApiService {
           AND segments.date = '${segments_date}' 
       `)
       };
-      const group_query = () => `
+      const group_query = () => {
+        const segments_date = date.format(date_format);
+
+        return `
         SELECT 
           campaign.id, 
           metrics.conversions, 
@@ -1354,9 +1357,10 @@ export class GoogleAdsApiService {
           segments.date 
         FROM ad_group 
         WHERE 
-          segments.date = '' 
+          segments.date = '${segments_date}'
           AND campaign.primary_status IN ('ELIGIBLE', 'LIMITED')
       `;
+      }
 
       const customer_ids = await this.getListCustomers();
 
@@ -1373,13 +1377,11 @@ export class GoogleAdsApiService {
 
         date.add('1', 'day');
 
-
         campaigns_data.push(campaigns);
         group_data.push(group);
       }
 
 
-      // console.log(JSON.stringify(campaigns, null, 2));
       const campaigns = await Promise.allSettled(campaigns_data)
         .then(r => {
           const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
@@ -1407,35 +1409,35 @@ export class GoogleAdsApiService {
           return [];
         })
 
-      // const groups = await Promise.allSettled(group_data)
-      //   .then(r => {
-      //     const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
-      //     return result.map(i => {
-      //       return {
-      //         campaign_id: i.campaign.id,
-      //         metrics_conversions: i.metrics.conversions,
-      //         metrics_cost_micros: i.metrics.cost_micros,
-      //         segments_week: i.segments.week,
-      //         segments_year: i.segments.year,
-      //         segments_month: i.segments.month,
-      //         segments_date: i.segments.date
-      //       }
-      //     })
-      //   }).catch(e => {
-      //     console.log(e);
-      //     return [];
-      //   })
+      const groups = await Promise.allSettled(group_data)
+        .then(r => {
+          const result = r.map(i => i.status === 'fulfilled' ? i.value : []).flat(2)
+          return result.map(i => {
+            return {
+              campaign_id: i.campaign.id,
+              metrics_conversions: i.metrics.conversions,
+              metrics_cost_micros: i.metrics.cost_micros,
+              segments_week: i.segments.week,
+              segments_year: i.segments.year,
+              segments_month: i.segments.month,
+              segments_date: i.segments.date
+            }
+          })
+        }).catch(e => {
+          console.log(e);
+          return [];
+        })
 
-      // const result = campaigns.map(c => {
-      //   const campaign = { ...c }
-      //   const g = groups.find(g => g.segments_date === c.segments_date && g.campaign_id === c.campaign_id)
-      //   campaign.group_metrics_conversions += g.metrics_conversions;
-      //   campaign.group_metrics_cost_micros += g.metrics_cost_micros;
+      const result = campaigns.map(c => {
+        const campaign = { ...c }
+        const g = groups.find(g => g.segments_date === c.segments_date && g.campaign_id === c.campaign_id)
+        campaign.group_metrics_conversions += g.metrics_conversions;
+        campaign.group_metrics_cost_micros += g.metrics_cost_micros;
 
-      //   return campaign
-      // })
+        return campaign
+      })
 
-      // console.log(JSON.stringify(result, null, 2));
+      console.log(JSON.stringify(result, null, 2));
 
 
     } catch (error) {
