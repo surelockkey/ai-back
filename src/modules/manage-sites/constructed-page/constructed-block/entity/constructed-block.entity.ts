@@ -21,6 +21,10 @@ export class ConstructedBlock extends BaseEntity {
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
+  description_secondary?: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   text_left?: string;
 
   @Field(() => String, { nullable: true })
