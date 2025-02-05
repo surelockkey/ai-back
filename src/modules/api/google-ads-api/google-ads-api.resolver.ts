@@ -7,7 +7,7 @@ import { AdAdUserLocationMetricsDto } from './dto/ad-user-location-view.dto';
 
 @Resolver()
 export class GoogleAdsApiResolver {
-  constructor(private readonly googleAdsApiService: GoogleAdsApiService) {}
+  constructor(private readonly googleAdsApiService: GoogleAdsApiService) { }
 
   // @UseGuards(GqlAuthGuard)
   @Query(() => String)
