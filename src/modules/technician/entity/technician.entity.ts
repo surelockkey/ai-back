@@ -27,6 +27,10 @@ export class Technician extends BaseEntity {
   @Column()
   license_plate: string;
 
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  vin?: string;
+
   @Field(() => TechnicianManager)
   @ManyToOne(
     () => TechnicianManager,
