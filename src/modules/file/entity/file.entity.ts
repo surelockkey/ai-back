@@ -4,6 +4,7 @@ import { Column, Entity, OneToOne } from 'typeorm';
 import { Key } from '../../customer-app/key/entity/key.entity';
 import { InventoryRequestInvoice } from 'src/modules/car-inventory/modules/inventory-request/inventory-request-invoice/entity/inventory-request-invoice.entity';
 import { ConstructedPhoto } from 'src/modules/manage-sites/constructed-page/constructed-photo/entity/constructed-photo.entity';
+import { OilChange } from 'src/modules/technician/oil-change/entity/oil-change.entity';
 
 @Entity('file')
 @ObjectType()
@@ -34,4 +35,16 @@ export class File extends BaseEntity {
     { onDelete: 'CASCADE', onUpdate: 'CASCADE' },
   )
   constructed_photo: ConstructedPhoto;
+
+  @OneToOne(() => OilChange, (oil_change) => oil_change.vehicle_picture, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  oil_change_vehicle: OilChange;
+
+  @OneToOne(() => OilChange, (oil_change) => oil_change.receipt_picture, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  oil_change_receipt: OilChange;
 }

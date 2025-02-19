@@ -22,6 +22,7 @@ import { UserModule } from './modules/user/user.module';
 import { ManageSitesModule } from './modules/manage-sites/manage-sites.module';
 import { CustomerAppModule } from './modules/customer-app/customer-app.module';
 import { ReferralModule } from './modules/referral/referral.module';
+import { TechnicianModule } from './modules/technician/technician.module';
 
 @Module({
   imports: [
@@ -52,7 +53,8 @@ import { ReferralModule } from './modules/referral/referral.module';
     ManageSitesModule,
     CustomerAppModule,
     ReferralModule,
+    TechnicianModule,
   ],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}

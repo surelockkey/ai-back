@@ -108,14 +108,22 @@ export class FileService extends CrudService<File> {
         Key: new_file.id,
         ContentType: 'image/webp',
       }).catch(async (e) => {
+        console.log(e);
+
         throw new GraphQLError('Failed to upload file');
       });
+
+      console.log(new_file);
 
       return new_file;
     } catch (error) {
       console.log(error);
 
-      await queryRunner.rollbackTransaction();
+      if (!isManagerExist) {
+        await queryRunner.rollbackTransaction();
+      }
+
+      throw new GraphQLError('Failed to upload file');
     } finally {
       if (!isManagerExist) {
         await queryRunner.commitTransaction();

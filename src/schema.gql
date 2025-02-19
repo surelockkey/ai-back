@@ -543,6 +543,7 @@ type ConstructedBlock {
   constructed_page_id: ID!
   constructed_photo_id: ID
   description: String
+  description_secondary: String
   first_list: String
   headline: String
   id: ID!
@@ -563,6 +564,7 @@ type ConstructedBlock {
 input ConstructedBlockDto {
   body_text: String
   description: String
+  description_secondary: String
   first_list: String
   headline: String
   last_list: String
@@ -884,6 +886,14 @@ input CreateLocksmithDto {
   url: String
 }
 
+input CreateOilChange {
+  date: Int!
+  next_date: Int!
+  receipt_picture: Upload
+  technician_id: ID!
+  vehicle_picture: Upload
+}
+
 input CreateOrUpdateUserInfoDto {
   id: ID
   key: String!
@@ -935,6 +945,20 @@ input CreateReferralDto {
   last_name: String
   phone: String!
   service_type: String
+}
+
+input CreateTechnicianDto {
+  first_name: String!
+  last_name: String!
+  license_plate: String!
+  manager_id: ID
+  phone: String!
+}
+
+input CreateTechnicianManagerDto {
+  first_name: String!
+  last_name: String!
+  phone: String!
 }
 
 input CreateTemplateDto {
@@ -1569,6 +1593,7 @@ type Mutation {
   createManyTemplates(createTemplateDto: [CreateTemplateDto!]!): [Template!]!
   createManyUsersSchedules(users_schedules: [CreateUserScheduleDto!]!): [UserSchedule!]!
   createNewJobWorkiz(createJobDto: CreateJobDto!): SendDto!
+  createOilChange(oil_change: CreateOilChange!): OilChange!
   createOrUpdateManyUsersSchedules(user_schedules: [CreateOrUpdateUserScheduleDto!]!): [UserSchedule!]!
   createOrUpdateUserInfo(user_infos: [CreateOrUpdateUserInfoDto!]!): [UserInfo!]!
   createOrUpdateUserNote(user_note: CreateOrUpdateUserNoteDto!): UserNote!
@@ -1576,6 +1601,8 @@ type Mutation {
   createOrder(order_dto: CreateOrderDto!): Order!
   createReferral(referral: CreateReferralDto!): Referral!
   createSystemSettings(max_tokens: Int!): SystemSettings!
+  createTechnician(technician: CreateTechnicianDto!): Technician!
+  createTechnicianManager(technician_manager: CreateTechnicianManagerDto!): TechnicianManager!
   createTimeTemplate(time_template: CreateTimeTemplateDto!): TimeTemplate!
   createUserInfo(user_info: CreateUserInfoDto!): UserInfo!
   createUserNote(user_note: CreateUserNoteDto!): UserNote!
@@ -1603,7 +1630,10 @@ type Mutation {
   deleteManyUserScheduleRequest(ids: [ID!]!): [ID!]!
   deleteManyUserSchedules(ids: [ID!]!): [ID!]!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
+  deleteOilChange(id: ID!): ID!
   deletePhotoLocationById(id: String!): LocationPhoto!
+  deleteTechnician(id: ID!): ID!
+  deleteTechnicianManager(id: ID!): ID!
   deleteTimeTemplate(id: ID!): ID!
   deleteUserInfo(id: ID!): ID!
   deleteUserNote(id: ID!): ID!
@@ -1644,7 +1674,10 @@ type Mutation {
   updateLocation(updateLocationDto: UpdateLocationDto!): Location!
   updateLocksmith(locksmith: UpdateLocksmithDto!): Locksmith!
   updateManyUsersSchedules(users_schedules: [UpdateUserScheduleDto!]!): [UserSchedule!]!
+  updateOilChange(oil_change: UpdateOilChange!): OilChange!
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
+  updateTechnician(technician: UpdateTechnicianDto!): Technician!
+  updateTechnicianManager(technician_manager: UpdateTechnicianManagerDto!): TechnicianManager!
   updateTemplate(updateTemplateDto: UpdateTemplateDto!): Template!
   updateTimeTemplate(time_template: UpdateTimeTemplateDto!): TimeTemplate!
   updateUser(user: UpdateUserDto!): User!
@@ -1653,6 +1686,18 @@ type Mutation {
   updateUserNote(user_note: UpdateUserNoteDto!): UserNote!
   updateUserSchedule(user_schedule: UpdateUserScheduleDto!): UserSchedule!
   uploadCV(email: String!, file: Upload!, last_name: String!, name: String!, phone: String!): String!
+}
+
+type OilChange {
+  date: Int!
+  id: ID!
+  next_date: Int!
+  receipt_picture: File
+  receipt_picture_id: ID
+  technician: Technician!
+  technician_id: ID!
+  vehicle_picture: File
+  vehicle_picture_id: ID
 }
 
 type OpenAiFile {
@@ -1822,9 +1867,12 @@ type Query {
   getMessages(chat_type: ChatType! = DEFAULT, pagination: FindPaginationDto!): PaginatedMessages!
   getMyOrders: [Order!]!
   getMySchedule(from: Int!, to: Int!): UserWithSchedule!
+  getOilChanges: [OilChange!]!
   getOrderById(id: ID!): Order!
   getPreparedCampaign: String!
   getSystemSettings: SystemSettings!
+  getTechnicianManagers: [TechnicianManager!]!
+  getTechnicians: [Technician!]!
   getTemplateById(id: ID!): Template!
   getUniqueLocations: [String!]
   getUnreviewedReviews: [LocksmithReviewWithEmail!]!
@@ -1989,6 +2037,23 @@ type TechInventoryItem {
 input TechInventoryItemDto {
   qty: Int!
   sku: String!
+}
+
+type Technician {
+  first_name: String!
+  id: ID!
+  last_name: String!
+  license_plate: String!
+  manager_id: ID
+  phone: String!
+  technician_manager: Technician!
+}
+
+type TechnicianManager {
+  first_name: String!
+  id: ID!
+  last_name: String!
+  phone: String!
 }
 
 type TechnicianWorkiz {
@@ -2261,9 +2326,19 @@ input UpdateLocksmithScheduleDto {
   open_at: DateTime
 }
 
+input UpdateOilChange {
+  date: Int
+  id: ID!
+  next_date: Int
+  receipt_picture: Upload
+  technician_id: ID
+  vehicle_picture: Upload
+}
+
 input UpdateOrCreateConstructedBlockDto {
   body_text: String
   description: String
+  description_secondary: String
   first_list: String
   headline: String
   id: ID
@@ -2301,6 +2376,22 @@ input UpdateTechInventoryItemDto {
   id: ID!
   qty: Int
   sku: String
+}
+
+input UpdateTechnicianDto {
+  first_name: String
+  id: ID!
+  last_name: String
+  license_plate: String
+  manager_id: ID
+  phone: String
+}
+
+input UpdateTechnicianManagerDto {
+  first_name: String
+  id: ID!
+  last_name: String
+  phone: String
 }
 
 input UpdateTemplateDto {
