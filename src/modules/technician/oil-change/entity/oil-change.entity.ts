@@ -35,7 +35,7 @@ export class OilChange extends BaseEntity {
 
   @Field(() => Int)
   @Column({ type: 'int' })
-  milage: number;
+  mileage: number;
 
   @Field(() => File, { nullable: true })
   @OneToOne(() => File, (file) => file.oil_change_vehicle, {

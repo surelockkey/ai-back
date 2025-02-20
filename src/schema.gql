@@ -888,7 +888,7 @@ input CreateLocksmithDto {
 
 input CreateOilChange {
   date: Int!
-  milage: Int!
+  mileage: Int!
   next_date: Int!
   receipt_picture: Upload
   technician_id: ID!
@@ -1693,7 +1693,7 @@ type Mutation {
 type OilChange {
   date: Int!
   id: ID!
-  milage: Int!
+  mileage: Int!
   next_date: Int!
   receipt_picture: File
   receipt_picture_id: ID
@@ -2333,7 +2333,7 @@ input UpdateLocksmithScheduleDto {
 input UpdateOilChange {
   date: Int
   id: ID!
-  milage: Int
+  mileage: Int
   next_date: Int
   receipt_picture: Upload
   technician_id: ID
