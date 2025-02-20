@@ -34,8 +34,8 @@ export class FileService extends CrudService<File> {
   ) {
     super(fileRepository);
     this.s3 = new S3({
-      accessKeyId: process.env.AWS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET,
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     });
     this.cloudConvert = new CloudConvert(process.env.CLOUD_CONVER_TOKEN);
   }
