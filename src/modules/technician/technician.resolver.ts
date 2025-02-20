@@ -12,7 +12,7 @@ export class TechnicianResolver {
     @Args('technician', { type: () => CreateTechnicianDto })
     technician: CreateTechnicianDto,
   ) {
-    return this.technicianService.create(technician);
+    return this.technicianService.createTechnician(technician);
   }
 
   @Mutation(() => Technician)

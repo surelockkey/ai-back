@@ -33,6 +33,10 @@ export class OilChange extends BaseEntity {
   @Column('uuid')
   technician_id: string;
 
+  @Field(() => Int)
+  @Column({ type: 'int' })
+  milage: number;
+
   @Field(() => File, { nullable: true })
   @OneToOne(() => File, (file) => file.oil_change_vehicle, {
     eager: true,

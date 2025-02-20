@@ -31,14 +31,14 @@ export class Technician extends BaseEntity {
   @Column({ nullable: true })
   vin?: string;
 
-  @Field(() => TechnicianManager)
+  @Field(() => TechnicianManager, { nullable: true })
   @ManyToOne(
     () => TechnicianManager,
     (technician_manager) => technician_manager.technicians,
-    { eager: true, onDelete: 'SET NULL' },
+    { eager: true, onDelete: 'SET NULL', nullable: true },
   )
   @JoinColumn({ name: 'manager_id' })
-  technician_manager: TechnicianManager;
+  technician_manager?: TechnicianManager;
 
   @OneToMany(() => OilChange, (oil_change) => oil_change.technician)
   oil_changes: OilChange[];

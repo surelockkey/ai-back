@@ -888,6 +888,7 @@ input CreateLocksmithDto {
 
 input CreateOilChange {
   date: Int!
+  milage: Int!
   next_date: Int!
   receipt_picture: Upload
   technician_id: ID!
@@ -953,6 +954,7 @@ input CreateTechnicianDto {
   license_plate: String!
   manager_id: ID
   phone: String!
+  vin: String
 }
 
 input CreateTechnicianManagerDto {
@@ -1691,6 +1693,7 @@ type Mutation {
 type OilChange {
   date: Int!
   id: ID!
+  milage: Int!
   next_date: Int!
   receipt_picture: File
   receipt_picture_id: ID
@@ -2046,7 +2049,8 @@ type Technician {
   license_plate: String!
   manager_id: ID
   phone: String!
-  technician_manager: Technician!
+  technician_manager: TechnicianManager
+  vin: String
 }
 
 type TechnicianManager {
@@ -2329,6 +2333,7 @@ input UpdateLocksmithScheduleDto {
 input UpdateOilChange {
   date: Int
   id: ID!
+  milage: Int
   next_date: Int
   receipt_picture: Upload
   technician_id: ID
@@ -2385,6 +2390,7 @@ input UpdateTechnicianDto {
   license_plate: String
   manager_id: ID
   phone: String
+  vin: String
 }
 
 input UpdateTechnicianManagerDto {
