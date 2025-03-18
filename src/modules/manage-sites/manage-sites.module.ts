@@ -8,6 +8,7 @@ import { LocationModule } from './location/location.module';
 import { FormMemberModule } from './form-member/form-member.module';
 import { LocksmithModule } from './locksmith/locksmith.module';
 import { ConstructedPageModule } from './constructed-page/constructed-page.module';
+import { ManageSitesEmailModule } from './manage-sites-email/manage-sites-email.module';
 
 @Module({
   imports: [
@@ -20,6 +21,8 @@ import { ConstructedPageModule } from './constructed-page/constructed-page.modul
     FormMemberModule,
     LocksmithModule,
     ConstructedPageModule,
+    ManageSitesEmailModule,
   ],
+  exports: [ManageSitesEmailModule],
 })
 export class ManageSitesModule {}
