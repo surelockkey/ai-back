@@ -630,8 +630,12 @@ type ConstructedPage {
 }
 
 type ConstructedPageCompany {
+  blog_base_url: String
   id: ID!
+  location_base_url: String
   name: String!
+  redirects: JSON
+  webhook_urls: [String!]
 }
 
 enum ConstructedPageType {
@@ -746,7 +750,11 @@ input CreateCarTemplateDto {
 }
 
 input CreateConstructedPageCompanyDto {
+  blog_base_url: String
+  location_base_url: String
   name: String!
+  redirects: JSON
+  webhook_urls: [String!]
 }
 
 input CreateConstructedPageDto {
@@ -1668,6 +1676,7 @@ type Mutation {
 
   """update blogs"""
   updateBlog(updateBlog: UpdateConstructorBlogDto!): ConstructorBlog!
+  updateCompanySitemap(company_id: String!, sitemaps: [SitemapInput!]!): [Sitemap!]!
   updateConstructedPage(constructed_page: UpdateConstructedPageDto!): ConstructedPage!
   updateConstructedPageCompany(company_dto: UpdateConstructedPageCompanyDto!): ConstructedPageCompany!
   updateCurrentUser(user: UpdateCurrentUserDto!): User!
@@ -1887,6 +1896,7 @@ type Query {
   listFineTunes: String!
   listModels: String!
   searchCars(make: String, model: String): [Car!]!
+  sitemapsByCompanyId(company_id: String!): [Sitemap!]!
   testApi(method: String!, url: String!): String!
   transcriptCalls(from: String!, limit: Int): Int!
 }
@@ -1985,6 +1995,23 @@ enum ServiceType {
   RESIDENTIAL
   SAFES
   SECURITY
+}
+
+type Sitemap {
+  changefreq: String
+  company: ConstructedPageCompany!
+  company_id: String!
+  id: ID!
+  last_mod: Int!
+  loc: String!
+  priority: String
+}
+
+input SitemapInput {
+  changefreq: String
+  last_mod: Int!
+  loc: String!
+  priority: String
 }
 
 """Chouse which type of sorting would you like to use"""
@@ -2164,8 +2191,12 @@ input UpdateConstructedMetaInfoDto {
 }
 
 input UpdateConstructedPageCompanyDto {
+  blog_base_url: String
   id: ID!
+  location_base_url: String
   name: String
+  redirects: JSON
+  webhook_urls: [String!]
 }
 
 input UpdateConstructedPageDto {

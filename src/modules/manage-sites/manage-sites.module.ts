@@ -9,6 +9,7 @@ import { FormMemberModule } from './form-member/form-member.module';
 import { LocksmithModule } from './locksmith/locksmith.module';
 import { ConstructedPageModule } from './constructed-page/constructed-page.module';
 import { ManageSitesEmailModule } from './manage-sites-email/manage-sites-email.module';
+import { SitemapModule } from './sitemap/sitemap.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { ManageSitesEmailModule } from './manage-sites-email/manage-sites-email.
     LocksmithModule,
     ConstructedPageModule,
     ManageSitesEmailModule,
+    SitemapModule,
   ],
-  exports: [ManageSitesEmailModule],
+  exports: [ManageSitesEmailModule, SitemapModule],
 })
 export class ManageSitesModule {}
