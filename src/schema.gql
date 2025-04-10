@@ -1853,6 +1853,7 @@ type Query {
   getConstructedPageById(id: ID!): ConstructedPage!
   getConstructedPageByUrl(url: String!): ConstructedPage!
   getConstructedPageCompanies: [ConstructedPageCompany!]!
+  getConstructedPageCompanyById(company_id: ID!): ConstructedPageCompany!
   getConstructedPages(constructed_page_company_id: ID, is_posted: Boolean, pagination: FindPaginationDto, type: ConstructedPageType): [ConstructedPage!]!
   getContainerById(id: String!): FindContainerAndTemplate!
   getCurrentUser: User!

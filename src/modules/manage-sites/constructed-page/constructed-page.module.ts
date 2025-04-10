@@ -12,6 +12,7 @@ import { ConstructedPageParserService } from './constructed-page-parser.service'
 import { ConstructorBlogModule } from '../blog/constructor-blog/constructor-blog.module';
 import { ConstructedPageParserLocationService } from './constructed-page-parser-location.service';
 import { LocationModule } from '../location/location.module';
+import { SitemapModule } from '../sitemap/sitemap.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { LocationModule } from '../location/location.module';
     ConstructedPageCompanyModule,
     ConstructorBlogModule,
     LocationModule,
+    SitemapModule,
   ],
   providers: [
     ConstructedPageResolver,

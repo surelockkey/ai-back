@@ -17,6 +17,13 @@ export class ConstructedPageCompanyResolver {
     return this.constructedPageCompanyService.findAll();
   }
 
+  @Query(() => ConstructedPageCompany)
+  getConstructedPageCompanyById(
+    @Args('company_id', { type: () => ID }) company_id: string,
+  ) {
+    return this.constructedPageCompanyService.findOneById(company_id);
+  }
+
   @Mutation(() => ConstructedPageCompany)
   createConstructedPageCompany(
     @Args('company_dto', { type: () => CreateConstructedPageCompanyDto })

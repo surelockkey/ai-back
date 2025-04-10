@@ -13,6 +13,7 @@ import { ConstructedMetaInfoService } from './constructed-meta-info/constructed-
 import { ConstructedPreviewService } from './constructed-preview/constructed-preview.service';
 import { GetConstructedPagesArgs } from './args/get-constructed-pages.args';
 import * as moment from 'moment';
+import { SitemapService } from '../sitemap/sitemap.service';
 
 @Injectable()
 export class ConstructedPageService extends CrudService<ConstructedPage> {
@@ -23,6 +24,7 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
     private readonly constructedBlockService: ConstructedBlockService,
     private readonly constructedMetaInfoService: ConstructedMetaInfoService,
     private readonly constructedPreviewService: ConstructedPreviewService,
+    private readonly sitemapService: SitemapService,
   ) {
     super(constructedPageRepository);
   }
@@ -135,6 +137,8 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
 
       await queryRunner.commitTransaction();
 
+      // await this.sitemapService.handlePageSitemap(constructed_page);
+
       return await this.findOneById(constructed_page.id);
     } catch (error) {
       await queryRunner.rollbackTransaction();
@@ -205,7 +209,22 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
 
       await queryRunner.commitTransaction();
 
-      return this.findOneById(id);
+      const updatedPage = await this.findOneById(id);
+
+      //   type: string;
+      // is_posted: boolean;
+      // meta_info: { url: string; redirect_url?: string };
+      // constructed_page_company_id: string;
+      //   await this.sitemapService.handlePageSitemap({
+      //     is_posted: updatedPage.is_posted,
+      //     meta_info: {
+      //       url: updatedPage.meta_info.,
+      //       redirect_url: updatedPage.meta_info.redirect_url,
+      //     },
+      //     constructed_page_company_id: updatedPage.constructed_page_company_id,
+      //   });
+
+      return updatedPage;
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw new GraphQLError(error.message, { originalError: error });
@@ -213,4 +232,15 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
       await queryRunner.release();
     }
   }
+
+  // async delete(criteria: any): Promise<void> {
+  //   const page = await this.findOne(criteria);
+  //   if (page) {
+  //     await this.sitemapService.handlePageSitemap({
+  //       ...page,
+  //       is_posted: false, // Force removal from sitemap
+  //     });
+  //   }
+  //   await super.delete(criteria);
+  // }
 }
