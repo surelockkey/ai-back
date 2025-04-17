@@ -11,7 +11,7 @@ RUN NODE_OPTIONS=--max_old_space_size=2048 npm install
 
 COPY . .
 
-RUN NODE_OPTIONS=--max_old_space_size=2048 npm run build
+RUN NODE_OPTIONS=--max_old_space_size=3072 npm run build
 
 ENV GENERATE_SOURCEMAP=false
 ENV NODE_OPTIONS=--max-old-space-size=2048
