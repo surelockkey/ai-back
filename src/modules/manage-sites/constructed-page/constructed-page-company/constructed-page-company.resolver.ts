@@ -42,7 +42,7 @@ export class ConstructedPageCompanyResolver {
     @Args('company_dto', { type: () => UpdateConstructedPageCompanyDto })
     company_dto: UpdateConstructedPageCompanyDto,
   ) {
-    return this.constructedPageCompanyService.updateAndReturn(
+    return this.constructedPageCompanyService.updateCompany(
       company_dto.id,
       company_dto,
     );

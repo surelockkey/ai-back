@@ -14,65 +14,43 @@ export class ConstructedPageCompanyService extends CrudService<ConstructedPageCo
     super(constructedPageCompanyRepository);
   }
 
-  // async update(criteria: any, data: any): Promise<ConstructedPageCompany> {
-  //   const queryRunner = this.dataSource.createQueryRunner();
-  //   await queryRunner.connect();
-  //   await queryRunner.startTransaction();
+  private async notifyWebhook(
+    url: string,
+    type: 'sitemap' | 'redirects',
+  ): Promise<void> {
+    try {
+      const webhookUrl = new URL(url);
+      webhookUrl.searchParams.append('type', type);
 
-  //   try {
-  //     const company = await super.update(criteria, data);
+      await fetch(webhookUrl.toString(), {
+        method: 'GET',
+      });
+    } catch (error) {
+      console.error(`Failed to notify webhook ${url}:`, error);
+    }
+  }
 
-  //     if (data.redirects !== undefined) {
-  //       const updatedCompany = await this.findOne(criteria);
-  //       if (updatedCompany?.webhook_urls?.length) {
-  //         const promises = updatedCompany.webhook_urls.map((url) =>
-  //           firstValueFrom(
-  //             this.httpService.post(url, {
-  //               type: 'redirects',
-  //               redirects: updatedCompany.redirects,
-  //             }),
-  //           ),
-  //         );
-  //         await Promise.all(promises);
-  //       }
-  //     }
+  private async notifyWebhooks(
+    urls: string[],
+    type: 'sitemap' | 'redirects',
+  ): Promise<void> {
+    if (!urls?.length) return;
 
-  //     await queryRunner.commitTransaction();
-  //     return company;
-  //   } catch (error) {
-  //     await queryRunner.rollbackTransaction();
-  //     throw error;
-  //   } finally {
-  //     await queryRunner.release();
-  //   }
-  // }
+    await Promise.all(urls.map((url) => this.notifyWebhook(url, type)));
+  }
 
   async updateCompany(
     id: string,
     data: DeepPartial<ConstructedPageCompany>,
   ): Promise<ConstructedPageCompany> {
-    const company = await this.updateAndReturn(id, data);
+    const updatedCompany = await this.updateAndReturn(id, data);
 
     if (data.redirects !== undefined) {
-      const updatedCompany = await this.findOneById(id);
       if (updatedCompany?.webhook_urls?.length) {
-        await Promise.all(
-          updatedCompany.webhook_urls.map((url) =>
-            fetch(url, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                type: 'redirects',
-                redirects: updatedCompany.redirects,
-              }),
-            }).catch((error) => {
-              console.error(`Failed to notify webhook ${url}:`, error);
-            }),
-          ),
-        );
+        await this.notifyWebhooks(updatedCompany.webhook_urls, 'redirects');
       }
     }
 
-    return company;
+    return updatedCompany;
   }
 }

@@ -53,7 +53,7 @@ export class ConstructedPageResolver {
   @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)
   @Mutation(() => ID)
   deleteConstructedPageById(@Args('id', { type: () => ID }) id: string) {
-    return this.constructedPageService.deleteByIdReturnId(id);
+    return this.constructedPageService.deleteConstructedPage(id);
   }
 
   @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)

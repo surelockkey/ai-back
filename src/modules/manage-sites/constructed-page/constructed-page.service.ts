@@ -101,6 +101,39 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
     });
   }
 
+  public async deleteConstructedPage(id: string) {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.startTransaction();
+
+    try {
+      const constructed_page = await this.findOneById(id);
+      if (!constructed_page) {
+        throw new GraphQLError('Constructed page not found');
+      }
+
+      await this.sitemapService.handlePageSitemap({
+        type: constructed_page.type,
+        is_posted: false, // Force removal from sitemap
+        meta_info: {
+          url: constructed_page.meta_info.url,
+          redirect_url: constructed_page.meta_info.redirect_url,
+        },
+        constructed_page_company_id:
+          constructed_page.constructed_page_company_id,
+      });
+
+      await this.deleteById(id);
+
+      await queryRunner.commitTransaction();
+      return id;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw new GraphQLError(error.message, { originalError: error });
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
   public async createConstructedPage(
     constructed_page_dto: CreateConstructedPageDto,
   ) {
@@ -139,7 +172,19 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
 
       // await this.sitemapService.handlePageSitemap(constructed_page);
 
-      return await this.findOneById(constructed_page.id);
+      const created_page = await this.findOneById(constructed_page.id);
+
+      await this.sitemapService.handlePageSitemap({
+        type: created_page.type,
+        is_posted: created_page.is_posted,
+        meta_info: {
+          url: created_page.meta_info.url,
+          redirect_url: created_page.meta_info.redirect_url,
+        },
+        constructed_page_company_id: created_page.constructed_page_company_id,
+      });
+
+      return created_page;
     } catch (error) {
       await queryRunner.rollbackTransaction();
       throw new GraphQLError(error.message, { originalError: error });
@@ -211,18 +256,15 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
 
       const updatedPage = await this.findOneById(id);
 
-      //   type: string;
-      // is_posted: boolean;
-      // meta_info: { url: string; redirect_url?: string };
-      // constructed_page_company_id: string;
-      //   await this.sitemapService.handlePageSitemap({
-      //     is_posted: updatedPage.is_posted,
-      //     meta_info: {
-      //       url: updatedPage.meta_info.,
-      //       redirect_url: updatedPage.meta_info.redirect_url,
-      //     },
-      //     constructed_page_company_id: updatedPage.constructed_page_company_id,
-      //   });
+      await this.sitemapService.handlePageSitemap({
+        type: updatedPage.type,
+        is_posted: updatedPage.is_posted,
+        meta_info: {
+          url: updatedPage.meta_info.url,
+          redirect_url: updatedPage.meta_info.redirect_url,
+        },
+        constructed_page_company_id: updatedPage.constructed_page_company_id,
+      });
 
       return updatedPage;
     } catch (error) {
