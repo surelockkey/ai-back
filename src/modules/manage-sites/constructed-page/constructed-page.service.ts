@@ -103,6 +103,7 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
 
   public async deleteConstructedPage(id: string) {
     const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
     await queryRunner.startTransaction();
 
     try {
@@ -111,16 +112,19 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
         throw new GraphQLError('Constructed page not found');
       }
 
-      await this.sitemapService.handlePageSitemap({
-        type: constructed_page.type,
-        is_posted: false, // Force removal from sitemap
-        meta_info: {
-          url: constructed_page.meta_info.url,
-          redirect_url: constructed_page.meta_info.redirect_url,
+      await this.sitemapService.handlePageSitemap(
+        {
+          type: constructed_page.type,
+          is_posted: false,
+          meta_info: {
+            url: constructed_page.meta_info.url,
+            redirect_url: constructed_page.meta_info.redirect_url,
+          },
+          constructed_page_company_id:
+            constructed_page.constructed_page_company_id,
         },
-        constructed_page_company_id:
-          constructed_page.constructed_page_company_id,
-      });
+        queryRunner,
+      );
 
       await this.deleteById(id);
 
@@ -138,6 +142,7 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
     constructed_page_dto: CreateConstructedPageDto,
   ) {
     const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
     await queryRunner.startTransaction();
 
     try {
@@ -170,19 +175,20 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
 
       await queryRunner.commitTransaction();
 
-      // await this.sitemapService.handlePageSitemap(constructed_page);
-
       const created_page = await this.findOneById(constructed_page.id);
 
-      await this.sitemapService.handlePageSitemap({
-        type: created_page.type,
-        is_posted: created_page.is_posted,
-        meta_info: {
-          url: created_page.meta_info.url,
-          redirect_url: created_page.meta_info.redirect_url,
+      await this.sitemapService.handlePageSitemap(
+        {
+          type: created_page.type,
+          is_posted: created_page.is_posted,
+          meta_info: {
+            url: created_page.meta_info.url,
+            redirect_url: created_page.meta_info.redirect_url,
+          },
+          constructed_page_company_id: created_page.constructed_page_company_id,
         },
-        constructed_page_company_id: created_page.constructed_page_company_id,
-      });
+        queryRunner,
+      );
 
       return created_page;
     } catch (error) {
@@ -197,6 +203,7 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
     update_constructed_page_dto: UpdateConstructedPageDto,
   ) {
     const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
     await queryRunner.startTransaction();
 
     try {
@@ -256,15 +263,18 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
 
       const updatedPage = await this.findOneById(id);
 
-      await this.sitemapService.handlePageSitemap({
-        type: updatedPage.type,
-        is_posted: updatedPage.is_posted,
-        meta_info: {
-          url: updatedPage.meta_info.url,
-          redirect_url: updatedPage.meta_info.redirect_url,
+      await this.sitemapService.handlePageSitemap(
+        {
+          type: updatedPage.type,
+          is_posted: updatedPage.is_posted,
+          meta_info: {
+            url: updatedPage.meta_info.url,
+            redirect_url: updatedPage.meta_info.redirect_url,
+          },
+          constructed_page_company_id: updatedPage.constructed_page_company_id,
         },
-        constructed_page_company_id: updatedPage.constructed_page_company_id,
-      });
+        queryRunner,
+      );
 
       return updatedPage;
     } catch (error) {
@@ -274,15 +284,4 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
       await queryRunner.release();
     }
   }
-
-  // async delete(criteria: any): Promise<void> {
-  //   const page = await this.findOne(criteria);
-  //   if (page) {
-  //     await this.sitemapService.handlePageSitemap({
-  //       ...page,
-  //       is_posted: false, // Force removal from sitemap
-  //     });
-  //   }
-  //   await super.delete(criteria);
-  // }
 }

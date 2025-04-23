@@ -45,10 +45,8 @@ export class ConstructedPageCompanyService extends CrudService<ConstructedPageCo
   ): Promise<ConstructedPageCompany> {
     const updatedCompany = await this.updateAndReturn(id, data);
 
-    if (data.redirects !== undefined) {
-      if (updatedCompany?.webhook_urls?.length) {
-        await this.notifyWebhooks(updatedCompany.webhook_urls, 'redirects');
-      }
+    if (data.redirects !== undefined && updatedCompany?.webhook_urls?.length) {
+      await this.notifyWebhooks(updatedCompany.webhook_urls, 'redirects');
     }
 
     return updatedCompany;

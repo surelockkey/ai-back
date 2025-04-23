@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource } from 'typeorm';
+import { Repository, DataSource, QueryRunner } from 'typeorm';
 import { Sitemap } from './entity/sitemap.entity';
 import * as moment from 'moment';
 import { SitemapInput } from './dto/sitemap.types';
@@ -103,51 +103,87 @@ export class SitemapService extends CrudService<Sitemap> {
     return `${baseUrl}${metaUrl || ''}`.replace(/\/+/g, '/');
   }
 
-  async handlePageSitemap(page: {
-    type: string;
-    is_posted: boolean;
-    meta_info: { url: string; redirect_url?: string };
-    constructed_page_company_id: string;
-  }): Promise<void> {
-    const company = await this.dataSource
-      .getRepository('constructed_page_company')
-      .findOne({
-        where: { id: page.constructed_page_company_id },
-      });
+  async handlePageSitemap(
+    page: {
+      type: string;
+      is_posted: boolean;
+      meta_info: { url: string; redirect_url?: string };
+      constructed_page_company_id: string;
+    },
+    queryRunner?: QueryRunner,
+  ): Promise<void> {
+    const isExternalTransaction = !!queryRunner;
+    const localQueryRunner = queryRunner || this.dataSource.createQueryRunner();
 
-    if (!company) return;
-
-    const baseUrl =
-      page.type === 'blog' ? company.blog_base_url : company.location_base_url;
-    const loc = this.generateLoc(baseUrl, page.meta_info?.url);
-    let sitemapChanged = false;
-
-    if (page.is_posted && !page.meta_info?.redirect_url) {
-      const existingSitemap = await this.findOne({ loc });
-
-      if (existingSitemap) {
-        await this.update(existingSitemap.id, { last_mod: moment().unix() });
-      } else {
-        await this.create({
-          loc,
-          company_id: company.id,
-          last_mod: moment().unix(),
-        });
-      }
-      sitemapChanged = true;
-    } else {
-      const existingSitemap = await this.findOne({ loc });
-      if (existingSitemap) {
-        await this.deleteByCriteria({ loc });
-        sitemapChanged = true;
-      }
+    if (!isExternalTransaction) {
+      await localQueryRunner.connect();
+      await localQueryRunner.startTransaction();
     }
 
-    // Notify webhooks if sitemap was changed
-    if (sitemapChanged && company.webhook_urls?.length) {
-      await Promise.all(
-        company.webhook_urls.map((url) => this.notifyWebhook(url, 'sitemap')),
-      );
+    try {
+      const manager = localQueryRunner.manager;
+
+      const company = await manager
+        .getRepository('constructed_page_company')
+        .findOne({
+          where: { id: page.constructed_page_company_id },
+        });
+
+      if (!company) return;
+
+      const baseUrl =
+        page.type === 'blog'
+          ? company.blog_base_url
+          : company.location_base_url;
+      const loc = this.generateLoc(baseUrl, page.meta_info?.url);
+      let sitemapChanged = false;
+
+      if (page.is_posted && !page.meta_info?.redirect_url) {
+        const existingSitemap = await manager
+          .getRepository(Sitemap)
+          .findOne({ where: { loc } });
+
+        if (existingSitemap) {
+          await manager.update(
+            Sitemap,
+            { id: existingSitemap.id },
+            { last_mod: moment().unix() },
+          );
+        } else {
+          await manager.save(Sitemap, {
+            loc,
+            company_id: company.id,
+            last_mod: moment().unix(),
+          });
+        }
+        sitemapChanged = true;
+      } else {
+        const existingSitemap = await manager
+          .getRepository(Sitemap)
+          .findOne({ where: { loc } });
+        if (existingSitemap) {
+          await manager.delete(Sitemap, { loc });
+          sitemapChanged = true;
+        }
+      }
+
+      if (!isExternalTransaction) {
+        await localQueryRunner.commitTransaction();
+      }
+
+      // Notify webhooks if sitemap was changed (regardless of transaction type)
+      if (sitemapChanged && company.webhook_urls?.length) {
+        await this.notifyWebhooks(company.webhook_urls, 'sitemap');
+      }
+    } catch (error) {
+      if (!isExternalTransaction) {
+        await localQueryRunner.rollbackTransaction();
+      }
+      throw error;
+    } finally {
+      if (!isExternalTransaction) {
+        await localQueryRunner.release();
+      }
     }
   }
 }

@@ -426,4 +426,105 @@ export class FileService extends CrudService<File> {
 
     return Buffer.concat(chunks);
   }
+
+  public async uploadFileTransactional(
+    file: FileUpload,
+    manager?: EntityManager,
+    queryRunner?: QueryRunner,
+  ): Promise<File> {
+    const isManagerExist = manager || queryRunner;
+
+    if (!isManagerExist) {
+      queryRunner = await this.connection.createQueryRunner();
+      await queryRunner.connect();
+      await queryRunner.startTransaction();
+      manager = queryRunner.manager;
+    }
+
+    try {
+      const buffer = await this.createBuffer(file);
+      const new_file = await manager.save(File, { format: file.mimetype });
+
+      await this.uploadToS3({
+        Body: buffer,
+        Bucket: process.env.AWS_BUCKET,
+        Key: new_file.id,
+        ContentType: file.mimetype,
+      }).catch(async (e) => {
+        throw new GraphQLError('Failed to upload file');
+      });
+
+      if (!isManagerExist) {
+        await queryRunner.commitTransaction();
+      }
+
+      return new_file;
+    } catch (error) {
+      if (!isManagerExist) {
+        await queryRunner.rollbackTransaction();
+      }
+      throw new GraphQLError('Failed to upload file', { originalError: error });
+    } finally {
+      if (!isManagerExist) {
+        await queryRunner.release();
+      }
+    }
+  }
+
+  public async updateImageTransactional(
+    input_file: FileUpload,
+    file_id: string,
+    manager?: EntityManager,
+    queryRunner?: QueryRunner,
+  ): Promise<File> {
+    const isManagerExist = manager || queryRunner;
+
+    if (!isManagerExist) {
+      queryRunner = await this.connection.createQueryRunner();
+      await queryRunner.connect();
+      await queryRunner.startTransaction();
+      manager = queryRunner.manager;
+    }
+
+    try {
+      const file = await input_file;
+
+      if (!file.mimetype.includes('image/')) {
+        throw new GraphQLError('File is not an image');
+      }
+
+      const buffer = await this.createBuffer(file);
+
+      await this.deleteFromS3({
+        Bucket: process.env.AWS_BUCKET,
+        Key: file_id,
+      });
+
+      await this.uploadToS3({
+        Body: buffer,
+        Bucket: process.env.AWS_BUCKET,
+        Key: file_id,
+        ContentType: file.mimetype,
+      });
+
+      const updated_file = await manager.findOne(File, {
+        where: { id: file_id },
+      });
+
+      if (!isManagerExist) {
+        await queryRunner.commitTransaction();
+      }
+
+      return updated_file;
+    } catch (error) {
+      if (!isManagerExist) {
+        await queryRunner.rollbackTransaction();
+      }
+      throw new GraphQLError('Failed to update file', { originalError: error });
+    } finally {
+      if (!isManagerExist) {
+        await queryRunner.release();
+      }
+    }
+  }
 }

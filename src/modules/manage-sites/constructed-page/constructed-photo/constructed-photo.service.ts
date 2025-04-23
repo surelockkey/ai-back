@@ -25,7 +25,7 @@ export class ConstructedPhotoService extends CrudService<ConstructedPhoto> {
   ) {
     const { file, ...photo } = photo_dto;
 
-    const { id: file_id } = await this.fileService.uploadImageSharp(
+    const { id: file_id } = await this.fileService.uploadFileTransactional(
       await file,
       queryRunner.manager,
       queryRunner,
@@ -47,9 +47,11 @@ export class ConstructedPhotoService extends CrudService<ConstructedPhoto> {
     if (file) {
       const constructed_photo = await this.findOneById(constructed_photo_id);
 
-      await this.fileService.updateImageSharp(
+      await this.fileService.updateImageTransactional(
         await file,
         constructed_photo.file_id,
+        queryRunner.manager,
+        queryRunner,
       );
     }
 
