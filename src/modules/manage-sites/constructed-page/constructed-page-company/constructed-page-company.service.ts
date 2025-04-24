@@ -3,7 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource, DeepPartial } from 'typeorm';
 import { ConstructedPageCompany } from './entity/constructed-page-company.entity';
 import { CrudService } from '@tech-slk/nest-crud';
-import { fetch } from 'undici';
+import { HttpService } from '@nestjs/axios';
+import { AxiosRequestConfig } from 'axios';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class ConstructedPageCompanyService extends CrudService<ConstructedPageCompany> {
@@ -11,6 +13,7 @@ export class ConstructedPageCompanyService extends CrudService<ConstructedPageCo
     @InjectRepository(ConstructedPageCompany)
     private readonly constructedPageCompanyRepository: Repository<ConstructedPageCompany>,
     private dataSource: DataSource,
+    private readonly httpService: HttpService,
   ) {
     super(constructedPageCompanyRepository);
   }
@@ -24,14 +27,19 @@ export class ConstructedPageCompanyService extends CrudService<ConstructedPageCo
       webhookUrl.search +=
         (webhookUrl.search ? '&' : '?') + encodeURIComponent(type);
 
-      await fetch(webhookUrl.toString(), { method: 'GET', redirect: 'follow' })
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
+      const config: AxiosRequestConfig = {
+        method: 'GET',
+        maxRedirects: 5,
+      };
 
-      // await fetch(webhookUrl.toString(), {
-      //   method: 'GET',
-      // });
+      try {
+        const response = await lastValueFrom(
+          this.httpService.get(webhookUrl.toString(), config),
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.error('Webhook error:', error.message);
+      }
     } catch (error) {
       console.error(`Failed to notify webhook ${url}:`, error);
     }

@@ -6,7 +6,9 @@ import * as moment from 'moment';
 import { SitemapInput } from './dto/sitemap.types';
 import { CrudService } from '@tech-slk/nest-crud';
 import { ConstructedPageCompany } from '../constructed-page/constructed-page-company/entity/constructed-page-company.entity';
-import { fetch } from 'undici';
+import { HttpService } from '@nestjs/axios';
+import { AxiosRequestConfig } from 'axios';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class SitemapService extends CrudService<Sitemap> {
@@ -14,6 +16,7 @@ export class SitemapService extends CrudService<Sitemap> {
     @InjectRepository(Sitemap)
     private readonly sitemapRepository: Repository<Sitemap>,
     private dataSource: DataSource,
+    private readonly httpService: HttpService,
   ) {
     super(sitemapRepository);
   }
@@ -27,10 +30,19 @@ export class SitemapService extends CrudService<Sitemap> {
       webhookUrl.search +=
         (webhookUrl.search ? '&' : '?') + encodeURIComponent(type);
 
-      await fetch(webhookUrl.toString(), {
+      const config: AxiosRequestConfig = {
         method: 'GET',
-        redirect: 'follow',
-      });
+        maxRedirects: 5,
+      };
+
+      try {
+        const response = await lastValueFrom(
+          this.httpService.get(webhookUrl.toString(), config),
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.error('Webhook error:', error.message);
+      }
     } catch (error) {
       console.error(`Failed to notify webhook ${url}:`, error);
     }
