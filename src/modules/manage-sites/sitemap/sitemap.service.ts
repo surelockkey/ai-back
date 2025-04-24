@@ -24,11 +24,17 @@ export class SitemapService extends CrudService<Sitemap> {
   ): Promise<void> {
     try {
       const webhookUrl = new URL(url);
-      webhookUrl.searchParams.append('type', type);
+      webhookUrl.search +=
+        (webhookUrl.search ? '&' : '?') + encodeURIComponent(type);
 
-      await fetch(webhookUrl.toString(), {
-        method: 'GET',
-      });
+      fetch(webhookUrl.toString(), { method: 'GET', redirect: 'follow' })
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
+
+      // await fetch(webhookUrl.toString(), {
+      //   method: 'GET',
+      // });
     } catch (error) {
       console.error(`Failed to notify webhook ${url}:`, error);
     }
