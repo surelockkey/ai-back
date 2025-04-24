@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { SitemapInput } from './dto/sitemap.types';
 import { CrudService } from '@tech-slk/nest-crud';
 import { ConstructedPageCompany } from '../constructed-page/constructed-page-company/entity/constructed-page-company.entity';
-import { ConstructedPageType } from '../constructed-page/enum/constructed-page-type.enum';
+import { fetch } from 'undici';
 
 @Injectable()
 export class SitemapService extends CrudService<Sitemap> {
@@ -27,14 +27,10 @@ export class SitemapService extends CrudService<Sitemap> {
       webhookUrl.search +=
         (webhookUrl.search ? '&' : '?') + encodeURIComponent(type);
 
-      fetch(webhookUrl.toString(), { method: 'GET', redirect: 'follow' })
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.error(error));
-
-      // await fetch(webhookUrl.toString(), {
-      //   method: 'GET',
-      // });
+      await fetch(webhookUrl.toString(), {
+        method: 'GET',
+        redirect: 'follow',
+      });
     } catch (error) {
       console.error(`Failed to notify webhook ${url}:`, error);
     }

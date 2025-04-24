@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource, DeepPartial } from 'typeorm';
 import { ConstructedPageCompany } from './entity/constructed-page-company.entity';
 import { CrudService } from '@tech-slk/nest-crud';
+import { fetch } from 'undici';
 
 @Injectable()
 export class ConstructedPageCompanyService extends CrudService<ConstructedPageCompany> {
