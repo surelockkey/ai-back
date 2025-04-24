@@ -1896,6 +1896,7 @@ type Query {
   getWorkizLeadById(id: String!): JobDto!
   listFineTunes: String!
   listModels: String!
+  notifyWebhook(url: String!): String!
   searchCars(make: String, model: String): [Car!]!
   sitemapsByCompanyId(company_id: String!): [Sitemap!]!
   testApi(method: String!, url: String!): String!

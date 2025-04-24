@@ -14,7 +14,7 @@ export class ConstructedPageCompanyService extends CrudService<ConstructedPageCo
     super(constructedPageCompanyRepository);
   }
 
-  private async notifyWebhook(
+  public async notifyWebhook(
     url: string,
     type: 'sitemap' | 'redirects',
   ): Promise<void> {
@@ -23,7 +23,7 @@ export class ConstructedPageCompanyService extends CrudService<ConstructedPageCo
       webhookUrl.search +=
         (webhookUrl.search ? '&' : '?') + encodeURIComponent(type);
 
-      fetch(webhookUrl.toString(), { method: 'GET', redirect: 'follow' })
+      await fetch(webhookUrl.toString(), { method: 'GET', redirect: 'follow' })
         .then((response) => response.text())
         .then((result) => console.log(result))
         .catch((error) => console.error(error));

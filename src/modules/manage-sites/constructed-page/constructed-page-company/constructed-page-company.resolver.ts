@@ -47,4 +47,9 @@ export class ConstructedPageCompanyResolver {
       company_dto,
     );
   }
+
+  @Query(() => String)
+  notifyWebhook(@Args('url', { type: () => String }) url: string) {
+    return this.constructedPageCompanyService.notifyWebhook(url, 'redirects');
+  }
 }
