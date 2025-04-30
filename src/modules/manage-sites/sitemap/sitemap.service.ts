@@ -36,10 +36,8 @@ export class SitemapService extends CrudService<Sitemap> {
       };
 
       try {
-        const response = await lastValueFrom(
-          this.httpService.get(webhookUrl.toString(), config),
-        );
-        console.log(response.data);
+        this.httpService.get(webhookUrl.toString(), config);
+        console.log('Fetched');
       } catch (error) {
         console.error('Webhook error:', error.message);
       }
