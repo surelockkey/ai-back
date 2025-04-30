@@ -34,10 +34,6 @@ services:
       POSTGRES_DB: ${DATABASE_NAME}
     volumes:
       - data:/var/lib/postgresql/data
-      - ./postgres_config/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
-      - ./postgres_config/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
-    command: postgres -c config_file=/var/lib/postgresql/data/postgresql.conf
-
   pgadmin:
     image: dpage/pgadmin4
     cgroup_parent: "system.slice"
