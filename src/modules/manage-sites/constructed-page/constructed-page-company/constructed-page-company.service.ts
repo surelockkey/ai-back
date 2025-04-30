@@ -18,6 +18,21 @@ export class ConstructedPageCompanyService extends CrudService<ConstructedPageCo
     super(constructedPageCompanyRepository);
   }
 
+  private async fetchWebhook(url: string) {
+    try {
+      const config: AxiosRequestConfig = {
+        method: 'GET',
+        maxRedirects: 5,
+      };
+
+      const res = await lastValueFrom(this.httpService.get(url, config));
+
+      console.log(res);
+    } catch (error) {
+      console.error('Webhook error:', error.message);
+    }
+  }
+
   public async notifyWebhook(
     url: string,
     type: 'sitemap' | 'redirects',
@@ -27,17 +42,7 @@ export class ConstructedPageCompanyService extends CrudService<ConstructedPageCo
       webhookUrl.search +=
         (webhookUrl.search ? '&' : '?') + encodeURIComponent(type);
 
-      const config: AxiosRequestConfig = {
-        method: 'GET',
-        maxRedirects: 5,
-      };
-
-      try {
-        this.httpService.get(webhookUrl.toString(), config);
-        console.log('Fetched');
-      } catch (error) {
-        console.error('Webhook error:', error.message);
-      }
+      this.fetchWebhook(webhookUrl.toString());
     } catch (error) {
       console.error(`Failed to notify webhook ${url}:`, error);
     }
