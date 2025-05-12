@@ -2004,14 +2004,14 @@ type Sitemap {
   company: ConstructedPageCompany!
   company_id: String!
   id: ID!
-  last_mod: Int!
+  lastmod: Int!
   loc: String!
   priority: String
 }
 
 input SitemapInput {
   changefreq: String
-  last_mod: Int!
+  lastmod: Int!
   loc: String!
   priority: String
 }

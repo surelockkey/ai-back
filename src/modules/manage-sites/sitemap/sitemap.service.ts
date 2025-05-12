@@ -88,7 +88,7 @@ export class SitemapService extends CrudService<Sitemap> {
         this.sitemapRepository.create({
           ...sitemap,
           company_id,
-          last_mod: sitemap.last_mod || moment().unix(),
+          lastmod: sitemap.lastmod || moment().unix(),
         }),
       );
 
@@ -164,13 +164,13 @@ export class SitemapService extends CrudService<Sitemap> {
           await manager.update(
             Sitemap,
             { id: existingSitemap.id },
-            { last_mod: moment().unix() },
+            { lastmod: moment().unix() },
           );
         } else {
           await manager.save(Sitemap, {
             loc,
             company_id: company.id,
-            last_mod: moment().unix(),
+            lastmod: moment().unix(),
           });
         }
         sitemapChanged = true;

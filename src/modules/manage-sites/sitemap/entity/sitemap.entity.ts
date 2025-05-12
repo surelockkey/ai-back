@@ -13,7 +13,7 @@ export class Sitemap extends BaseEntity {
 
   @Field(() => Int)
   @Column({ type: 'bigint' })
-  last_mod: number;
+  lastmod: number;
 
   @Field(() => String, { nullable: true })
   @Column({ type: 'float', nullable: true })
