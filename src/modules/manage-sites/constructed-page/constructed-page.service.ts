@@ -119,6 +119,8 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
           meta_info: {
             url: constructed_page.meta_info.url,
             redirect_url: constructed_page.meta_info.redirect_url,
+            state: constructed_page.meta_info.state,
+            name: constructed_page.meta_info.name,
           },
           constructed_page_company_id:
             constructed_page.constructed_page_company_id,
@@ -184,6 +186,8 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
           meta_info: {
             url: created_page.meta_info.url,
             redirect_url: created_page.meta_info.redirect_url,
+            state: created_page.meta_info.state,
+            name: created_page.meta_info.name,
           },
           constructed_page_company_id: created_page.constructed_page_company_id,
         },
@@ -270,6 +274,8 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
           meta_info: {
             url: updatedPage.meta_info.url,
             redirect_url: updatedPage.meta_info.redirect_url,
+            state: updatedPage.meta_info.state,
+            name: updatedPage.meta_info.name,
           },
           constructed_page_company_id: updatedPage.constructed_page_company_id,
         },

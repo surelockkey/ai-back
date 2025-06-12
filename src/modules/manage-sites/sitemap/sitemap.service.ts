@@ -116,15 +116,20 @@ export class SitemapService extends CrudService<Sitemap> {
     }
   }
 
-  private generateLoc(baseUrl: string, metaUrl: string): string {
-    return `${baseUrl}${metaUrl || ''}`.replace(/\/+/g, '/');
+  private generateLoc(baseUrl: string, state: string, name: string): string {
+    return `${baseUrl.replace(`{State}`, state).replace(`{Name}`, name)}`;
   }
 
   async handlePageSitemap(
     page: {
       type: string;
       is_posted: boolean;
-      meta_info: { url: string; redirect_url?: string };
+      meta_info: {
+        url: string;
+        redirect_url?: string;
+        state?: string;
+        name?: string;
+      };
       constructed_page_company_id: string;
     },
     queryRunner?: QueryRunner,
@@ -152,7 +157,11 @@ export class SitemapService extends CrudService<Sitemap> {
         page.type === 'blog'
           ? company.blog_base_url
           : company.location_base_url;
-      const loc = this.generateLoc(baseUrl, page.meta_info?.url);
+      const loc = this.generateLoc(
+        baseUrl,
+        page.meta_info?.state,
+        page.meta_info?.name,
+      );
       let sitemapChanged = false;
 
       if (page.is_posted && !page.meta_info?.redirect_url) {
