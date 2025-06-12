@@ -116,8 +116,16 @@ export class SitemapService extends CrudService<Sitemap> {
     }
   }
 
-  private generateLoc(baseUrl: string, state: string, name: string): string {
-    return `${baseUrl.replace(`{State}`, state).replace(`{Name}`, name)}`;
+  private generateLoc(
+    baseUrl: string,
+    state: string,
+    name: string,
+    url: string,
+  ): string {
+    return `${baseUrl
+      .replace(`{state}`, state)
+      .replace(`{name}`, name)
+      .replace(`{url}`, url)}}`;
   }
 
   async handlePageSitemap(
@@ -161,6 +169,7 @@ export class SitemapService extends CrudService<Sitemap> {
         baseUrl,
         page.meta_info?.state,
         page.meta_info?.name,
+        page.meta_info?.url,
       );
       let sitemapChanged = false;
 
