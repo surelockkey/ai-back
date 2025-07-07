@@ -88,7 +88,7 @@ export class SitemapService extends CrudService<Sitemap> {
         this.sitemapRepository.create({
           ...sitemap,
           company_id,
-          lastmod: sitemap.lastmod || moment().unix(),
+          // lastmod: sitemap.lastmod || moment().unix(), // Removed this by Roman 7.7.2025
         }),
       );
 
