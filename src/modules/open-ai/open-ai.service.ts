@@ -1,10 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import {
-  ChatCompletionRequestMessage,
-  Configuration,
-  OpenAIApi,
-  OpenAIFile,
-} from 'openai';
 import * as fs from 'fs';
 import axios from 'axios';
 import * as FormData from 'form-data';
@@ -16,176 +10,175 @@ import { InjectDataSource } from '@nestjs/typeorm';
 import * as moment from 'moment';
 import { Message } from '../chat/entity/message.entity';
 import { GraphQLError } from 'graphql';
-
-// import * as ax from 'axios';
+import OpenAI from 'openai';
+import { ChatCompletionMessageParam } from 'openai/resources/index';
 
 @Injectable()
 export class OpenAiService {
-  private readonly configuration: Configuration;
-  private readonly openai: OpenAIApi;
+  private readonly openai: OpenAI;
 
   constructor(
     private readonly configService: ConfigService,
     private readonly systemSettingsService: SystemSettingsService,
     @InjectDataSource() private readonly dataSource: DataSource,
   ) {
-    this.configuration = new Configuration({
+    this.openai = new OpenAI({
       apiKey: this.configService.get<string>('app.open_ai_key'),
     });
-    this.openai = new OpenAIApi(this.configuration);
   }
 
-  public async listModel() {
-    const res = await this.openai.listModels();
-
-    console.log(res.data);
-
-    return res.data;
+  public async listModels() {
+    const models_response = await this.openai.models.list();
+    console.log(models_response.data);
+    return models_response.data;
   }
 
   public async sendMessage(
-    prompt: string,
-    context?: Message[],
+    user_prompt: string,
+    message_context?: Message[],
   ): Promise<OpenAiMessageResponse> {
-    const prev_messages: ChatCompletionRequestMessage[] = [];
+    const previous_messages: ChatCompletionMessageParam[] = [];
 
-    context.forEach((message) => {
-      prev_messages.push({
-        role: 'user',
-        content: message.prompt,
+    if (message_context) {
+      message_context.forEach((message) => {
+        previous_messages.push({
+          role: 'user',
+          content: message.prompt,
+        });
+        previous_messages.push({
+          role: 'assistant',
+          content: message.text,
+        });
       });
-      prev_messages.push({
-        role: 'assistant',
-        content: message.text,
-      });
-    });
+    }
 
-    const res = await this.openai.createChatCompletion({
-      model: 'gpt-5',
+    const completion = await this.openai.chat.completions.create({
+      model: 'gpt-4',
       messages: [
-        ...prev_messages,
+        ...previous_messages,
         {
           role: 'user',
-          content: prompt,
+          content: user_prompt,
         },
       ],
       temperature: 0,
     });
 
     return {
-      id: res.data.id,
-      created: res.data.created,
-      text: res.data.choices[0].message.content.replace('\n\n', ''),
-      total_tokens: res.data.usage.total_tokens,
-      finish_reason: res.data.choices[0].finish_reason,
+      id: completion.id,
+      created: completion.created,
+      text: completion.choices[0].message.content?.replace('\n\n', '') || '',
+      total_tokens: completion.usage?.total_tokens || 0,
+      finish_reason: completion.choices[0].finish_reason,
     };
   }
 
-  public async uploadFileToOpenAi(filename: string): Promise<OpenAIFile> {
-    const data = new FormData();
-
-    data.append('purpose', 'fine-tune');
-    data.append(
-      'file',
-      fs.createReadStream(__dirname + `/../../../pubic/${filename}.jsonl`),
+  public async uploadFileToOpenAi(
+    file_name: string,
+  ): Promise<OpenAI.Files.FileObject> {
+    const file_stream = fs.createReadStream(
+      __dirname + `/../../../public/${file_name}.jsonl`,
     );
 
-    const res = await axios({
-      method: 'post',
-      url: 'https://api.openai.com/v1/files',
-      headers: {
-        Authorization: 'Bearer ' + process.env.OPEN_AI_API_KEY,
-        ...data.getHeaders(),
-      },
-      data: data,
+    const uploaded_file = await this.openai.files.create({
+      file: file_stream,
+      purpose: 'fine-tune',
     });
 
-    return res.data;
+    return uploaded_file;
   }
 
-  public async getAllFiles() {
-    return (await this.openai.listFiles()).data.data;
+  public async getAllFiles(): Promise<OpenAI.Files.FileObject[]> {
+    const files_response = await this.openai.files.list();
+    return files_response.data;
   }
 
-  public async createTune(file_id: string, model: string) {
-    const res = await this.openai.createFineTune({
-      training_file: file_id,
-      model: model,
+  public async createFineTune(training_file_id: string, base_model: string) {
+    const fine_tune_job = await this.openai.fineTuning.jobs.create({
+      training_file: training_file_id,
+      model: base_model,
     });
 
-    return res.data;
+    return fine_tune_job;
   }
 
-  public async getFullFineTune(fine_tune_id: string) {
-    return (await this.openai.retrieveFineTune(fine_tune_id)).data;
+  public async getFullFineTune(fine_tune_job_id: string) {
+    return await this.openai.fineTuning.jobs.retrieve(fine_tune_job_id);
   }
 
-  public async getFullLastFineTune(fine_tune_id: string) {
-    const fine_tune = await this.getFullFineTune(fine_tune_id);
+  public async getFullLastFineTune(fine_tune_job_id: string) {
+    const fine_tune_job = await this.getFullFineTune(fine_tune_job_id);
     const system_settings =
       await this.systemSettingsService.getSystemSettings();
 
-    console.log(fine_tune);
+    console.log(fine_tune_job);
 
     if (
-      fine_tune.status === 'succeeded' &&
-      fine_tune.fine_tuned_model !== system_settings.active_model
+      fine_tune_job.status === 'succeeded' &&
+      fine_tune_job.fine_tuned_model !== system_settings.active_model
     ) {
       await this.systemSettingsService.updateByCriteriaAndReturnOne(
         {},
-        { active_model: fine_tune.fine_tuned_model },
+        { active_model: fine_tune_job.fine_tuned_model },
       );
     }
 
-    return fine_tune;
+    return fine_tune_job;
   }
 
   public async listFineTunes() {
-    const res = await this.openai.listFineTunes();
-    console.log(res.data.data.map((item) => item));
+    const fine_tune_jobs = await this.openai.fineTuning.jobs.list();
+    console.log(fine_tune_jobs.data.map((job) => job));
 
-    const events = await this.openai.listFineTuneEvents(
-      res.data.data[res.data.data.length - 1].id,
-    );
+    if (fine_tune_jobs.data.length > 0) {
+      const latest_job = fine_tune_jobs.data[fine_tune_jobs.data.length - 1];
+      const job_events = await this.openai.fineTuning.jobs.listEvents(
+        latest_job.id,
+      );
+      console.log(job_events.data);
+    }
 
-    console.log(events.data);
+    return fine_tune_jobs.data;
   }
 
-  public async speechToText(audio_url: File): Promise<any> {
-    return await this.openai.createTranscription(
-      audio_url,
-      'whisper-1',
-      undefined,
-      'json',
-      0.85,
-      'en',
-    );
+  public async speechToText(
+    audio_file: File,
+  ): Promise<OpenAI.Audio.Transcription> {
+    const transcription = await this.openai.audio.transcriptions.create({
+      file: audio_file,
+      model: 'whisper-1',
+      response_format: 'json',
+      temperature: 0.85,
+      language: 'en',
+    });
+
+    return transcription;
   }
 
-  public async sendSqlMessage(message: string) {
+  public async sendSqlMessage(user_message: string) {
     try {
-      let number_of_generated_queries = 0;
-      let data: any;
-      let query: any;
+      let query_generation_attempts = 0;
+      let database_data: any;
+      let executed_query: any;
 
-      while (number_of_generated_queries < 3 && !data) {
-        await this.generateSqlQuery(message).then((res) => {
-          if (res) {
-            data = res.data;
-            query = res.query;
+      while (query_generation_attempts < 3 && !database_data) {
+        await this.generateSqlQuery(user_message).then((query_result) => {
+          if (query_result) {
+            database_data = query_result.data;
+            executed_query = query_result.query;
           }
         });
 
-        number_of_generated_queries++;
-        console.log(number_of_generated_queries, data);
+        query_generation_attempts++;
+        console.log(query_generation_attempts, database_data);
       }
 
-      if (!data) {
+      if (!database_data) {
         throw new GraphQLError('Nothing found');
       }
 
-      const final_res = await this.openai
-        .createChatCompletion({
+      const final_completion = await this.openai.chat.completions
+        .create({
           model: 'gpt-4',
           messages: [
             {
@@ -193,32 +186,36 @@ export class OpenAiService {
               content: `
             Act as a assistant of locksmith company.
             Given the following user question and the related search results, respond to the user using only the results as context.
-            question: ${message} - Search Results: ${JSON.stringify(data)}
+            question: ${user_message} - Search Results: ${JSON.stringify(
+                database_data,
+              )}
           `,
             },
           ],
         })
-        .catch((e) => {
-          console.log(e.response.data);
-          throw e.response.data;
+        .catch((error) => {
+          console.log(error.response?.data);
+          throw error.response?.data || error;
         });
 
       return {
-        id: final_res.data.id,
-        created: final_res.data.created,
-        text: final_res.data.choices[0].message.content.replace('\n\n', ''),
-        total_tokens: final_res.data.usage.total_tokens,
-        finish_reason: final_res.data.choices[0].finish_reason,
-        database_result: JSON.stringify(data),
-        database_query: query,
+        id: final_completion.id,
+        created: final_completion.created,
+        text:
+          final_completion.choices[0].message.content?.replace('\n\n', '') ||
+          '',
+        total_tokens: final_completion.usage?.total_tokens || 0,
+        finish_reason: final_completion.choices[0].finish_reason,
+        database_result: JSON.stringify(database_data),
+        database_query: executed_query,
       };
-    } catch (e) {
-      console.log(111, e);
+    } catch (error) {
+      console.log(111, error);
       return {
         id: '',
         created: moment().unix(),
-        text: e.error
-          ? e.error.message
+        text: error.error
+          ? error.error.message
           : `Please try to change your question, I can't find any information based on this question`,
         total_tokens: 0,
         finish_reason: 'error',
@@ -226,9 +223,9 @@ export class OpenAiService {
     }
   }
 
-  private async generateSqlQuery(message: string) {
-    return await this.openai
-      .createChatCompletion({
+  private async generateSqlQuery(user_message: string) {
+    return await this.openai.chat.completions
+      .create({
         model: 'gpt-4-1106-preview',
         messages: [
           {
@@ -322,23 +319,25 @@ export class OpenAiService {
          call_sid      | character varying
          account       | character varying ( Acceptable values: main, arizona)
         
-        ### Please create a PostgresSQL query without any comments which will get all related for this question: ${message}.`,
+        ### Please create a PostgresSQL query without any comments which will get all related for this question: ${user_message}.`,
           },
         ],
       })
-      .then(async (r) => {
-        const query_text = r.data.choices[0].message.content;
-        const query = query_text
-          .replace('```sql', '')
-          .replace(new RegExp('```', 'g'), '');
+      .then(async (completion_response) => {
+        const query_text = completion_response.choices[0].message.content;
+        const cleaned_query =
+          query_text
+            ?.replace('```sql', '')
+            .replace(new RegExp('```', 'g'), '') || '';
 
         return {
-          data: await this.dataSource.query(query),
-          query,
+          data: await this.dataSource.query(cleaned_query),
+          query: cleaned_query,
         };
       })
-      .catch((e) => {
-        console.log(e.response);
+      .catch((error) => {
+        console.log(error.response);
+        return null;
       });
   }
 }

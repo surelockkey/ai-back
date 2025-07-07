@@ -100,7 +100,7 @@ export class CallTranscriptionService {
     const transcription = await this.openAiService.speechToText(
       createReadStream(file_name) as any,
     );
-    return transcription.data.text;
+    return transcription.text;
   }
 
   private isRepeatingTranscription(text: string, threshold = 7): boolean {

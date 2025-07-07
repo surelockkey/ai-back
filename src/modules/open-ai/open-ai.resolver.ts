@@ -26,9 +26,9 @@ export class OpenAiResolver {
     return this.openAiService.listFineTunes();
   }
 
-  @RoleGuard(UserRole.ADMIN)
-  @Query(() => String)
-  listModels() {
-    return this.openAiService.listModel();
-  }
+  // @RoleGuard(UserRole.ADMIN)
+  // @Query(() => String)
+  // listModels() {
+  //   return this.openAiService.listModel();
+  // }
 }

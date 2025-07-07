@@ -34,27 +34,14 @@ export class FineTuneService extends CrudService<FineTuneItem> {
       fine_tunes
         .map(
           (fine_tune) =>
-            `{ "prompt": "${
-              fine_tune.prompt
-                .replace(
-                  new RegExp('\n', 'g'),
-                  '\\n',
-                )
-                .replace(
-                  new RegExp('"', 'g'), 
-                  "'"
-                )
-            }", "completion": "${
-              fine_tune.text
+            `{ "prompt": "${fine_tune.prompt
+              .replace(new RegExp('\n', 'g'), '\\n')
               .replace(
-                new RegExp('\n', 'g'),
-                '\\n',
-              )
-              .replace(
-                new RegExp('"', 'g'), 
-                "'"
-              )
-            }" }`,
+                new RegExp('"', 'g'),
+                "'",
+              )}", "completion": "${fine_tune.text
+              .replace(new RegExp('\n', 'g'), '\\n')
+              .replace(new RegExp('"', 'g'), "'")}" }`,
         )
         .join('\n'),
     );
@@ -108,12 +95,12 @@ export class FineTuneService extends CrudService<FineTuneItem> {
 
       console.log({ model });
 
-      const openai_fine_tune = await this.openAiService.createTune(
-        file.id,
-        model,
-      );
+      // const openai_fine_tune = await this.openAiService.createTune(
+      //   file.id,
+      //   model,
+      // );
 
-      console.log({ openai_fine_tune });
+      // console.log({ openai_fine_tune });
 
       await this.fineTuneItemRepository.update(
         { deleted: false },
@@ -123,7 +110,7 @@ export class FineTuneService extends CrudService<FineTuneItem> {
       const res = await this.fineTuneRepository.save({
         created_at: moment().unix(),
         model,
-        openai_id: openai_fine_tune.id,
+        // openai_id: openai_fine_tune.id,
         openai_file_id: file.id,
       });
 

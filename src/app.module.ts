@@ -23,6 +23,7 @@ import { ManageSitesModule } from './modules/manage-sites/manage-sites.module';
 import { CustomerAppModule } from './modules/customer-app/customer-app.module';
 import { ReferralModule } from './modules/referral/referral.module';
 import { TechnicianModule } from './modules/technician/technician.module';
+import { DoorCornerPredictionModule } from './modules/door-corner-prediction/door-corner-prediction.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { TechnicianModule } from './modules/technician/technician.module';
     CustomerAppModule,
     ReferralModule,
     TechnicianModule,
+    DoorCornerPredictionModule,
   ],
   providers: [],
 })

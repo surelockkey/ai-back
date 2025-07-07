@@ -82,7 +82,7 @@ export class CallService {
 
           await this.callRepository.update(
             { id: call.id },
-            { transcription: transcription.data.text },
+            { transcription: transcription.text },
           );
         } catch (e) {
           console.dir({

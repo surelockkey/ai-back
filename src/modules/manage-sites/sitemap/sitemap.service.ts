@@ -125,7 +125,8 @@ export class SitemapService extends CrudService<Sitemap> {
     return `${baseUrl
       .replace(`{state}`, state)
       .replace(`{name}`, name)
-      .replace(`{url}`, url)}}`;
+      .replace(`{url}`, url)
+      .toLowerCase()}`;
   }
 
   async handlePageSitemap(
@@ -165,12 +166,14 @@ export class SitemapService extends CrudService<Sitemap> {
         page.type === 'blog'
           ? company.blog_base_url
           : company.location_base_url;
+
       const loc = this.generateLoc(
         baseUrl,
         page.meta_info?.state,
         page.meta_info?.name,
         page.meta_info?.url,
       );
+
       let sitemapChanged = false;
 
       if (page.is_posted && !page.meta_info?.redirect_url) {

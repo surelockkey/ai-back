@@ -1,6 +1,5 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Field, ObjectType, Int } from '@nestjs/graphql';
-import * as moment from 'moment';
 import { ConstructedPageCompany } from '../../constructed-page/constructed-page-company/entity/constructed-page-company.entity';
 import { BaseEntity } from '@tech-slk/nest-crud';
 
@@ -11,8 +10,8 @@ export class Sitemap extends BaseEntity {
   @Column()
   loc: string;
 
-  @Field(() => Int)
-  @Column({ type: 'bigint' })
+  @Field(() => Int, { nullable: true })
+  @Column({ type: 'bigint', nullable: true })
   lastmod: number;
 
   @Field(() => String, { nullable: true })

@@ -40,7 +40,7 @@ export class TranscriptionService extends CrudService<Transcription> {
 
       return await this.create({
         ctm_call_id: call_id,
-        text: transcription.data.text,
+        text: transcription.text,
       });
     });
 
