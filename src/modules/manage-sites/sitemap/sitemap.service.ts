@@ -9,6 +9,7 @@ import { ConstructedPageCompany } from '../constructed-page/constructed-page-com
 import { HttpService } from '@nestjs/axios';
 import { AxiosRequestConfig } from 'axios';
 import { lastValueFrom } from 'rxjs';
+import { ConstructedPageType } from '../constructed-page/enum/constructed-page-type.enum';
 
 @Injectable()
 export class SitemapService extends CrudService<Sitemap> {
@@ -163,7 +164,7 @@ export class SitemapService extends CrudService<Sitemap> {
       if (!company) return;
 
       const baseUrl =
-        page.type === 'blog'
+        page.type === ConstructedPageType.BLOG
           ? company.blog_base_url
           : company.location_base_url;
 
