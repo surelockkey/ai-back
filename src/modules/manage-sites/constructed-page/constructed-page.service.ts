@@ -175,9 +175,9 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
         queryRunner,
       );
 
-      await queryRunner.commitTransaction();
-
-      const created_page = await this.findOneById(constructed_page.id);
+      const created_page = await queryRunner.manager.findOne(ConstructedPage, {
+        where: { id: constructed_page.id },
+      });
 
       await this.sitemapService.handlePageSitemap(
         {
@@ -193,6 +193,8 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
         },
         queryRunner,
       );
+
+      await queryRunner.commitTransaction();
 
       return created_page;
     } catch (error) {
