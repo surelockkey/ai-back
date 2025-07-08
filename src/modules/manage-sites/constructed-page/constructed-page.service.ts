@@ -263,9 +263,9 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
         );
       }
 
-      await queryRunner.commitTransaction();
-
-      const updatedPage = await this.findOneById(id);
+      const updatedPage = await queryRunner.manager.findOne(ConstructedPage, {
+        where: { id },
+      });
 
       await this.sitemapService.handlePageSitemap(
         {
@@ -281,6 +281,8 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
         },
         queryRunner,
       );
+
+      await queryRunner.commitTransaction();
 
       return updatedPage;
     } catch (error) {
