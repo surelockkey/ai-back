@@ -1682,6 +1682,7 @@ type Mutation {
   startUpdateJobsInfo(account: Account! = main, from_month: Int = 1, from_year: Int = 18): String!
   transformAllLocation(constructed_page_company_id: String!, locations: JSON!): SendDto!
   transformBlogs(blogs: JSON!, constructed_page_company_id: String!): SendDto!
+  updateAllSitemapLastmodByPageCriteria(company_id: String!, is_posted: Boolean, type: ConstructedPageType): Boolean!
 
   """update blogs"""
   updateBlog(updateBlog: UpdateConstructorBlogDto!): ConstructorBlog!

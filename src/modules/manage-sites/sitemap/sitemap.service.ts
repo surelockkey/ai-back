@@ -10,6 +10,8 @@ import { HttpService } from '@nestjs/axios';
 import { AxiosRequestConfig } from 'axios';
 import { lastValueFrom } from 'rxjs';
 import { ConstructedPageType } from '../constructed-page/enum/constructed-page-type.enum';
+import { ConstructedPage } from '../constructed-page/entity/constructed-page.entity';
+import { GraphQLError } from 'graphql';
 
 @Injectable()
 export class SitemapService extends CrudService<Sitemap> {
@@ -223,6 +225,73 @@ export class SitemapService extends CrudService<Sitemap> {
       if (!isExternalTransaction) {
         await localQueryRunner.release();
       }
+    }
+  }
+
+  async updateSitemapLastmodByPageCriteria(
+    company_id: string,
+    type: ConstructedPageType,
+    is_posted?: boolean,
+  ): Promise<boolean> {
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      // Get all constructed pages matching the criteria
+      const pages = await queryRunner.manager
+        .getRepository(ConstructedPage)
+        .find({
+          where: {
+            constructed_page_company_id: company_id,
+            type,
+            is_posted,
+          },
+          relations: ['meta_info'],
+        });
+
+      if (!pages.length) return false;
+
+      // Get company details for base URLs
+      const company = await queryRunner.manager
+        .getRepository(ConstructedPageCompany)
+        .findOne({ where: { id: company_id } });
+
+      if (!company) return false;
+
+      const baseUrl =
+        type === ConstructedPageType.BLOG
+          ? company.blog_base_url
+          : company.location_base_url;
+
+      // Update sitemap entries for each page
+      for (const page of pages) {
+        if (page.meta_info && !page.meta_info.redirect_url) {
+          const loc = this.generateLoc(
+            baseUrl,
+            page.meta_info.state,
+            page.meta_info.name,
+            page.meta_info.url,
+          );
+
+          await queryRunner.manager.update(
+            Sitemap,
+            { loc, company_id },
+            { lastmod: page.post_date || moment().unix() },
+          );
+        }
+      }
+
+      await queryRunner.commitTransaction();
+
+      return true;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      throw new GraphQLError(
+        'Failed to update sitemap lastmod by page criteria',
+      );
+    } finally {
+      await queryRunner.release();
     }
   }
 }
