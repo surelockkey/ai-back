@@ -694,12 +694,6 @@ type ConstructorBlogFilterableWithCountDto {
   blogCount: Float
 }
 
-type CornerCoordinates {
-  label: String!
-  x: Float!
-  y: Float!
-}
-
 type Countie {
   city: String!
   county: String!
@@ -1583,7 +1577,6 @@ type Mutation {
   approveUserScheduleRequest(request_ids: [ID!]!): [UserSchedule!]!
   assignManyTemplateToCar(createCarTemplateDto: [CreateCarTemplateDto!]!): [CarTemplate!]!
   assignTechToJobWorkiz(id: String!, userName: String!): SendDto!
-  batchPredictDoorCorners(images: [Upload!]!): [PredictionResult!]!
 
   """change blog posted"""
   changeBlogPostStatus(changeBlogPostStatusDto: ChangeBlogPostStatusDto!): ConstructorBlog!
@@ -1664,7 +1657,6 @@ type Mutation {
   parseCalls(account: Account! = main, from_month: Int = 1, from_year: Int = 18): SendDto!
   parseLocation(constructed_page_company_id: String!): SendDto!
   predictDoorCorners(image: Upload!): PredictionResult!
-  predictDoorCornersWithRetry(image: Upload!, maxRetries: Int! = 3): PredictionResult!
   prepareFileForFineTune(filename: String!): String!
   registrationCustomer(registration_dto: RegistrationCustomerDto!): User!
   requestLocksmith(locksmith: RequestLocksmithDto!): Locksmith!
@@ -1811,9 +1803,10 @@ type PhotoForBlock {
 }
 
 type PredictionResult {
-  confidence: Float!
-  corners: [CornerCoordinates!]!
-  processedAt: DateTime!
+  height: Float!
+  width: Float!
+  x: Float!
+  y: Float!
 }
 
 type Query {

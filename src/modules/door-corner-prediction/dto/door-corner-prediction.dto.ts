@@ -14,12 +14,15 @@ export class CornerCoordinates {
 
 @ObjectType()
 export class PredictionResult {
-  @Field(() => [CornerCoordinates])
-  corners: CornerCoordinates[];
+  @Field(() => Float)
+  x: number;
 
   @Field(() => Float)
-  confidence: number;
+  y: number;
 
-  @Field()
-  processedAt: Date;
+  @Field(() => Float)
+  width: number;
+
+  @Field(() => Float)
+  height: number;
 }
