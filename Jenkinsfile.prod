@@ -40,6 +40,7 @@ def prod_secrets = [
         [envVar: 'AWS_BUCKET_LOCKSMITH',  vaultKey: 'AWS_BUCKET_LOCKSMITH'],
         [envVar: 'TOKEN_WORKIZ', vaultKey: 'TOKEN_WORKIZ'],
         [envVar: 'ENVIROMENT', vaultKey: 'ENVIROMENT'],
+        [envVar: 'ROBOFLOW_API_KEY',  vaultKey: 'ROBOFLOW_API_KEY'],
     ]],
 ]
 
@@ -114,6 +115,7 @@ pipeline {
                         echo "AWS_REGION=${AWS_REGION}" >> .env
                         echo "AWS_BUCKET_LOCKSMITH=${AWS_BUCKET_LOCKSMITH}" >> .env
                         echo "ENVIROMENT=${ENVIROMENT}" >> .env
+                        echo "ROBOFLOW_API_KEY=${ROBOFLOW_API_KEY}" >> .env
 
                         sudo docker-compose stop
                         sudo docker-compose build --no-cache --build-arg NPM_TOKEN=${NPM_TOKEN} prod
