@@ -1,6 +1,19 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { FileUpload } from 'graphql-upload';
+import { CornerPointsDto, PointDto } from './dto/corner-points.dto';
+
+interface Prediction {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  confidence: number;
+  class: string;
+  points: PointDto[];
+  class_id: number;
+  detection_id: string;
+}
 
 @Injectable()
 export class DoorCornerPredictionService {
@@ -11,31 +24,33 @@ export class DoorCornerPredictionService {
   constructor(private configService: ConfigService) {
     this.roboflowApiKey = this.configService.get<string>('ROBOFLOW_API_KEY');
     this.roboflowEndpoint =
-      'https://serverless.roboflow.com/infer/workflows/surelock/detect-count-and-visualize-3';
+      'https://serverless.roboflow.com/infer/workflows/surelock/detect-count-and-visualize-4';
   }
 
-  async predictCornersFromUpload(image: FileUpload): Promise<any> {
+  async predictCornersFromUpload(
+    image: FileUpload,
+  ): Promise<CornerPointsDto[]> {
     try {
       this.logger.log('Starting corner prediction from uploaded image');
 
       // Create readable stream from upload
-      const { createReadStream, filename, mimetype } = image;
+      const { createReadStream } = image;
       const stream = createReadStream();
 
       // Convert stream to base64 for Roboflow API
       const base64Image = await this.streamToBase64(stream);
 
-      // Call Roboflow API
+      // Call Roboflow API with base64 image
       const result = await this.callRoboflowAPI(base64Image);
 
-      // this.logger.log(
-      //   'Roboflow API Response:',
-      //   JSON.stringify(result, null, 2),
-      // );
+      this.logger.log('Roboflow API call completed successfully');
 
-      // console.log(result.outputs[0].predictions.predictions[0]);
+      const corners: CornerPointsDto[] =
+        result.outputs[0].predictions.predictions.map((prediction) =>
+          this.extractCornerPoints(prediction),
+        );
 
-      return result.outputs[0].predictions.predictions[0];
+      return corners;
     } catch (error) {
       this.logger.error('Error in predictCornersFromUpload:', error);
       throw error;
@@ -88,5 +103,48 @@ export class DoorCornerPredictionService {
         reject(error);
       });
     });
+  }
+
+  extractCornerPoints(prediction: Prediction): CornerPointsDto {
+    const points = prediction.points;
+
+    if (!points || points.length === 0) {
+      throw new Error('No points found in prediction');
+    }
+
+    // Find extreme points
+    let topLeft = points[0];
+    let topRight = points[0];
+    let bottomLeft = points[0];
+    let bottomRight = points[0];
+
+    for (const point of points) {
+      // Top-left: minimize x + y (closest to origin)
+      if (point.x + point.y < topLeft.x + topLeft.y) {
+        topLeft = point;
+      }
+
+      // Top-right: maximize x - y (rightmost in upper area)
+      if (point.x - point.y > topRight.x - topRight.y) {
+        topRight = point;
+      }
+
+      // Bottom-left: minimize x - y (leftmost in lower area)
+      if (point.x - point.y < bottomLeft.x - bottomLeft.y) {
+        bottomLeft = point;
+      }
+
+      // Bottom-right: maximize x + y (farthest from origin)
+      if (point.x + point.y > bottomRight.x + bottomRight.y) {
+        bottomRight = point;
+      }
+    }
+
+    return {
+      topLeft,
+      topRight,
+      bottomLeft,
+      bottomRight,
+    };
   }
 }

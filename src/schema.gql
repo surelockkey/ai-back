@@ -694,6 +694,13 @@ type ConstructorBlogFilterableWithCountDto {
   blogCount: Float
 }
 
+type CornerPointsDto {
+  bottomLeft: PointDto!
+  bottomRight: PointDto!
+  topLeft: PointDto!
+  topRight: PointDto!
+}
+
 type Countie {
   city: String!
   county: String!
@@ -1656,7 +1663,7 @@ type Mutation {
   parseBlogs(constructed_page_company_id: String!): SendDto!
   parseCalls(account: Account! = main, from_month: Int = 1, from_year: Int = 18): SendDto!
   parseLocation(constructed_page_company_id: String!): SendDto!
-  predictDoorCorners(image: Upload!): PredictionResult!
+  predictDoorCorners(image: Upload!): [CornerPointsDto!]!
   prepareFileForFineTune(filename: String!): String!
   registrationCustomer(registration_dto: RegistrationCustomerDto!): User!
   requestLocksmith(locksmith: RequestLocksmithDto!): Locksmith!
@@ -1802,11 +1809,9 @@ type PhotoForBlock {
   title: String
 }
 
-type PredictionResult {
-  height: Float!
-  width: Float!
-  x: Float!
-  y: Float!
+type PointDto {
+  x: Int!
+  y: Int!
 }
 
 type Query {

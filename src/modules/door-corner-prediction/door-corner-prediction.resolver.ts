@@ -2,7 +2,7 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { DoorCornerPredictionService } from './door-corner-prediction.service';
 import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js';
 import { FileUpload } from 'graphql-upload';
-import { PredictionResult } from './dto/door-corner-prediction.dto';
+import { CornerPointsDto } from './dto/corner-points.dto';
 
 @Resolver()
 export class DoorCornerPredictionResolver {
@@ -10,10 +10,10 @@ export class DoorCornerPredictionResolver {
     private readonly doorCornerPredictionService: DoorCornerPredictionService,
   ) {}
 
-  @Mutation(() => PredictionResult)
+  @Mutation(() => [CornerPointsDto])
   async predictDoorCorners(
     @Args('image', { type: () => GraphQLUpload }) image: FileUpload,
-  ): Promise<void> {
+  ): Promise<CornerPointsDto[]> {
     return this.doorCornerPredictionService.predictCornersFromUpload(image);
   }
 }
