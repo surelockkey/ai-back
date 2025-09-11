@@ -901,6 +901,10 @@ input CreateLocksmithDto {
   url: String
 }
 
+input CreateManyPageMetadataDto {
+  metadata: [CreatePageMetadataDto!]!
+}
+
 input CreateOilChange {
   date: Int!
   mileage: Int!
@@ -945,6 +949,14 @@ input CreateOrderDto {
   notes: String!
   phone: String
   service_type: ServiceType!
+}
+
+input CreatePageMetadataDto {
+  canonical: String
+  constructed_page_company_id: ID!
+  description: String
+  key: String!
+  title: String!
 }
 
 input CreatePhotoForBlockDto {
@@ -1607,6 +1619,7 @@ type Mutation {
   createLocationPhoto(picture: Upload!): LocationPhoto!
   createLocksmith(locksmith: CreateLocksmithDto!): Locksmith!
   createManyItemTemplates(createItemTemplateDto: [CreateItemTemplateDto!]!): [ItemTemplate!]!
+  createManyPageMetadata(input: CreateManyPageMetadataDto!): [PageMetadata!]!
   createManyTemplates(createTemplateDto: [CreateTemplateDto!]!): [Template!]!
   createManyUsersSchedules(users_schedules: [CreateUserScheduleDto!]!): [UserSchedule!]!
   createNewJobWorkiz(createJobDto: CreateJobDto!): SendDto!
@@ -1616,6 +1629,7 @@ type Mutation {
   createOrUpdateUserNote(user_note: CreateOrUpdateUserNoteDto!): UserNote!
   createOrUpdateUserScheduleRequest(schedule_request: [CreateOrUpdateUserScheduleRequestDto!]!): [UserScheduleRequest!]!
   createOrder(order_dto: CreateOrderDto!): Order!
+  createPageMetadata(pageMetadata: CreatePageMetadataDto!): PageMetadata!
   createReferral(referral: CreateReferralDto!): Referral!
   createSystemSettings(max_tokens: Int!): SystemSettings!
   createTechnician(technician: CreateTechnicianDto!): Technician!
@@ -1641,6 +1655,7 @@ type Mutation {
   deleteManyInvitedUsers(user_ids: [ID!]!): [String!]!
   deleteManyItemTemplates(ids: [ID!]!): [ID!]!
   deleteManyKeyCar(ids: [ID!]!): [ID!]!
+  deleteManyPageMetadata(ids: [ID!]!): [ID!]!
   deleteManyPhoto(keys: [String!]!): SendDto!
   deleteManyTemplates(ids: [ID!]!): [ID!]!
   deleteManyUserInfo(ids: [ID!]!): [ID!]!
@@ -1648,6 +1663,7 @@ type Mutation {
   deleteManyUserSchedules(ids: [ID!]!): [ID!]!
   deleteManyUsers(user_ids: [ID!]!): [String!]!
   deleteOilChange(id: ID!): ID!
+  deletePageMetadata(id: ID!): PageMetadata!
   deletePhotoLocationById(id: String!): LocationPhoto!
   deleteTechnician(id: ID!): ID!
   deleteTechnicianManager(id: ID!): ID!
@@ -1696,6 +1712,7 @@ type Mutation {
   updateLocksmith(locksmith: UpdateLocksmithDto!): Locksmith!
   updateManyUsersSchedules(users_schedules: [UpdateUserScheduleDto!]!): [UserSchedule!]!
   updateOilChange(oil_change: UpdateOilChange!): OilChange!
+  updatePageMetadata(pageMetadata: UpdatePageMetadataDto!): PageMetadata!
   updateSystemSettings(system_settings: UpdateSystemSettingsDto!): SystemSettings!
   updateTechnician(technician: UpdateTechnicianDto!): Technician!
   updateTechnicianManager(technician_manager: UpdateTechnicianManagerDto!): TechnicianManager!
@@ -1773,6 +1790,16 @@ input OrderKeyDto {
   key_id: ID!
 }
 
+type PageMetadata {
+  canonical: String
+  constructed_page_company: ConstructedPageCompany!
+  constructed_page_company_id: ID!
+  description: String
+  id: ID!
+  key: String!
+  title: String!
+}
+
 type PaginatedInventoryRequests {
   items: [InventoryRequest!]!
   total: Int!
@@ -1845,6 +1872,7 @@ type Query {
   getAllLocationPhoto: [LocationPhoto!]!
   getAllMessages(chat_type: ChatType! = DEFAULT): [Message!]!
   getAllOrders: [Order!]!
+  getAllPageMetadata(constructed_page_company_id: ID!): [PageMetadata!]!
   getAllReferrals: [Referral!]!
   getAllTechsWorkiz: [TechnicianWorkiz!]!
   getAllTemplates: [Template!]!
@@ -1897,6 +1925,7 @@ type Query {
   getMySchedule(from: Int!, to: Int!): UserWithSchedule!
   getOilChanges: [OilChange!]!
   getOrderById(id: ID!): Order!
+  getPageMetadataById(id: ID!): PageMetadata!
   getPreparedCampaign: String!
   getSystemSettings: SystemSettings!
   getTechnicianManagers: [TechnicianManager!]!
@@ -2406,6 +2435,15 @@ input UpdateOrCreateConstructedBlockDto {
   text_left: String
   text_right: String
   type_block: String
+}
+
+input UpdatePageMetadataDto {
+  canonical: String
+  constructed_page_company_id: ID
+  description: String
+  id: ID!
+  key: String
+  title: String
 }
 
 input UpdatePhotoForBlockDto {

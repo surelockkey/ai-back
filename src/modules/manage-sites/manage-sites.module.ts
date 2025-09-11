@@ -10,6 +10,7 @@ import { LocksmithModule } from './locksmith/locksmith.module';
 import { ConstructedPageModule } from './constructed-page/constructed-page.module';
 import { ManageSitesEmailModule } from './manage-sites-email/manage-sites-email.module';
 import { SitemapModule } from './sitemap/sitemap.module';
+import { PageMetadataModule } from './page-metadata/page-metadata.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { SitemapModule } from './sitemap/sitemap.module';
     ConstructedPageModule,
     ManageSitesEmailModule,
     SitemapModule,
+    PageMetadataModule,
   ],
   exports: [ManageSitesEmailModule, SitemapModule],
 })
