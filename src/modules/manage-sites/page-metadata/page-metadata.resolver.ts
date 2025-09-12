@@ -39,13 +39,13 @@ export class PageMetadataResolver {
     return this.pageMetadataService.createOne(pageMetadata);
   }
 
-  @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)
+  //   @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)
   @Mutation(() => [PageMetadata])
   async createManyPageMetadata(
-    @Args('input', { type: () => CreateManyPageMetadataDto })
-    input: CreateManyPageMetadataDto,
+    @Args('items', { type: () => [CreatePageMetadataDto] })
+    items: CreatePageMetadataDto[],
   ): Promise<PageMetadata[]> {
-    return this.pageMetadataService.createMany(input.metadata);
+    return this.pageMetadataService.createMany(items);
   }
 
   @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)

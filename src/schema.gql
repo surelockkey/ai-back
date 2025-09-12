@@ -901,10 +901,6 @@ input CreateLocksmithDto {
   url: String
 }
 
-input CreateManyPageMetadataDto {
-  metadata: [CreatePageMetadataDto!]!
-}
-
 input CreateOilChange {
   date: Int!
   mileage: Int!
@@ -1619,7 +1615,7 @@ type Mutation {
   createLocationPhoto(picture: Upload!): LocationPhoto!
   createLocksmith(locksmith: CreateLocksmithDto!): Locksmith!
   createManyItemTemplates(createItemTemplateDto: [CreateItemTemplateDto!]!): [ItemTemplate!]!
-  createManyPageMetadata(input: CreateManyPageMetadataDto!): [PageMetadata!]!
+  createManyPageMetadata(items: [CreatePageMetadataDto!]!): [PageMetadata!]!
   createManyTemplates(createTemplateDto: [CreateTemplateDto!]!): [Template!]!
   createManyUsersSchedules(users_schedules: [CreateUserScheduleDto!]!): [UserSchedule!]!
   createNewJobWorkiz(createJobDto: CreateJobDto!): SendDto!
