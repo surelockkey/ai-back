@@ -3,7 +3,6 @@ import { RoleGuard } from 'src/modules/authorization/decorator/role.decorator';
 import { UserRole } from 'src/modules/user/enum/user-role.enum';
 import {
   CreatePageMetadataDto,
-  CreateManyPageMetadataDto,
   UpdatePageMetadataDto,
 } from './dto/page-metadata.dto';
 import { PageMetadata } from './entity/page-metadata.entity';
@@ -28,6 +27,13 @@ export class PageMetadataResolver {
     @Args('id', { type: () => ID }) id: string,
   ): Promise<PageMetadata> {
     return this.pageMetadataService.getOneById(id);
+  }
+
+  @Query(() => PageMetadata)
+  async getPageMetadataByKey(
+    @Args('key', { type: () => String }) key: string,
+  ): Promise<PageMetadata> {
+    return this.pageMetadataService.getOneByKey(key);
   }
 
   @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)

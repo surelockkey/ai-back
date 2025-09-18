@@ -1922,6 +1922,7 @@ type Query {
   getOilChanges: [OilChange!]!
   getOrderById(id: ID!): Order!
   getPageMetadataById(id: ID!): PageMetadata!
+  getPageMetadataByKey(key: String!): PageMetadata!
   getPreparedCampaign: String!
   getSystemSettings: SystemSettings!
   getTechnicianManagers: [TechnicianManager!]!

@@ -38,6 +38,18 @@ export class PageMetadataService extends CrudService<PageMetadata> {
     return metadata;
   }
 
+  public async getOneByKey(key: string): Promise<PageMetadata> {
+    const metadata = await this.pageMetadataRepository.findOne({
+      where: { key },
+    });
+
+    if (!metadata) {
+      throw new GraphQLError(`Page metadata with key ${key} not found`);
+    }
+
+    return metadata;
+  }
+
   public async createOne(
     createPageMetadataDto: CreatePageMetadataDto,
   ): Promise<PageMetadata> {
