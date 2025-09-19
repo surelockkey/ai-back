@@ -35,7 +35,6 @@ export class ConstructedPageResolver {
     return this.constructedPageService.getConstructedPageById(id);
   }
 
-  // @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Query(() => ConstructedPage)
   getConstructedPageByUrl(@Args('url') url: string) {
     return this.constructedPageService.getConstructedPageByUrl(url);

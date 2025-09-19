@@ -14,6 +14,7 @@ import { ConstructedPreviewService } from './constructed-preview/constructed-pre
 import { GetConstructedPagesArgs } from './args/get-constructed-pages.args';
 import * as moment from 'moment';
 import { SitemapService } from '../sitemap/sitemap.service';
+import { ConstructedPageType } from './enum/constructed-page-type.enum';
 
 @Injectable()
 export class ConstructedPageService extends CrudService<ConstructedPage> {
@@ -91,6 +92,20 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
     return this.constructedPageRepository.findOne({
       where: { id },
       order: { blocks: { position_block: 'ASC' } },
+    });
+  }
+
+  public async getConstructedPagesCount(filters: {
+    type?: ConstructedPageType;
+    is_posted?: boolean;
+    constructed_page_company_id?: string;
+  }): Promise<number> {
+    return this.constructedPageRepository.count({
+      where: {
+        is_posted: filters.is_posted,
+        type: filters.type,
+        constructed_page_company_id: filters.constructed_page_company_id,
+      },
     });
   }
 
@@ -198,6 +213,7 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
 
       return created_page;
     } catch (error) {
+      console.log('error', error);
       await queryRunner.rollbackTransaction();
       throw new GraphQLError(error.message, { originalError: error });
     } finally {

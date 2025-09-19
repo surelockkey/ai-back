@@ -13,6 +13,7 @@ import { ConstructorBlogModule } from '../blog/constructor-blog/constructor-blog
 import { ConstructedPageParserLocationService } from './constructed-page-parser-location.service';
 import { LocationModule } from '../location/location.module';
 import { SitemapModule } from '../sitemap/sitemap.module';
+import { ConstructedPageRestController } from './constructed-page.controller';
 
 @Module({
   imports: [
@@ -32,5 +33,6 @@ import { SitemapModule } from '../sitemap/sitemap.module';
     ConstructedPageParserService,
     ConstructedPageParserLocationService,
   ],
+  controllers: [ConstructedPageRestController],
 })
 export class ConstructedPageModule {}

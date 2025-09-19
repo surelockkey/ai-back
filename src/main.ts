@@ -1,3 +1,5 @@
+// Update your existing main.ts file
+
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as graphqlUploadExpress from 'graphql-upload/graphqlUploadExpress.js';
@@ -31,13 +33,55 @@ async function bootstrap() {
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
-  const config = new DocumentBuilder().setTitle('SLK CRM').build();
+  // Updated Swagger configuration with API key support
+  const config = new DocumentBuilder()
+    .setTitle('SLK CRM')
+    .setDescription('SLK CRM API with GraphQL and REST endpoints')
+    .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'API Key',
+        name: 'Authorization',
+        description: 'Enter your API key (for REST API endpoints)',
+        in: 'header',
+      },
+      'api-key',
+    )
+    .addApiKey(
+      {
+        type: 'apiKey',
+        name: 'X-API-Key',
+        in: 'header',
+        description: 'API Key for REST API authentication',
+      },
+      'api-key',
+    )
+    .addTag('Constructed Pages', 'REST API operations for constructed pages')
+    .build();
+
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+      docExpansion: 'none',
+      filter: true,
+      tagsSorter: 'alpha',
+      operationsSorter: 'alpha',
+    },
+  });
 
   app.use(bodyParser.json({ limit: '100mb' }));
   app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 
   await app.listen(configService.get('app.port'));
+
+  console.log(`🚀 Server running on port ${configService.get('app.port')}`);
+  console.log(
+    `📚 API Documentation available at http://localhost:${configService.get(
+      'app.port',
+    )}/api`,
+  );
 }
 bootstrap();

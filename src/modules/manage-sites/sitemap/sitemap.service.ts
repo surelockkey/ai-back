@@ -125,6 +125,10 @@ export class SitemapService extends CrudService<Sitemap> {
     name: string,
     url: string,
   ): string {
+    console.log('baseUrl', baseUrl);
+    console.log('state', state);
+    console.log('name', name);
+    console.log('url', url);
     return `${baseUrl
       .replace(`{state}`, state)
       .replace(`{name}`, name)
