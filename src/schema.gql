@@ -1682,7 +1682,7 @@ type Mutation {
   requestLocksmithReview(review: RequestLocksmithReviewDto!): LocksmithReview!
   reviewManyLocksmithReviews(reviews: [ReviewLocksmithReviewDto!]!): [LocksmithReview!]!
   saveCountie: Countie!
-  sendManageSitesHtmlEmail(html: String!, subject: String!, to: String!): Boolean!
+  sendManageSitesHtmlEmail(attachments: [Upload!], html: String!, subject: String!, to: String!): Boolean!
   sendMessage(chat_type: ChatType! = DEFAULT, prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
   sendRespondTo(email: String!, file: Upload, text: String!, title: String!): String!
