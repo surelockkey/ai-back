@@ -595,6 +595,9 @@ type ConstructedMetaInfo {
   redirect_url: String
   salary: String
   schema_script: String
+
+  """Array<{name: string, url: string}>"""
+  social_links: JSON
   state: String
   url: String
   video_link: String
@@ -612,6 +615,9 @@ input ConstructedMetaInfoDto {
   redirect_url: String
   salary: String
   schema_script: String
+
+  """Array<{name: string, url: string}>"""
+  social_links: JSON
   state: String
   url: String
   video_link: String
@@ -626,6 +632,7 @@ type ConstructedPage {
   meta_info: ConstructedMetaInfo
   post_date: Float
   preview: ConstructedPreview
+  schedule_date: Float
   type: ConstructedPageType!
 }
 
@@ -771,6 +778,7 @@ input CreateConstructedPageDto {
   meta_info: ConstructedMetaInfoDto
   post_date: Float
   preview: ConstructedPreviewDto
+  schedule_date: Float
   type: ConstructedPageType!
 }
 
@@ -2226,6 +2234,9 @@ input UpdateConstructedMetaInfoDto {
   redirect_url: String
   salary: String
   schema_script: String
+
+  """Array<{name: string, url: string}>"""
+  social_links: JSON
   state: String
   url: String
   video_link: String
@@ -2249,6 +2260,7 @@ input UpdateConstructedPageDto {
   meta_info: UpdateConstructedMetaInfoDto
   post_date: Float
   preview: UpdateConstructedPreviewDto
+  schedule_date: Float
   type: ConstructedPageType
 }
 

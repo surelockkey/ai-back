@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { BaseEntity } from '@tech-slk/nest-crud';
+import GraphQLJSON from 'graphql-type-json';
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { ConstructedPage } from '../../entity/constructed-page.entity';
 
@@ -65,6 +66,13 @@ export class ConstructedMetaInfo extends BaseEntity {
   @Field(() => ID)
   @Column('uuid')
   constructed_page_id?: string;
+
+  @Field(() => GraphQLJSON, { nullable: true, description: "Array<{name: string, url: string}>" })
+  @Column('jsonb', { nullable: true })
+  social_links?: Array<{
+    name: string;
+    url: string;
+  }>;
 
   @OneToOne(
     () => ConstructedPage,

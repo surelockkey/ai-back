@@ -25,6 +25,12 @@ export class ConstructedPage extends BaseEntity {
   @Column({ nullable: true })
   post_date?: number;
 
+
+  @Field(() => Number, { nullable: true })
+  @Column({ type: 'bigint', nullable: true })
+  schedule_date?: number;
+
+
   // select * from public.construted_page where constructed_page_company_id = '359be4f8-ee18-415f-b295-b89781b14065' and type = 'BLOG';
 
   // @Field(() => Number, { nullable: true })

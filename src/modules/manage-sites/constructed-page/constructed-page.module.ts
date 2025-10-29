@@ -14,6 +14,7 @@ import { ConstructedPageParserLocationService } from './constructed-page-parser-
 import { LocationModule } from '../location/location.module';
 import { SitemapModule } from '../sitemap/sitemap.module';
 import { ConstructedPageRestController } from './constructed-page.controller';
+import { ConstructedPagePublisherCron } from './cron/constructed-page-publisher.cron';
 
 @Module({
   imports: [
@@ -32,7 +33,8 @@ import { ConstructedPageRestController } from './constructed-page.controller';
     ConstructedPageService,
     ConstructedPageParserService,
     ConstructedPageParserLocationService,
+    ConstructedPagePublisherCron,
   ],
   controllers: [ConstructedPageRestController],
 })
-export class ConstructedPageModule {}
+export class ConstructedPageModule { }
