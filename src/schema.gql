@@ -629,6 +629,9 @@ type ConstructedPage {
   constructed_page_company_id: ID
   id: ID!
   is_posted: Boolean
+
+  """Unix timestamp of the last content update (page or relations)"""
+  last_content_update_unix: Float!
   meta_info: ConstructedMetaInfo
   post_date: Float
   preview: ConstructedPreview
@@ -775,6 +778,9 @@ input CreateConstructedPageDto {
   blocks: [ConstructedBlockDto!]
   constructed_page_company_id: ID
   is_posted: Boolean
+
+  """Unix timestamp of the last content update (page or relations)"""
+  last_content_update_unix: Float!
   meta_info: ConstructedMetaInfoDto
   post_date: Float
   preview: ConstructedPreviewDto
@@ -2257,6 +2263,9 @@ input UpdateConstructedPageDto {
   delete_blocks_ids: [ID!]
   id: ID!
   is_posted: Boolean
+
+  """Unix timestamp of the last content update (page or relations)"""
+  last_content_update_unix: Float
   meta_info: UpdateConstructedMetaInfoDto
   post_date: Float
   preview: UpdateConstructedPreviewDto
