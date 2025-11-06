@@ -16,6 +16,10 @@ export class PageMetadata extends BaseEntity {
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
+  schema?: string;
+
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
   description?: string;
 
   @Field(() => String, { nullable: true })

@@ -17,10 +17,6 @@ export class ConstructedMetaInfo extends BaseEntity {
 
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
-  schema?: string;
-
-  @Field(() => String, { nullable: true })
-  @Column({ nullable: true })
   schema_script?: string;
 
   @Field(() => String, { nullable: true })

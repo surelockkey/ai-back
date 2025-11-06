@@ -140,11 +140,6 @@ export class RestConstructedMetaInfoDto {
   @IsString()
   meta_tag_title?: string;
 
-  @ApiPropertyOptional({ description: 'Schema' })
-  @IsOptional()
-  @IsString()
-  schema?: string;
-
   @ApiPropertyOptional({ description: 'Schema script' })
   @IsOptional()
   @IsString()
