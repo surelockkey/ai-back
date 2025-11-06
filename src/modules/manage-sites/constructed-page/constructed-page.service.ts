@@ -238,49 +238,69 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
         ...constructed_page_dto
       } = update_constructed_page_dto;
 
+      const pageUpdates: any = { ...constructed_page_dto };
+      let shouldUpdateParentTimestamp = false;
+      const now = moment().unix();
+
+      // 1. Update Meta Info
       if (meta_info && Object.keys(meta_info).length) {
         await this.constructedMetaInfoService.updateConstructedMetaInfoTransactional(
           meta_info,
           id,
           queryRunner,
         );
+        shouldUpdateParentTimestamp = true;
       }
 
+      // 2. Update Preview
       if (preview) {
         await this.constructedPreviewService.updateConstructedPreviewTransactional(
           preview,
           id,
           queryRunner,
         );
+        shouldUpdateParentTimestamp = true;
       }
 
+      // 3. Update/Create Blocks
       if (blocks && blocks.length) {
         await this.constructedBlockService.updateOrCreateManyBlocksTransactional(
           blocks,
           id,
           queryRunner,
         );
+        shouldUpdateParentTimestamp = true;
       }
 
+      // 4. Delete Blocks
       if (delete_blocks_ids && delete_blocks_ids.length) {
         await this.constructedBlockService.deleteManyBlocksTransactional(
           delete_blocks_ids,
           queryRunner,
         );
+        shouldUpdateParentTimestamp = true;
       }
 
-      if (Object.keys(constructed_page_dto).length) {
+      // 5. Update Parent Page Fields and Timestamp
+      if (Object.keys(constructed_page_dto).length || shouldUpdateParentTimestamp) {
+        // Set post_date if is_posted is true, otherwise use the provided DTO or default
+        const updateData = constructed_page_dto.is_posted
+          ? { ...constructed_page_dto, post_date: now }
+          : constructed_page_dto;
+
+        // Explicitly set last_content_update_unix to current time if any related content was updated
+        if (shouldUpdateParentTimestamp) {
+          updateData.last_content_update_unix = now;
+        }
+
         await queryRunner.manager.update(
           ConstructedPage,
-          {
-            id,
-          },
-          constructed_page_dto.is_posted
-            ? { ...constructed_page_dto, post_date: moment().unix() }
-            : constructed_page_dto,
+          { id },
+          updateData,
         );
       }
 
+      // ... rest of the method (sitemap handling, commit, return)
       const updatedPage = await queryRunner.manager.findOne(ConstructedPage, {
         where: { id },
       });

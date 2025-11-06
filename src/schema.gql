@@ -595,6 +595,9 @@ type ConstructedMetaInfo {
   redirect_url: String
   salary: String
   schema_script: String
+
+  """Array<{name: string, url: string}>"""
+  social_links: JSON
   state: String
   url: String
   video_link: String
@@ -612,6 +615,9 @@ input ConstructedMetaInfoDto {
   redirect_url: String
   salary: String
   schema_script: String
+
+  """Array<{name: string, url: string}>"""
+  social_links: JSON
   state: String
   url: String
   video_link: String
@@ -623,9 +629,13 @@ type ConstructedPage {
   constructed_page_company_id: ID
   id: ID!
   is_posted: Boolean
+
+  """Unix timestamp of the last content update (page or relations)"""
+  last_content_update_unix: Float!
   meta_info: ConstructedMetaInfo
   post_date: Float
   preview: ConstructedPreview
+  schedule_date: Float
   type: ConstructedPageType!
 }
 
@@ -768,9 +778,13 @@ input CreateConstructedPageDto {
   blocks: [ConstructedBlockDto!]
   constructed_page_company_id: ID
   is_posted: Boolean
+
+  """Unix timestamp of the last content update (page or relations)"""
+  last_content_update_unix: Float!
   meta_info: ConstructedMetaInfoDto
   post_date: Float
   preview: ConstructedPreviewDto
+  schedule_date: Float
   type: ConstructedPageType!
 }
 
@@ -1682,7 +1696,7 @@ type Mutation {
   requestLocksmithReview(review: RequestLocksmithReviewDto!): LocksmithReview!
   reviewManyLocksmithReviews(reviews: [ReviewLocksmithReviewDto!]!): [LocksmithReview!]!
   saveCountie: Countie!
-  sendManageSitesHtmlEmail(html: String!, subject: String!, to: String!): Boolean!
+  sendManageSitesHtmlEmail(attachments: [Upload!], html: String!, subject: String!, to: String!): Boolean!
   sendMessage(chat_type: ChatType! = DEFAULT, prompt: String!): Message!
   sendMessageToOpenAi(message: String!): String!
   sendRespondTo(email: String!, file: Upload, text: String!, title: String!): String!
@@ -2226,6 +2240,9 @@ input UpdateConstructedMetaInfoDto {
   redirect_url: String
   salary: String
   schema_script: String
+
+  """Array<{name: string, url: string}>"""
+  social_links: JSON
   state: String
   url: String
   video_link: String
@@ -2246,9 +2263,13 @@ input UpdateConstructedPageDto {
   delete_blocks_ids: [ID!]
   id: ID!
   is_posted: Boolean
+
+  """Unix timestamp of the last content update (page or relations)"""
+  last_content_update_unix: Float
   meta_info: UpdateConstructedMetaInfoDto
   post_date: Float
   preview: UpdateConstructedPreviewDto
+  schedule_date: Float
   type: ConstructedPageType
 }
 

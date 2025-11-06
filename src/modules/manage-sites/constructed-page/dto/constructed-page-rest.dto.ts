@@ -28,6 +28,16 @@ export class RestConstructedPhotoDto {
   imageData: string;
 }
 
+export class RestSocialLinkDto {
+  @ApiProperty({ description: 'Social platform name' })
+  @IsString()
+  name: string;
+
+  @ApiProperty({ description: 'Social profile URL' })
+  @IsString()
+  url: string;
+}
+
 export class RestConstructedBlockDto {
   @ApiPropertyOptional({ description: 'Position of the block' })
   @IsOptional()
@@ -130,6 +140,11 @@ export class RestConstructedMetaInfoDto {
   @IsString()
   meta_tag_title?: string;
 
+  @ApiPropertyOptional({ description: 'Schema' })
+  @IsOptional()
+  @IsString()
+  schema?: string;
+
   @ApiPropertyOptional({ description: 'Schema script' })
   @IsOptional()
   @IsString()
@@ -189,6 +204,16 @@ export class RestConstructedMetaInfoDto {
   @IsOptional()
   @IsString()
   salary?: string;
+
+  @ApiPropertyOptional({
+    type: [RestSocialLinkDto],
+    description: 'Social media links'
+  })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => RestSocialLinkDto)
+  social_links?: RestSocialLinkDto[];
 }
 
 export class RestConstructedPreviewDto {
@@ -237,6 +262,11 @@ export class CreateConstructedPageRestDto {
   @IsOptional()
   @IsBoolean()
   is_posted?: boolean;
+
+  @ApiPropertyOptional({ description: 'Unix timestamp for when to publish' })
+  @IsOptional()
+  @IsNumber()
+  schedule_date?: number;
 
   @ApiPropertyOptional({ description: 'Company ID' })
   @IsOptional()
@@ -294,6 +324,11 @@ export class GetConstructedPagesQueryDto {
   @IsBoolean()
   is_posted?: boolean;
 
+  @ApiPropertyOptional({ description: 'Unix timestamp for when to publish' })
+  @IsOptional()
+  @IsNumber()
+  schedule_date?: number;
+
   @ApiPropertyOptional({ description: 'Filter by company ID' })
   @IsOptional()
   @IsString()
@@ -312,6 +347,9 @@ export class ConstructedPageResponseDto {
 
   @ApiPropertyOptional({ description: 'Whether the page is posted' })
   is_posted?: boolean;
+
+  @ApiPropertyOptional({ description: 'Unix timestamp for when to publish' })
+  schedule_date?: number;
 
   @ApiPropertyOptional({ description: 'Company ID' })
   constructed_page_company_id?: string;

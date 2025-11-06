@@ -29,7 +29,7 @@ export class JobService {
     private readonly systemSettingService: SystemSettingsService,
     private readonly countieService: CountieService,
     private readonly callService: CallService,
-  ) {}
+  ) { }
 
   public async jobLoop(
     from_year = 18,
@@ -339,17 +339,17 @@ export class JobService {
     console.log('Finish get unsaved jobs');
   }
 
-  @Cron('0 0 9 * * *', {
-    timeZone: 'Europe/Kiev',
-  })
-  async reParseJobEveryDay() {
-    if (process.env.ENVIROMENT !== 'prod') {
-      const date = new Date();
-      const month = date.getMonth() + 1;
-      const year = parseInt(date.getFullYear().toString().slice(-2));
-
-      await this.startUpdateJobsInfo(year, month, 'main');
-      await this.startUpdateJobsInfo(year, month, 'arizona');
-    }
-  }
+  // @Cron('0 0 9 * * *', {
+  //   timeZone: 'Europe/Kiev',
+  // })
+  // async reParseJobEveryDay() {
+  //   if (process.env.ENVIROMENT !== 'prod') {
+  //     const date = new Date();
+  //     const month = date.getMonth() + 1;
+  //     const year = parseInt(date.getFullYear().toString().slice(-2));
+  //
+  //     await this.startUpdateJobsInfo(year, month, 'main');
+  //     await this.startUpdateJobsInfo(year, month, 'arizona');
+  //   }
+  // }
 }

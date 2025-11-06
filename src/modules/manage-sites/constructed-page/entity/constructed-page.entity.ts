@@ -7,6 +7,7 @@ import {
   ManyToOne,
   OneToMany,
   OneToOne,
+  UpdateDateColumn,
 } from 'typeorm';
 import { ConstructedPageType } from '../enum/constructed-page-type.enum';
 import { ConstructedMetaInfo } from '../constructed-meta-info/entity/constructed-meta-info.entity';
@@ -24,6 +25,23 @@ export class ConstructedPage extends BaseEntity {
   @Field(() => Number, { nullable: true })
   @Column({ nullable: true })
   post_date?: number;
+
+
+  @Field(() => Number, { nullable: true })
+  @Column({ type: 'bigint', nullable: true })
+  schedule_date?: number;
+
+  @Field(() => Number, { description: 'Unix timestamp of the last content update (page or relations)' })
+  @UpdateDateColumn({
+    type: 'bigint',
+    transformer: {
+      to: (value?: number) => value,
+      from: (value?: string) => value ? parseInt(value) : undefined,
+    },
+    default: () => 'EXTRACT(EPOCH FROM NOW())',
+  })
+  last_content_update_unix: number;
+
 
   // select * from public.construted_page where constructed_page_company_id = '359be4f8-ee18-415f-b295-b89781b14065' and type = 'BLOG';
 
