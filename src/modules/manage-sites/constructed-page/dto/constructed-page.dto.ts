@@ -27,7 +27,8 @@ export class ConstructedPageInput extends OmitType(ConstructedPage, [
   'meta_info',
   'preview',
   'constructed_page_company',
-]) {}
+  'last_content_update_unix'
+]) { }
 
 @InputType()
 export class CreateConstructedPageDto extends OmitType(ConstructedPageInput, [
