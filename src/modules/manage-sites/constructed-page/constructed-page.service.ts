@@ -168,7 +168,7 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
       const constructed_page = await queryRunner.manager.save(
         ConstructedPage,
         page_dto.is_posted
-          ? { ...page_dto, post_date: moment().unix() }
+          ? { ...page_dto, post_date: moment().unix(), last_content_update_unix: moment().unix() }
           : page_dto,
       );
 
