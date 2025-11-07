@@ -40,7 +40,7 @@ export class ConstructedPageResolver {
     return this.constructedPageService.getConstructedPageByUrl(url);
   }
 
-  // @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)
   @Mutation(() => ConstructedPage)
   createConstructedPage(
     @Args('constructed_page', { type: () => CreateConstructedPageDto })
@@ -55,7 +55,7 @@ export class ConstructedPageResolver {
     return this.constructedPageService.deleteConstructedPage(id);
   }
 
-  // @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)
+  @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)
   @Mutation(() => ConstructedPage)
   updateConstructedPage(
     @Args('constructed_page', { type: () => UpdateConstructedPageDto })
