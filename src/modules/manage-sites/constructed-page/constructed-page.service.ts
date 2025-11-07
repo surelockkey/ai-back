@@ -291,7 +291,7 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
         await queryRunner.manager.update(
           ConstructedPage,
           { id },
-          { ...updateData, last_content_update_unix: shouldUpdateParentTimestamp ? now : undefined },
+          { ...updateData, last_content_update_unix: now },
         );
       }
 
