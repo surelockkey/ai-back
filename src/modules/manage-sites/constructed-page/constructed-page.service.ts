@@ -288,15 +288,10 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
           ? { ...constructed_page_dto, post_date: now }
           : constructed_page_dto;
 
-        // Explicitly set last_content_update_unix to current time if any related content was updated
-        if (shouldUpdateParentTimestamp) {
-          updateData.last_content_update_unix = now;
-        }
-
         await queryRunner.manager.update(
           ConstructedPage,
           { id },
-          updateData,
+          { ...updateData, last_content_update_unix: shouldUpdateParentTimestamp ? now : undefined },
         );
       }
 
