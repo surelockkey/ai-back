@@ -63,6 +63,10 @@ export class ConstructedMetaInfo extends BaseEntity {
   @Column({ nullable: true })
   salary?: string;
 
+  @Field(() => GraphQLJSON, { nullable: true, description: 'Auto-generated Schema.org JSON-LD for blog posts' })
+  @Column('jsonb', { nullable: true })
+  schema_org?: Record<string, any>;
+
   @Field(() => ID)
   @Column('uuid')
   constructed_page_id?: string;

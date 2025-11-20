@@ -1,5 +1,6 @@
 import { Field, InputType, OmitType, PartialType } from '@nestjs/graphql';
 import { ConstructedMetaInfo } from '../entity/constructed-meta-info.entity';
+import GraphQLJSON from 'graphql-type-json';
 
 @InputType()
 export class SocialLinkInput {
@@ -16,6 +17,9 @@ export class ConstructedMetaInfoInput extends OmitType(ConstructedMetaInfo, [
 ]) {
   @Field(() => [SocialLinkInput], { nullable: true })
   social_links?: SocialLinkInput[];
+
+  @Field(() => GraphQLJSON, { nullable: true })
+  schema_org?: Record<string, any>;
 }
 
 @InputType()

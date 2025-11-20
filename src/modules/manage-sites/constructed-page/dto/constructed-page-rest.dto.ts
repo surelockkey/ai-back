@@ -7,6 +7,7 @@ import {
   IsEnum,
   IsNumber,
   ValidateNested,
+  IsObject,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ConstructedPageType } from '../enum/constructed-page-type.enum';
@@ -201,6 +202,14 @@ export class RestConstructedMetaInfoDto {
   salary?: string;
 
   @ApiPropertyOptional({
+    type: 'object',
+    description: 'Auto-generated Schema.org JSON-LD (read-only, auto-populated for blog posts)',
+  })
+  @IsOptional()
+  @IsObject()
+  schema_org?: Record<string, any>;
+
+  @ApiPropertyOptional({
     type: [RestSocialLinkDto],
     description: 'Social media links'
   })
@@ -280,7 +289,7 @@ export class CreateConstructedPageRestDto {
 
   @ApiPropertyOptional({
     type: RestConstructedMetaInfoDto,
-    description: 'Meta information',
+    description: 'Meta information (schema_org will be auto-generated for blog posts)',
   })
   @IsOptional()
   @ValidateNested()
@@ -355,7 +364,7 @@ export class ConstructedPageResponseDto {
   @ApiPropertyOptional({ description: 'Last update date' })
   updated_at?: Date;
 
-  @ApiPropertyOptional({ description: 'Meta information' })
+  @ApiPropertyOptional({ description: 'Meta information (includes auto-generated schema_org for blogs)' })
   meta_info?: any;
 
   @ApiPropertyOptional({ description: 'Page blocks' })

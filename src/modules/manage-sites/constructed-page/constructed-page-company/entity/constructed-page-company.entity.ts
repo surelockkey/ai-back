@@ -27,6 +27,18 @@ export class ConstructedPageCompany extends BaseEntity {
   @Column('jsonb', { nullable: true })
   redirects: JSON;
 
+  @Field(() => String, { nullable: true, description: 'Company legal name for schema.org' })
+  @Column({ nullable: true })
+  company_legal_name?: string;
+
+  @Field(() => String, { nullable: true, description: 'Company logo URL for schema.org' })
+  @Column({ nullable: true })
+  company_logo_url?: string;
+
+  @Field(() => String, { nullable: true, description: 'Company website URL' })
+  @Column({ nullable: true })
+  company_website_url?: string;
+
   @OneToMany(
     () => ConstructedPage,
     (constructed_page) => constructed_page.constructed_page_company,

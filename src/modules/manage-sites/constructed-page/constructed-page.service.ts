@@ -15,6 +15,7 @@ import { GetConstructedPagesArgs } from './args/get-constructed-pages.args';
 import * as moment from 'moment';
 import { SitemapService } from '../sitemap/sitemap.service';
 import { ConstructedPageType } from './enum/constructed-page-type.enum';
+import { ConstructedPageCompany } from './constructed-page-company/entity/constructed-page-company.entity';
 
 @Injectable()
 export class ConstructedPageService extends CrudService<ConstructedPage> {
@@ -28,6 +29,60 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
     private readonly sitemapService: SitemapService,
   ) {
     super(constructedPageRepository);
+  }
+
+  /**
+   * Generate Schema.org JSON-LD for blog posts
+   */
+  private generateBlogSchemaOrg(
+    metaInfo: any,
+    preview: any,
+    company: ConstructedPageCompany,
+    postDate: number,
+    lastUpdateDate: number,
+  ): Record<string, any> {
+    const baseUrl = company.blog_base_url || company.company_website_url || '';
+    const blogUrl = `${baseUrl}${metaInfo.url ? `/${metaInfo.url}` : ''}`;
+
+    // Get thumbnail from preview photo if available
+    let thumbnailUrl = '';
+    if (preview?.photo?.file?.url) {
+      thumbnailUrl = preview.photo.file.url;
+    }
+
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: metaInfo.meta_tag_title || preview?.headline || '',
+      description: metaInfo.meta_tag_description || preview?.description || '',
+      author: {
+        '@type': 'Organization',
+        name: company.company_legal_name || company.name,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: company.company_legal_name || company.name,
+        ...(company.company_logo_url && {
+          logo: {
+            '@type': 'ImageObject',
+            url: company.company_logo_url,
+          },
+        }),
+      },
+      datePublished: moment.unix(postDate).toISOString(),
+      dateModified: moment.unix(lastUpdateDate).toISOString(),
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': blogUrl,
+      },
+    };
+
+    // Add image if available
+    if (thumbnailUrl) {
+      schema['image'] = thumbnailUrl;
+    }
+
+    return schema;
   }
 
   public async getConstructedPages({
@@ -50,40 +105,6 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
       },
       ...pagination,
     });
-
-    // return await this.constructedPageRepository
-    //   .createQueryBuilder('constructed_page')
-    //   .leftJoinAndSelect(
-    //     'constructed_page.constructed_page_company',
-    //     'constructed_page_company',
-    //   )
-    //   .leftJoinAndSelect('constructed_page.meta_info', 'meta_info')
-    //   .leftJoinAndSelect('constructed_page.blocks', 'constructed_block')
-    //   .leftJoinAndSelect('constructed_block.photo', 'constructed_block_photo')
-    //   .leftJoinAndSelect(
-    //     'constructed_block_photo.file',
-    //     'constructed_block_photo_file',
-    //   )
-    //   .leftJoinAndSelect('constructed_page.preview', 'constructed_page_preview')
-    //   .leftJoinAndSelect(
-    //     'constructed_page_preview.photo',
-    //     'constructed_page_preview_photo',
-    //   )
-    //   .leftJoinAndSelect(
-    //     'constructed_page_preview_photo.file',
-    //     'constructed_page_preview_photo_file',
-    //   )
-    //   .where('constructed_page.is_posted = :is_posted', { is_posted })
-    //   .andWhere('constructed_page.type = :type', { type })
-    //   .andWhere(
-    //     'constructed_page.constructed_page_company_id = :constructed_page_company_id',
-    //     { constructed_page_company_id },
-    //   )
-    //   .orderBy('constructed_page.post_date', 'DESC')
-    //   .addOrderBy(`constructed_block.position_block`, 'ASC')
-    //   .offset(pagination.skip)
-    //   .limit(pagination.take)
-    //   .getMany();
 
     return items;
   }
@@ -178,8 +199,31 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
         queryRunner,
       );
 
+      // Get company info for schema.org generation
+      const company = await queryRunner.manager.findOne(ConstructedPageCompany, {
+        where: { id: constructed_page.constructed_page_company_id },
+      });
+
+      // Auto-generate schema.org for blog posts
+      let finalMetaInfo = meta_info;
+      if (page_dto.type === ConstructedPageType.BLOG && company) {
+        const postDate = constructed_page.post_date || moment().unix();
+        const schemaOrg = this.generateBlogSchemaOrg(
+          meta_info,
+          preview,
+          company,
+          postDate,
+          postDate,
+        );
+
+        finalMetaInfo = {
+          ...meta_info,
+          schema_org: schemaOrg,
+        };
+      }
+
       await this.constructedMetaInfoService.createConstructedMetaInfoTransactional(
-        meta_info,
+        finalMetaInfo,
         constructed_page.id,
         queryRunner,
       );
@@ -242,10 +286,48 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
       let shouldUpdateParentTimestamp = false;
       const now = moment().unix();
 
+      // Get existing page and company info
+      const existingPage = await queryRunner.manager.findOne(ConstructedPage, {
+        where: { id },
+        relations: ['meta_info', 'preview', 'constructed_page_company'],
+      });
+
+      if (!existingPage) {
+        throw new GraphQLError('Page not found');
+      }
+
       // 1. Update Meta Info
       if (meta_info && Object.keys(meta_info).length) {
+        // Auto-regenerate schema.org for blog posts if relevant fields changed
+        let finalMetaInfo = meta_info;
+        if (existingPage.type === ConstructedPageType.BLOG && existingPage.constructed_page_company) {
+          const shouldRegenerateSchema =
+            meta_info.meta_tag_title ||
+            meta_info.meta_tag_description ||
+            preview?.headline ||
+            preview?.description;
+
+          if (shouldRegenerateSchema) {
+            const mergedMetaInfo = { ...existingPage.meta_info, ...meta_info };
+            const mergedPreview = preview ? { ...existingPage.preview, ...preview } : existingPage.preview;
+
+            const schemaOrg = this.generateBlogSchemaOrg(
+              mergedMetaInfo,
+              mergedPreview,
+              existingPage.constructed_page_company,
+              existingPage.post_date || now,
+              now,
+            );
+
+            finalMetaInfo = {
+              ...meta_info,
+              schema_org: schemaOrg,
+            };
+          }
+        }
+
         await this.constructedMetaInfoService.updateConstructedMetaInfoTransactional(
-          meta_info,
+          finalMetaInfo,
           id,
           queryRunner,
         );
@@ -260,6 +342,26 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
           queryRunner,
         );
         shouldUpdateParentTimestamp = true;
+
+        // Regenerate schema.org if preview image changed for blog posts
+        if (existingPage.type === ConstructedPageType.BLOG &&
+          preview.photo &&
+          existingPage.constructed_page_company) {
+          const mergedPreview = { ...existingPage.preview, ...preview };
+          const schemaOrg = this.generateBlogSchemaOrg(
+            existingPage.meta_info,
+            mergedPreview,
+            existingPage.constructed_page_company,
+            existingPage.post_date || now,
+            now,
+          );
+
+          await this.constructedMetaInfoService.updateConstructedMetaInfoTransactional(
+            { schema_org: schemaOrg },
+            id,
+            queryRunner,
+          );
+        }
       }
 
       // 3. Update/Create Blocks
@@ -283,7 +385,6 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
 
       // 5. Update Parent Page Fields and Timestamp
       if (Object.keys(constructed_page_dto).length || shouldUpdateParentTimestamp) {
-        // Set post_date if is_posted is true, otherwise use the provided DTO or default
         const updateData = constructed_page_dto.is_posted
           ? { ...constructed_page_dto, post_date: now }
           : constructed_page_dto;
@@ -295,7 +396,6 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
         );
       }
 
-      // ... rest of the method (sitemap handling, commit, return)
       const updatedPage = await queryRunner.manager.findOne(ConstructedPage, {
         where: { id },
       });
