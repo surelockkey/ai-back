@@ -86,10 +86,12 @@ export class ConstructedBlockService extends CrudService<ConstructedBlock> {
             );
           constructed_photo_id = constructed_photo.id;
         } else if (id && !photo) {
-          const exist_block = await this.findOneById(id);
+          const exist_block = await this.findOneWithoutError({ id });
 
           if (exist_block.constructed_photo_id) {
-            await this.constructedPhotoService.deleteById(exist_block.constructed_photo_id);
+            await this.constructedPhotoService.deleteById(
+              exist_block.constructed_photo_id,
+            );
           }
         }
 

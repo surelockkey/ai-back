@@ -21,7 +21,7 @@ export class ConstructedPageResolver {
     private readonly constructedPageService: ConstructedPageService,
     private readonly constructedPageParserService: ConstructedPageParserService,
     private readonly constructedPageParserLocationService: ConstructedPageParserLocationService,
-  ) { }
+  ) {}
 
   // @RoleGuard(UserRole.ADMIN, UserRole.SEO)
   @Query(() => [ConstructedPage])

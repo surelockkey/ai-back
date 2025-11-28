@@ -91,7 +91,7 @@ export class ConstructedBlock extends BaseEntity {
   @OneToOne(
     () => ConstructedPhoto,
     (constructed_photo) => constructed_photo.block,
-    { nullable: true, eager: true },
+    { nullable: true, eager: true, onDelete: 'SET NULL', onUpdate: 'SET NULL' },
   )
   @JoinColumn({ name: 'constructed_photo_id' })
   photo: ConstructedPhoto;

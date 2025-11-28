@@ -30,14 +30,14 @@ export class ConstructedPhoto extends BaseEntity {
   @OneToOne(
     () => ConstructedBlock,
     (constructed_block) => constructed_block.photo,
-    { onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true },
+    { onDelete: 'SET NULL', onUpdate: 'SET NULL', nullable: true },
   )
   block: ConstructedBlock;
 
   @OneToOne(
     () => ConstructedPreview,
     (constructed_preview) => constructed_preview.photo,
-    { onDelete: 'CASCADE', onUpdate: 'CASCADE', nullable: true },
+    { onDelete: 'SET NULL', onUpdate: 'SET NULL', nullable: true },
   )
   preview: ConstructedPreview;
 }

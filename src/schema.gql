@@ -594,6 +594,9 @@ type ConstructedMetaInfo {
   name: String
   redirect_url: String
   salary: String
+
+  """Auto-generated Schema.org JSON-LD for blog posts"""
+  schema_org: JSON
   schema_script: String
 
   """Array<{name: string, url: string}>"""
@@ -614,6 +617,9 @@ input ConstructedMetaInfoDto {
   name: String
   redirect_url: String
   salary: String
+
+  """Auto-generated Schema.org JSON-LD for blog posts"""
+  schema_org: JSON
   schema_script: String
 
   """Array<{name: string, url: string}>"""
@@ -641,6 +647,15 @@ type ConstructedPage {
 
 type ConstructedPageCompany {
   blog_base_url: String
+
+  """Company legal name for schema.org"""
+  company_legal_name: String
+
+  """Company logo URL for schema.org"""
+  company_logo_url: String
+
+  """Company website URL"""
+  company_website_url: String
   id: ID!
   location_base_url: String
   name: String!
@@ -768,6 +783,15 @@ input CreateCarTemplateDto {
 
 input CreateConstructedPageCompanyDto {
   blog_base_url: String
+
+  """Company legal name for schema.org"""
+  company_legal_name: String
+
+  """Company logo URL for schema.org"""
+  company_logo_url: String
+
+  """Company website URL"""
+  company_website_url: String
   location_base_url: String
   name: String!
   redirects: JSON
@@ -2238,6 +2262,9 @@ input UpdateConstructedMetaInfoDto {
   name: String
   redirect_url: String
   salary: String
+
+  """Auto-generated Schema.org JSON-LD for blog posts"""
+  schema_org: JSON
   schema_script: String
 
   """Array<{name: string, url: string}>"""
@@ -2249,6 +2276,15 @@ input UpdateConstructedMetaInfoDto {
 
 input UpdateConstructedPageCompanyDto {
   blog_base_url: String
+
+  """Company legal name for schema.org"""
+  company_legal_name: String
+
+  """Company logo URL for schema.org"""
+  company_logo_url: String
+
+  """Company website URL"""
+  company_website_url: String
   id: ID!
   location_base_url: String
   name: String
