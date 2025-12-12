@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CrudService } from '@tech-slk/nest-crud';
 import { ConstructedPage } from './entity/constructed-page.entity';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, Repository, In } from 'typeorm';
 import {
   CreateConstructedPageDto,
   UpdateConstructedPageDto,
@@ -109,6 +109,100 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
     return items;
   }
 
+  /**
+   * Get constructed pages with correct pagination handling for one-to-many relationships
+   * This method fixes the issue where eager-loaded one-to-many relationships (like blocks)
+   * cause duplicate rows in SQL, leading to incorrect pagination.
+   *
+   * Strategy:
+   * 1. First query: Get paginated IDs only (no joins, fast and accurate)
+   * 2. Second query: Fetch full entities with all relations using the IDs
+   */
+  public async getConstructedPagesPaginated({
+    pagination,
+    type,
+    is_posted,
+    constructed_page_company_id,
+  }: GetConstructedPagesArgs) {
+    // Step 1: Get paginated IDs without eager relations
+    const queryBuilder = this.constructedPageRepository
+      .createQueryBuilder('page')
+      .select('page.id', 'page_id')
+      .addSelect('MAX(page.post_date)', 'page_post_date')
+      .where('1=1'); // Always true condition to start
+
+    if (is_posted !== undefined) {
+      queryBuilder.andWhere('page.is_posted = :is_posted', { is_posted });
+    }
+
+    if (type) {
+      queryBuilder.andWhere('page.type = :type', { type });
+    }
+
+    if (constructed_page_company_id) {
+      queryBuilder.andWhere(
+        'page.constructed_page_company_id = :constructed_page_company_id',
+        {
+          constructed_page_company_id,
+        },
+      );
+    }
+
+    queryBuilder
+      .groupBy('page.id')
+      .orderBy('page_post_date', 'DESC')
+      .addOrderBy('page.id', 'ASC'); // Secondary sort for deterministic ordering
+
+    // Apply pagination
+    if (pagination?.skip !== undefined) {
+      queryBuilder.skip(pagination.skip);
+    }
+
+    if (pagination?.take !== undefined) {
+      queryBuilder.take(pagination.take);
+    }
+
+    // Execute to get IDs
+    const paginatedResults = await queryBuilder.getRawMany();
+    const pageIds = paginatedResults.map((row) => row.page_id);
+
+    // If no results, return empty array
+    if (pageIds.length === 0) {
+      return [];
+    }
+
+    // Step 2: Fetch full entities with all eager relations using the IDs
+    // Use query builder with LEFT JOIN to avoid duplicates from eager loading
+    const { entities: pages } = await this.constructedPageRepository
+      .createQueryBuilder('page')
+      .leftJoinAndSelect('page.blocks', 'blocks')
+      .leftJoinAndSelect('blocks.photo', 'blockPhoto')
+      .leftJoinAndSelect('blockPhoto.file', 'blockPhotoFile')
+      .leftJoinAndSelect('page.meta_info', 'metaInfo')
+      .leftJoinAndSelect('page.preview', 'preview')
+      .leftJoinAndSelect('preview.photo', 'previewPhoto')
+      .leftJoinAndSelect('previewPhoto.file', 'previewPhotoFile')
+      .leftJoinAndSelect('page.constructed_page_company', 'company')
+      .whereInIds(pageIds)
+      .orderBy('page.post_date', 'DESC')
+      .addOrderBy('page.id', 'ASC') // Secondary sort for deterministic ordering
+      .addOrderBy('blocks.position_block', 'ASC')
+      .getRawAndEntities();
+
+    // Deduplicate pages (TypeORM getMany() with LEFT JOIN can sometimes return duplicates)
+    const pageMap = new Map<string, ConstructedPage>();
+    for (const page of pages) {
+      if (!pageMap.has(page.id)) {
+        pageMap.set(page.id, page);
+      }
+    }
+
+    // Sort the results to match the original order from step 1
+    const sortedPages = pageIds.map((id) => pageMap.get(id)).filter(Boolean);
+
+    return sortedPages;
+  }
+
   public async getConstructedPageById(id: string) {
     return this.constructedPageRepository.findOne({
       where: { id },
@@ -126,6 +220,23 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
         is_posted: filters.is_posted,
         type: filters.type,
         constructed_page_company_id: filters.constructed_page_company_id,
+      },
+    });
+  }
+
+  /**
+   * Get count of constructed pages (for use with paginated method)
+   */
+  public async getConstructedPagesPaginatedCount({
+    type,
+    is_posted,
+    constructed_page_company_id,
+  }: Omit<GetConstructedPagesArgs, 'pagination'>): Promise<number> {
+    return this.constructedPageRepository.count({
+      where: {
+        is_posted,
+        type,
+        constructed_page_company_id,
       },
     });
   }
@@ -189,7 +300,11 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
       const constructed_page = await queryRunner.manager.save(
         ConstructedPage,
         page_dto.is_posted
-          ? { ...page_dto, post_date: moment().unix(), last_content_update_unix: moment().unix() }
+          ? {
+              ...page_dto,
+              post_date: moment().unix(),
+              last_content_update_unix: moment().unix(),
+            }
           : page_dto,
       );
 
@@ -200,9 +315,12 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
       );
 
       // Get company info for schema.org generation
-      const company = await queryRunner.manager.findOne(ConstructedPageCompany, {
-        where: { id: constructed_page.constructed_page_company_id },
-      });
+      const company = await queryRunner.manager.findOne(
+        ConstructedPageCompany,
+        {
+          where: { id: constructed_page.constructed_page_company_id },
+        },
+      );
 
       // Auto-generate schema.org for blog posts
       let finalMetaInfo = meta_info;
@@ -300,7 +418,10 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
       if (meta_info && Object.keys(meta_info).length) {
         // Auto-regenerate schema.org for blog posts if relevant fields changed
         let finalMetaInfo = meta_info;
-        if (existingPage.type === ConstructedPageType.BLOG && existingPage.constructed_page_company) {
+        if (
+          existingPage.type === ConstructedPageType.BLOG &&
+          existingPage.constructed_page_company
+        ) {
           const shouldRegenerateSchema =
             meta_info.meta_tag_title ||
             meta_info.meta_tag_description ||
@@ -309,7 +430,9 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
 
           if (shouldRegenerateSchema) {
             const mergedMetaInfo = { ...existingPage.meta_info, ...meta_info };
-            const mergedPreview = preview ? { ...existingPage.preview, ...preview } : existingPage.preview;
+            const mergedPreview = preview
+              ? { ...existingPage.preview, ...preview }
+              : existingPage.preview;
 
             const schemaOrg = this.generateBlogSchemaOrg(
               mergedMetaInfo,
@@ -344,9 +467,11 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
         shouldUpdateParentTimestamp = true;
 
         // Regenerate schema.org if preview image changed for blog posts
-        if (existingPage.type === ConstructedPageType.BLOG &&
+        if (
+          existingPage.type === ConstructedPageType.BLOG &&
           preview.photo &&
-          existingPage.constructed_page_company) {
+          existingPage.constructed_page_company
+        ) {
           const mergedPreview = { ...existingPage.preview, ...preview };
           const schemaOrg = this.generateBlogSchemaOrg(
             existingPage.meta_info,
@@ -384,7 +509,10 @@ export class ConstructedPageService extends CrudService<ConstructedPage> {
       }
 
       // 5. Update Parent Page Fields and Timestamp
-      if (Object.keys(constructed_page_dto).length || shouldUpdateParentTimestamp) {
+      if (
+        Object.keys(constructed_page_dto).length ||
+        shouldUpdateParentTimestamp
+      ) {
         const updateData = constructed_page_dto.is_posted
           ? { ...constructed_page_dto, post_date: now }
           : constructed_page_dto;

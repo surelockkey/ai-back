@@ -29,6 +29,15 @@ export class ConstructedPageResolver {
     return this.constructedPageService.getConstructedPages(args);
   }
 
+  /**
+   * Get constructed pages with correct pagination
+   * Fixes pagination issues caused by eager-loaded one-to-many relationships
+   */
+  @Query(() => [ConstructedPage])
+  getConstructedPagesPaginated(@Args() args: GetConstructedPagesArgs) {
+    return this.constructedPageService.getConstructedPagesPaginated(args);
+  }
+
   @RoleGuard(UserRole.ADMIN, UserRole.SEO, UserRole.MARKETING)
   @Query(() => ConstructedPage)
   getConstructedPageById(@Args('id', { type: () => ID }) id: string) {
